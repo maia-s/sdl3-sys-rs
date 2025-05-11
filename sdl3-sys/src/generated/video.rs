@@ -40,17 +40,77 @@ use super::surface::*;
 ///
 /// The value 0 is an invalid ID.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_DisplayID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_DisplayID(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_DisplayID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_DisplayID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_DisplayID) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_DisplayID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_DisplayID) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_DisplayID {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_DisplayID;
+}
 
 /// This is a unique ID for a window.
 ///
 /// The value 0 is an invalid ID.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_WindowID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_WindowID(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_WindowID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_WindowID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_WindowID) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_WindowID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_WindowID) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_WindowID {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_WindowID;
+}
 
 /// The pointer to the global `wl_display` object used by the Wayland video
 /// backend.
@@ -68,10 +128,10 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 
 /// System theme.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_SystemTheme::UNKNOWN) | [`SDL_SYSTEM_THEME_UNKNOWN`] | Unknown system theme |
@@ -80,6 +140,20 @@ pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SystemTheme(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_SystemTheme {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_SystemTheme> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_SystemTheme) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_SystemTheme> for ::core::ffi::c_int {
     #[inline(always)]
@@ -104,11 +178,11 @@ impl ::core::fmt::Debug for SDL_SystemTheme {
 
 impl SDL_SystemTheme {
     /// Unknown system theme
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
     /// Light colored system theme
-    pub const LIGHT: Self = Self(1);
+    pub const LIGHT: Self = Self((1 as ::core::ffi::c_int));
     /// Dark colored system theme
-    pub const DARK: Self = Self(2);
+    pub const DARK: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Unknown system theme
@@ -118,19 +192,24 @@ pub const SDL_SYSTEM_THEME_LIGHT: SDL_SystemTheme = SDL_SystemTheme::LIGHT;
 /// Dark colored system theme
 pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_SystemTheme {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_SystemTheme;
+}
+
 /// The structure that defines a display mode.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetFullscreenDisplayModes`]
 /// - [`SDL_GetDesktopDisplayMode`]
 /// - [`SDL_GetCurrentDisplayMode`]
 /// - [`SDL_SetWindowFullscreenMode`]
 /// - [`SDL_GetWindowFullscreenMode`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayMode {
     /// the display this mode is associated with
@@ -151,14 +230,16 @@ pub struct SDL_DisplayMode {
     pub refresh_rate_denominator: ::core::ffi::c_int,
     /// Private
     pub internal: *mut SDL_DisplayModeData,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 /// Display orientation values; the way a display is rotated.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_DisplayOrientation::UNKNOWN) | [`SDL_ORIENTATION_UNKNOWN`] | The display orientation can't be determined |
@@ -169,6 +250,20 @@ pub struct SDL_DisplayMode {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_DisplayOrientation(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_DisplayOrientation {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_DisplayOrientation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_DisplayOrientation) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_DisplayOrientation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -195,15 +290,15 @@ impl ::core::fmt::Debug for SDL_DisplayOrientation {
 
 impl SDL_DisplayOrientation {
     /// The display orientation can't be determined
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
     /// The display is in landscape mode, with the right side up, relative to portrait mode
-    pub const LANDSCAPE: Self = Self(1);
+    pub const LANDSCAPE: Self = Self((1 as ::core::ffi::c_int));
     /// The display is in landscape mode, with the left side up, relative to portrait mode
-    pub const LANDSCAPE_FLIPPED: Self = Self(2);
+    pub const LANDSCAPE_FLIPPED: Self = Self((2 as ::core::ffi::c_int));
     /// The display is in portrait mode
-    pub const PORTRAIT: Self = Self(3);
+    pub const PORTRAIT: Self = Self((3 as ::core::ffi::c_int));
     /// The display is in portrait mode, upside down
-    pub const PORTRAIT_FLIPPED: Self = Self(4);
+    pub const PORTRAIT_FLIPPED: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// The display orientation can't be determined
@@ -219,6 +314,12 @@ pub const SDL_ORIENTATION_PORTRAIT: SDL_DisplayOrientation = SDL_DisplayOrientat
 pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
     SDL_DisplayOrientation::PORTRAIT_FLIPPED;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_DisplayOrientation {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_DisplayOrientation;
+}
+
 /// The flags on a window.
 ///
 /// These cover a lot of true/false, or on/off, window state. Some of it is
@@ -226,123 +327,474 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 /// changed on existing windows by the app, and some of it might be altered by
 /// the user or system outside of the app's control.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetWindowFlags`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_WINDOW_FULLSCREEN`] | window is in fullscreen mode |
-/// | [`SDL_WINDOW_OPENGL`] | window usable with OpenGL context |
-/// | [`SDL_WINDOW_OCCLUDED`] | window is occluded |
-/// | [`SDL_WINDOW_HIDDEN`] | window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible |
-/// | [`SDL_WINDOW_BORDERLESS`] | no window decoration |
-/// | [`SDL_WINDOW_RESIZABLE`] | window can be resized |
-/// | [`SDL_WINDOW_MINIMIZED`] | window is minimized |
-/// | [`SDL_WINDOW_MAXIMIZED`] | window is maximized |
-/// | [`SDL_WINDOW_MOUSE_GRABBED`] | window has grabbed mouse input |
-/// | [`SDL_WINDOW_INPUT_FOCUS`] | window has input focus |
-/// | [`SDL_WINDOW_MOUSE_FOCUS`] | window has mouse focus |
-/// | [`SDL_WINDOW_EXTERNAL`] | window not created by SDL |
-/// | [`SDL_WINDOW_MODAL`] | window is modal |
-/// | [`SDL_WINDOW_HIGH_PIXEL_DENSITY`] | window uses high pixel density back buffer if possible |
-/// | [`SDL_WINDOW_MOUSE_CAPTURE`] | window has mouse captured (unrelated to MOUSE_GRABBED) |
-/// | [`SDL_WINDOW_MOUSE_RELATIVE_MODE`] | window has relative mode enabled |
-/// | [`SDL_WINDOW_ALWAYS_ON_TOP`] | window should always be above others |
-/// | [`SDL_WINDOW_UTILITY`] | window should be treated as a utility window, not showing in the task bar and window list |
-/// | [`SDL_WINDOW_TOOLTIP`] | window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window |
-/// | [`SDL_WINDOW_POPUP_MENU`] | window should be treated as a popup menu, requires a parent window |
-/// | [`SDL_WINDOW_KEYBOARD_GRABBED`] | window has grabbed keyboard input |
-/// | [`SDL_WINDOW_VULKAN`] | window usable for Vulkan surface |
-/// | [`SDL_WINDOW_METAL`] | window usable for Metal view |
-/// | [`SDL_WINDOW_TRANSPARENT`] | window with transparent buffer |
-/// | [`SDL_WINDOW_NOT_FOCUSABLE`] | window should not be focusable |
-pub type SDL_WindowFlags = Uint64;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`FULLSCREEN`](SDL_WindowFlags::FULLSCREEN) | [`SDL_WINDOW_FULLSCREEN`] | window is in fullscreen mode |
+/// | [`OPENGL`](SDL_WindowFlags::OPENGL) | [`SDL_WINDOW_OPENGL`] | window usable with OpenGL context |
+/// | [`OCCLUDED`](SDL_WindowFlags::OCCLUDED) | [`SDL_WINDOW_OCCLUDED`] | window is occluded |
+/// | [`HIDDEN`](SDL_WindowFlags::HIDDEN) | [`SDL_WINDOW_HIDDEN`] | window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible |
+/// | [`BORDERLESS`](SDL_WindowFlags::BORDERLESS) | [`SDL_WINDOW_BORDERLESS`] | no window decoration |
+/// | [`RESIZABLE`](SDL_WindowFlags::RESIZABLE) | [`SDL_WINDOW_RESIZABLE`] | window can be resized |
+/// | [`MINIMIZED`](SDL_WindowFlags::MINIMIZED) | [`SDL_WINDOW_MINIMIZED`] | window is minimized |
+/// | [`MAXIMIZED`](SDL_WindowFlags::MAXIMIZED) | [`SDL_WINDOW_MAXIMIZED`] | window is maximized |
+/// | [`MOUSE_GRABBED`](SDL_WindowFlags::MOUSE_GRABBED) | [`SDL_WINDOW_MOUSE_GRABBED`] | window has grabbed mouse input |
+/// | [`INPUT_FOCUS`](SDL_WindowFlags::INPUT_FOCUS) | [`SDL_WINDOW_INPUT_FOCUS`] | window has input focus |
+/// | [`MOUSE_FOCUS`](SDL_WindowFlags::MOUSE_FOCUS) | [`SDL_WINDOW_MOUSE_FOCUS`] | window has mouse focus |
+/// | [`EXTERNAL`](SDL_WindowFlags::EXTERNAL) | [`SDL_WINDOW_EXTERNAL`] | window not created by SDL |
+/// | [`MODAL`](SDL_WindowFlags::MODAL) | [`SDL_WINDOW_MODAL`] | window is modal |
+/// | [`HIGH_PIXEL_DENSITY`](SDL_WindowFlags::HIGH_PIXEL_DENSITY) | [`SDL_WINDOW_HIGH_PIXEL_DENSITY`] | window uses high pixel density back buffer if possible |
+/// | [`MOUSE_CAPTURE`](SDL_WindowFlags::MOUSE_CAPTURE) | [`SDL_WINDOW_MOUSE_CAPTURE`] | window has mouse captured (unrelated to MOUSE_GRABBED) |
+/// | [`MOUSE_RELATIVE_MODE`](SDL_WindowFlags::MOUSE_RELATIVE_MODE) | [`SDL_WINDOW_MOUSE_RELATIVE_MODE`] | window has relative mode enabled |
+/// | [`ALWAYS_ON_TOP`](SDL_WindowFlags::ALWAYS_ON_TOP) | [`SDL_WINDOW_ALWAYS_ON_TOP`] | window should always be above others |
+/// | [`UTILITY`](SDL_WindowFlags::UTILITY) | [`SDL_WINDOW_UTILITY`] | window should be treated as a utility window, not showing in the task bar and window list |
+/// | [`TOOLTIP`](SDL_WindowFlags::TOOLTIP) | [`SDL_WINDOW_TOOLTIP`] | window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window |
+/// | [`POPUP_MENU`](SDL_WindowFlags::POPUP_MENU) | [`SDL_WINDOW_POPUP_MENU`] | window should be treated as a popup menu, requires a parent window |
+/// | [`KEYBOARD_GRABBED`](SDL_WindowFlags::KEYBOARD_GRABBED) | [`SDL_WINDOW_KEYBOARD_GRABBED`] | window has grabbed keyboard input |
+/// | [`VULKAN`](SDL_WindowFlags::VULKAN) | [`SDL_WINDOW_VULKAN`] | window usable for Vulkan surface |
+/// | [`METAL`](SDL_WindowFlags::METAL) | [`SDL_WINDOW_METAL`] | window usable for Metal view |
+/// | [`TRANSPARENT`](SDL_WindowFlags::TRANSPARENT) | [`SDL_WINDOW_TRANSPARENT`] | window with transparent buffer |
+/// | [`NOT_FOCUSABLE`](SDL_WindowFlags::NOT_FOCUSABLE) | [`SDL_WINDOW_NOT_FOCUSABLE`] | window should not be focusable |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_WindowFlags(pub Uint64);
+
+impl ::core::cmp::PartialEq<Uint64> for SDL_WindowFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint64) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_WindowFlags> for Uint64 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_WindowFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_WindowFlags> for Uint64 {
+    #[inline(always)]
+    fn from(value: SDL_WindowFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_WindowFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_WindowFlags(")?;
+        let all_bits = all_bits | Self::FULLSCREEN.0;
+        if (Self::FULLSCREEN != 0 || self.0 == 0) && *self & Self::FULLSCREEN == Self::FULLSCREEN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FULLSCREEN")?;
+        }
+        let all_bits = all_bits | Self::OPENGL.0;
+        if (Self::OPENGL != 0 || self.0 == 0) && *self & Self::OPENGL == Self::OPENGL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "OPENGL")?;
+        }
+        let all_bits = all_bits | Self::OCCLUDED.0;
+        if (Self::OCCLUDED != 0 || self.0 == 0) && *self & Self::OCCLUDED == Self::OCCLUDED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "OCCLUDED")?;
+        }
+        let all_bits = all_bits | Self::HIDDEN.0;
+        if (Self::HIDDEN != 0 || self.0 == 0) && *self & Self::HIDDEN == Self::HIDDEN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "HIDDEN")?;
+        }
+        let all_bits = all_bits | Self::BORDERLESS.0;
+        if (Self::BORDERLESS != 0 || self.0 == 0) && *self & Self::BORDERLESS == Self::BORDERLESS {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BORDERLESS")?;
+        }
+        let all_bits = all_bits | Self::RESIZABLE.0;
+        if (Self::RESIZABLE != 0 || self.0 == 0) && *self & Self::RESIZABLE == Self::RESIZABLE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RESIZABLE")?;
+        }
+        let all_bits = all_bits | Self::MINIMIZED.0;
+        if (Self::MINIMIZED != 0 || self.0 == 0) && *self & Self::MINIMIZED == Self::MINIMIZED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MINIMIZED")?;
+        }
+        let all_bits = all_bits | Self::MAXIMIZED.0;
+        if (Self::MAXIMIZED != 0 || self.0 == 0) && *self & Self::MAXIMIZED == Self::MAXIMIZED {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MAXIMIZED")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_GRABBED.0;
+        if (Self::MOUSE_GRABBED != 0 || self.0 == 0)
+            && *self & Self::MOUSE_GRABBED == Self::MOUSE_GRABBED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_GRABBED")?;
+        }
+        let all_bits = all_bits | Self::INPUT_FOCUS.0;
+        if (Self::INPUT_FOCUS != 0 || self.0 == 0) && *self & Self::INPUT_FOCUS == Self::INPUT_FOCUS
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INPUT_FOCUS")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_FOCUS.0;
+        if (Self::MOUSE_FOCUS != 0 || self.0 == 0) && *self & Self::MOUSE_FOCUS == Self::MOUSE_FOCUS
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_FOCUS")?;
+        }
+        let all_bits = all_bits | Self::EXTERNAL.0;
+        if (Self::EXTERNAL != 0 || self.0 == 0) && *self & Self::EXTERNAL == Self::EXTERNAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "EXTERNAL")?;
+        }
+        let all_bits = all_bits | Self::MODAL.0;
+        if (Self::MODAL != 0 || self.0 == 0) && *self & Self::MODAL == Self::MODAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MODAL")?;
+        }
+        let all_bits = all_bits | Self::HIGH_PIXEL_DENSITY.0;
+        if (Self::HIGH_PIXEL_DENSITY != 0 || self.0 == 0)
+            && *self & Self::HIGH_PIXEL_DENSITY == Self::HIGH_PIXEL_DENSITY
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "HIGH_PIXEL_DENSITY")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_CAPTURE.0;
+        if (Self::MOUSE_CAPTURE != 0 || self.0 == 0)
+            && *self & Self::MOUSE_CAPTURE == Self::MOUSE_CAPTURE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_CAPTURE")?;
+        }
+        let all_bits = all_bits | Self::MOUSE_RELATIVE_MODE.0;
+        if (Self::MOUSE_RELATIVE_MODE != 0 || self.0 == 0)
+            && *self & Self::MOUSE_RELATIVE_MODE == Self::MOUSE_RELATIVE_MODE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MOUSE_RELATIVE_MODE")?;
+        }
+        let all_bits = all_bits | Self::ALWAYS_ON_TOP.0;
+        if (Self::ALWAYS_ON_TOP != 0 || self.0 == 0)
+            && *self & Self::ALWAYS_ON_TOP == Self::ALWAYS_ON_TOP
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ALWAYS_ON_TOP")?;
+        }
+        let all_bits = all_bits | Self::UTILITY.0;
+        if (Self::UTILITY != 0 || self.0 == 0) && *self & Self::UTILITY == Self::UTILITY {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "UTILITY")?;
+        }
+        let all_bits = all_bits | Self::TOOLTIP.0;
+        if (Self::TOOLTIP != 0 || self.0 == 0) && *self & Self::TOOLTIP == Self::TOOLTIP {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TOOLTIP")?;
+        }
+        let all_bits = all_bits | Self::POPUP_MENU.0;
+        if (Self::POPUP_MENU != 0 || self.0 == 0) && *self & Self::POPUP_MENU == Self::POPUP_MENU {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "POPUP_MENU")?;
+        }
+        let all_bits = all_bits | Self::KEYBOARD_GRABBED.0;
+        if (Self::KEYBOARD_GRABBED != 0 || self.0 == 0)
+            && *self & Self::KEYBOARD_GRABBED == Self::KEYBOARD_GRABBED
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "KEYBOARD_GRABBED")?;
+        }
+        let all_bits = all_bits | Self::VULKAN.0;
+        if (Self::VULKAN != 0 || self.0 == 0) && *self & Self::VULKAN == Self::VULKAN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "VULKAN")?;
+        }
+        let all_bits = all_bits | Self::METAL.0;
+        if (Self::METAL != 0 || self.0 == 0) && *self & Self::METAL == Self::METAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "METAL")?;
+        }
+        let all_bits = all_bits | Self::TRANSPARENT.0;
+        if (Self::TRANSPARENT != 0 || self.0 == 0) && *self & Self::TRANSPARENT == Self::TRANSPARENT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TRANSPARENT")?;
+        }
+        let all_bits = all_bits | Self::NOT_FOCUSABLE.0;
+        if (Self::NOT_FOCUSABLE != 0 || self.0 == 0)
+            && *self & Self::NOT_FOCUSABLE == Self::NOT_FOCUSABLE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NOT_FOCUSABLE")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_WindowFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_WindowFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_WindowFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_WindowFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_WindowFlags {
+    /// window is in fullscreen mode
+    pub const FULLSCREEN: Self = Self((1_u64 as Uint64));
+    /// window usable with OpenGL context
+    pub const OPENGL: Self = Self((2_u64 as Uint64));
+    /// window is occluded
+    pub const OCCLUDED: Self = Self((4_u64 as Uint64));
+    /// window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible
+    pub const HIDDEN: Self = Self((8_u64 as Uint64));
+    /// no window decoration
+    pub const BORDERLESS: Self = Self((16_u64 as Uint64));
+    /// window can be resized
+    pub const RESIZABLE: Self = Self((32_u64 as Uint64));
+    /// window is minimized
+    pub const MINIMIZED: Self = Self((64_u64 as Uint64));
+    /// window is maximized
+    pub const MAXIMIZED: Self = Self((128_u64 as Uint64));
+    /// window has grabbed mouse input
+    pub const MOUSE_GRABBED: Self = Self((256_u64 as Uint64));
+    /// window has input focus
+    pub const INPUT_FOCUS: Self = Self((512_u64 as Uint64));
+    /// window has mouse focus
+    pub const MOUSE_FOCUS: Self = Self((1024_u64 as Uint64));
+    /// window not created by SDL
+    pub const EXTERNAL: Self = Self((2048_u64 as Uint64));
+    /// window is modal
+    pub const MODAL: Self = Self((4096_u64 as Uint64));
+    /// window uses high pixel density back buffer if possible
+    pub const HIGH_PIXEL_DENSITY: Self = Self((8192_u64 as Uint64));
+    /// window has mouse captured (unrelated to MOUSE_GRABBED)
+    pub const MOUSE_CAPTURE: Self = Self((16384_u64 as Uint64));
+    /// window has relative mode enabled
+    pub const MOUSE_RELATIVE_MODE: Self = Self((32768_u64 as Uint64));
+    /// window should always be above others
+    pub const ALWAYS_ON_TOP: Self = Self((65536_u64 as Uint64));
+    /// window should be treated as a utility window, not showing in the task bar and window list
+    pub const UTILITY: Self = Self((131072_u64 as Uint64));
+    /// window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window
+    pub const TOOLTIP: Self = Self((262144_u64 as Uint64));
+    /// window should be treated as a popup menu, requires a parent window
+    pub const POPUP_MENU: Self = Self((524288_u64 as Uint64));
+    /// window has grabbed keyboard input
+    pub const KEYBOARD_GRABBED: Self = Self((1048576_u64 as Uint64));
+    /// window usable for Vulkan surface
+    pub const VULKAN: Self = Self((268435456_u64 as Uint64));
+    /// window usable for Metal view
+    pub const METAL: Self = Self((536870912_u64 as Uint64));
+    /// window with transparent buffer
+    pub const TRANSPARENT: Self = Self((1073741824_u64 as Uint64));
+    /// window should not be focusable
+    pub const NOT_FOCUSABLE: Self = Self((2147483648_u64 as Uint64));
+}
 
 /// window is in fullscreen mode
-pub const SDL_WINDOW_FULLSCREEN: SDL_WindowFlags = (1_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_FULLSCREEN: SDL_WindowFlags = SDL_WindowFlags::FULLSCREEN;
 /// window usable with OpenGL context
-pub const SDL_WINDOW_OPENGL: SDL_WindowFlags = (2_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_OPENGL: SDL_WindowFlags = SDL_WindowFlags::OPENGL;
 /// window is occluded
-pub const SDL_WINDOW_OCCLUDED: SDL_WindowFlags = (4_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_OCCLUDED: SDL_WindowFlags = SDL_WindowFlags::OCCLUDED;
 /// window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible
-pub const SDL_WINDOW_HIDDEN: SDL_WindowFlags = (8_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_HIDDEN: SDL_WindowFlags = SDL_WindowFlags::HIDDEN;
 /// no window decoration
-pub const SDL_WINDOW_BORDERLESS: SDL_WindowFlags = (16_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_BORDERLESS: SDL_WindowFlags = SDL_WindowFlags::BORDERLESS;
 /// window can be resized
-pub const SDL_WINDOW_RESIZABLE: SDL_WindowFlags = (32_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_RESIZABLE: SDL_WindowFlags = SDL_WindowFlags::RESIZABLE;
 /// window is minimized
-pub const SDL_WINDOW_MINIMIZED: SDL_WindowFlags = (64_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MINIMIZED: SDL_WindowFlags = SDL_WindowFlags::MINIMIZED;
 /// window is maximized
-pub const SDL_WINDOW_MAXIMIZED: SDL_WindowFlags = (128_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MAXIMIZED: SDL_WindowFlags = SDL_WindowFlags::MAXIMIZED;
 /// window has grabbed mouse input
-pub const SDL_WINDOW_MOUSE_GRABBED: SDL_WindowFlags = (256_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_GRABBED: SDL_WindowFlags = SDL_WindowFlags::MOUSE_GRABBED;
 /// window has input focus
-pub const SDL_WINDOW_INPUT_FOCUS: SDL_WindowFlags = (512_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_INPUT_FOCUS: SDL_WindowFlags = SDL_WindowFlags::INPUT_FOCUS;
 /// window has mouse focus
-pub const SDL_WINDOW_MOUSE_FOCUS: SDL_WindowFlags = (1024_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_FOCUS: SDL_WindowFlags = SDL_WindowFlags::MOUSE_FOCUS;
 /// window not created by SDL
-pub const SDL_WINDOW_EXTERNAL: SDL_WindowFlags = (2048_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_EXTERNAL: SDL_WindowFlags = SDL_WindowFlags::EXTERNAL;
 /// window is modal
-pub const SDL_WINDOW_MODAL: SDL_WindowFlags = (4096_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MODAL: SDL_WindowFlags = SDL_WindowFlags::MODAL;
 /// window uses high pixel density back buffer if possible
-pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: SDL_WindowFlags = (8192_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_HIGH_PIXEL_DENSITY: SDL_WindowFlags = SDL_WindowFlags::HIGH_PIXEL_DENSITY;
 /// window has mouse captured (unrelated to MOUSE_GRABBED)
-pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags = (16384_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_CAPTURE: SDL_WindowFlags = SDL_WindowFlags::MOUSE_CAPTURE;
 /// window has relative mode enabled
-pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: SDL_WindowFlags = (32768_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_MOUSE_RELATIVE_MODE: SDL_WindowFlags = SDL_WindowFlags::MOUSE_RELATIVE_MODE;
 /// window should always be above others
-pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags = (65536_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_ALWAYS_ON_TOP: SDL_WindowFlags = SDL_WindowFlags::ALWAYS_ON_TOP;
 /// window should be treated as a utility window, not showing in the task bar and window list
-pub const SDL_WINDOW_UTILITY: SDL_WindowFlags = (131072_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_UTILITY: SDL_WindowFlags = SDL_WindowFlags::UTILITY;
 /// window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window
-pub const SDL_WINDOW_TOOLTIP: SDL_WindowFlags = (262144_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_TOOLTIP: SDL_WindowFlags = SDL_WindowFlags::TOOLTIP;
 /// window should be treated as a popup menu, requires a parent window
-pub const SDL_WINDOW_POPUP_MENU: SDL_WindowFlags = (524288_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_POPUP_MENU: SDL_WindowFlags = SDL_WindowFlags::POPUP_MENU;
 /// window has grabbed keyboard input
-pub const SDL_WINDOW_KEYBOARD_GRABBED: SDL_WindowFlags = (1048576_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_KEYBOARD_GRABBED: SDL_WindowFlags = SDL_WindowFlags::KEYBOARD_GRABBED;
 /// window usable for Vulkan surface
-pub const SDL_WINDOW_VULKAN: SDL_WindowFlags = (268435456_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_VULKAN: SDL_WindowFlags = SDL_WindowFlags::VULKAN;
 /// window usable for Metal view
-pub const SDL_WINDOW_METAL: SDL_WindowFlags = (536870912_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_METAL: SDL_WindowFlags = SDL_WindowFlags::METAL;
 /// window with transparent buffer
-pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = (1073741824_u64 as SDL_WindowFlags);
-
+pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = SDL_WindowFlags::TRANSPARENT;
 /// window should not be focusable
-pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = (2147483648_u64 as SDL_WindowFlags);
+pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = SDL_WindowFlags::NOT_FOCUSABLE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_WindowFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_WindowFlags;
+}
 
 /// A magic value used with [`SDL_WINDOWPOS_UNDEFINED`].
 ///
 /// Generally this macro isn't used directly, but rather through
 /// [`SDL_WINDOWPOS_UNDEFINED`] or [`SDL_WINDOWPOS_UNDEFINED_DISPLAY`].
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 
@@ -351,30 +803,31 @@ pub const SDL_WINDOWPOS_UNDEFINED_MASK: ::core::primitive::u32 = 536805376_u32;
 /// If you _really_ don't care, [`SDL_WINDOWPOS_UNDEFINED`] is the same, but always
 /// uses the primary display instead of specifying one.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `X`: the [`SDL_DisplayID`] of the display to use.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
-    ((SDL_WINDOWPOS_UNDEFINED_MASK | X) as ::core::ffi::c_int)
+    ((SDL_WINDOWPOS_UNDEFINED_MASK | X.0) as ::core::ffi::c_int)
 }
 
 /// Used to indicate that you don't care what the window position/display is.
 ///
 /// This always uses the primary display.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_WINDOWPOS_UNDEFINED: ::core::ffi::c_int = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
+pub const SDL_WINDOWPOS_UNDEFINED: ::core::ffi::c_int =
+    SDL_WINDOWPOS_UNDEFINED_DISPLAY(SDL_DisplayID((0 as Uint32)));
 
 /// A macro to test if the window position is marked as "undefined."
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `X`: the window position value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::ffi::c_int) -> ::core::primitive::bool {
@@ -386,7 +839,7 @@ pub const fn SDL_WINDOWPOS_ISUNDEFINED(X: ::core::ffi::c_int) -> ::core::primiti
 /// Generally this macro isn't used directly, but rather through
 /// [`SDL_WINDOWPOS_CENTERED`] or [`SDL_WINDOWPOS_CENTERED_DISPLAY`].
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 
@@ -395,30 +848,31 @@ pub const SDL_WINDOWPOS_CENTERED_MASK: ::core::primitive::u32 = 805240832_u32;
 /// [`SDL_WINDOWPOS_CENTERED`] is the same, but always uses the primary display
 /// instead of specifying one.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `X`: the [`SDL_DisplayID`] of the display to use.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: SDL_DisplayID) -> ::core::ffi::c_int {
-    ((SDL_WINDOWPOS_CENTERED_MASK | X) as ::core::ffi::c_int)
+    ((SDL_WINDOWPOS_CENTERED_MASK | X.0) as ::core::ffi::c_int)
 }
 
 /// Used to indicate that the window position should be centered.
 ///
 /// This always uses the primary display.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_WINDOWPOS_CENTERED: ::core::ffi::c_int = SDL_WINDOWPOS_CENTERED_DISPLAY(0);
+pub const SDL_WINDOWPOS_CENTERED: ::core::ffi::c_int =
+    SDL_WINDOWPOS_CENTERED_DISPLAY(SDL_DisplayID((0 as Uint32)));
 
 /// A macro to test if the window position is marked as "centered."
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `X`: the window position value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitive::bool {
@@ -427,10 +881,10 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 
 /// Window flash operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`CANCEL`](SDL_FlashOperation::CANCEL) | [`SDL_FLASH_CANCEL`] | Cancel any window flash state |
@@ -439,6 +893,20 @@ pub const fn SDL_WINDOWPOS_ISCENTERED(X: ::core::ffi::c_int) -> ::core::primitiv
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FlashOperation(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FlashOperation {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_FlashOperation> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_FlashOperation) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_FlashOperation> for ::core::ffi::c_int {
     #[inline(always)]
@@ -463,11 +931,11 @@ impl ::core::fmt::Debug for SDL_FlashOperation {
 
 impl SDL_FlashOperation {
     /// Cancel any window flash state
-    pub const CANCEL: Self = Self(0);
+    pub const CANCEL: Self = Self((0 as ::core::ffi::c_int));
     /// Flash the window briefly to get attention
-    pub const BRIEFLY: Self = Self(1);
+    pub const BRIEFLY: Self = Self((1 as ::core::ffi::c_int));
     /// Flash the window until it gets focus
-    pub const UNTIL_FOCUSED: Self = Self(2);
+    pub const UNTIL_FOCUSED: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Cancel any window flash state
@@ -477,42 +945,48 @@ pub const SDL_FLASH_BRIEFLY: SDL_FlashOperation = SDL_FlashOperation::BRIEFLY;
 /// Flash the window until it gets focus
 pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTIL_FOCUSED;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_FlashOperation {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_FlashOperation;
+}
+
 /// An opaque handle to an OpenGL context.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GL_CreateContext`]
 pub type SDL_GLContext = *mut SDL_GLContextState;
 
 /// Opaque type for an EGL display.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLDisplay = *mut ::core::ffi::c_void;
 
 /// Opaque type for an EGL config.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLConfig = *mut ::core::ffi::c_void;
 
 /// Opaque type for an EGL surface.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLSurface = *mut ::core::ffi::c_void;
 
 /// An EGL attribute, used when creating an EGL context.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLAttrib = ::core::primitive::isize;
 
 /// An EGL integer attribute, used when creating an EGL surface.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_EGLint = ::core::ffi::c_int;
 
@@ -531,16 +1005,16 @@ pub type SDL_EGLint = ::core::ffi::c_int;
 /// The arrays returned by each callback will be appended to the existing
 /// attribute arrays defined by SDL.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_EGL_SetAttributeCallbacks`]
 pub type SDL_EGLAttribArrayCallback = ::core::option::Option<
     unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void) -> *mut SDL_EGLAttrib,
@@ -565,18 +1039,18 @@ pub type SDL_EGLAttribArrayCallback = ::core::option::Option<
 /// The arrays returned by each callback will be appended to the existing
 /// attribute arrays defined by SDL.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 /// - `display`: the EGL display to be used.
 /// - `config`: the EGL config to be used.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a newly-allocated array of attributes, terminated with `EGL_NONE`.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_EGL_SetAttributeCallbacks`]
 pub type SDL_EGLIntArrayCallback = ::core::option::Option<
     unsafe extern "C" fn(
@@ -600,16 +1074,16 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// fail if the GL can't provide your requested attributes at a minimum, but
 /// you should check to see exactly what you got.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
-/// | [`RED_SIZE`](SDL_GLAttr::RED_SIZE) | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 3. |
-/// | [`GREEN_SIZE`](SDL_GLAttr::GREEN_SIZE) | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 3. |
-/// | [`BLUE_SIZE`](SDL_GLAttr::BLUE_SIZE) | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 2. |
-/// | [`ALPHA_SIZE`](SDL_GLAttr::ALPHA_SIZE) | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 0. |
+/// | [`RED_SIZE`](SDL_GLAttr::RED_SIZE) | [`SDL_GL_RED_SIZE`] | the minimum number of bits for the red channel of the color buffer; defaults to 8. |
+/// | [`GREEN_SIZE`](SDL_GLAttr::GREEN_SIZE) | [`SDL_GL_GREEN_SIZE`] | the minimum number of bits for the green channel of the color buffer; defaults to 8. |
+/// | [`BLUE_SIZE`](SDL_GLAttr::BLUE_SIZE) | [`SDL_GL_BLUE_SIZE`] | the minimum number of bits for the blue channel of the color buffer; defaults to 8. |
+/// | [`ALPHA_SIZE`](SDL_GLAttr::ALPHA_SIZE) | [`SDL_GL_ALPHA_SIZE`] | the minimum number of bits for the alpha channel of the color buffer; defaults to 8. |
 /// | [`BUFFER_SIZE`](SDL_GLAttr::BUFFER_SIZE) | [`SDL_GL_BUFFER_SIZE`] | the minimum number of bits for frame buffer size; defaults to 0. |
 /// | [`DOUBLEBUFFER`](SDL_GLAttr::DOUBLEBUFFER) | [`SDL_GL_DOUBLEBUFFER`] | whether the output is single or double buffered; defaults to double buffering on. |
 /// | [`DEPTH_SIZE`](SDL_GLAttr::DEPTH_SIZE) | [`SDL_GL_DEPTH_SIZE`] | the minimum number of bits in the depth buffer; defaults to 16. |
@@ -637,6 +1111,20 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GLAttr(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GLAttr {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GLAttr> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLAttr) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GLAttr> for ::core::ffi::c_int {
     #[inline(always)]
@@ -685,68 +1173,68 @@ impl ::core::fmt::Debug for SDL_GLAttr {
 }
 
 impl SDL_GLAttr {
-    /// the minimum number of bits for the red channel of the color buffer; defaults to 3.
-    pub const RED_SIZE: Self = Self(0);
-    /// the minimum number of bits for the green channel of the color buffer; defaults to 3.
-    pub const GREEN_SIZE: Self = Self(1);
-    /// the minimum number of bits for the blue channel of the color buffer; defaults to 2.
-    pub const BLUE_SIZE: Self = Self(2);
-    /// the minimum number of bits for the alpha channel of the color buffer; defaults to 0.
-    pub const ALPHA_SIZE: Self = Self(3);
+    /// the minimum number of bits for the red channel of the color buffer; defaults to 8.
+    pub const RED_SIZE: Self = Self((0 as ::core::ffi::c_int));
+    /// the minimum number of bits for the green channel of the color buffer; defaults to 8.
+    pub const GREEN_SIZE: Self = Self((1 as ::core::ffi::c_int));
+    /// the minimum number of bits for the blue channel of the color buffer; defaults to 8.
+    pub const BLUE_SIZE: Self = Self((2 as ::core::ffi::c_int));
+    /// the minimum number of bits for the alpha channel of the color buffer; defaults to 8.
+    pub const ALPHA_SIZE: Self = Self((3 as ::core::ffi::c_int));
     /// the minimum number of bits for frame buffer size; defaults to 0.
-    pub const BUFFER_SIZE: Self = Self(4);
+    pub const BUFFER_SIZE: Self = Self((4 as ::core::ffi::c_int));
     /// whether the output is single or double buffered; defaults to double buffering on.
-    pub const DOUBLEBUFFER: Self = Self(5);
+    pub const DOUBLEBUFFER: Self = Self((5 as ::core::ffi::c_int));
     /// the minimum number of bits in the depth buffer; defaults to 16.
-    pub const DEPTH_SIZE: Self = Self(6);
+    pub const DEPTH_SIZE: Self = Self((6 as ::core::ffi::c_int));
     /// the minimum number of bits in the stencil buffer; defaults to 0.
-    pub const STENCIL_SIZE: Self = Self(7);
+    pub const STENCIL_SIZE: Self = Self((7 as ::core::ffi::c_int));
     /// the minimum number of bits for the red channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_RED_SIZE: Self = Self(8);
+    pub const ACCUM_RED_SIZE: Self = Self((8 as ::core::ffi::c_int));
     /// the minimum number of bits for the green channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_GREEN_SIZE: Self = Self(9);
+    pub const ACCUM_GREEN_SIZE: Self = Self((9 as ::core::ffi::c_int));
     /// the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_BLUE_SIZE: Self = Self(10);
+    pub const ACCUM_BLUE_SIZE: Self = Self((10 as ::core::ffi::c_int));
     /// the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0.
-    pub const ACCUM_ALPHA_SIZE: Self = Self(11);
+    pub const ACCUM_ALPHA_SIZE: Self = Self((11 as ::core::ffi::c_int));
     /// whether the output is stereo 3D; defaults to off.
-    pub const STEREO: Self = Self(12);
+    pub const STEREO: Self = Self((12 as ::core::ffi::c_int));
     /// the number of buffers used for multisample anti-aliasing; defaults to 0.
-    pub const MULTISAMPLEBUFFERS: Self = Self(13);
+    pub const MULTISAMPLEBUFFERS: Self = Self((13 as ::core::ffi::c_int));
     /// the number of samples used around the current pixel used for multisample anti-aliasing.
-    pub const MULTISAMPLESAMPLES: Self = Self(14);
+    pub const MULTISAMPLESAMPLES: Self = Self((14 as ::core::ffi::c_int));
     /// set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either.
-    pub const ACCELERATED_VISUAL: Self = Self(15);
+    pub const ACCELERATED_VISUAL: Self = Self((15 as ::core::ffi::c_int));
     /// not used (deprecated).
-    pub const RETAINED_BACKING: Self = Self(16);
+    pub const RETAINED_BACKING: Self = Self((16 as ::core::ffi::c_int));
     /// OpenGL context major version.
-    pub const CONTEXT_MAJOR_VERSION: Self = Self(17);
+    pub const CONTEXT_MAJOR_VERSION: Self = Self((17 as ::core::ffi::c_int));
     /// OpenGL context minor version.
-    pub const CONTEXT_MINOR_VERSION: Self = Self(18);
+    pub const CONTEXT_MINOR_VERSION: Self = Self((18 as ::core::ffi::c_int));
     /// some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.
-    pub const CONTEXT_FLAGS: Self = Self(19);
+    pub const CONTEXT_FLAGS: Self = Self((19 as ::core::ffi::c_int));
     /// type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.
-    pub const CONTEXT_PROFILE_MASK: Self = Self(20);
+    pub const CONTEXT_PROFILE_MASK: Self = Self((20 as ::core::ffi::c_int));
     /// OpenGL context sharing; defaults to 0.
-    pub const SHARE_WITH_CURRENT_CONTEXT: Self = Self(21);
+    pub const SHARE_WITH_CURRENT_CONTEXT: Self = Self((21 as ::core::ffi::c_int));
     /// requests sRGB capable visual; defaults to 0.
-    pub const FRAMEBUFFER_SRGB_CAPABLE: Self = Self(22);
+    pub const FRAMEBUFFER_SRGB_CAPABLE: Self = Self((22 as ::core::ffi::c_int));
     /// sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.
-    pub const CONTEXT_RELEASE_BEHAVIOR: Self = Self(23);
+    pub const CONTEXT_RELEASE_BEHAVIOR: Self = Self((23 as ::core::ffi::c_int));
     /// set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.
-    pub const CONTEXT_RESET_NOTIFICATION: Self = Self(24);
-    pub const CONTEXT_NO_ERROR: Self = Self(25);
-    pub const FLOATBUFFERS: Self = Self(26);
-    pub const EGL_PLATFORM: Self = Self(27);
+    pub const CONTEXT_RESET_NOTIFICATION: Self = Self((24 as ::core::ffi::c_int));
+    pub const CONTEXT_NO_ERROR: Self = Self((25 as ::core::ffi::c_int));
+    pub const FLOATBUFFERS: Self = Self((26 as ::core::ffi::c_int));
+    pub const EGL_PLATFORM: Self = Self((27 as ::core::ffi::c_int));
 }
 
-/// the minimum number of bits for the red channel of the color buffer; defaults to 3.
+/// the minimum number of bits for the red channel of the color buffer; defaults to 8.
 pub const SDL_GL_RED_SIZE: SDL_GLAttr = SDL_GLAttr::RED_SIZE;
-/// the minimum number of bits for the green channel of the color buffer; defaults to 3.
+/// the minimum number of bits for the green channel of the color buffer; defaults to 8.
 pub const SDL_GL_GREEN_SIZE: SDL_GLAttr = SDL_GLAttr::GREEN_SIZE;
-/// the minimum number of bits for the blue channel of the color buffer; defaults to 2.
+/// the minimum number of bits for the blue channel of the color buffer; defaults to 8.
 pub const SDL_GL_BLUE_SIZE: SDL_GLAttr = SDL_GLAttr::BLUE_SIZE;
-/// the minimum number of bits for the alpha channel of the color buffer; defaults to 0.
+/// the minimum number of bits for the alpha channel of the color buffer; defaults to 8.
 pub const SDL_GL_ALPHA_SIZE: SDL_GLAttr = SDL_GLAttr::ALPHA_SIZE;
 /// the minimum number of bits for frame buffer size; defaults to 0.
 pub const SDL_GL_BUFFER_SIZE: SDL_GLAttr = SDL_GLAttr::BUFFER_SIZE;
@@ -794,100 +1282,648 @@ pub const SDL_GL_CONTEXT_NO_ERROR: SDL_GLAttr = SDL_GLAttr::CONTEXT_NO_ERROR;
 pub const SDL_GL_FLOATBUFFERS: SDL_GLAttr = SDL_GLAttr::FLOATBUFFERS;
 pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLAttr {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_GLAttr;
+}
+
 /// Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_PROFILE_CORE`] | OpenGL Core Profile context |
-/// | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | OpenGL Compatibility Profile context |
-/// | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
-pub type SDL_GLProfile = Sint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`CORE`](SDL_GLProfile::CORE) | [`SDL_GL_CONTEXT_PROFILE_CORE`] | OpenGL Core Profile context |
+/// | [`COMPATIBILITY`](SDL_GLProfile::COMPATIBILITY) | [`SDL_GL_CONTEXT_PROFILE_COMPATIBILITY`] | OpenGL Compatibility Profile context |
+/// | [`ES`](SDL_GLProfile::ES) | [`SDL_GL_CONTEXT_PROFILE_ES`] | GLX_CONTEXT_ES2_PROFILE_BIT_EXT |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLProfile(pub Sint32);
+
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLProfile {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GLProfile> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLProfile) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GLProfile> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLProfile) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLProfile {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLProfile(")?;
+        let all_bits = all_bits | Self::CORE.0;
+        if (Self::CORE != 0 || self.0 == 0) && *self & Self::CORE == Self::CORE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CORE")?;
+        }
+        let all_bits = all_bits | Self::COMPATIBILITY.0;
+        if (Self::COMPATIBILITY != 0 || self.0 == 0)
+            && *self & Self::COMPATIBILITY == Self::COMPATIBILITY
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPATIBILITY")?;
+        }
+        let all_bits = all_bits | Self::ES.0;
+        if (Self::ES != 0 || self.0 == 0) && *self & Self::ES == Self::ES {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ES")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLProfile {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLProfile {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLProfile {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLProfile {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GLProfile {
+    /// OpenGL Core Profile context
+    pub const CORE: Self = Self((0x0001 as Sint32));
+    /// OpenGL Compatibility Profile context
+    pub const COMPATIBILITY: Self = Self((0x0002 as Sint32));
+    /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
+    pub const ES: Self = Self((0x0004 as Sint32));
+}
 
 /// OpenGL Core Profile context
-pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = (0x0001 as SDL_GLProfile);
-
+pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = SDL_GLProfile::CORE;
 /// OpenGL Compatibility Profile context
-pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = (0x0002 as SDL_GLProfile);
-
+pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = SDL_GLProfile::COMPATIBILITY;
 /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
-pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = (0x0004 as SDL_GLProfile);
+pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = SDL_GLProfile::ES;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLProfile {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_GLProfile;
+}
 
 /// Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_DEBUG_FLAG`] | |
-/// | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
-/// | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
-/// | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
-pub type SDL_GLContextFlag = Sint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`DEBUG_FLAG`](SDL_GLContextFlag::DEBUG_FLAG) | [`SDL_GL_CONTEXT_DEBUG_FLAG`] | |
+/// | [`FORWARD_COMPATIBLE_FLAG`](SDL_GLContextFlag::FORWARD_COMPATIBLE_FLAG) | [`SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG`] | |
+/// | [`ROBUST_ACCESS_FLAG`](SDL_GLContextFlag::ROBUST_ACCESS_FLAG) | [`SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG`] | |
+/// | [`RESET_ISOLATION_FLAG`](SDL_GLContextFlag::RESET_ISOLATION_FLAG) | [`SDL_GL_CONTEXT_RESET_ISOLATION_FLAG`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLContextFlag(pub Sint32);
 
-pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLContextFlag = (0x0001 as SDL_GLContextFlag);
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextFlag {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
 
-pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLContextFlag = (0x0002 as SDL_GLContextFlag);
+impl ::core::cmp::PartialEq<SDL_GLContextFlag> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLContextFlag) -> bool {
+        self == &other.0
+    }
+}
 
-pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLContextFlag = (0x0004 as SDL_GLContextFlag);
+impl From<SDL_GLContextFlag> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLContextFlag) -> Self {
+        value.0
+    }
+}
 
-pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag = (0x0008 as SDL_GLContextFlag);
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLContextFlag {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLContextFlag(")?;
+        let all_bits = all_bits | Self::DEBUG_FLAG.0;
+        if (Self::DEBUG_FLAG != 0 || self.0 == 0) && *self & Self::DEBUG_FLAG == Self::DEBUG_FLAG {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DEBUG_FLAG")?;
+        }
+        let all_bits = all_bits | Self::FORWARD_COMPATIBLE_FLAG.0;
+        if (Self::FORWARD_COMPATIBLE_FLAG != 0 || self.0 == 0)
+            && *self & Self::FORWARD_COMPATIBLE_FLAG == Self::FORWARD_COMPATIBLE_FLAG
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FORWARD_COMPATIBLE_FLAG")?;
+        }
+        let all_bits = all_bits | Self::ROBUST_ACCESS_FLAG.0;
+        if (Self::ROBUST_ACCESS_FLAG != 0 || self.0 == 0)
+            && *self & Self::ROBUST_ACCESS_FLAG == Self::ROBUST_ACCESS_FLAG
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ROBUST_ACCESS_FLAG")?;
+        }
+        let all_bits = all_bits | Self::RESET_ISOLATION_FLAG.0;
+        if (Self::RESET_ISOLATION_FLAG != 0 || self.0 == 0)
+            && *self & Self::RESET_ISOLATION_FLAG == Self::RESET_ISOLATION_FLAG
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RESET_ISOLATION_FLAG")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLContextFlag {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLContextFlag {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLContextFlag {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLContextFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GLContextFlag {
+    pub const DEBUG_FLAG: Self = Self((0x0001 as Sint32));
+    pub const FORWARD_COMPATIBLE_FLAG: Self = Self((0x0002 as Sint32));
+    pub const ROBUST_ACCESS_FLAG: Self = Self((0x0004 as Sint32));
+    pub const RESET_ISOLATION_FLAG: Self = Self((0x0008 as Sint32));
+}
+
+pub const SDL_GL_CONTEXT_DEBUG_FLAG: SDL_GLContextFlag = SDL_GLContextFlag::DEBUG_FLAG;
+pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG: SDL_GLContextFlag =
+    SDL_GLContextFlag::FORWARD_COMPATIBLE_FLAG;
+pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLContextFlag =
+    SDL_GLContextFlag::ROBUST_ACCESS_FLAG;
+pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag =
+    SDL_GLContextFlag::RESET_ISOLATION_FLAG;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextFlag {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_GLContextFlag;
+}
 
 /// Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]
 /// attribute.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
-/// | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
-pub type SDL_GLContextReleaseFlag = Sint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NONE`](SDL_GLContextReleaseFlag::NONE) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE`] | |
+/// | [`FLUSH`](SDL_GLContextReleaseFlag::FLUSH) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLContextReleaseFlag(pub Sint32);
+
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GLContextReleaseFlag> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLContextReleaseFlag) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GLContextReleaseFlag> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLContextReleaseFlag) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLContextReleaseFlag {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLContextReleaseFlag(")?;
+        let all_bits = all_bits | Self::NONE.0;
+        if (Self::NONE != 0 || self.0 == 0) && *self & Self::NONE == Self::NONE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NONE")?;
+        }
+        let all_bits = all_bits | Self::FLUSH.0;
+        if (Self::FLUSH != 0 || self.0 == 0) && *self & Self::FLUSH == Self::FLUSH {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FLUSH")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLContextReleaseFlag {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLContextReleaseFlag {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GLContextReleaseFlag {
+    pub const NONE: Self = Self((0x0000 as Sint32));
+    pub const FLUSH: Self = Self((0x0001 as Sint32));
+}
 
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLContextReleaseFlag =
-    (0x0000 as SDL_GLContextReleaseFlag);
-
+    SDL_GLContextReleaseFlag::NONE;
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
-    (0x0001 as SDL_GLContextReleaseFlag);
+    SDL_GLContextReleaseFlag::FLUSH;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextReleaseFlag {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_GLContextReleaseFlag;
+}
 
 /// Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
-/// | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
-pub type SDL_GLContextResetNotification = Sint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NO_NOTIFICATION`](SDL_GLContextResetNotification::NO_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NO_NOTIFICATION`] | |
+/// | [`LOSE_CONTEXT`](SDL_GLContextResetNotification::LOSE_CONTEXT) | [`SDL_GL_CONTEXT_RESET_LOSE_CONTEXT`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GLContextResetNotification(pub Sint32);
+
+impl ::core::cmp::PartialEq<Sint32> for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn eq(&self, other: &Sint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GLContextResetNotification> for Sint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GLContextResetNotification) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GLContextResetNotification> for Sint32 {
+    #[inline(always)]
+    fn from(value: SDL_GLContextResetNotification) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GLContextResetNotification {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GLContextResetNotification(")?;
+        let all_bits = all_bits | Self::NO_NOTIFICATION.0;
+        if (Self::NO_NOTIFICATION != 0 || self.0 == 0)
+            && *self & Self::NO_NOTIFICATION == Self::NO_NOTIFICATION
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NO_NOTIFICATION")?;
+        }
+        let all_bits = all_bits | Self::LOSE_CONTEXT.0;
+        if (Self::LOSE_CONTEXT != 0 || self.0 == 0)
+            && *self & Self::LOSE_CONTEXT == Self::LOSE_CONTEXT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LOSE_CONTEXT")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GLContextResetNotification {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GLContextResetNotification {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GLContextResetNotification {
+    pub const NO_NOTIFICATION: Self = Self((0x0000 as Sint32));
+    pub const LOSE_CONTEXT: Self = Self((0x0001 as Sint32));
+}
 
 pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
-    (0x0000 as SDL_GLContextResetNotification);
-
+    SDL_GLContextResetNotification::NO_NOTIFICATION;
 pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
-    (0x0001 as SDL_GLContextResetNotification);
+    SDL_GLContextResetNotification::LOSE_CONTEXT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextResetNotification {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_GLContextResetNotification;
+}
 
 extern "C" {
     /// Get the number of video drivers compiled into SDL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of built in video drivers.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetVideoDriver`]
     pub fn SDL_GetNumVideoDrivers() -> ::core::ffi::c_int;
 }
@@ -902,19 +1938,19 @@ extern "C" {
     /// "x11" or "windows". These never have Unicode characters, and are not meant
     /// to be proper names.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `index`: the index of a video driver.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of the video driver with the given **index**.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetNumVideoDrivers`]
     pub fn SDL_GetVideoDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
@@ -926,17 +1962,17 @@ extern "C" {
     /// "x11" or "windows". These never have Unicode characters, and are not meant
     /// to be proper names.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of the current video driver or NULL if no driver has been
     ///   initialized.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetNumVideoDrivers`]
     /// - [`SDL_GetVideoDriver`]
     pub fn SDL_GetCurrentVideoDriver() -> *const ::core::ffi::c_char;
@@ -945,13 +1981,13 @@ extern "C" {
 extern "C" {
     /// Get the current system theme.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current system theme, light, dark, or unknown.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSystemTheme() -> SDL_SystemTheme;
 }
@@ -959,19 +1995,19 @@ extern "C" {
 extern "C" {
     /// Get a list of currently connected displays.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `count`: a pointer filled in with the number of displays returned, may
     ///   be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a 0 terminated array of display instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDisplays(count: *mut ::core::ffi::c_int) -> *mut SDL_DisplayID;
 }
@@ -979,17 +2015,17 @@ extern "C" {
 extern "C" {
     /// Return the primary display.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the instance ID of the primary display on success or 0 on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetPrimaryDisplay() -> SDL_DisplayID;
 }
@@ -1012,17 +2048,17 @@ extern "C" {
     ///   responsible for any coordinate transformations needed to conform to the
     ///   requested display orientation.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDisplayProperties(displayID: SDL_DisplayID) -> SDL_PropertiesID;
 }
@@ -1036,20 +2072,20 @@ pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: *const ::core::ffi::
 extern "C" {
     /// Get the name of a display in UTF-8 encoding.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of a display or NULL on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayName(displayID: SDL_DisplayID) -> *const ::core::ffi::c_char;
 }
@@ -1060,21 +2096,21 @@ extern "C" {
     /// The primary display is often located at (0,0), but may be placed at a
     /// different location depending on monitor layout.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `rect`: the [`SDL_Rect`] structure filled in with the display bounds.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplayUsableBounds`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayBounds(
@@ -1095,21 +2131,21 @@ extern "C" {
     /// so these are good guidelines for the maximum space available to a
     /// non-fullscreen window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `rect`: the [`SDL_Rect`] structure filled in with the display bounds.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplayBounds`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayUsableBounds(
@@ -1121,20 +2157,20 @@ extern "C" {
 extern "C" {
     /// Get the orientation of a display when it is unrotated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
     ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetNaturalDisplayOrientation(displayID: SDL_DisplayID) -> SDL_DisplayOrientation;
 }
@@ -1142,20 +2178,20 @@ extern "C" {
 extern "C" {
     /// Get the orientation of a display.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_DisplayOrientation`] enum value of the display, or
     ///   [`SDL_ORIENTATION_UNKNOWN`] if it isn't available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetCurrentDisplayOrientation(displayID: SDL_DisplayID) -> SDL_DisplayOrientation;
 }
@@ -1174,20 +2210,20 @@ extern "C" {
     /// scale factor may differ from the base value of the display it is on,
     /// particularly on high-DPI and/or multi-monitor desktop configurations.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the content scale of the display, or 0.0f on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowDisplayScale`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayContentScale(displayID: SDL_DisplayID) -> ::core::ffi::c_float;
@@ -1205,24 +2241,24 @@ extern "C" {
     /// - refresh rate -> highest to lowest
     /// - pixel density -> lowest to highest
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `count`: a pointer filled in with the number of display modes returned,
     ///   may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL terminated array of display mode pointers or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This is a
     ///   single allocation that should be freed with [`SDL_free()`] when it is
     ///   no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetFullscreenDisplayModes(
         displayID: SDL_DisplayID,
@@ -1240,7 +2276,7 @@ extern "C" {
     /// and finally checking the refresh rate. If all the available modes are too
     /// small, then false is returned.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     /// - `w`: the width in pixels of the desired display mode.
     /// - `h`: the height in pixels of the desired display mode.
@@ -1251,17 +2287,17 @@ extern "C" {
     /// - `closest`: a pointer filled in with the closest display mode equal to
     ///   or larger than the desired mode.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplays`]
     /// - [`SDL_GetFullscreenDisplayModes`]
     pub fn SDL_GetClosestFullscreenDisplayMode(
@@ -1282,20 +2318,20 @@ extern "C" {
     /// function will return the previous native display mode, and not the current
     /// display mode.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the desktop display mode or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetCurrentDisplayMode`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDesktopDisplayMode(displayID: SDL_DisplayID) -> *const SDL_DisplayMode;
@@ -1309,20 +2345,20 @@ extern "C" {
     /// function will return the current display mode, and not the previous native
     /// display mode.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the desktop display mode or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDesktopDisplayMode`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetCurrentDisplayMode(displayID: SDL_DisplayID) -> *const SDL_DisplayMode;
@@ -1331,20 +2367,20 @@ extern "C" {
 extern "C" {
     /// Get the display containing a point.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `point`: the point to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the instance ID of the display containing the point or 0 on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplayBounds`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayForPoint(point: *const SDL_Point) -> SDL_DisplayID;
@@ -1353,21 +2389,21 @@ extern "C" {
 extern "C" {
     /// Get the display primarily containing a rect.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `rect`: the rect to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the instance ID of the display entirely containing the rect or
     ///   closest to the center of the rect on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplayBounds`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayForRect(rect: *const SDL_Rect) -> SDL_DisplayID;
@@ -1376,21 +2412,21 @@ extern "C" {
 extern "C" {
     /// Get the display associated with a window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the instance ID of the display containing the center of the window
     ///   on success or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDisplayBounds`]
     /// - [`SDL_GetDisplays`]
     pub fn SDL_GetDisplayForWindow(window: *mut SDL_Window) -> SDL_DisplayID;
@@ -1403,20 +2439,20 @@ extern "C" {
     /// 1920x1080 and it has a high density back buffer of 3840x2160 pixels, it
     /// would have a pixel density of 2.0.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the pixel density or 0.0f on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowDisplayScale`]
     pub fn SDL_GetWindowPixelDensity(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
@@ -1435,17 +2471,17 @@ extern "C" {
     /// updated when that setting is changed, or the window moves to a display with
     /// a different scale setting.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the display scale, or 0.0f on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowDisplayScale(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
@@ -1467,24 +2503,24 @@ extern "C" {
     /// [`SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED`] event will be emitted with the new mode
     /// dimensions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to affect.
     /// - `mode`: a pointer to the display mode to use, which can be NULL for
     ///   borderless fullscreen desktop mode, or one of the fullscreen
     ///   modes returned by [`SDL_GetFullscreenDisplayModes()`] to set an
     ///   exclusive fullscreen mode.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowFullscreenMode`]
     /// - [`SDL_SetWindowFullscreen`]
     /// - [`SDL_SyncWindow`]
@@ -1497,20 +2533,20 @@ extern "C" {
 extern "C" {
     /// Query the display mode to use when a window is visible at fullscreen.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the exclusive fullscreen mode to use or NULL for
     ///   borderless fullscreen desktop mode.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowFullscreenMode`]
     /// - [`SDL_SetWindowFullscreen`]
     pub fn SDL_GetWindowFullscreenMode(window: *mut SDL_Window) -> *const SDL_DisplayMode;
@@ -1519,19 +2555,19 @@ extern "C" {
 extern "C" {
     /// Get the raw ICC profile data for the screen the window is currently on.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     /// - `size`: the size of the ICC profile.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the raw ICC profile data on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. This should be freed with
     ///   [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowICCProfile(
         window: *mut SDL_Window,
@@ -1542,18 +2578,18 @@ extern "C" {
 extern "C" {
     /// Get the pixel format associated with the window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the pixel format of the window on success or
     ///   [`SDL_PIXELFORMAT_UNKNOWN`] on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> SDL_PixelFormat;
 }
@@ -1561,26 +2597,30 @@ extern "C" {
 extern "C" {
     /// Get a list of valid windows.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `count`: a pointer filled in with the number of windows returned, may
     ///   be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL terminated array of [`SDL_Window`] pointers or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This is a single
     ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindows(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Window;
 }
 
 extern "C" {
     /// Create a window with the specified dimensions and flags.
+    ///
+    /// The window size is a request and may be different than expected based on
+    /// the desktop layout and window manager policies. Your application should be
+    /// prepared to handle a window of any size.
     ///
     /// `flags` may be any of the following OR'd together:
     ///
@@ -1647,23 +2687,23 @@ extern "C" {
     /// loader or link to a dynamic library version. This limitation may be removed
     /// in a future version of SDL.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `title`: the title of the window, in UTF-8 encoding.
     /// - `w`: the width of the window.
     /// - `h`: the height of the window.
     /// - `flags`: 0, or one or more [`SDL_WindowFlags`] OR'd together.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateWindowAndRenderer`]
     /// - [`SDL_CreatePopupWindow`]
     /// - [`SDL_CreateWindowWithProperties`]
@@ -1678,6 +2718,10 @@ extern "C" {
 
 extern "C" {
     /// Create a child popup window of the specified parent window.
+    ///
+    /// The window size is a request and may be different than expected based on
+    /// the desktop layout and window manager policies. Your application should be
+    /// prepared to handle a window of any size.
     ///
     /// The flags parameter **must** contain at least one of the following:
     ///
@@ -1715,7 +2759,7 @@ extern "C" {
     /// recursively hidden or destroyed as well. Child popup windows not explicitly
     /// hidden will be restored when the parent is shown.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `parent`: the parent of the window, must not be NULL.
     /// - `offset_x`: the x position of the popup window relative to the origin
     ///   of the parent.
@@ -1726,17 +2770,17 @@ extern "C" {
     /// - `flags`: [`SDL_WINDOW_TOOLTIP`] or [`SDL_WINDOW_POPUP_MENU`], and zero or more
     ///   additional [`SDL_WindowFlags`] OR'd together.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateWindow`]
     /// - [`SDL_CreateWindowWithProperties`]
     /// - [`SDL_DestroyWindow`]
@@ -1753,6 +2797,10 @@ extern "C" {
 
 extern "C" {
     /// Create a window with the specified properties.
+    ///
+    /// The window size is a request and may be different than expected based on
+    /// the desktop layout and window manager policies. Your application should be
+    /// prepared to handle a window of any size.
     ///
     /// These are the supported properties:
     ///
@@ -1858,20 +2906,20 @@ extern "C" {
     /// set to true, then create the renderer, then show the window with
     /// [`SDL_ShowWindow()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the window that was created or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProperties`]
     /// - [`SDL_CreateWindow`]
     /// - [`SDL_DestroyWindow`]
@@ -1986,20 +3034,20 @@ extern "C" {
     /// The numeric ID is what [`SDL_WindowEvent`] references, and is necessary to map
     /// these events to specific [`SDL_Window`] objects.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the ID of the window on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowFromID`]
     pub fn SDL_GetWindowID(window: *mut SDL_Window) -> SDL_WindowID;
 }
@@ -2010,20 +3058,20 @@ extern "C" {
     /// The numeric ID is what [`SDL_WindowEvent`] references, and is necessary to map
     /// these events to specific [`SDL_Window`] objects.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `id`: the ID of the window.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the window associated with `id` or NULL if it doesn't exist; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowID`]
     pub fn SDL_GetWindowFromID(id: SDL_WindowID) -> *mut SDL_Window;
 }
@@ -2031,20 +3079,20 @@ extern "C" {
 extern "C" {
     /// Get parent of a window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the parent of the window on success or NULL if the window has no
     ///   parent.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreatePopupWindow`]
     pub fn SDL_GetWindowParent(window: *mut SDL_Window) -> *mut SDL_Window;
 }
@@ -2161,17 +3209,17 @@ extern "C" {
     /// - [`SDL_PROP_WINDOW_X11_WINDOW_NUMBER`]\: the X11 Window associated with the
     ///   window
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowProperties(window: *mut SDL_Window) -> SDL_PropertiesID;
 }
@@ -2283,19 +3331,19 @@ pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
 extern "C" {
     /// Get the window flags.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a mask of the [`SDL_WindowFlags`] associated with `window`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateWindow`]
     /// - [`SDL_HideWindow`]
     /// - [`SDL_MaximizeWindow`]
@@ -2311,21 +3359,21 @@ extern "C" {
     ///
     /// This string is expected to be in UTF-8 encoding.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     /// - `title`: the desired window title in UTF-8 format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowTitle`]
     pub fn SDL_SetWindowTitle(
         window: *mut SDL_Window,
@@ -2336,20 +3384,20 @@ extern "C" {
 extern "C" {
     /// Get the title of a window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the title of the window in UTF-8 format or "" if there is no
     ///   title.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowTitle`]
     pub fn SDL_GetWindowTitle(window: *mut SDL_Window) -> *const ::core::ffi::c_char;
 }
@@ -2367,18 +3415,18 @@ extern "C" {
     /// appropriate size and be used instead, if available. Otherwise, the closest
     /// smaller image will be upscaled and be used instead.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     /// - `icon`: an [`SDL_Surface`] structure containing the icon for the window.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowIcon(
         window: *mut SDL_Window,
@@ -2410,24 +3458,24 @@ extern "C" {
     /// Additionally, as this is just a request, it can be denied by the windowing
     /// system.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to reposition.
     /// - `x`: the x coordinate of the window, or [`SDL_WINDOWPOS_CENTERED`] or
     ///   [`SDL_WINDOWPOS_UNDEFINED`].
     /// - `y`: the y coordinate of the window, or [`SDL_WINDOWPOS_CENTERED`] or
     ///   [`SDL_WINDOWPOS_UNDEFINED`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowPosition`]
     /// - [`SDL_SyncWindow`]
     pub fn SDL_SetWindowPosition(
@@ -2446,24 +3494,24 @@ extern "C" {
     /// If you do not need the value for one of the positions a NULL may be passed
     /// in the `x` or `y` parameter.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     /// - `x`: a pointer filled in with the x position of the window, may be
     ///   NULL.
     /// - `y`: a pointer filled in with the y position of the window, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowPosition`]
     pub fn SDL_GetWindowPosition(
         window: *mut SDL_Window,
@@ -2493,22 +3541,22 @@ extern "C" {
     /// content area to remain within the usable desktop bounds). Additionally, as
     /// this is just a request, it can be denied by the windowing system.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     /// - `w`: the width of the window, must be > 0.
     /// - `h`: the height of the window, must be > 0.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowSize`]
     /// - [`SDL_SetWindowFullscreenMode`]
     /// - [`SDL_SyncWindow`]
@@ -2526,22 +3574,22 @@ extern "C" {
     /// window is on a high pixel density display. Use [`SDL_GetWindowSizeInPixels()`]
     /// or [`SDL_GetRenderOutputSize()`] to get the real client area size in pixels.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query the width and height from.
     /// - `w`: a pointer filled in with the width of the window, may be NULL.
     /// - `h`: a pointer filled in with the height of the window, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetRenderOutputSize`]
     /// - [`SDL_GetWindowSizeInPixels`]
     /// - [`SDL_SetWindowSize`]
@@ -2562,19 +3610,19 @@ extern "C" {
     /// into the rest of the window, but it should not contain visually important
     /// or interactible content.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     /// - `rect`: a pointer filled in with the client area that is safe for
     ///   interactive content.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetWindowSafeArea(
         window: *mut SDL_Window,
@@ -2606,24 +3654,24 @@ extern "C" {
     /// Additionally, as this is just a request, it can be denied by the windowing
     /// system.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     /// - `min_aspect`: the minimum aspect ratio of the window, or 0.0f for no
     ///   limit.
     /// - `max_aspect`: the maximum aspect ratio of the window, or 0.0f for no
     ///   limit.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowAspectRatio`]
     /// - [`SDL_SyncWindow`]
     pub fn SDL_SetWindowAspectRatio(
@@ -2636,24 +3684,24 @@ extern "C" {
 extern "C" {
     /// Get the size of a window's client area.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query the width and height from.
     /// - `min_aspect`: a pointer filled in with the minimum aspect ratio of the
     ///   window, may be NULL.
     /// - `max_aspect`: a pointer filled in with the maximum aspect ratio of the
     ///   window, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowAspectRatio`]
     pub fn SDL_GetWindowAspectRatio(
         window: *mut SDL_Window,
@@ -2678,7 +3726,7 @@ extern "C" {
     /// This function also returns false if getting the information is not
     /// supported.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query the size values of the border
     ///   (decorations) from.
     /// - `top`: pointer to variable for storing the size of the top border; NULL
@@ -2690,17 +3738,17 @@ extern "C" {
     /// - `right`: pointer to variable for storing the size of the right border;
     ///   NULL is permitted.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowSize`]
     pub fn SDL_GetWindowBordersSize(
         window: *mut SDL_Window,
@@ -2714,24 +3762,24 @@ extern "C" {
 extern "C" {
     /// Get the size of a window's client area, in pixels.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window from which the drawable size should be queried.
     /// - `w`: a pointer to variable for storing the width in pixels, may be
     ///   NULL.
     /// - `h`: a pointer to variable for storing the height in pixels, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateWindow`]
     /// - [`SDL_GetWindowSize`]
     pub fn SDL_GetWindowSizeInPixels(
@@ -2744,22 +3792,22 @@ extern "C" {
 extern "C" {
     /// Set the minimum size of a window's client area.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     /// - `min_w`: the minimum width of the window, or 0 for no limit.
     /// - `min_h`: the minimum height of the window, or 0 for no limit.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowMinimumSize`]
     /// - [`SDL_SetWindowMaximumSize`]
     pub fn SDL_SetWindowMinimumSize(
@@ -2772,24 +3820,24 @@ extern "C" {
 extern "C" {
     /// Get the minimum size of a window's client area.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     /// - `w`: a pointer filled in with the minimum width of the window, may be
     ///   NULL.
     /// - `h`: a pointer filled in with the minimum height of the window, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowMaximumSize`]
     /// - [`SDL_SetWindowMinimumSize`]
     pub fn SDL_GetWindowMinimumSize(
@@ -2802,22 +3850,22 @@ extern "C" {
 extern "C" {
     /// Set the maximum size of a window's client area.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     /// - `max_w`: the maximum width of the window, or 0 for no limit.
     /// - `max_h`: the maximum height of the window, or 0 for no limit.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowMaximumSize`]
     /// - [`SDL_SetWindowMinimumSize`]
     pub fn SDL_SetWindowMaximumSize(
@@ -2830,24 +3878,24 @@ extern "C" {
 extern "C" {
     /// Get the maximum size of a window's client area.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     /// - `w`: a pointer filled in with the maximum width of the window, may be
     ///   NULL.
     /// - `h`: a pointer filled in with the maximum height of the window, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowMinimumSize`]
     /// - [`SDL_SetWindowMaximumSize`]
     pub fn SDL_GetWindowMaximumSize(
@@ -2866,21 +3914,21 @@ extern "C" {
     ///
     /// You can't change the border state of a fullscreen window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window of which to change the border state.
     /// - `bordered`: false to remove border, true to add border.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowFlags`]
     pub fn SDL_SetWindowBordered(
         window: *mut SDL_Window,
@@ -2897,21 +3945,21 @@ extern "C" {
     ///
     /// You can't change the resizable state of a fullscreen window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window of which to change the resizable state.
     /// - `resizable`: true to allow resizing, false to disallow.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowFlags`]
     pub fn SDL_SetWindowResizable(
         window: *mut SDL_Window,
@@ -2925,21 +3973,21 @@ extern "C" {
     /// This will add or remove the window's [`SDL_WINDOW_ALWAYS_ON_TOP`] flag. This
     /// will bring the window to the front and keep the window above the rest.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window of which to change the always on top state.
     /// - `on_top`: true to set the window always on top, false to disable.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowFlags`]
     pub fn SDL_SetWindowAlwaysOnTop(
         window: *mut SDL_Window,
@@ -2950,20 +3998,20 @@ extern "C" {
 extern "C" {
     /// Show a window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to show.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HideWindow`]
     /// - [`SDL_RaiseWindow`]
     pub fn SDL_ShowWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
@@ -2972,20 +4020,20 @@ extern "C" {
 extern "C" {
     /// Hide a window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to hide.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ShowWindow`]
     /// - [`SDL_WINDOW_HIDDEN`]
     pub fn SDL_HideWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
@@ -3001,17 +4049,17 @@ extern "C" {
     /// input focus, an [`SDL_EVENT_WINDOW_FOCUS_GAINED`] event will be emitted, and
     /// the window will have the [`SDL_WINDOW_INPUT_FOCUS`] flag set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to raise.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_RaiseWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
@@ -3036,20 +4084,20 @@ extern "C" {
     /// manager. Win32 and macOS enforce the constraints when maximizing, while X11
     /// and Wayland window managers may vary.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to maximize.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_MinimizeWindow`]
     /// - [`SDL_RestoreWindow`]
     /// - [`SDL_SyncWindow`]
@@ -3071,20 +4119,20 @@ extern "C" {
     /// emitted. Note that, as this is just a request, the windowing system can
     /// deny the state change.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to minimize.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_MaximizeWindow`]
     /// - [`SDL_RestoreWindow`]
     /// - [`SDL_SyncWindow`]
@@ -3107,20 +4155,20 @@ extern "C" {
     /// emitted. Note that, as this is just a request, the windowing system can
     /// deny the state change.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to restore.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_MaximizeWindow`]
     /// - [`SDL_MinimizeWindow`]
     /// - [`SDL_SyncWindow`]
@@ -3143,21 +4191,21 @@ extern "C" {
     /// [`SDL_EVENT_WINDOW_LEAVE_FULLSCREEN`] event will be emitted. Note that, as this
     /// is just a request, it can be denied by the windowing system.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     /// - `fullscreen`: true for fullscreen mode, false for windowed mode.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowFullscreenMode`]
     /// - [`SDL_SetWindowFullscreenMode`]
     /// - [`SDL_SyncWindow`]
@@ -3180,21 +4228,21 @@ extern "C" {
     ///
     /// On windowing systems where changes are immediate, this does nothing.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window for which to wait for the pending state to be
     ///   applied.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false if the operation timed out before the
     ///   window was in the requested state.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowSize`]
     /// - [`SDL_SetWindowPosition`]
     /// - [`SDL_SetWindowFullscreen`]
@@ -3208,20 +4256,20 @@ extern "C" {
 extern "C" {
     /// Return whether the window has a surface associated with it.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if there is a surface associated with the window, or false
     ///   otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowSurface`]
     pub fn SDL_WindowHasSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
@@ -3240,20 +4288,20 @@ extern "C" {
     ///
     /// This function is affected by [`SDL_HINT_FRAMEBUFFER_ACCELERATION`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the surface associated with the window, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DestroyWindowSurface`]
     /// - [`SDL_WindowHasSurface`]
     /// - [`SDL_UpdateWindowSurface`]
@@ -3274,21 +4322,21 @@ extern "C" {
     /// supported by every driver, so you should check the return value to see
     /// whether the requested setting is supported.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window.
     /// - `vsync`: the vertical refresh sync interval.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowSurfaceVSync`]
     pub fn SDL_SetWindowSurfaceVSync(
         window: *mut SDL_Window,
@@ -3303,22 +4351,22 @@ pub const SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
 extern "C" {
     /// Get VSync for the window surface.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     /// - `vsync`: an int filled with the current vertical refresh sync interval.
     ///   See [`SDL_SetWindowSurfaceVSync()`] for the meaning of the value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowSurfaceVSync`]
     pub fn SDL_GetWindowSurfaceVSync(
         window: *mut SDL_Window,
@@ -3334,20 +4382,20 @@ extern "C" {
     ///
     /// This function is equivalent to the SDL 1.2 API SDL_Flip().
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to update.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowSurface`]
     /// - [`SDL_UpdateWindowSurfaceRects`]
     pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
@@ -3366,23 +4414,23 @@ extern "C" {
     /// update more of the screen (or all of the screen!), depending on what method
     /// SDL uses to send pixels to the system.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to update.
     /// - `rects`: an array of [`SDL_Rect`] structures representing areas of the
     ///   surface to copy, in pixels.
     /// - `numrects`: the number of rectangles.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowSurface`]
     /// - [`SDL_UpdateWindowSurface`]
     pub fn SDL_UpdateWindowSurfaceRects(
@@ -3395,20 +4443,20 @@ extern "C" {
 extern "C" {
     /// Destroy the surface associated with the window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to update.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowSurface`]
     /// - [`SDL_WindowHasSurface`]
     pub fn SDL_DestroyWindowSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
@@ -3433,21 +4481,21 @@ extern "C" {
     /// If the caller enables a grab while another window is currently grabbed, the
     /// other window loses its grab in favor of the caller's window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window for which the keyboard grab mode should be set.
     /// - `grabbed`: this is true to grab keyboard, and false to release.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowKeyboardGrab`]
     /// - [`SDL_SetWindowMouseGrab`]
     pub fn SDL_SetWindowKeyboardGrab(
@@ -3461,21 +4509,21 @@ extern "C" {
     ///
     /// Mouse grab confines the mouse cursor to the window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window for which the mouse grab mode should be set.
     /// - `grabbed`: this is true to grab mouse, and false to release.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowMouseRect`]
     /// - [`SDL_SetWindowMouseRect`]
     /// - [`SDL_SetWindowMouseGrab`]
@@ -3489,19 +4537,19 @@ extern "C" {
 extern "C" {
     /// Get a window's keyboard grab mode.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if keyboard is grabbed, and false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowKeyboardGrab`]
     pub fn SDL_GetWindowKeyboardGrab(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
@@ -3509,19 +4557,19 @@ extern "C" {
 extern "C" {
     /// Get a window's mouse grab mode.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if mouse is grabbed, and false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowMouseRect`]
     /// - [`SDL_SetWindowMouseRect`]
     /// - [`SDL_SetWindowMouseGrab`]
@@ -3532,16 +4580,16 @@ extern "C" {
 extern "C" {
     /// Get the window that currently has an input grab enabled.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the window if input is grabbed or NULL otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowMouseGrab`]
     /// - [`SDL_SetWindowKeyboardGrab`]
     pub fn SDL_GetGrabbedWindow() -> *mut SDL_Window;
@@ -3553,22 +4601,22 @@ extern "C" {
     /// Note that this does NOT grab the cursor, it only defines the area a cursor
     /// is restricted to when the window has mouse focus.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window that will be associated with the barrier.
     /// - `rect`: a rectangle area in window-relative coordinates. If NULL the
     ///   barrier for the specified window will be destroyed.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowMouseRect`]
     /// - [`SDL_GetWindowMouseGrab`]
     /// - [`SDL_SetWindowMouseGrab`]
@@ -3581,20 +4629,20 @@ extern "C" {
 extern "C" {
     /// Get the mouse confinement rectangle of a window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the mouse confinement rectangle of a window, or NULL
     ///   if there isn't one.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowMouseRect`]
     /// - [`SDL_GetWindowMouseGrab`]
     /// - [`SDL_SetWindowMouseGrab`]
@@ -3609,21 +4657,21 @@ extern "C" {
     ///
     /// This function also returns false if setting the opacity isn't supported.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window which will be made transparent or opaque.
     /// - `opacity`: the opacity value (0.0f - transparent, 1.0f - opaque).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetWindowOpacity`]
     pub fn SDL_SetWindowOpacity(
         window: *mut SDL_Window,
@@ -3637,20 +4685,20 @@ extern "C" {
     /// If transparency isn't supported on this platform, opacity will be returned
     /// as 1.0f without error.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to get the current opacity value from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the opacity, (0.0f - transparent, 1.0f - opaque), or -1.0f on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowOpacity`]
     pub fn SDL_GetWindowOpacity(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
@@ -3676,21 +4724,21 @@ extern "C" {
     /// Setting a parent window that is currently the sibling or descendent of the
     /// child window results in undefined behavior.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window that should become the child of a parent.
     /// - `parent`: the new parent window for the child window.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowModal`]
     pub fn SDL_SetWindowParent(
         window: *mut SDL_Window,
@@ -3704,21 +4752,21 @@ extern "C" {
     /// To enable modal status on a window, the window must currently be the child
     /// window of a parent, or toggling modal status on will fail.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window on which to set the modal state.
     /// - `modal`: true to toggle modal status on, false to toggle it off.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetWindowParent`]
     /// - [`SDL_WINDOW_MODAL`]
     pub fn SDL_SetWindowModal(
@@ -3730,18 +4778,18 @@ extern "C" {
 extern "C" {
     /// Set whether the window may have input focus.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to set focusable state.
     /// - `focusable`: true to allow input focus, false to not allow input focus.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowFocusable(
         window: *mut SDL_Window,
@@ -3760,21 +4808,21 @@ extern "C" {
     /// On platforms or desktops where this is unsupported, this function does
     /// nothing.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window for which the menu will be displayed.
     /// - `x`: the x coordinate of the menu, relative to the origin (top-left) of
     ///   the client area.
     /// - `y`: the y coordinate of the menu, relative to the origin (top-left) of
     ///   the client area.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ShowWindowSystemMenu(
         window: *mut SDL_Window,
@@ -3785,16 +4833,16 @@ extern "C" {
 
 /// Possible return values from the [`SDL_HitTest`] callback.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// This function should only be called on the main thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_HitTest`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NORMAL`](SDL_HitTestResult::NORMAL) | [`SDL_HITTEST_NORMAL`] | Region is normal. No special properties. |
@@ -3810,6 +4858,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_HitTestResult(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_HitTestResult {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_HitTestResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_HitTestResult) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_HitTestResult> for ::core::ffi::c_int {
     #[inline(always)]
@@ -3841,25 +4903,25 @@ impl ::core::fmt::Debug for SDL_HitTestResult {
 
 impl SDL_HitTestResult {
     /// Region is normal. No special properties.
-    pub const NORMAL: Self = Self(0);
+    pub const NORMAL: Self = Self((0 as ::core::ffi::c_int));
     /// Region can drag entire window.
-    pub const DRAGGABLE: Self = Self(1);
+    pub const DRAGGABLE: Self = Self((1 as ::core::ffi::c_int));
     /// Region is the resizable top-left corner border.
-    pub const RESIZE_TOPLEFT: Self = Self(2);
+    pub const RESIZE_TOPLEFT: Self = Self((2 as ::core::ffi::c_int));
     /// Region is the resizable top border.
-    pub const RESIZE_TOP: Self = Self(3);
+    pub const RESIZE_TOP: Self = Self((3 as ::core::ffi::c_int));
     /// Region is the resizable top-right corner border.
-    pub const RESIZE_TOPRIGHT: Self = Self(4);
+    pub const RESIZE_TOPRIGHT: Self = Self((4 as ::core::ffi::c_int));
     /// Region is the resizable right border.
-    pub const RESIZE_RIGHT: Self = Self(5);
+    pub const RESIZE_RIGHT: Self = Self((5 as ::core::ffi::c_int));
     /// Region is the resizable bottom-right corner border.
-    pub const RESIZE_BOTTOMRIGHT: Self = Self(6);
+    pub const RESIZE_BOTTOMRIGHT: Self = Self((6 as ::core::ffi::c_int));
     /// Region is the resizable bottom border.
-    pub const RESIZE_BOTTOM: Self = Self(7);
+    pub const RESIZE_BOTTOM: Self = Self((7 as ::core::ffi::c_int));
     /// Region is the resizable bottom-left corner border.
-    pub const RESIZE_BOTTOMLEFT: Self = Self(8);
+    pub const RESIZE_BOTTOMLEFT: Self = Self((8 as ::core::ffi::c_int));
     /// Region is the resizable left border.
-    pub const RESIZE_LEFT: Self = Self(9);
+    pub const RESIZE_LEFT: Self = Self((9 as ::core::ffi::c_int));
 }
 
 /// Region is normal. No special properties.
@@ -3883,17 +4945,23 @@ pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult = SDL_HitTestResult::
 /// Region is the resizable left border.
 pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE_LEFT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_HitTestResult {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::video::METADATA_SDL_HitTestResult;
+}
+
 /// Callback used for hit-testing.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `win`: the [`SDL_Window`] where hit-testing was set on.
 /// - `area`: an [`SDL_Point`] which should be hit-tested.
 /// - `data`: what was passed as `callback_data` to [`SDL_SetWindowHitTest()`].
 ///
-/// ### Return value
+/// ## Return value
 /// Returns an [`SDL_HitTestResult`] value.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetWindowHitTest`]
 pub type SDL_HitTest = ::core::option::Option<
     unsafe extern "C" fn(
@@ -3935,19 +5003,19 @@ extern "C" {
     /// can fire at any time, you should try to keep your callback efficient,
     /// devoid of allocations, etc.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to set hit-testing on.
     /// - `callback`: the function to call when doing a hit-test.
     /// - `callback_data`: an app-defined void pointer passed to **callback**.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowHitTest(
         window: *mut SDL_Window,
@@ -3972,19 +5040,19 @@ extern "C" {
     ///
     /// The window must have been created with the [`SDL_WINDOW_TRANSPARENT`] flag.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window.
     /// - `shape`: the surface representing the shape of the window, or NULL to
     ///   remove any current shape.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetWindowShape(
         window: *mut SDL_Window,
@@ -3995,18 +5063,18 @@ extern "C" {
 extern "C" {
     /// Request a window to demand attention from the user.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to be flashed.
     /// - `operation`: the operation to perform.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_FlashWindow(
         window: *mut SDL_Window,
@@ -4024,16 +5092,16 @@ extern "C" {
     /// from the screen until the SDL event loop is pumped again, even though the
     /// [`SDL_Window`] is no longer valid after this call.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to destroy.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreatePopupWindow`]
     /// - [`SDL_CreateWindow`]
     /// - [`SDL_CreateWindowWithProperties`]
@@ -4047,16 +5115,16 @@ extern "C" {
     ///
     /// The default can also be changed using [`SDL_HINT_VIDEO_ALLOW_SCREENSAVER`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the screensaver is enabled, false if it is disabled.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DisableScreenSaver`]
     /// - [`SDL_EnableScreenSaver`]
     pub fn SDL_ScreenSaverEnabled() -> ::core::primitive::bool;
@@ -4065,17 +5133,17 @@ extern "C" {
 extern "C" {
     /// Allow the screen to be blanked by a screen saver.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DisableScreenSaver`]
     /// - [`SDL_ScreenSaverEnabled`]
     pub fn SDL_EnableScreenSaver() -> ::core::primitive::bool;
@@ -4090,17 +5158,17 @@ extern "C" {
     /// The screensaver is disabled by default, but this may by changed by
     /// [`SDL_HINT_VIDEO_ALLOW_SCREENSAVER`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_EnableScreenSaver`]
     /// - [`SDL_ScreenSaverEnabled`]
     pub fn SDL_DisableScreenSaver() -> ::core::primitive::bool;
@@ -4116,21 +5184,21 @@ extern "C" {
     /// If you do this, you need to retrieve all of the GL functions used in your
     /// program from the dynamic library using [`SDL_GL_GetProcAddress()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the platform dependent OpenGL library name, or NULL to open the
     ///   default OpenGL library.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_GetProcAddress`]
     /// - [`SDL_GL_UnloadLibrary`]
     pub fn SDL_GL_LoadLibrary(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
@@ -4177,20 +5245,20 @@ extern "C" {
     ///   code. This will ensure the proper calling convention is followed on
     ///   platforms where this matters (Win32) thereby avoiding stack corruption.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `proc`: the name of an OpenGL function.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the named OpenGL function. The returned pointer
     ///   should be cast to the appropriate function signature.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_ExtensionSupported`]
     /// - [`SDL_GL_LoadLibrary`]
     /// - [`SDL_GL_UnloadLibrary`]
@@ -4204,20 +5272,20 @@ extern "C" {
     /// points for EGL functions. This is useful to provide to an EGL API and
     /// extension loader.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `proc`: the name of an EGL function.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the named EGL function. The returned pointer should
     ///   be cast to the appropriate function signature.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_EGL_GetCurrentDisplay`]
     pub fn SDL_EGL_GetProcAddress(proc: *const ::core::ffi::c_char) -> SDL_FunctionPointer;
 }
@@ -4225,13 +5293,13 @@ extern "C" {
 extern "C" {
     /// Unload the OpenGL library previously loaded by [`SDL_GL_LoadLibrary()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_LoadLibrary`]
     pub fn SDL_GL_UnloadLibrary();
 }
@@ -4250,16 +5318,16 @@ extern "C" {
     /// context and save that information somewhere instead of calling the function
     /// every time you need to know.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `extension`: the name of the extension to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the extension is supported, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GL_ExtensionSupported(
         extension: *const ::core::ffi::c_char,
@@ -4269,13 +5337,13 @@ extern "C" {
 extern "C" {
     /// Reset all previously set OpenGL context attributes to their default values.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_GetAttribute`]
     /// - [`SDL_GL_SetAttribute`]
     pub fn SDL_GL_ResetAttributes();
@@ -4289,22 +5357,22 @@ extern "C" {
     /// [`SDL_GL_GetAttribute()`] to check the values after creating the OpenGL
     /// context, since the values obtained can differ from the requested ones.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `attr`: an [`SDL_GLAttr`] enum value specifying the OpenGL attribute to
     ///   set.
     /// - `value`: the desired value for the attribute.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_GetAttribute`]
     /// - [`SDL_GL_ResetAttributes`]
     pub fn SDL_GL_SetAttribute(
@@ -4316,22 +5384,22 @@ extern "C" {
 extern "C" {
     /// Get the actual value for an attribute from the current context.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `attr`: an [`SDL_GLAttr`] enum value specifying the OpenGL attribute to
     ///   get.
     /// - `value`: a pointer filled in with the current value of `attr`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_ResetAttributes`]
     /// - [`SDL_GL_SetAttribute`]
     pub fn SDL_GL_GetAttribute(
@@ -4351,20 +5419,20 @@ extern "C" {
     ///
     /// [`SDL_GLContext`] is opaque to the application.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to associate with the context.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the OpenGL context associated with `window` or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_DestroyContext`]
     /// - [`SDL_GL_MakeCurrent`]
     pub fn SDL_GL_CreateContext(window: *mut SDL_Window) -> SDL_GLContext;
@@ -4375,21 +5443,21 @@ extern "C" {
     ///
     /// The context must have been created with a compatible window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to associate with the context.
     /// - `context`: the OpenGL context to associate with the window.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_CreateContext`]
     pub fn SDL_GL_MakeCurrent(
         window: *mut SDL_Window,
@@ -4400,14 +5468,14 @@ extern "C" {
 extern "C" {
     /// Get the currently active OpenGL window.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the currently active OpenGL window on success or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
 }
@@ -4415,17 +5483,17 @@ extern "C" {
 extern "C" {
     /// Get the currently active OpenGL context.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the currently active OpenGL context or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_MakeCurrent`]
     pub fn SDL_GL_GetCurrentContext() -> SDL_GLContext;
 }
@@ -4433,14 +5501,14 @@ extern "C" {
 extern "C" {
     /// Get the currently active EGL display.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the currently active EGL display or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_GetCurrentDisplay() -> SDL_EGLDisplay;
 }
@@ -4448,14 +5516,14 @@ extern "C" {
 extern "C" {
     /// Get the currently active EGL config.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the currently active EGL config or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_GetCurrentConfig() -> SDL_EGLConfig;
 }
@@ -4463,17 +5531,17 @@ extern "C" {
 extern "C" {
     /// Get the EGL surface associated with the window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the EGLSurface pointer associated with the window, or NULL on
     ///   failure.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_GetWindowSurface(window: *mut SDL_Window) -> SDL_EGLSurface;
 }
@@ -4486,7 +5554,7 @@ extern "C" {
     ///
     /// NOTE: These callback pointers will be reset after [`SDL_GL_ResetAttributes`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `platformAttribCallback`: callback for attributes to pass to
     ///   eglGetPlatformDisplay. May be NULL.
     /// - `surfaceAttribCallback`: callback for attributes to pass to
@@ -4495,10 +5563,10 @@ extern "C" {
     ///   eglCreateContext. May be NULL.
     /// - `userdata`: a pointer that is passed to the callbacks.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EGL_SetAttributeCallbacks(
         platformAttribCallback: SDL_EGLAttribArrayCallback,
@@ -4526,21 +5594,21 @@ extern "C" {
     /// Read more on the Khronos wiki:
     /// <https://www.khronos.org/opengl/wiki/Swap_Interval#Adaptive_Vsync>
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `interval`: 0 for immediate updates, 1 for updates synchronized with
     ///   the vertical retrace, -1 for adaptive vsync.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_GetSwapInterval`]
     pub fn SDL_GL_SetSwapInterval(interval: ::core::ffi::c_int) -> ::core::primitive::bool;
 }
@@ -4551,23 +5619,23 @@ extern "C" {
     /// If the system can't determine the swap interval, or there isn't a valid
     /// current context, this function will set *interval to 0 as a safe default.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `interval`: output interval value. 0 if there is no vertical retrace
     ///   synchronization, 1 if the buffer swap is synchronized with
     ///   the vertical retrace, and -1 if late swaps happen
     ///   immediately instead of waiting for the next retrace.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_SetSwapInterval`]
     pub fn SDL_GL_GetSwapInterval(interval: *mut ::core::ffi::c_int) -> ::core::primitive::bool;
 }
@@ -4582,17 +5650,17 @@ extern "C" {
     /// glBindFramebuffer(), this is the default and you won't have to do anything
     /// extra.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to change.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
@@ -4600,20 +5668,20 @@ extern "C" {
 extern "C" {
     /// Delete an OpenGL context.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: the OpenGL context to be deleted.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GL_CreateContext`]
     pub fn SDL_GL_DestroyContext(context: SDL_GLContext) -> ::core::primitive::bool;
 }
@@ -4622,10 +5690,10 @@ extern "C" {
 ///
 /// This lives as a field in [`SDL_DisplayMode`], as opaque data.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_DisplayMode`]
 #[repr(C)]
 pub struct SDL_DisplayModeData {
@@ -4639,10 +5707,10 @@ pub struct SDL_GLContextState {
 
 /// The struct used as an opaque handle to a window.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateWindow`]
 #[repr(C)]
 pub struct SDL_Window {

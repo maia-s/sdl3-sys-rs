@@ -668,7 +668,7 @@ impl Emit for Value {
             Value::U64(u) => write!(ctx, "{u}_u64")?,
             Value::Usize(u) => write!(ctx, "{u}_usize")?,
             &Value::F32(f) => {
-                let s = format!("{}", f);
+                let s = format!("{f}");
                 if s.parse() == Ok(f) {
                     let dec = if s.contains('.') { "" } else { ".0" };
                     write!(ctx, "{s}{dec}_f32")?
@@ -677,7 +677,7 @@ impl Emit for Value {
                 }
             }
             &Value::F64(f) => {
-                let s = format!("{}", f);
+                let s = format!("{f}");
                 if s.parse() == Ok(f) {
                     let dec = if s.contains('.') { "" } else { ".0" };
                     write!(ctx, "{s}{dec}_f64")?
@@ -794,7 +794,7 @@ impl Eval for Cast {
         } else if let Some(sym) = self.ty.is_c_enum(ctx)? {
             ctx.capture_output(|ctx| {
                 write!(ctx, "{}(", sym.ident)?;
-                self.expr.emit(ctx)?;
+                self.expr.cast(sym.enum_base_ty.unwrap()).emit(ctx)?;
                 write!(ctx, ")")?;
                 Ok(())
             })
@@ -1773,7 +1773,10 @@ impl Eval for FnCall {
                         }
                         first = false;
                         if let Ok(Some(argval)) = arg.try_eval(ctx) {
-                            if let Some(argval) = argval.coerce(ctx, arg_ty)? {
+                            if let Ok(Some(_)) = arg_ty.is_c_enum(ctx) {
+                                arg.cast(arg_ty.clone()).emit(ctx)?;
+                                continue;
+                            } else if let Some(argval) = argval.coerce(ctx, arg_ty)? {
                                 argval.emit(ctx)?;
                                 continue;
                             }
@@ -1824,7 +1827,7 @@ impl Emit for IntegerLiteral {
         if s.len() < self.ndigits as usize {
             s = format!("{}{s}", "0".repeat(self.ndigits as usize - s.len()));
         }
-        write!(ctx, "{}{}", pfx, s)?;
+        write!(ctx, "{pfx}{s}")?;
         Ok(())
     }
 }
@@ -1848,7 +1851,7 @@ impl Emit for StringLiteral {
                     ctx.write_char('\\')?;
                     ctx.write_char(b as char)?
                 }
-                _ => write!(ctx, "\\x{:02x}", b)?,
+                _ => write!(ctx, "\\x{b:02x}")?,
             }
         }
         write!(ctx, "\".as_ptr()")?;

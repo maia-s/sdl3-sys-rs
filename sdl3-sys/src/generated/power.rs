@@ -17,10 +17,10 @@ use super::error::*;
 ///
 /// These are results returned by [`SDL_GetPowerInfo()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`ERROR`](SDL_PowerState::ERROR) | [`SDL_POWERSTATE_ERROR`] | error determining power status |
@@ -32,6 +32,20 @@ use super::error::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PowerState(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PowerState {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PowerState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PowerState) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_PowerState> for ::core::ffi::c_int {
     #[inline(always)]
@@ -59,17 +73,17 @@ impl ::core::fmt::Debug for SDL_PowerState {
 
 impl SDL_PowerState {
     /// error determining power status
-    pub const ERROR: Self = Self(-1_i32);
+    pub const ERROR: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// cannot determine power status
-    pub const UNKNOWN: Self = Self(0_i32);
+    pub const UNKNOWN: Self = Self((0_i32 as ::core::ffi::c_int));
     /// Not plugged in, running on the battery
-    pub const ON_BATTERY: Self = Self(1_i32);
+    pub const ON_BATTERY: Self = Self((1_i32 as ::core::ffi::c_int));
     /// Plugged in, no battery available
-    pub const NO_BATTERY: Self = Self(2_i32);
+    pub const NO_BATTERY: Self = Self((2_i32 as ::core::ffi::c_int));
     /// Plugged in, charging battery
-    pub const CHARGING: Self = Self(3_i32);
+    pub const CHARGING: Self = Self((3_i32 as ::core::ffi::c_int));
     /// Plugged in, battery charged
-    pub const CHARGED: Self = Self(4_i32);
+    pub const CHARGED: Self = Self((4_i32 as ::core::ffi::c_int));
 }
 
 /// error determining power status
@@ -84,6 +98,12 @@ pub const SDL_POWERSTATE_NO_BATTERY: SDL_PowerState = SDL_PowerState::NO_BATTERY
 pub const SDL_POWERSTATE_CHARGING: SDL_PowerState = SDL_PowerState::CHARGING;
 /// Plugged in, battery charged
 pub const SDL_POWERSTATE_CHARGED: SDL_PowerState = SDL_PowerState::CHARGED;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PowerState {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::power::METADATA_SDL_PowerState;
+}
 
 extern "C" {
     /// Get the current power supply details.
@@ -101,7 +121,11 @@ extern "C" {
     /// It's possible a platform can only report battery percentage or time left
     /// but not both.
     ///
-    /// ### Parameters
+    /// On some platforms, retrieving power supply details might be expensive. If
+    /// you want to display continuous status you could call this function every
+    /// minute or so.
+    ///
+    /// ## Parameters
     /// - `seconds`: a pointer filled in with the seconds of battery life left,
     ///   or NULL to ignore. This will be filled in with -1 if we
     ///   can't determine a value or there is no battery.
@@ -110,11 +134,11 @@ extern "C" {
     ///   filled in with -1 we can't determine a value or there is no
     ///   battery.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current battery state or [`SDL_POWERSTATE_ERROR`] on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPowerInfo(
         seconds: *mut ::core::ffi::c_int,

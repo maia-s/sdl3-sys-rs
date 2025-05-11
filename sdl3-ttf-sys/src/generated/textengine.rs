@@ -4,10 +4,10 @@ use super::ttf::*;
 
 /// A font atlas draw command.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL_ttf 3.0.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NOOP`](TTF_DrawCommand::NOOP) | [`TTF_DRAW_COMMAND_NOOP`] | |
@@ -16,6 +16,20 @@ use super::ttf::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_DrawCommand(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_DrawCommand {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_DrawCommand> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_DrawCommand) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<TTF_DrawCommand> for ::core::ffi::c_int {
     #[inline(always)]
@@ -39,21 +53,27 @@ impl ::core::fmt::Debug for TTF_DrawCommand {
 }
 
 impl TTF_DrawCommand {
-    pub const NOOP: Self = Self(0);
-    pub const FILL: Self = Self(1);
-    pub const COPY: Self = Self(2);
+    pub const NOOP: Self = Self((0 as ::core::ffi::c_int));
+    pub const FILL: Self = Self((1 as ::core::ffi::c_int));
+    pub const COPY: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const TTF_DRAW_COMMAND_NOOP: TTF_DrawCommand = TTF_DrawCommand::NOOP;
 pub const TTF_DRAW_COMMAND_FILL: TTF_DrawCommand = TTF_DrawCommand::FILL;
 pub const TTF_DRAW_COMMAND_COPY: TTF_DrawCommand = TTF_DrawCommand::COPY;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_DrawCommand {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::textengine::METADATA_TTF_DrawCommand;
+}
+
 /// A filled rectangle draw operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_DrawOperation`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -67,10 +87,10 @@ pub struct TTF_FillOperation {
 
 /// A texture copy draw operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_DrawOperation`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -106,7 +126,7 @@ impl ::core::default::Default for TTF_CopyOperation {
 
 /// A text engine draw operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -128,10 +148,10 @@ impl ::core::default::Default for TTF_DrawOperation {
 ///
 /// This structure should be initialized using [`SDL_INIT_INTERFACE()`]
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_INIT_INTERFACE`]
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

@@ -50,7 +50,7 @@ use sdl3_sys::{
     surface::{SDL_DestroySurface, SDL_SaveBMP, SDL_Surface},
     video::{
         SDL_CreateWindow, SDL_DestroyWindow, SDL_GetWindowSurface, SDL_SetWindowSurfaceVSync,
-        SDL_UpdateWindowSurface, SDL_Window,
+        SDL_UpdateWindowSurface, SDL_Window, SDL_WindowFlags,
     },
 };
 use sdl3_ttf_sys::ttf::{
@@ -533,7 +533,8 @@ fn main() -> ExitCode {
     }
 
     // Create a window
-    scene.window = unsafe { SDL_CreateWindow(c"showfont demo".as_ptr(), WIDTH, HEIGHT, 0) };
+    scene.window =
+        unsafe { SDL_CreateWindow(c"showfont demo".as_ptr(), WIDTH, HEIGHT, SDL_WindowFlags(0)) };
     if scene.window.is_null() {
         unsafe { SDL_Log(c"SDL_CreateWindow() failed: %s".as_ptr(), SDL_GetError()) };
         return ExitCode::FAILURE;

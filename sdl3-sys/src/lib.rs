@@ -3,16 +3,9 @@
 #![cfg_attr(feature = "nightly", feature(c_variadic))] // https://github.com/rust-lang/rust/issues/44930
 #![cfg_attr(all(feature = "nightly", doc), feature(doc_auto_cfg))] // https://github.com/rust-lang/rust/issues/43781
 #![cfg_attr(all(feature = "nightly", doc), feature(doc_cfg))] // https://github.com/rust-lang/rust/issues/43781
-#![cfg_attr(
-    all(
-        feature = "nightly",
-        any(target_arch = "arm", target_arch = "aarch64", target_arch = "arm64ec")
-    ),
-    feature(stdarch_arm_hints)
-)] // https://github.com/rust-lang/rust/issues/117218
 #![doc = include_str!("../README.md")]
 
-use core::mem::size_of;
+extern crate self as sdl3_sys;
 
 // This macro is used to apply a cfg attribute to multiple items
 // e.g. `apply_cfg!(#[cfg(feature = "nightly")] => { type VaList = ::core::ffi::VaList; })`
@@ -25,6 +18,7 @@ macro_rules! size_of_field {
     ($struct:ty, $field:ident) => {
         $crate::size_of_return_value(&|s: $struct| unsafe {
             // safety: this is never evaluated
+            #[allow(deprecated)]
             s.$field
         })
     };
@@ -54,6 +48,21 @@ macro_rules! __const_c_str {
         };
     };
 }
+
+#[doc(hidden)]
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct NonExhaustive(());
+
+#[cfg(feature = "debug-impls")]
+impl core::fmt::Debug for NonExhaustive {
+    #[inline(always)]
+    fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+        Ok(())
+    }
+}
+
+const _: () = assert!(size_of::<NonExhaustive>() == 0);
 
 mod generated;
 pub use generated::*;
@@ -86,3 +95,5 @@ pub mod ffi {
     #[cfg(all(not(doc), not(feature = "nightly")))]
     pub enum VaList {}
 }
+
+pub mod metadata;

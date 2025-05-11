@@ -33,19 +33,20 @@ mod parse;
 
 use core::fmt::Write;
 use emit::{Emit, EmitContext, EmitErr, InnerEmitContext};
-use parse::{DefineValue, Ident, Items, Parse, ParseContext, ParseErr, Source, Span};
+use parse::{DefineValue, EnumKind, Ident, Items, Parse, ParseContext, ParseErr, Source, Span};
 use std::{
     cell::RefCell,
     collections::{BTreeMap, HashSet},
     env::{current_dir, set_current_dir},
     error,
     fmt::{self, Debug, Display},
-    fs::{self, read_dir, DirBuilder, File, OpenOptions},
+    fs::{self, create_dir, read_dir, DirBuilder, File, OpenOptions},
     io::{self, BufWriter, Read, Write as _},
     path::{Path, PathBuf},
     process::{Command, Stdio},
     thread,
 };
+use str_block::str_block;
 
 fn skip(module: &str) -> bool {
     [
@@ -68,7 +69,18 @@ fn skip_emit(_module: &str) -> bool {
     false
 }
 
+fn create_dir_r(dir: &Path) -> Result<(), Error> {
+    if !dir.exists() {
+        if let Some(parent) = dir.parent() {
+            create_dir_r(parent)?;
+        }
+        create_dir(dir)?;
+    }
+    Ok(())
+}
+
 fn format_and_write(input: String, path: &Path) -> Result<(), Error> {
+    create_dir_r(path.parent().unwrap())?;
     let mut fmt = Command::new("rustfmt")
         .arg("--edition")
         .arg("2021")
@@ -80,6 +92,36 @@ fn format_and_write(input: String, path: &Path) -> Result<(), Error> {
     let output = String::from_utf8(fmt.wait_with_output()?.stdout).unwrap();
     fs::write(path, output)?;
     Ok(())
+}
+
+#[derive(Default)]
+pub struct Metadata {
+    hints: Vec<HintMetadata>,
+    properties: Vec<PropertyMetadata>,
+    groups: Vec<GroupMetadata>,
+}
+
+pub struct HintMetadata {
+    name: String,
+    doc: String,
+}
+
+pub struct PropertyMetadata {
+    name: String,
+    doc: String,
+}
+
+pub struct GroupMetadata {
+    kind: EnumKind,
+    name: String,
+    doc: String,
+    values: Vec<GroupValueMetadata>,
+}
+
+pub struct GroupValueMetadata {
+    name: String,
+    short_name: String,
+    doc: String,
 }
 
 struct LinesPatch<'a> {
@@ -114,9 +156,13 @@ impl LinesPatch<'_> {
     }
 }
 
+fn read_to_string(path: &Path) -> Result<String, Error> {
+    Ok(fs::read_to_string(path)
+        .map_err(|e| format!("error reading `{}`: {}", path.display(), e))?)
+}
+
 fn patch_file(path: &Path, patches: &[LinesPatch]) -> Result<(), Error> {
-    let mut contents = fs::read_to_string(path)
-        .map_err(|e| format!("error reading `{}`: {}", path.display(), e))?;
+    let mut contents = read_to_string(path)?;
     for patch in patches {
         contents = patch.patch(&contents);
     }
@@ -127,13 +173,37 @@ fn patch_file(path: &Path, patches: &[LinesPatch]) -> Result<(), Error> {
 struct Crate {
     name: String,
     root_path: PathBuf,
+    config: BTreeMap<String, String>,
 }
 
 impl Crate {
     fn new(root: &Path, name: impl ToString) -> Self {
         let name = name.to_string();
         let root_path = root.join(&name);
-        Self { name, root_path }
+        let config_file = root_path.join("config.txt");
+        let mut config = BTreeMap::new();
+        if let Ok(config_src) = fs::read_to_string(&config_file) {
+            for line in config_src.lines() {
+                let (key, value) = line
+                    .split_once(":")
+                    .unwrap_or_else(|| panic!("invalid config line: `{line}`"));
+                let (key, value) = (key.trim(), value.trim());
+                if let Some(prev) = config.insert(key.to_owned(), value.to_owned()) {
+                    panic!("config key `{key}` already set to `{prev}`, new value `{value}`");
+                }
+            }
+        }
+        Self {
+            name,
+            root_path,
+            config,
+        }
+    }
+
+    fn config(&self, key: &str) -> &str {
+        self.config
+            .get(key)
+            .unwrap_or_else(|| panic!("config key {key} not set"))
     }
 
     fn cargo_toml_path(&self) -> PathBuf {
@@ -155,7 +225,6 @@ impl Crate {
 
 struct Library {
     lib_name: String,
-    lib_dir: String,
     src_crate: Crate,
     sys_crate: Crate,
     revision: String,
@@ -163,27 +232,63 @@ struct Library {
 
 impl Library {
     fn new(root: &Path, name: &str) -> Result<Self, Error> {
-        let (pfx, module) = name.split_once('-').unwrap_or((name, ""));
-        let pfx_uc = pfx.to_ascii_uppercase();
-        let pfx_base_uc = pfx.strip_suffix('3').unwrap().to_ascii_uppercase();
         let name = name.to_string();
-        let lib_name = if module.is_empty() {
-            pfx_uc
-        } else {
-            format!("{pfx_uc}_{module}")
-        };
-        let lib_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
-        let lib_dir = if module.is_empty() {
-            pfx_base_uc
-        } else {
-            format!("{pfx_base_uc}_{module}")
-        };
         let src_crate = Crate::new(root, format!("{name}-src"));
         let sys_crate = Crate::new(root, format!("{name}-sys"));
+        let lib_name = sys_crate.config("lib_name");
+        let lib_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
+        let lib_dir = sys_crate.config("lib_dir");
+        let include_dir = sys_crate.config("include_dir");
+        let version_header = src_crate
+            .root_path
+            .join(lib_dir)
+            .join(include_dir)
+            .join(sys_crate.config("version_header"));
+        let define_prefix = sys_crate.config("define_prefix");
+
+        let mut version_major = None;
+        let mut version_minor = None;
+        let mut version_micro = None;
+        for line in read_to_string(&version_header)?.lines() {
+            if let Some(line) = line.trim_ascii_start().strip_prefix("#define") {
+                if let Some(line) = line.trim_ascii_start().strip_prefix(define_prefix) {
+                    if let Some(line) = line.strip_prefix("MAJOR_VERSION") {
+                        version_major = Some(
+                            line.trim_ascii()
+                                .parse::<usize>()
+                                .map_err(|e| format!("couldn't parse major version: {e}"))?,
+                        );
+                    } else if let Some(line) = line.strip_prefix("MINOR_VERSION") {
+                        version_minor = Some(
+                            line.trim_ascii()
+                                .parse::<usize>()
+                                .map_err(|e| format!("couldn't parse minor version: {e}"))?,
+                        );
+                    } else if let Some(line) = line.strip_prefix("MICRO_VERSION") {
+                        version_micro = Some(
+                            line.trim_ascii()
+                                .parse::<usize>()
+                                .map_err(|e| format!("couldn't parse micro version: {e}"))?,
+                        );
+                    }
+                    if version_major.is_some() && version_minor.is_some() && version_micro.is_some()
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        let version = format!(
+            "{}.{}.{}",
+            version_major.unwrap(),
+            version_minor.unwrap(),
+            version_micro.unwrap()
+        );
 
         let git_describe = {
             let cwd = current_dir()?;
-            set_current_dir(src_crate.root_path.join(&lib_dir))?;
+            set_current_dir(src_crate.root_path.join(lib_dir))
+                .map_err(|e| format!("error setting cwd to `{lib_dir}`: {e}"))?;
             let _cwd = Defer::new(|| set_current_dir(cwd).unwrap());
             Command::new("git")
                 .args(["describe", "--tags", "--long"])
@@ -198,43 +303,41 @@ impl Library {
 
         let (rest, revision_hash) = git_describe.rsplit_once('-').unwrap();
         let (revision_tag, revision_offset) = rest.rsplit_once('-').unwrap();
-        let (revision_tag_base, version) = revision_tag.rsplit_once('-').unwrap();
 
-        let (src_ver, src_ver_display, revision, revision_metadata) =
-            match (revision_tag_base, revision_offset) {
-                ("release", "0") => {
-                    let ver = version.to_string();
+        let (revision_tag_base, revision_ver) =
+            if let Some((revision_tag_base, _)) = revision_tag.rsplit_once('-') {
+                match (revision_tag_base, revision_offset) {
+                    ("release", "0") => (revision_tag_base, version.clone()),
+
+                    (_, "0") => (revision_tag_base, format!("{version}-{revision_tag}")),
+
+                    (_, _) => (
+                        revision_tag_base,
+                        format!("{version}-{revision_tag}-{revision_offset}-{revision_hash}"),
+                    ),
+                }
+            } else if revision_tag.starts_with('v')
+                && revision_tag[1..].chars().next().unwrap().is_ascii_digit()
+            {
+                if revision_offset == "0" {
+                    ("", format!("{version}-{revision_tag}"))
+                } else {
                     (
-                        ver.clone(),
-                        ver.clone(),
-                        format!("{lib_name}-{revision_tag}"),
-                        format!("{lib_name_meta}-{ver}"),
+                        "",
+                        format!("{version}-{revision_tag}-{revision_offset}-{revision_hash}"),
                     )
                 }
-
-                (_, "0") => {
-                    let ver = format!("{version}-{revision_tag_base}");
-                    let rev = format!("{lib_name}-{revision_tag}");
-                    let rev_meta = format!("{lib_name_meta}-{revision_tag}");
-                    (format!("{ver}-{revision_offset}"), ver, rev, rev_meta)
-                }
-
-                (_, _) => {
-                    let ver =
-                        format!("{version}-{revision_tag_base}-{revision_offset}-{revision_hash}");
-                    let rev =
-                        format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}");
-                    let rev_meta =
-                        format!("{lib_name_meta}-{revision_tag}-{revision_offset}-{revision_hash}");
-                    (ver.clone(), ver, rev, rev_meta)
-                }
+            } else {
+                todo!()
             };
+        let revision = format!("{lib_name}-{revision_ver}");
+        let revision_meta = revision.replace('_', "-");
 
         patch_file(
             &src_crate.cargo_toml_path(),
             &[LinesPatch {
                 match_lines: &[&|s| s.starts_with("version =")],
-                apply: &|_| format!("version = \"{src_ver}\"\n"),
+                apply: &|_| format!("version = \"{revision_ver}\"\n"),
             }],
         )?;
 
@@ -243,7 +346,7 @@ impl Library {
             &[
                 LinesPatch {
                     match_lines: &[&|s| s.starts_with("pub const REVISION:")],
-                    apply: &|_| format!("pub const REVISION: &str = {revision:?};\n"),
+                    apply: &|_| format!("pub const REVISION: &str = \"{revision}\";\n"),
                 },
                 LinesPatch {
                     match_lines: &[&|s| s.starts_with("pub const VERSION:")],
@@ -284,7 +387,7 @@ impl Library {
                         else {
                             unreachable!()
                         };
-                        format!("{}{}\"\n", &line[..=revision_pos], revision_metadata)
+                        format!("{}{revision_meta}\"\n", &line[..=revision_pos],)
                     },
                 },
                 LinesPatch {
@@ -292,7 +395,7 @@ impl Library {
                         &|s| s == format!("[build-dependencies.{}]", src_crate.name),
                         &|s| s.starts_with("version ="),
                     ],
-                    apply: &|lines| format!("{}version = \"{}\"\n", lines[0], src_ver),
+                    apply: &|lines| format!("{}version = \"{revision_ver}\"\n", lines[0]),
                 },
             ],
         )?;
@@ -300,35 +403,42 @@ impl Library {
         patch_file(
             &sys_crate.readme_path(),
             &[LinesPatch {
-                match_lines: &[&|s| s.contains(&format!("bindings for {} version", lib_dir))],
+                match_lines: &[&|s| s.contains(&format!("bindings for {lib_dir} version"))],
                 apply: &|lines| {
-                    let match_ = &format!("bindings for {} version", lib_dir);
+                    let match_ = &format!("bindings for {lib_dir} version");
                     let line = &lines[0];
                     let pfx = &line[..line.find(match_).unwrap() + match_.len()];
-                    if src_ver_display == "3.2.0" {
-                        format!("{pfx} `{}`.\n", src_ver_display)
+                    if version == "3.2.0" {
+                        format!("{pfx} `{version}`.\n")
                     } else {
-                        format!("{pfx}s `3.2.0` to `{}`, inclusive.\n", src_ver_display)
+                        format!("{pfx}s `3.2.0` to `{revision_ver}`, inclusive.\n")
                     }
                 },
             }],
         )?;
 
         Ok(Self {
-            lib_name,
-            lib_dir,
+            lib_name: lib_name.to_owned(),
             src_crate,
             sys_crate,
             revision,
         })
     }
 
+    fn config(&self, key: &str) -> &str {
+        self.sys_crate.config(key)
+    }
+
+    fn source_root_path(&self) -> PathBuf {
+        self.src_crate.root_path.join(self.config("lib_dir"))
+    }
+
     fn headers_path(&self) -> PathBuf {
-        self.src_crate
-            .root_path
-            .join(&self.lib_dir)
-            .join("include")
-            .join(&self.lib_name)
+        self.source_root_path().join(self.config("include_dir"))
+    }
+
+    fn headers_prefix(&self) -> &str {
+        self.config("headers_prefix")
     }
 
     fn output_path(&self) -> PathBuf {
@@ -336,7 +446,7 @@ impl Library {
     }
 }
 
-pub fn generate(root: &Path, libs: &[&str]) -> Result<(), Error> {
+pub fn generate(root: &Path, libs: &[String]) -> Result<(), Error> {
     let libs = libs
         .iter()
         .map(|lib| Library::new(root, lib))
@@ -346,36 +456,44 @@ pub fn generate(root: &Path, libs: &[&str]) -> Result<(), Error> {
 
     for (i, lib) in libs.into_iter().enumerate() {
         let headers_path = lib.headers_path();
+        let headers_prefix = lib.headers_prefix().to_ascii_lowercase();
 
         let mut gen = Gen::new(
             lib.lib_name.clone(),
-            match lib.lib_name.as_str() {
-                "SDL3" => "SDL_",
-                "SDL3_image" => "IMG_",
-                "SDL3_ttf" => "TTF_",
-                _ => return Err(format!("unknown library `{}`", lib.lib_name).into()),
-            },
+            lib.config("sym_prefix").to_owned(),
             emitted_sdl3,
             headers_path.clone(),
             lib.output_path(),
             lib.revision,
         )?;
 
-        for entry in read_dir(headers_path)? {
+        for entry in read_dir(&headers_path)
+            .map_err(|e| format!("couldn't open dir `{}`: {}", headers_path.display(), e))?
+        {
             let entry = entry?;
             let name = entry.file_name();
             let name = name.to_string_lossy();
             let name_lc = name.to_ascii_lowercase();
 
             if let Some(module) = name_lc
-                .strip_prefix("sdl_")
+                .strip_prefix(&headers_prefix)
                 .and_then(|s| s.strip_suffix(".h"))
             {
                 if skip(module) {
                     continue;
                 }
                 let mut buf = String::new();
-                File::open(entry.path())?.read_to_string(&mut buf)?;
+                let entry_path = entry.path();
+                File::open(&entry_path)
+                    .map_err(|e| {
+                        format!(
+                            "error opening `{}` for reading: {}",
+                            entry_path.display(),
+                            e
+                        )
+                    })?
+                    .read_to_string(&mut buf)
+                    .map_err(|e| format!("error reading `{}`: {}", entry_path.display(), e))?;
                 let buf = gen.patch_module(module, buf);
                 let display_path = entry.path();
                 let display_path = display_path
@@ -409,7 +527,7 @@ pub type EmittedItems = BTreeMap<String, InnerEmitContext>;
 #[derive(Default)]
 pub struct Gen {
     lib_name: String,
-    sym_prefix: &'static str,
+    sym_prefix: String,
     revision: String,
     parsed: ParsedItems,
     emitted: RefCell<EmittedItems>,
@@ -422,7 +540,7 @@ pub struct Gen {
 impl Gen {
     pub fn new(
         lib_name: String,
-        sym_prefix: &'static str,
+        sym_prefix: String,
         emitted_sdl3: EmittedItems,
         headers_path: PathBuf,
         output_path: PathBuf,
@@ -506,7 +624,11 @@ impl Gen {
             let mut path = self.output_path.clone();
             path.push("mod");
             path.set_extension("rs");
-            let mut file = Writable(BufWriter::new(OpenOptions::new().append(true).open(&path)?));
+            let mut file = Writable(BufWriter::new(
+                OpenOptions::new().append(true).open(&path).map_err(|e| {
+                    format!("error opening `{}` for writing: {}", path.display(), e)
+                })?,
+            ));
             writeln!(file, "pub mod {module};")?;
         }
         Ok(())
@@ -530,6 +652,7 @@ impl Gen {
                 "clippy::needless_bool, ",
                 "clippy::needless_return, ",
                 "clippy::nonminimal_bool, ",
+                "clippy::ptr_eq, ",
                 "clippy::too_long_first_doc_paragraph, ",
                 "clippy::unnecessary_cast, ",
                 "non_camel_case_types, ",
@@ -546,17 +669,251 @@ impl Gen {
         for module in self.emitted.borrow().keys() {
             writeln!(output, "pub mod {module};")?;
         }
+        writeln!(output)?;
+        let mut everything_module = String::new();
         writeln!(
-            output,
-            "\n/// Reexports of everything from the other modules"
+            everything_module,
+            "/// Reexports of everything from the other modules"
         )?;
-        writeln!(output, "pub mod everything {{")?;
+        writeln!(everything_module, "pub mod everything {{")?;
         for module in self.emitted.borrow().keys() {
-            writeln!(output, "    #[doc(no_inline)]")?;
-            writeln!(output, "    pub use super::{module}::*;")?;
+            writeln!(everything_module, "    #[doc(no_inline)]")?;
+            writeln!(everything_module, "    pub use super::{module}::*;")?;
         }
-        writeln!(output, "}}")?;
+        writeln!(everything_module, "}}")?;
+        write!(output, "{everything_module}")?;
         format_and_write(output, &path)?;
+
+        let metadata_path = self
+            .output_path
+            .join("..")
+            .join("metadata")
+            .join("generated");
+
+        let mut metadata_out = String::from(str_block! {"
+            #![allow(non_upper_case_globals, unused)]
+
+            use core::ffi::CStr;
+            use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property, PropertyType}}, version::SDL_VERSIONNUM}};
+
+        "});
+        let mut metadata_out_hints = String::new();
+        let mut metadata_out_props = String::new();
+        let mut metadata_out_groups = String::new();
+        let emitted = self.emitted.borrow();
+
+        fn get_available_since(doc: &str) -> String {
+            let mut lines = doc.lines();
+            while let Some(line) = lines.next() {
+                if line.contains("# Availability") {
+                    let avail = lines.next().unwrap();
+                    let avail_since = "available since ";
+                    let i = avail.find(avail_since).unwrap();
+                    let (_, ver) = avail[i + avail_since.len()..].split_once(' ').unwrap();
+                    let (major, rest) = ver.split_once('.').unwrap();
+                    let (minor, rest) = rest.split_once('.').unwrap();
+                    let micro = if let Some((micro, rest)) = rest.split_once('.') {
+                        assert!(rest.trim().is_empty());
+                        micro
+                    } else {
+                        rest
+                    };
+                    let major = major.parse::<i32>().unwrap();
+                    let minor = minor.parse::<i32>().unwrap();
+                    let micro = micro.parse::<i32>().unwrap();
+                    return format!("Some(SDL_VERSIONNUM({major}, {minor}, {micro}))");
+                }
+            }
+            String::from("None")
+        }
+        macro_rules! write_indented {
+            ($target:expr, $indent: expr, $($tt:tt)*) => {{
+                let indent = " ".repeat($indent);
+                for line in format!($($tt)*).lines() {
+                    if line.is_empty() {
+                        writeln!($target)?;
+                    } else {
+                        writeln!($target, "{indent}{line}")?;
+                    }
+                }
+            }};
+        }
+
+        writeln!(
+            metadata_out_hints,
+            str_block! {"
+                /// Metadata for hint constants in this crate
+                pub const HINTS: &[&Hint] = &["}
+        )?;
+        writeln!(
+            metadata_out_props,
+            str_block! {"
+                /// Metadata for property constants in this crate
+                pub const PROPERTIES: &[&Property] = &["}
+        )?;
+        writeln!(
+            metadata_out_groups,
+            str_block! {"
+                /// Metadata for groups in this crate
+                pub const GROUPS: &[&Group] = &["}
+        )?;
+
+        for module in emitted.keys() {
+            let metadata = &emitted[module].metadata;
+            writeln!(metadata_out, "pub mod {module};")?;
+            let mut module_out = format!(
+                "//! Metadata for items in the `crate::{module}` module\n\nuse super::*;\n\n"
+            );
+            for hint in &metadata.hints {
+                let short_name = hint.name.strip_prefix("SDL_HINT_").unwrap();
+                writeln!(metadata_out_hints, "    &{module}::METADATA_{},", hint.name)?;
+                write!(
+                    module_out,
+                    str_block! {"
+                        pub const METADATA_{name}: Hint = Hint {{
+                            module: {module:?},
+                            name: {name:?},
+                            short_name: {short_name:?},
+                            value: crate::{module}::{name},
+                            doc: {doc},
+                            available_since: {available_since},
+                        }};
+                    "},
+                    module = module,
+                    name = hint.name,
+                    short_name = short_name,
+                    available_since = get_available_since(&hint.doc),
+                    doc = if hint.doc.is_empty() {
+                        "None".into()
+                    } else {
+                        format!("Some({:?})", hint.doc)
+                    }
+                )?;
+            }
+            for prop in &metadata.properties {
+                writeln!(metadata_out_props, "    &{module}::METADATA_{},", prop.name)?;
+                let short_name = prop.name.strip_prefix("SDL_PROP_").unwrap();
+                let ty = if short_name.ends_with("_POINTER") {
+                    "POINTER"
+                } else if short_name.ends_with("_STRING") {
+                    "STRING"
+                } else if short_name.ends_with("_NUMBER") {
+                    "NUMBER"
+                } else if short_name.ends_with("_FLOAT") {
+                    "FLOAT"
+                } else if short_name.ends_with("_BOOLEAN") {
+                    "BOOLEAN"
+                } else {
+                    match prop.name.as_str() {
+                        "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID" => "NUMBER",
+                        "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8" => "NUMBER",
+                        _ => panic!("unknown property type for property {}", prop.name),
+                    }
+                };
+                write!(
+                    module_out,
+                    str_block! {"
+                        pub const METADATA_{name}: Property = Property {{
+                            module: {module:?},
+                            name: {name:?},
+                            short_name: {short_name:?},
+                            value: crate::{module}::{name},
+                            ty: PropertyType::{ty},
+                            doc: {doc},
+                            available_since: {available_since},
+                        }};
+                    "},
+                    module = module,
+                    name = prop.name,
+                    short_name = short_name,
+                    ty = ty,
+                    doc = if prop.doc.is_empty() {
+                        "None".into()
+                    } else {
+                        format!("Some({:?})", prop.doc)
+                    },
+                    available_since = get_available_since(&prop.doc),
+                )?;
+            }
+            for group in &metadata.groups {
+                let available_since = get_available_since(&group.doc);
+                writeln!(
+                    metadata_out_groups,
+                    "    &{module}::METADATA_{},",
+                    group.name
+                )?;
+                write!(
+                    module_out,
+                    str_block! {"
+                        pub const METADATA_{name}: Group = Group {{
+                            module: {module:?},
+                            kind: GroupKind::{kind},
+                            name: {name:?},
+                            short_name: {short_name:?},
+                            doc: {doc},
+                            available_since: {available_since},
+                            values: &[
+                    "},
+                    module = module,
+                    kind = match group.kind {
+                        EnumKind::Enum => "Enum",
+                        EnumKind::Flags => "Flags",
+                        EnumKind::Id => "Id",
+                        EnumKind::Lock => "Lock",
+                    },
+                    name = group.name,
+                    short_name = group.name.strip_prefix(&self.sym_prefix).unwrap(),
+                    doc = if group.doc.is_empty() {
+                        "None".into()
+                    } else {
+                        format!("Some({:?})", group.doc)
+                    },
+                    available_since = available_since,
+                )?;
+                if !group.values.is_empty() {
+                    for value in &group.values {
+                        write_indented!(
+                            module_out,
+                            8,
+                            str_block! {"
+                                GroupValue {{
+                                    name: {name:?},
+                                    short_name: {short_name:?},
+                                    doc: {doc},
+                                    available_since: {available_since},
+                                }},
+                            "},
+                            name = value.name,
+                            short_name = value.short_name,
+                            doc = if value.doc.is_empty() {
+                                "None".into()
+                            } else {
+                                format!("Some({:?})", value.doc)
+                            },
+                            available_since = get_available_since(&value.doc),
+                        );
+                    }
+                }
+                write!(
+                    module_out,
+                    str_block! {"
+                            ],
+                        }};
+                    "}
+                )?;
+            }
+            format_and_write(module_out, &metadata_path.join(format!("{module}.rs")))?;
+        }
+
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{everything_module}")?;
+        writeln!(metadata_out, "{metadata_out_hints}];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{metadata_out_props}];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{metadata_out_groups}];")?;
+
+        format_and_write(metadata_out, &metadata_path.join("mod.rs"))?;
         Ok(())
     }
 
@@ -582,7 +939,7 @@ impl Gen {
                             patched
                         },
                     }
-                    .patch(fs::read_to_string(&main_impl).unwrap().as_str())
+                    .patch(read_to_string(&main_impl).unwrap().as_str())
                 },
             }
             .patch(input.as_str()),
@@ -677,6 +1034,10 @@ impl From<Error> for EmitErr {
     }
 }
 
+pub const fn is_valid_ident(s: &str) -> bool {
+    matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
+}
+
 fn common_doc_prefix<'a>(a: &'a str, b: &str) -> &'a str {
     let i = 'pfx: {
         for (i, (ca, cb)) in a.chars().zip(b.chars()).enumerate() {
@@ -707,6 +1068,34 @@ fn common_ident_prefix<'a>(a: &'a str, b: &str) -> &'a str {
         }
     }
     &a[..i]
+}
+
+fn find_common_ident_prefix<'a>(for_type: &str, mut it: impl Iterator<Item = &'a str>) -> &'a str {
+    #[allow(clippy::single_match)]
+    match for_type {
+        "SDL_AudioDeviceID" => return "SDL_AUDIO_DEVICE_",
+        "SDL_GlobFlags" => return "SDL_GLOB_",
+        _ => (),
+    }
+
+    let mut prefix = it.next().unwrap_or_default();
+    if let Some(next) = it.next() {
+        prefix = common_ident_prefix(prefix, next);
+        for i in it {
+            prefix = common_ident_prefix(prefix, i);
+        }
+        prefix
+    } else {
+        ""
+    }
+}
+
+fn strip_common_ident_prefix<'a>(ident: &'a str, prefix: &str) -> &'a str {
+    let mut stripped = ident.strip_prefix(prefix).unwrap();
+    if !is_valid_ident(stripped) {
+        stripped = &ident[ident.len() - stripped.len() - 1..];
+    }
+    stripped
 }
 
 const fn is_rust_keyword(s: &str) -> bool {

@@ -1,14 +1,18 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
-This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.8`, inclusive.
+This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.12`, inclusive.
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
 However, many of these aren't valid when passed to SDL without further modification.
 They're intended to be used with `..Default::default()` in initializers.
 The `Default` impl of interface types also sets the version field to the correct value.
 
-SDL_image is available via the [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys) crate.
+Add-on crates:
+- [`sdl3-main`](https://crates.io/crates/sdl3-main): Tools for using SDL's main and callback interface
+- [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys): Bindings for SDL3_image
+- [`sdl3-ttf-sys`](https://crates.io/crates/sdl3-ttf-sys): Bindings for SDL3_ttf
+
 Other satellite libraries aren't stable yet, but will be released as they're available.
 
 <div class="warning">
@@ -28,7 +32,7 @@ If you're looking for more idiomatic or higher level bindings, check out the
 
 ## Usage
 
-`sdl3-sys` requires SDL version `3.1.3` or later, but `3.2.0` or later is preferred.
+`sdl3-sys` requires SDL version `3.1.3` or later, but `3.2.0` or later is recommended.
 Some APIs may require a later version. You can check availability in the documentation.
 
 By default, `sdl3-sys` will attempt to link to a dynamic/shared library named
@@ -41,16 +45,27 @@ convention for libraries. You can change this behaviour with the following featu
 | `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library. |
 | `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
-| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
+| `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `~/Library/Frameworks` or `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL statically. SDL doesn't recommend doing this. <ul><li>On targets that only support static linking, such as emscripten, you don't have to enable this feature.</li><li>On Apple targets, this currently requires frameworks that should be optional.</li></ul> |
+| `no-link` | Don't link anything, and provide linking flags via Cargo metadata so you can do manual linking if desired. |
 
 ### Building from source
 
 When building from source with the `build-from-source` feature flag, you can enable these
-additional features to configure the build. These have no effect when not building from source.
+additional features to configure the build. They have no effect when not building from source.
+They correspond to SDL CMake variables, and you can prefix them with `no-` to disable them,
+e.g. `no-sdl-libc` to not link with the system C library. If you both enable and disable a
+feature, enable takes precedence.
 
-| Feature | Description |
-| ------- | ----------- |
+Most of these features only work on some targets; don't enable them unless you need them.
+
+| Feature                  | Description |
+| ------------------------ | ----------- |
+| `sdl-asan`               | Compile SDL with Address Sanitizer. |
+| `sdl-ccache`             | Compile SDL with Ccache. |
+| `sdl-gpu-dxvk`           | Build SDL GPU with DXVK support. |
+| `sdl-libc`               | Link SDL with system C library (default). Use `no-sdl-libc` to disable. |
+| `sdl-rpath`              | Set RPATH when linking SDL (default on some targets). Use `no-sdl-rpath` to disable. |
 | `sdl-unix-console-build` | Allow building SDL without X11 or Wayland support on Linux and other targets that usually use X11/Wayland. By default, SDL requires either X11 or Wayland on these targets as a sanity check. |
 
 ## Target specific features
@@ -95,11 +110,21 @@ These features are mutually exclusive. Features higher in this list override lat
 | Feature | Description |
 | ------- | ----------- |
 | `debug-impls` | Implement the `Debug` trait for most SDL types. |
+| `metadata`    | Enable metadata. |
+| `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. |
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
 
 ## Recent changes
 
-- next: Derive PartialEq/Eq/Hash traits for applicable types
+- 0.6.0 WIP: Make IDs and flag types newtypes, add metadata
+- 0.5.0:
+    - Update SDL to 3.2.12
+    - Add `no-link` feature
+    - Add more SDL CMake features for use when building from source
+    - On Apple targets, look for frameworks in `~/Library/Frameworks` too
+- 0.4.7:
+    - Update SDL to 3.2.10
+    - Derive PartialEq/Eq/Hash traits for applicable types
 - 0.4.6: Update SDL to 3.2.8
 - 0.4.5: Update SDL to 3.2.6
 - 0.4.4: Update SDL to 3.2.4

@@ -42,24 +42,24 @@ extern "C" {
     ///
     /// See [`SDL_CreateProcessWithProperties()`] for more details.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `args`: the path and arguments for the new process.
     /// - `pipe_stdio`: true to create pipes to the process's standard input and
     ///   from the process's standard output, false for the process
     ///   to have no input and inherit the application's standard
     ///   output.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the newly created and running process, or NULL if the process
     ///   couldn't be created.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcessWithProperties`]
     /// - [`SDL_GetProcessProperties`]
     /// - [`SDL_ReadProcess`]
@@ -107,17 +107,17 @@ extern "C" {
 /// [`SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER`] set. This is true for streams
 /// representing files and process I/O.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateProcessWithProperties`]
 /// - [`SDL_GetProcessProperties`]
 /// - [`SDL_ReadProcess`]
 /// - [`SDL_GetProcessInput`]
 /// - [`SDL_GetProcessOutput`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INHERITED`](SDL_ProcessIO::INHERITED) | [`SDL_PROCESS_STDIO_INHERITED`] | The I/O stream is inherited from the application. |
@@ -127,6 +127,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ProcessIO(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ProcessIO {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ProcessIO> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ProcessIO) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_ProcessIO> for ::core::ffi::c_int {
     #[inline(always)]
@@ -152,13 +166,13 @@ impl ::core::fmt::Debug for SDL_ProcessIO {
 
 impl SDL_ProcessIO {
     /// The I/O stream is inherited from the application.
-    pub const INHERITED: Self = Self(0);
+    pub const INHERITED: Self = Self((0 as ::core::ffi::c_int));
     /// The I/O stream is ignored.
-    pub const NULL: Self = Self(1);
+    pub const NULL: Self = Self((1 as ::core::ffi::c_int));
     /// The I/O stream is connected to a new [`SDL_IOStream`] that the application can read or write
-    pub const APP: Self = Self(2);
+    pub const APP: Self = Self((2 as ::core::ffi::c_int));
     /// The I/O stream is redirected to an existing [`SDL_IOStream`].
-    pub const REDIRECT: Self = Self(3);
+    pub const REDIRECT: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// The I/O stream is inherited from the application.
@@ -169,6 +183,12 @@ pub const SDL_PROCESS_STDIO_NULL: SDL_ProcessIO = SDL_ProcessIO::NULL;
 pub const SDL_PROCESS_STDIO_APP: SDL_ProcessIO = SDL_ProcessIO::APP;
 /// The I/O stream is redirected to an existing [`SDL_IOStream`].
 pub const SDL_PROCESS_STDIO_REDIRECT: SDL_ProcessIO = SDL_ProcessIO::REDIRECT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ProcessIO {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::process::METADATA_SDL_ProcessIO;
+}
 
 extern "C" {
     /// Create a new process with the specified properties.
@@ -213,20 +233,20 @@ extern "C" {
     /// from properly tracking the lifetime of the underlying process. You should
     /// use [`SDL_WaitProcess()`] instead.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the newly created and running process, or NULL if the process
     ///   couldn't be created.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_GetProcessProperties`]
     /// - [`SDL_ReadProcess`]
@@ -286,20 +306,20 @@ extern "C" {
     /// - [`SDL_PROP_PROCESS_BACKGROUND_BOOLEAN`]\: true if the process is running in
     ///   the background.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `process`: the process to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_CreateProcessWithProperties`]
     pub fn SDL_GetProcessProperties(process: *mut SDL_Process) -> SDL_PropertiesID;
@@ -332,24 +352,24 @@ extern "C" {
     ///
     /// The data should be freed with [`SDL_free()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `process`: The process to read.
     /// - `datasize`: a pointer filled in with the number of bytes read, may be
     ///   NULL.
     /// - `exitcode`: a pointer filled in with the process exit code if the
     ///   process has exited, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_CreateProcessWithProperties`]
     /// - [`SDL_DestroyProcess`]
@@ -372,20 +392,20 @@ extern "C" {
     /// if so you may need to call [`SDL_GetProcessOutput()`] and read the output in
     /// parallel with writing input.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `process`: The process to get the input stream for.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the input stream or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_CreateProcessWithProperties`]
     /// - [`SDL_GetProcessOutput`]
@@ -402,20 +422,20 @@ extern "C" {
     /// Reading from this stream can return 0 with [`SDL_GetIOStatus()`] returning
     /// [`SDL_IO_STATUS_NOT_READY`] if no output is available yet.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `process`: The process to get the output stream for.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the output stream or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_CreateProcessWithProperties`]
     /// - [`SDL_GetProcessInput`]
@@ -425,7 +445,7 @@ extern "C" {
 extern "C" {
     /// Stop a process.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `process`: The process to stop.
     /// - `force`: true to terminate the process immediately, false to try to
     ///   stop the process gracefully. In general you should try to stop
@@ -433,17 +453,17 @@ extern "C" {
     ///   leave it with half-written data or in some other unstable
     ///   state.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_CreateProcessWithProperties`]
     /// - [`SDL_WaitProcess`]
@@ -469,23 +489,23 @@ extern "C" {
     /// blocked indefinitely waiting for output to be read and [`SDL_WaitProcess()`]
     /// will never return true;
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `process`: The process to wait for.
     /// - `block`: If true, block until the process finishes; otherwise, report
     ///   on the process' status.
     /// - `exitcode`: a pointer filled in with the process exit code if the
     ///   process has exited, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the process exited, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_CreateProcessWithProperties`]
     /// - [`SDL_KillProcess`]
@@ -504,16 +524,16 @@ extern "C" {
     /// to track it. If you want to stop the process you should use
     /// [`SDL_KillProcess()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `process`: The process object to destroy.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateProcess`]
     /// - [`SDL_CreateProcessWithProperties`]
     /// - [`SDL_KillProcess`]
@@ -522,10 +542,10 @@ extern "C" {
 
 /// An opaque handle representing a system process.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateProcess`]
 #[repr(C)]
 pub struct SDL_Process {

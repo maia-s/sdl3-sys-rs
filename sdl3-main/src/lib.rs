@@ -1,13 +1,17 @@
 #![no_std]
 #![deny(unsafe_op_in_unsafe_fn)]
-#![doc = include_str!("../README.md")]
+#![doc = include_str!("../README.md.inc")]
 #![cfg_attr(all(feature = "nightly", doc), feature(doc_auto_cfg))] // https://github.com/rust-lang/rust/issues/43781
+#![cfg_attr(feature = "nightly", feature(try_trait_v2))] // https://github.com/rust-lang/rust/issues/84277
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
 #[cfg(feature = "std")]
 extern crate std;
+
+#[cfg(feature = "nightly")]
+use core::{convert::Infallible, ops::FromResidual};
 
 #[cfg(doc)]
 use state::SyncPtr;
@@ -39,6 +43,34 @@ pub use sdl3_main_macros::main;
 /// respective sdl main callbacks, as if the corresponding attribute macros were used.
 /// All four must be defined in a single impl block, but `app_quit` is optional and will be
 /// defined as an empty function if omitted.
+///
+/// This is functionally the same as marking those functions with the respective attribute
+/// macros, but works with methods and uses the type the block is implemented for as the
+/// app state type.
+///
+/// See the documentation for [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`].
+///
+/// Example (using the `nightly` feature for ?-propagation to `AppResult*`):
+/// ```custom,{.rust}
+/// use sdl3_main::{AppResult, AppResultWithState};
+///
+/// #[app_impl]
+/// impl MyAppState {
+///     fn app_init() -> AppResultWithState<Self> {
+///         AppResultWithState::Continue(Box::new(Mutex::new(Self::new()?)))
+///     }
+///
+///     fn app_iterate(&mut self) -> AppResult {
+///         self.iterate()?;
+///         AppResult::Continue
+///     }
+///
+///     fn app_event(&mut self) -> AppResult {
+///         self.handle_events()?;
+///         AppResult::Continue
+///     }
+/// }
+/// ```
 pub use sdl3_main_macros::app_impl;
 
 /// The function tagged with `app_init` is called by SDL at the start of the program on the main thread.
@@ -165,11 +197,29 @@ use sdl3_sys::{
     log::{SDL_LogCategory, SDL_LogCritical},
 };
 
+macro_rules! defer {
+    ($($tt:tt)*) => {
+        let _defer = $crate::Defer(Some(move || {{ $($tt)* };}));
+    };
+}
+
+struct Defer<F: FnOnce()>(Option<F>);
+
+impl<F: FnOnce()> Drop for Defer<F> {
+    fn drop(&mut self) {
+        if let Some(f) = self.0.take() {
+            f();
+        }
+    }
+}
+
 pub mod app;
 mod main_thread;
 pub mod state;
 
-pub use main_thread::{MainThreadData, MainThreadToken};
+pub use main_thread::{
+    run_async_on_main_thread, run_sync_on_main_thread, MainThreadData, MainThreadToken,
+};
 use state::{AppState, BorrowMut, BorrowRef, BorrowVal, ConsumeMut, ConsumeRef, ConsumeVal};
 
 #[doc(hidden)]
@@ -188,8 +238,10 @@ pub mod __internal {
     use std::{
         any::Any,
         cell::UnsafeCell,
+        env,
         mem::MaybeUninit,
         panic::{catch_unwind, resume_unwind, UnwindSafe},
+        vec::Vec,
     };
 
     #[cfg(feature = "std")]
@@ -255,11 +307,52 @@ pub mod __internal {
         }
     }
 
-    #[inline(always)]
+    #[cfg(feature = "std")]
+    #[inline(always)] // this is only called once
     pub unsafe fn run_app(
         main_fn: unsafe extern "C" fn(c_int, *mut *mut c_char) -> c_int,
     ) -> c_int {
-        unsafe { SDL_RunApp(0, ptr::null_mut(), Some(main_fn), ptr::null_mut()) }
+        #[cfg(windows)]
+        {
+            // On Windows, SDL_RunApp gets arguments from the win api if passed NULL
+            unsafe { SDL_RunApp(0, ptr::null_mut(), Some(main_fn), ptr::null_mut()) }
+        }
+        #[cfg(not(windows))]
+        {
+            // copy arguments so we can null-terminate them
+            let mut cargs = Vec::new();
+
+            for arg in env::args_os() {
+                let mut carg;
+                #[cfg(unix)]
+                {
+                    use std::{borrow::ToOwned, os::unix::ffi::OsStringExt};
+                    carg = arg.to_owned().into_vec();
+                }
+                #[cfg(not(unix))]
+                {
+                    // yolo
+                    carg = arg.to_string_lossy().into_owned().into_bytes();
+                }
+                carg.push(0);
+                cargs.push(carg);
+            }
+
+            let mut ptrargs = cargs
+                .iter_mut()
+                .map(|carg| carg.as_mut_ptr())
+                .collect::<Vec<_>>();
+            ptrargs.push(ptr::null_mut());
+
+            unsafe {
+                SDL_RunApp(
+                    cargs.len().try_into().expect("too many arguments"),
+                    ptrargs.as_mut_ptr() as *mut *mut c_char,
+                    Some(main_fn),
+                    ptr::null_mut(),
+                )
+            }
+        }
     }
 }
 
@@ -361,6 +454,22 @@ impl From<SDL_AppResult> for AppResult {
     }
 }
 
+#[cfg(feature = "nightly")]
+impl<E> FromResidual<Result<Infallible, E>> for AppResult {
+    #[inline(always)]
+    fn from_residual(_residual: Result<Infallible, E>) -> Self {
+        AppResult::Failure
+    }
+}
+
+#[cfg(feature = "nightly")]
+impl FromResidual<Option<Infallible>> for AppResult {
+    #[inline(always)]
+    fn from_residual(_residual: Option<Infallible>) -> Self {
+        AppResult::Failure
+    }
+}
+
 /// An [`AppResult`] with an app state, for returning from the function tagged with [`app_init`].
 #[derive(Debug)]
 pub enum AppResultWithState<S: AppState> {
@@ -372,6 +481,22 @@ pub enum AppResultWithState<S: AppState> {
 
     /// Quit with failure status
     Failure(Option<S>),
+}
+
+#[cfg(feature = "nightly")]
+impl<S: AppState, E> FromResidual<Result<Infallible, E>> for AppResultWithState<S> {
+    #[inline(always)]
+    fn from_residual(_residual: Result<Infallible, E>) -> Self {
+        AppResultWithState::Failure(None)
+    }
+}
+
+#[cfg(feature = "nightly")]
+impl<S: AppState> FromResidual<Option<Infallible>> for AppResultWithState<S> {
+    #[inline(always)]
+    fn from_residual(_residual: Option<Infallible>) -> Self {
+        AppResultWithState::Failure(None)
+    }
 }
 
 impl<S: AppState> AppResultWithState<S> {

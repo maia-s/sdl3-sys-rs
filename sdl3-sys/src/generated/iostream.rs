@@ -13,10 +13,10 @@ use super::properties::*;
 
 /// [`SDL_IOStream`] status, set by a read or write operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`READY`](SDL_IOStatus::READY) | [`SDL_IO_STATUS_READY`] | Everything is ready (no errors and not EOF). |
@@ -28,6 +28,20 @@ use super::properties::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOStatus(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_IOStatus {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_IOStatus> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_IOStatus) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_IOStatus> for ::core::ffi::c_int {
     #[inline(always)]
@@ -55,17 +69,17 @@ impl ::core::fmt::Debug for SDL_IOStatus {
 
 impl SDL_IOStatus {
     /// Everything is ready (no errors and not EOF).
-    pub const READY: Self = Self(0);
+    pub const READY: Self = Self((0 as ::core::ffi::c_int));
     /// Read or write I/O error
-    pub const ERROR: Self = Self(1);
+    pub const ERROR: Self = Self((1 as ::core::ffi::c_int));
     /// End of file
-    pub const EOF: Self = Self(2);
+    pub const EOF: Self = Self((2 as ::core::ffi::c_int));
     /// Non blocking I/O, not ready
-    pub const NOT_READY: Self = Self(3);
+    pub const NOT_READY: Self = Self((3 as ::core::ffi::c_int));
     /// Tried to write a read-only buffer
-    pub const READONLY: Self = Self(4);
+    pub const READONLY: Self = Self((4 as ::core::ffi::c_int));
     /// Tried to read a write-only buffer
-    pub const WRITEONLY: Self = Self(5);
+    pub const WRITEONLY: Self = Self((5 as ::core::ffi::c_int));
 }
 
 /// Everything is ready (no errors and not EOF).
@@ -81,15 +95,21 @@ pub const SDL_IO_STATUS_READONLY: SDL_IOStatus = SDL_IOStatus::READONLY;
 /// Tried to read a write-only buffer
 pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOStatus {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::iostream::METADATA_SDL_IOStatus;
+}
+
 /// Possible `whence` values for [`SDL_IOStream`] seeking.
 ///
 /// These map to the same "whence" concept that `fseek` or `lseek` use in the
 /// standard C runtime.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`SET`](SDL_IOWhence::SET) | [`SDL_IO_SEEK_SET`] | Seek from the beginning of data |
@@ -98,6 +118,20 @@ pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_IOWhence(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_IOWhence {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_IOWhence> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_IOWhence) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_IOWhence> for ::core::ffi::c_int {
     #[inline(always)]
@@ -122,11 +156,11 @@ impl ::core::fmt::Debug for SDL_IOWhence {
 
 impl SDL_IOWhence {
     /// Seek from the beginning of data
-    pub const SET: Self = Self(0);
+    pub const SET: Self = Self((0 as ::core::ffi::c_int));
     /// Seek relative to current read point
-    pub const CUR: Self = Self(1);
+    pub const CUR: Self = Self((1 as ::core::ffi::c_int));
     /// Seek relative to the end of data
-    pub const END: Self = Self(2);
+    pub const END: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Seek from the beginning of data
@@ -135,6 +169,12 @@ pub const SDL_IO_SEEK_SET: SDL_IOWhence = SDL_IOWhence::SET;
 pub const SDL_IO_SEEK_CUR: SDL_IOWhence = SDL_IOWhence::CUR;
 /// Seek relative to the end of data
 pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOWhence {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::iostream::METADATA_SDL_IOWhence;
+}
 
 /// The function pointers that drive an [`SDL_IOStream`].
 ///
@@ -145,10 +185,10 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 ///
 /// This structure should be initialized using [`SDL_INIT_INTERFACE()`]
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_INIT_INTERFACE`]
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -320,22 +360,22 @@ extern "C" {
     ///   the filesystem. If SDL used some other method to access the filesystem,
     ///   this property will not be set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: a UTF-8 string representing the filename to open.
     /// - `mode`: an ASCII string representing the mode to be used for opening
     ///   the file.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the [`SDL_IOStream`] structure that is created or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CloseIO`]
     /// - [`SDL_FlushIO`]
     /// - [`SDL_ReadIO`]
@@ -382,21 +422,21 @@ extern "C" {
     /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]\: this will be the `size` parameter
     ///   that was passed to this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `mem`: a pointer to a buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_IOFromConstMem`]
     /// - [`SDL_CloseIO`]
     /// - [`SDL_FlushIO`]
@@ -440,21 +480,21 @@ extern "C" {
     /// - [`SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER`]\: this will be the `size` parameter
     ///   that was passed to this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `mem`: a pointer to a read-only buffer to feed an [`SDL_IOStream`] stream.
     /// - `size`: the buffer size, in bytes.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_IOFromMem`]
     /// - [`SDL_CloseIO`]
     /// - [`SDL_ReadIO`]
@@ -481,17 +521,17 @@ extern "C" {
     /// - [`SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER`]\: memory will be allocated in
     ///   multiples of this size, defaulting to 1024.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to a new [`SDL_IOStream`] structure or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CloseIO`]
     /// - [`SDL_ReadIO`]
     /// - [`SDL_SeekIO`]
@@ -517,22 +557,22 @@ extern "C" {
     /// This function makes a copy of `iface` and the caller does not need to keep
     /// it around after this call.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `iface`: the interface that implements this [`SDL_IOStream`], initialized
     ///   using [`SDL_INIT_INTERFACE()`].
     /// - `userdata`: the pointer that will be passed to the interface functions.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the allocated memory on success or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CloseIO`]
     /// - [`SDL_INIT_INTERFACE`]
     /// - [`SDL_IOFromConstMem`]
@@ -564,20 +604,20 @@ extern "C" {
     /// should call [`SDL_FlushIO()`] before closing. Note that flushing takes time and
     /// makes the system and your app operate less efficiently, so do so sparingly.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: [`SDL_IOStream`] structure to close.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_OpenIO`]
     pub fn SDL_CloseIO(context: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
@@ -585,17 +625,17 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with an [`SDL_IOStream`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetIOProperties(context: *mut SDL_IOStream) -> SDL_PropertiesID;
 }
@@ -611,16 +651,16 @@ extern "C" {
     /// [`SDL_WriteIO`] call; don't expect it to change if you just call this query
     /// function in a tight loop.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: the [`SDL_IOStream`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an [`SDL_IOStatus`] enum with the current state.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetIOStatus(context: *mut SDL_IOStream) -> SDL_IOStatus;
 }
@@ -628,18 +668,18 @@ extern "C" {
 extern "C" {
     /// Use this function to get the size of the data stream in an [`SDL_IOStream`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: the [`SDL_IOStream`] to get the size of the data stream from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the size of the data stream in the [`SDL_IOStream`] on success or a
     ///   negative error code on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetIOSize(context: *mut SDL_IOStream) -> Sint64;
 }
@@ -657,24 +697,24 @@ extern "C" {
     ///
     /// If this stream can not seek, it will return -1.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `offset`: an offset in bytes, relative to `whence` location; can be
     ///   negative.
     /// - `whence`: any of [`SDL_IO_SEEK_SET`], [`SDL_IO_SEEK_CUR`],
     ///   [`SDL_IO_SEEK_END`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the final offset in the data stream after the seek or -1 on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_TellIO`]
     pub fn SDL_SeekIO(context: *mut SDL_IOStream, offset: Sint64, whence: SDL_IOWhence) -> Sint64;
 }
@@ -686,21 +726,21 @@ extern "C" {
     /// `seek` method, with an offset of 0 bytes from [`SDL_IO_SEEK_CUR`], to
     /// simplify application development.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: an [`SDL_IOStream`] data stream object from which to get the
     ///   current offset.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current offset in the stream, or -1 if the information can not
     ///   be determined.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SeekIO`]
     pub fn SDL_TellIO(context: *mut SDL_IOStream) -> Sint64;
 }
@@ -716,22 +756,22 @@ extern "C" {
     /// the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different error
     /// value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer to read data into.
     /// - `size`: the number of bytes to read from the data source.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes read, or 0 on end of file or other failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WriteIO`]
     /// - [`SDL_GetIOStatus`]
     pub fn SDL_ReadIO(
@@ -755,22 +795,22 @@ extern "C" {
     /// recoverable, such as a non-blocking write that can simply be retried later,
     /// or a fatal error.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `ptr`: a pointer to a buffer containing data to write.
     /// - `size`: the number of bytes to write.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes written, which will be less than `size` on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_IOprintf`]
     /// - [`SDL_ReadIO`]
     /// - [`SDL_SeekIO`]
@@ -788,23 +828,23 @@ extern "C" {
     ///
     /// This function does formatted printing to the stream.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `fmt`: a printf() style format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
     ///   any.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_IOvprintf`]
     /// - [`SDL_WriteIO`]
     pub fn SDL_IOprintf(
@@ -819,22 +859,22 @@ extern "C" {
     ///
     /// This function does formatted printing to the stream.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: a pointer to an [`SDL_IOStream`] structure.
     /// - `fmt`: a printf() style format string.
     /// - `ap`: a variable argument list.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of bytes written or 0 on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_IOprintf`]
     /// - [`SDL_WriteIO`]
     pub fn SDL_IOvprintf(
@@ -851,20 +891,20 @@ extern "C" {
     /// Normally this isn't necessary but if the stream is a pipe or socket it
     /// guarantees that any pending data is sent.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `context`: [`SDL_IOStream`] structure to flush.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_OpenIO`]
     /// - [`SDL_WriteIO`]
     pub fn SDL_FlushIO(context: *mut SDL_IOStream) -> ::core::primitive::bool;
@@ -879,24 +919,24 @@ extern "C" {
     ///
     /// The data should be freed with [`SDL_free()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the [`SDL_IOStream`] to read all available data from.
     /// - `datasize`: a pointer filled in with the number of bytes read, may be
     ///   NULL.
     /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_LoadFile`]
     /// - [`SDL_SaveFile_IO`]
     pub fn SDL_LoadFile_IO(
@@ -915,21 +955,21 @@ extern "C" {
     ///
     /// The data should be freed with [`SDL_free()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: the path to read all available data from.
     /// - `datasize`: if not NULL, will store the number of bytes read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the data or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_LoadFile_IO`]
     /// - [`SDL_SaveFile`]
     pub fn SDL_LoadFile(
@@ -941,7 +981,7 @@ extern "C" {
 extern "C" {
     /// Save all the data into an SDL data stream.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the [`SDL_IOStream`] to write all data to.
     /// - `data`: the data to be written. If datasize is 0, may be NULL or a
     ///   invalid pointer.
@@ -949,17 +989,17 @@ extern "C" {
     /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
     ///   in the case of an error.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SaveFile`]
     /// - [`SDL_LoadFile_IO`]
     pub fn SDL_SaveFile_IO(
@@ -973,23 +1013,23 @@ extern "C" {
 extern "C" {
     /// Save all the data into a file path.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: the path to write all available data into.
     /// - `data`: the data to be written. If datasize is 0, may be NULL or a
     ///   invalid pointer.
     /// - `datasize`: the number of bytes to be written.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SaveFile_IO`]
     /// - [`SDL_LoadFile`]
     pub fn SDL_SaveFile(
@@ -1007,18 +1047,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the [`SDL_IOStream`] to read from.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure or EOF; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadU8(src: *mut SDL_IOStream, value: *mut Uint8) -> ::core::primitive::bool;
 }
@@ -1031,18 +1071,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the [`SDL_IOStream`] to read from.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadS8(src: *mut SDL_IOStream, value: *mut Sint8) -> ::core::primitive::bool;
 }
@@ -1059,18 +1099,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadU16LE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
@@ -1087,18 +1127,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadS16LE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
@@ -1115,18 +1155,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadU16BE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
@@ -1143,18 +1183,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadS16BE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
@@ -1171,18 +1211,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadU32LE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
@@ -1199,18 +1239,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadS32LE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
@@ -1227,18 +1267,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadU32BE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
@@ -1255,18 +1295,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadS32BE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
@@ -1283,18 +1323,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadU64LE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
@@ -1311,18 +1351,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadS64LE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
@@ -1339,18 +1379,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadU64BE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
@@ -1367,18 +1407,18 @@ extern "C" {
     /// and the stream is not at EOF, [`SDL_GetIOStatus()`] will return a different
     /// error value and [`SDL_GetError()`] will offer a human-readable message.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: the stream from which to read data.
     /// - `value`: a pointer filled in with the data read.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReadS64BE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
@@ -1386,18 +1426,18 @@ extern "C" {
 extern "C" {
     /// Use this function to write a byte to an [`SDL_IOStream`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the [`SDL_IOStream`] to write to.
     /// - `value`: the byte value to write.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteU8(dst: *mut SDL_IOStream, value: Uint8) -> ::core::primitive::bool;
 }
@@ -1405,18 +1445,18 @@ extern "C" {
 extern "C" {
     /// Use this function to write a signed byte to an [`SDL_IOStream`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the [`SDL_IOStream`] to write to.
     /// - `value`: the byte value to write.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteS8(dst: *mut SDL_IOStream, value: Sint8) -> ::core::primitive::bool;
 }
@@ -1429,18 +1469,18 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteU16LE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
@@ -1453,18 +1493,18 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteS16LE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
@@ -1476,18 +1516,18 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteU16BE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
@@ -1499,18 +1539,18 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteS16BE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
@@ -1523,18 +1563,18 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteU32LE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
@@ -1547,18 +1587,18 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteS32LE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
@@ -1570,18 +1610,18 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteU32BE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
@@ -1593,18 +1633,18 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteS32BE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
@@ -1617,18 +1657,18 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteU64LE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
@@ -1641,18 +1681,18 @@ extern "C" {
     /// specifies native format, and the data written will be in little-endian
     /// format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteS64LE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
 }
@@ -1664,18 +1704,18 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteU64BE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
@@ -1687,18 +1727,18 @@ extern "C" {
     /// SDL byteswaps the data only if necessary, so the application always
     /// specifies native format, and the data written will be in big-endian format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `dst`: the stream to which data will be written.
     /// - `value`: the data to be written, in native format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on successful write or false on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_WriteS64BE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
 }
@@ -1710,7 +1750,7 @@ extern "C" {
 /// [`SDL_OpenIO()`] to provide their own stream implementation behind this
 /// struct's abstract interface.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_IOStream {

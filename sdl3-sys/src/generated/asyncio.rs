@@ -77,10 +77,10 @@ use super::stdinc::*;
 
 /// Types of asynchronous I/O tasks.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`READ`](SDL_AsyncIOTaskType::READ) | [`SDL_ASYNCIO_TASK_READ`] | A read operation. |
@@ -89,6 +89,20 @@ use super::stdinc::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AsyncIOTaskType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AsyncIOTaskType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_AsyncIOTaskType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AsyncIOTaskType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_AsyncIOTaskType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -113,11 +127,11 @@ impl ::core::fmt::Debug for SDL_AsyncIOTaskType {
 
 impl SDL_AsyncIOTaskType {
     /// A read operation.
-    pub const READ: Self = Self(0);
+    pub const READ: Self = Self((0 as ::core::ffi::c_int));
     /// A write operation.
-    pub const WRITE: Self = Self(1);
+    pub const WRITE: Self = Self((1 as ::core::ffi::c_int));
     /// A close operation.
-    pub const CLOSE: Self = Self(2);
+    pub const CLOSE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// A read operation.
@@ -127,12 +141,18 @@ pub const SDL_ASYNCIO_TASK_WRITE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::WRI
 /// A close operation.
 pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLOSE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOTaskType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::asyncio::METADATA_SDL_AsyncIOTaskType;
+}
+
 /// Possible outcomes of an asynchronous I/O task.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`COMPLETE`](SDL_AsyncIOResult::COMPLETE) | [`SDL_ASYNCIO_COMPLETE`] | request was completed without error |
@@ -141,6 +161,20 @@ pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLO
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AsyncIOResult(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AsyncIOResult {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_AsyncIOResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AsyncIOResult) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_AsyncIOResult> for ::core::ffi::c_int {
     #[inline(always)]
@@ -165,11 +199,11 @@ impl ::core::fmt::Debug for SDL_AsyncIOResult {
 
 impl SDL_AsyncIOResult {
     /// request was completed without error
-    pub const COMPLETE: Self = Self(0);
+    pub const COMPLETE: Self = Self((0 as ::core::ffi::c_int));
     /// request failed for some reason; check [`SDL_GetError()`]!
-    pub const FAILURE: Self = Self(1);
+    pub const FAILURE: Self = Self((1 as ::core::ffi::c_int));
     /// request was canceled before completing.
-    pub const CANCELED: Self = Self(2);
+    pub const CANCELED: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// request was completed without error
@@ -179,9 +213,15 @@ pub const SDL_ASYNCIO_FAILURE: SDL_AsyncIOResult = SDL_AsyncIOResult::FAILURE;
 /// request was canceled before completing.
 pub const SDL_ASYNCIO_CANCELED: SDL_AsyncIOResult = SDL_AsyncIOResult::CANCELED;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOResult {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::asyncio::METADATA_SDL_AsyncIOResult;
+}
+
 /// Information about a completed asynchronous I/O request.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -237,19 +277,19 @@ extern "C" {
     /// under the assumption that doing so is generally a fast operation. Future
     /// reads and writes to the opened file will be async, however.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: a UTF-8 string representing the filename to open.
     /// - `mode`: an ASCII string representing the mode to be used for opening
     ///   the file.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the [`SDL_AsyncIO`] structure that is created or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CloseAsyncIO`]
     /// - [`SDL_ReadAsyncIO`]
     /// - [`SDL_WriteAsyncIO`]
@@ -265,18 +305,18 @@ extern "C" {
     /// This call is _not_ asynchronous; it assumes that obtaining this info is a
     /// non-blocking operation in most reasonable cases.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `asyncio`: the [`SDL_AsyncIO`] to get the size of the data stream from.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the size of the data stream in the [`SDL_IOStream`] on success or a
     ///   negative error code on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetAsyncIOSize(asyncio: *mut SDL_AsyncIO) -> Sint64;
 }
@@ -300,7 +340,7 @@ extern "C" {
     /// An [`SDL_AsyncIOQueue`] must be specified. The newly-created task will be added
     /// to it when it completes its work.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `asyncio`: a pointer to an [`SDL_AsyncIO`] structure.
     /// - `ptr`: a pointer to a buffer to read data into.
     /// - `offset`: the position to start reading in the data source.
@@ -309,17 +349,17 @@ extern "C" {
     /// - `userdata`: an app-defined pointer that will be provided with the task
     ///   results.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WriteAsyncIO`]
     /// - [`SDL_CreateAsyncIOQueue`]
     pub fn SDL_ReadAsyncIO(
@@ -350,7 +390,7 @@ extern "C" {
     /// An [`SDL_AsyncIOQueue`] must be specified. The newly-created task will be added
     /// to it when it completes its work.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `asyncio`: a pointer to an [`SDL_AsyncIO`] structure.
     /// - `ptr`: a pointer to a buffer to write data from.
     /// - `offset`: the position to start writing to the data source.
@@ -359,17 +399,17 @@ extern "C" {
     /// - `userdata`: an app-defined pointer that will be provided with the task
     ///   results.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ReadAsyncIO`]
     /// - [`SDL_CreateAsyncIOQueue`]
     pub fn SDL_WriteAsyncIO(
@@ -416,22 +456,22 @@ extern "C" {
     /// An [`SDL_AsyncIOQueue`] must be specified. The newly-created task will be added
     /// to it when it completes its work.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `asyncio`: a pointer to an [`SDL_AsyncIO`] structure to close.
     /// - `flush`: true if data should sync to disk before the task completes.
     /// - `queue`: a queue to add the new [`SDL_AsyncIO`] to.
     /// - `userdata`: an app-defined pointer that will be provided with the task
     ///   results.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, but two
     ///   threads should not attempt to close the same object.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CloseAsyncIO(
         asyncio: *mut SDL_AsyncIO,
@@ -447,17 +487,17 @@ extern "C" {
     /// Async I/O operations are assigned to a queue when started. The queue can be
     /// checked for completed tasks thereafter.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new task queue object or NULL if there was an error; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DestroyAsyncIOQueue`]
     /// - [`SDL_GetAsyncIOResult`]
     /// - [`SDL_WaitAsyncIOResult`]
@@ -484,15 +524,15 @@ extern "C" {
     /// unblock those threads, and take measures (such as [`SDL_WaitThread()`]) to make
     /// sure they have finished their wait and won't wait on the queue again.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `queue`: the task queue to destroy.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, so long as
     ///   no other thread is waiting on the queue with
     ///   [`SDL_WaitAsyncIOResult`].
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DestroyAsyncIOQueue(queue: *mut SDL_AsyncIOQueue);
 }
@@ -510,21 +550,21 @@ extern "C" {
     /// It is safe for multiple threads to call this function on the same queue at
     /// once; a completed task will only go to one of the threads.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `queue`: the async I/O task queue to query.
     /// - `outcome`: details of a finished task will be written here. May not be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if a task has completed, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WaitAsyncIOResult`]
     pub fn SDL_GetAsyncIOResult(
         queue: *mut SDL_AsyncIOQueue,
@@ -561,23 +601,23 @@ extern "C" {
     /// polling, it is possible to have a timeout of -1 to wait forever, and use
     /// [`SDL_SignalAsyncIOQueue()`] to wake up the waiting threads later.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `queue`: the async I/O task queue to wait on.
     /// - `outcome`: details of a finished task will be written here. May not be
     ///   NULL.
     /// - `timeoutMS`: the maximum time to wait, in milliseconds, or -1 to wait
     ///   indefinitely.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if task has completed, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SignalAsyncIOQueue`]
     pub fn SDL_WaitAsyncIOResult(
         queue: *mut SDL_AsyncIOQueue,
@@ -600,16 +640,16 @@ extern "C" {
     /// flag to tell the threads to terminate and then using [`SDL_WaitThread()`] to
     /// make sure they've done so).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `queue`: the async I/O task queue to signal.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WaitAsyncIOResult`]
     pub fn SDL_SignalAsyncIOQueue(queue: *mut SDL_AsyncIOQueue);
 }
@@ -633,20 +673,20 @@ extern "C" {
     /// An [`SDL_AsyncIOQueue`] must be specified. The newly-created task will be added
     /// to it when it completes its work.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: the path to read all available data from.
     /// - `queue`: a queue to add the new [`SDL_AsyncIO`] to.
     /// - `userdata`: an app-defined pointer that will be provided with the task
     ///   results.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_LoadFile_IO`]
     pub fn SDL_LoadFileAsync(
         file: *const ::core::ffi::c_char,
@@ -660,10 +700,10 @@ extern "C" {
 /// This operates as an opaque handle. One can then request read or write
 /// operations on it.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_AsyncIOFromFile`]
 #[repr(C)]
 pub struct SDL_AsyncIO {
@@ -677,10 +717,10 @@ pub struct SDL_AsyncIO {
 /// allowing an app to manage multiple pending tasks in one place, in whatever
 /// order they complete.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateAsyncIOQueue`]
 /// - [`SDL_ReadAsyncIO`]
 /// - [`SDL_WriteAsyncIO`]

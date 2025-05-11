@@ -1,7 +1,8 @@
 [package]
 name = "sdl3-image-sys"
-version = "0.1.2+SDL3-image-3.2.4"
+version = "0.3.0+SDL3-image-3.2.4"
 edition = "2021"
+rust-version = "1.81"
 authors = ["Maia S. R."]
 license = "Zlib"
 description = "Low level Rust bindings for SDL3_image"
@@ -26,6 +27,12 @@ build-static-vendored = ["build-from-source-static", "sdlimage-vendored"]
 # Link SDL3_image as a static library. The default is to link a shared/dynamic library.
 link-static = []
 
+# Link SDL3_image as an Apple framework. The link-static feature has no effect if this is enabled.
+link-framework = []
+
+# Don't link anything, and provide linking flags via Cargo metadata.
+no-link = []
+
 # Use pkg-config to get link flags for SDL3_image. Only used when not building from source.
 # This has no effect if the link-framework feature is enabled.
 use-pkg-config = ["dep:pkg-config"]
@@ -36,7 +43,14 @@ use-pkg-config = ["dep:pkg-config"]
 use-vcpkg = ["dep:vcpkg"]
 
 # Implement the Debug trait for applicable types
-debug-impls = []
+debug-impls = ["sdl3-sys/debug-impls"]
+
+# Enable metadata
+metadata = []
+only-metadata = ["metadata", "no-link"]
+
+# Enable nightly features
+nightly = []
 
 no-default = [
     "no-default-backends",
@@ -146,7 +160,7 @@ no-sdlimage-tif-shared = []
 no-sdlimage-webp-shared = []
 
 [dependencies]
-sdl3-sys = { version = "0.4.5", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.6", path = "../sdl3-sys" }
 
 [build-dependencies.cmake]
 version = "0.1"

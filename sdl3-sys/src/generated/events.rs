@@ -56,10 +56,10 @@ use super::video::*;
 
 /// The types of events that can be delivered.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`FIRST`](SDL_EventType::FIRST) | [`SDL_EVENT_FIRST`] | Unused (do not remove) |
@@ -183,6 +183,20 @@ use super::video::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventType(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_EventType {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_EventType> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_EventType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_EventType> for Uint32 {
     #[inline(always)]
@@ -322,245 +336,245 @@ impl ::core::fmt::Debug for SDL_EventType {
 
 impl SDL_EventType {
     /// Unused (do not remove)
-    pub const FIRST: Self = Self(0);
+    pub const FIRST: Self = Self((0 as Uint32));
     /// User-requested quit
-    pub const QUIT: Self = Self(0x100);
+    pub const QUIT: Self = Self((0x100 as Uint32));
     /// The application is being terminated by the OS. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillTerminate()
     /// Called on Android in onDestroy()
-    pub const TERMINATING: Self = Self(257);
+    pub const TERMINATING: Self = Self((257 as Uint32));
     /// The application is low on memory, free memory if possible. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidReceiveMemoryWarning()
     /// Called on Android in onTrimMemory()
-    pub const LOW_MEMORY: Self = Self(258);
+    pub const LOW_MEMORY: Self = Self((258 as Uint32));
     /// The application is about to enter the background. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillResignActive()
     /// Called on Android in onPause()
-    pub const WILL_ENTER_BACKGROUND: Self = Self(259);
+    pub const WILL_ENTER_BACKGROUND: Self = Self((259 as Uint32));
     /// The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidEnterBackground()
     /// Called on Android in onPause()
-    pub const DID_ENTER_BACKGROUND: Self = Self(260);
+    pub const DID_ENTER_BACKGROUND: Self = Self((260 as Uint32));
     /// The application is about to enter the foreground. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationWillEnterForeground()
     /// Called on Android in onResume()
-    pub const WILL_ENTER_FOREGROUND: Self = Self(261);
+    pub const WILL_ENTER_FOREGROUND: Self = Self((261 as Uint32));
     /// The application is now interactive. This event must be handled in a callback set with [`SDL_AddEventWatch()`].
     /// Called on iOS in applicationDidBecomeActive()
     /// Called on Android in onResume()
-    pub const DID_ENTER_FOREGROUND: Self = Self(262);
+    pub const DID_ENTER_FOREGROUND: Self = Self((262 as Uint32));
     /// The user's locale preferences have changed.
-    pub const LOCALE_CHANGED: Self = Self(263);
+    pub const LOCALE_CHANGED: Self = Self((263 as Uint32));
     /// The system theme changed
-    pub const SYSTEM_THEME_CHANGED: Self = Self(264);
+    pub const SYSTEM_THEME_CHANGED: Self = Self((264 as Uint32));
     /// Display orientation has changed to data1
-    pub const DISPLAY_ORIENTATION: Self = Self(0x151);
+    pub const DISPLAY_ORIENTATION: Self = Self((0x151 as Uint32));
     /// Display has been added to the system
-    pub const DISPLAY_ADDED: Self = Self(338);
+    pub const DISPLAY_ADDED: Self = Self((338 as Uint32));
     /// Display has been removed from the system
-    pub const DISPLAY_REMOVED: Self = Self(339);
+    pub const DISPLAY_REMOVED: Self = Self((339 as Uint32));
     /// Display has changed position
-    pub const DISPLAY_MOVED: Self = Self(340);
+    pub const DISPLAY_MOVED: Self = Self((340 as Uint32));
     /// Display has changed desktop mode
-    pub const DISPLAY_DESKTOP_MODE_CHANGED: Self = Self(341);
+    pub const DISPLAY_DESKTOP_MODE_CHANGED: Self = Self((341 as Uint32));
     /// Display has changed current mode
-    pub const DISPLAY_CURRENT_MODE_CHANGED: Self = Self(342);
+    pub const DISPLAY_CURRENT_MODE_CHANGED: Self = Self((342 as Uint32));
     /// Display has changed content scale
-    pub const DISPLAY_CONTENT_SCALE_CHANGED: Self = Self(343);
+    pub const DISPLAY_CONTENT_SCALE_CHANGED: Self = Self((343 as Uint32));
     pub const DISPLAY_FIRST: Self = SDL_EVENT_DISPLAY_ORIENTATION;
     pub const DISPLAY_LAST: Self = SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED;
     /// Window has been shown
-    pub const WINDOW_SHOWN: Self = Self(0x202);
+    pub const WINDOW_SHOWN: Self = Self((0x202 as Uint32));
     /// Window has been hidden
-    pub const WINDOW_HIDDEN: Self = Self(515);
+    pub const WINDOW_HIDDEN: Self = Self((515 as Uint32));
     /// Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event
-    pub const WINDOW_EXPOSED: Self = Self(516);
+    pub const WINDOW_EXPOSED: Self = Self((516 as Uint32));
     /// Window has been moved to data1, data2
-    pub const WINDOW_MOVED: Self = Self(517);
+    pub const WINDOW_MOVED: Self = Self((517 as Uint32));
     /// Window has been resized to data1xdata2
-    pub const WINDOW_RESIZED: Self = Self(518);
+    pub const WINDOW_RESIZED: Self = Self((518 as Uint32));
     /// The pixel size of the window has changed to data1xdata2
-    pub const WINDOW_PIXEL_SIZE_CHANGED: Self = Self(519);
+    pub const WINDOW_PIXEL_SIZE_CHANGED: Self = Self((519 as Uint32));
     /// The pixel size of a Metal view associated with the window has changed
-    pub const WINDOW_METAL_VIEW_RESIZED: Self = Self(520);
+    pub const WINDOW_METAL_VIEW_RESIZED: Self = Self((520 as Uint32));
     /// Window has been minimized
-    pub const WINDOW_MINIMIZED: Self = Self(521);
+    pub const WINDOW_MINIMIZED: Self = Self((521 as Uint32));
     /// Window has been maximized
-    pub const WINDOW_MAXIMIZED: Self = Self(522);
+    pub const WINDOW_MAXIMIZED: Self = Self((522 as Uint32));
     /// Window has been restored to normal size and position
-    pub const WINDOW_RESTORED: Self = Self(523);
+    pub const WINDOW_RESTORED: Self = Self((523 as Uint32));
     /// Window has gained mouse focus
-    pub const WINDOW_MOUSE_ENTER: Self = Self(524);
+    pub const WINDOW_MOUSE_ENTER: Self = Self((524 as Uint32));
     /// Window has lost mouse focus
-    pub const WINDOW_MOUSE_LEAVE: Self = Self(525);
+    pub const WINDOW_MOUSE_LEAVE: Self = Self((525 as Uint32));
     /// Window has gained keyboard focus
-    pub const WINDOW_FOCUS_GAINED: Self = Self(526);
+    pub const WINDOW_FOCUS_GAINED: Self = Self((526 as Uint32));
     /// Window has lost keyboard focus
-    pub const WINDOW_FOCUS_LOST: Self = Self(527);
+    pub const WINDOW_FOCUS_LOST: Self = Self((527 as Uint32));
     /// The window manager requests that the window be closed
-    pub const WINDOW_CLOSE_REQUESTED: Self = Self(528);
+    pub const WINDOW_CLOSE_REQUESTED: Self = Self((528 as Uint32));
     /// Window had a hit test that wasn't [`SDL_HITTEST_NORMAL`]
-    pub const WINDOW_HIT_TEST: Self = Self(529);
+    pub const WINDOW_HIT_TEST: Self = Self((529 as Uint32));
     /// The ICC profile of the window's display has changed
-    pub const WINDOW_ICCPROF_CHANGED: Self = Self(530);
+    pub const WINDOW_ICCPROF_CHANGED: Self = Self((530 as Uint32));
     /// Window has been moved to display data1
-    pub const WINDOW_DISPLAY_CHANGED: Self = Self(531);
+    pub const WINDOW_DISPLAY_CHANGED: Self = Self((531 as Uint32));
     /// Window display scale has been changed
-    pub const WINDOW_DISPLAY_SCALE_CHANGED: Self = Self(532);
+    pub const WINDOW_DISPLAY_SCALE_CHANGED: Self = Self((532 as Uint32));
     /// The window safe area has been changed
-    pub const WINDOW_SAFE_AREA_CHANGED: Self = Self(533);
+    pub const WINDOW_SAFE_AREA_CHANGED: Self = Self((533 as Uint32));
     /// The window has been occluded
-    pub const WINDOW_OCCLUDED: Self = Self(534);
+    pub const WINDOW_OCCLUDED: Self = Self((534 as Uint32));
     /// The window has entered fullscreen mode
-    pub const WINDOW_ENTER_FULLSCREEN: Self = Self(535);
+    pub const WINDOW_ENTER_FULLSCREEN: Self = Self((535 as Uint32));
     /// The window has left fullscreen mode
-    pub const WINDOW_LEAVE_FULLSCREEN: Self = Self(536);
+    pub const WINDOW_LEAVE_FULLSCREEN: Self = Self((536 as Uint32));
     /// The window with the associated ID is being or has been destroyed. If this message is being handled
     /// in an event watcher, the window handle is still valid and can still be used to retrieve any properties
     /// associated with the window. Otherwise, the handle has already been destroyed and all resources
     /// associated with it are invalid
-    pub const WINDOW_DESTROYED: Self = Self(537);
+    pub const WINDOW_DESTROYED: Self = Self((537 as Uint32));
     /// Window HDR properties have changed
-    pub const WINDOW_HDR_STATE_CHANGED: Self = Self(538);
+    pub const WINDOW_HDR_STATE_CHANGED: Self = Self((538 as Uint32));
     pub const WINDOW_FIRST: Self = SDL_EVENT_WINDOW_SHOWN;
     pub const WINDOW_LAST: Self = SDL_EVENT_WINDOW_HDR_STATE_CHANGED;
     /// Key pressed
-    pub const KEY_DOWN: Self = Self(0x300);
+    pub const KEY_DOWN: Self = Self((0x300 as Uint32));
     /// Key released
-    pub const KEY_UP: Self = Self(769);
+    pub const KEY_UP: Self = Self((769 as Uint32));
     /// Keyboard text editing (composition)
-    pub const TEXT_EDITING: Self = Self(770);
+    pub const TEXT_EDITING: Self = Self((770 as Uint32));
     /// Keyboard text input
-    pub const TEXT_INPUT: Self = Self(771);
+    pub const TEXT_INPUT: Self = Self((771 as Uint32));
     /// Keymap changed due to a system event such as an
     /// input language or keyboard layout change.
-    pub const KEYMAP_CHANGED: Self = Self(772);
+    pub const KEYMAP_CHANGED: Self = Self((772 as Uint32));
     /// A new keyboard has been inserted into the system
-    pub const KEYBOARD_ADDED: Self = Self(773);
+    pub const KEYBOARD_ADDED: Self = Self((773 as Uint32));
     /// A keyboard has been removed
-    pub const KEYBOARD_REMOVED: Self = Self(774);
+    pub const KEYBOARD_REMOVED: Self = Self((774 as Uint32));
     /// Keyboard text editing candidates
-    pub const TEXT_EDITING_CANDIDATES: Self = Self(775);
+    pub const TEXT_EDITING_CANDIDATES: Self = Self((775 as Uint32));
     /// Mouse moved
-    pub const MOUSE_MOTION: Self = Self(0x400);
+    pub const MOUSE_MOTION: Self = Self((0x400 as Uint32));
     /// Mouse button pressed
-    pub const MOUSE_BUTTON_DOWN: Self = Self(1025);
+    pub const MOUSE_BUTTON_DOWN: Self = Self((1025 as Uint32));
     /// Mouse button released
-    pub const MOUSE_BUTTON_UP: Self = Self(1026);
+    pub const MOUSE_BUTTON_UP: Self = Self((1026 as Uint32));
     /// Mouse wheel motion
-    pub const MOUSE_WHEEL: Self = Self(1027);
+    pub const MOUSE_WHEEL: Self = Self((1027 as Uint32));
     /// A new mouse has been inserted into the system
-    pub const MOUSE_ADDED: Self = Self(1028);
+    pub const MOUSE_ADDED: Self = Self((1028 as Uint32));
     /// A mouse has been removed
-    pub const MOUSE_REMOVED: Self = Self(1029);
+    pub const MOUSE_REMOVED: Self = Self((1029 as Uint32));
     /// Joystick axis motion
-    pub const JOYSTICK_AXIS_MOTION: Self = Self(0x600);
+    pub const JOYSTICK_AXIS_MOTION: Self = Self((0x600 as Uint32));
     /// Joystick trackball motion
-    pub const JOYSTICK_BALL_MOTION: Self = Self(1537);
+    pub const JOYSTICK_BALL_MOTION: Self = Self((1537 as Uint32));
     /// Joystick hat position change
-    pub const JOYSTICK_HAT_MOTION: Self = Self(1538);
+    pub const JOYSTICK_HAT_MOTION: Self = Self((1538 as Uint32));
     /// Joystick button pressed
-    pub const JOYSTICK_BUTTON_DOWN: Self = Self(1539);
+    pub const JOYSTICK_BUTTON_DOWN: Self = Self((1539 as Uint32));
     /// Joystick button released
-    pub const JOYSTICK_BUTTON_UP: Self = Self(1540);
+    pub const JOYSTICK_BUTTON_UP: Self = Self((1540 as Uint32));
     /// A new joystick has been inserted into the system
-    pub const JOYSTICK_ADDED: Self = Self(1541);
+    pub const JOYSTICK_ADDED: Self = Self((1541 as Uint32));
     /// An opened joystick has been removed
-    pub const JOYSTICK_REMOVED: Self = Self(1542);
+    pub const JOYSTICK_REMOVED: Self = Self((1542 as Uint32));
     /// Joystick battery level change
-    pub const JOYSTICK_BATTERY_UPDATED: Self = Self(1543);
+    pub const JOYSTICK_BATTERY_UPDATED: Self = Self((1543 as Uint32));
     /// Joystick update is complete
-    pub const JOYSTICK_UPDATE_COMPLETE: Self = Self(1544);
+    pub const JOYSTICK_UPDATE_COMPLETE: Self = Self((1544 as Uint32));
     /// Gamepad axis motion
-    pub const GAMEPAD_AXIS_MOTION: Self = Self(0x650);
+    pub const GAMEPAD_AXIS_MOTION: Self = Self((0x650 as Uint32));
     /// Gamepad button pressed
-    pub const GAMEPAD_BUTTON_DOWN: Self = Self(1617);
+    pub const GAMEPAD_BUTTON_DOWN: Self = Self((1617 as Uint32));
     /// Gamepad button released
-    pub const GAMEPAD_BUTTON_UP: Self = Self(1618);
+    pub const GAMEPAD_BUTTON_UP: Self = Self((1618 as Uint32));
     /// A new gamepad has been inserted into the system
-    pub const GAMEPAD_ADDED: Self = Self(1619);
+    pub const GAMEPAD_ADDED: Self = Self((1619 as Uint32));
     /// A gamepad has been removed
-    pub const GAMEPAD_REMOVED: Self = Self(1620);
+    pub const GAMEPAD_REMOVED: Self = Self((1620 as Uint32));
     /// The gamepad mapping was updated
-    pub const GAMEPAD_REMAPPED: Self = Self(1621);
+    pub const GAMEPAD_REMAPPED: Self = Self((1621 as Uint32));
     /// Gamepad touchpad was touched
-    pub const GAMEPAD_TOUCHPAD_DOWN: Self = Self(1622);
+    pub const GAMEPAD_TOUCHPAD_DOWN: Self = Self((1622 as Uint32));
     /// Gamepad touchpad finger was moved
-    pub const GAMEPAD_TOUCHPAD_MOTION: Self = Self(1623);
+    pub const GAMEPAD_TOUCHPAD_MOTION: Self = Self((1623 as Uint32));
     /// Gamepad touchpad finger was lifted
-    pub const GAMEPAD_TOUCHPAD_UP: Self = Self(1624);
+    pub const GAMEPAD_TOUCHPAD_UP: Self = Self((1624 as Uint32));
     /// Gamepad sensor was updated
-    pub const GAMEPAD_SENSOR_UPDATE: Self = Self(1625);
+    pub const GAMEPAD_SENSOR_UPDATE: Self = Self((1625 as Uint32));
     /// Gamepad update is complete
-    pub const GAMEPAD_UPDATE_COMPLETE: Self = Self(1626);
+    pub const GAMEPAD_UPDATE_COMPLETE: Self = Self((1626 as Uint32));
     /// Gamepad Steam handle has changed
-    pub const GAMEPAD_STEAM_HANDLE_UPDATED: Self = Self(1627);
-    pub const FINGER_DOWN: Self = Self(0x700);
-    pub const FINGER_UP: Self = Self(1793);
-    pub const FINGER_MOTION: Self = Self(1794);
-    pub const FINGER_CANCELED: Self = Self(1795);
+    pub const GAMEPAD_STEAM_HANDLE_UPDATED: Self = Self((1627 as Uint32));
+    pub const FINGER_DOWN: Self = Self((0x700 as Uint32));
+    pub const FINGER_UP: Self = Self((1793 as Uint32));
+    pub const FINGER_MOTION: Self = Self((1794 as Uint32));
+    pub const FINGER_CANCELED: Self = Self((1795 as Uint32));
     /// The clipboard or primary selection changed
-    pub const CLIPBOARD_UPDATE: Self = Self(0x900);
+    pub const CLIPBOARD_UPDATE: Self = Self((0x900 as Uint32));
     /// The system requests a file open
-    pub const DROP_FILE: Self = Self(0x1000);
+    pub const DROP_FILE: Self = Self((0x1000 as Uint32));
     /// text/plain drag-and-drop event
-    pub const DROP_TEXT: Self = Self(4097);
+    pub const DROP_TEXT: Self = Self((4097 as Uint32));
     /// A new set of drops is beginning (NULL filename)
-    pub const DROP_BEGIN: Self = Self(4098);
+    pub const DROP_BEGIN: Self = Self((4098 as Uint32));
     /// Current set of drops is now complete (NULL filename)
-    pub const DROP_COMPLETE: Self = Self(4099);
+    pub const DROP_COMPLETE: Self = Self((4099 as Uint32));
     /// Position while moving over the window
-    pub const DROP_POSITION: Self = Self(4100);
+    pub const DROP_POSITION: Self = Self((4100 as Uint32));
     /// A new audio device is available
-    pub const AUDIO_DEVICE_ADDED: Self = Self(0x1100);
+    pub const AUDIO_DEVICE_ADDED: Self = Self((0x1100 as Uint32));
     /// An audio device has been removed.
-    pub const AUDIO_DEVICE_REMOVED: Self = Self(4353);
+    pub const AUDIO_DEVICE_REMOVED: Self = Self((4353 as Uint32));
     /// An audio device's format has been changed by the system.
-    pub const AUDIO_DEVICE_FORMAT_CHANGED: Self = Self(4354);
+    pub const AUDIO_DEVICE_FORMAT_CHANGED: Self = Self((4354 as Uint32));
     /// A sensor was updated
-    pub const SENSOR_UPDATE: Self = Self(0x1200);
+    pub const SENSOR_UPDATE: Self = Self((0x1200 as Uint32));
     /// Pressure-sensitive pen has become available
-    pub const PEN_PROXIMITY_IN: Self = Self(0x1300);
+    pub const PEN_PROXIMITY_IN: Self = Self((0x1300 as Uint32));
     /// Pressure-sensitive pen has become unavailable
-    pub const PEN_PROXIMITY_OUT: Self = Self(4865);
+    pub const PEN_PROXIMITY_OUT: Self = Self((4865 as Uint32));
     /// Pressure-sensitive pen touched drawing surface
-    pub const PEN_DOWN: Self = Self(4866);
+    pub const PEN_DOWN: Self = Self((4866 as Uint32));
     /// Pressure-sensitive pen stopped touching drawing surface
-    pub const PEN_UP: Self = Self(4867);
+    pub const PEN_UP: Self = Self((4867 as Uint32));
     /// Pressure-sensitive pen button pressed
-    pub const PEN_BUTTON_DOWN: Self = Self(4868);
+    pub const PEN_BUTTON_DOWN: Self = Self((4868 as Uint32));
     /// Pressure-sensitive pen button released
-    pub const PEN_BUTTON_UP: Self = Self(4869);
+    pub const PEN_BUTTON_UP: Self = Self((4869 as Uint32));
     /// Pressure-sensitive pen is moving on the tablet
-    pub const PEN_MOTION: Self = Self(4870);
+    pub const PEN_MOTION: Self = Self((4870 as Uint32));
     /// Pressure-sensitive pen angle/pressure/etc changed
-    pub const PEN_AXIS: Self = Self(4871);
+    pub const PEN_AXIS: Self = Self((4871 as Uint32));
     /// A new camera device is available
-    pub const CAMERA_DEVICE_ADDED: Self = Self(0x1400);
+    pub const CAMERA_DEVICE_ADDED: Self = Self((0x1400 as Uint32));
     /// A camera device has been removed.
-    pub const CAMERA_DEVICE_REMOVED: Self = Self(5121);
+    pub const CAMERA_DEVICE_REMOVED: Self = Self((5121 as Uint32));
     /// A camera device has been approved for use by the user.
-    pub const CAMERA_DEVICE_APPROVED: Self = Self(5122);
+    pub const CAMERA_DEVICE_APPROVED: Self = Self((5122 as Uint32));
     /// A camera device has been denied for use by the user.
-    pub const CAMERA_DEVICE_DENIED: Self = Self(5123);
+    pub const CAMERA_DEVICE_DENIED: Self = Self((5123 as Uint32));
     /// The render targets have been reset and their contents need to be updated
-    pub const RENDER_TARGETS_RESET: Self = Self(0x2000);
+    pub const RENDER_TARGETS_RESET: Self = Self((0x2000 as Uint32));
     /// The device has been reset and all textures need to be recreated
-    pub const RENDER_DEVICE_RESET: Self = Self(8193);
+    pub const RENDER_DEVICE_RESET: Self = Self((8193 as Uint32));
     /// The device has been lost and can't be recovered.
-    pub const RENDER_DEVICE_LOST: Self = Self(8194);
-    pub const PRIVATE0: Self = Self(0x4000);
-    pub const PRIVATE1: Self = Self(16385);
-    pub const PRIVATE2: Self = Self(16386);
-    pub const PRIVATE3: Self = Self(16387);
+    pub const RENDER_DEVICE_LOST: Self = Self((8194 as Uint32));
+    pub const PRIVATE0: Self = Self((0x4000 as Uint32));
+    pub const PRIVATE1: Self = Self((16385 as Uint32));
+    pub const PRIVATE2: Self = Self((16386 as Uint32));
+    pub const PRIVATE3: Self = Self((16387 as Uint32));
     /// Signals the end of an event poll cycle
-    pub const POLL_SENTINEL: Self = Self(0x7f00);
+    pub const POLL_SENTINEL: Self = Self((0x7f00 as Uint32));
     ///  Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,
     /// and should be allocated with [`SDL_RegisterEvents()`]
-    pub const USER: Self = Self(0x8000);
+    pub const USER: Self = Self((0x8000 as Uint32));
     /// *  This last event is only for bounding internal arrays
-    pub const LAST: Self = Self(0xffff);
-    pub const ENUM_PADDING: Self = Self(0x7fffffff);
+    pub const LAST: Self = Self((0xffff as Uint32));
+    pub const ENUM_PADDING: Self = Self((0x7fffffff as Uint32));
 }
 
 /// Unused (do not remove)
@@ -816,9 +830,15 @@ pub const SDL_EVENT_USER: SDL_EventType = SDL_EventType::USER;
 pub const SDL_EVENT_LAST: SDL_EventType = SDL_EventType::LAST;
 pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::events::METADATA_SDL_EventType;
+}
+
 /// Fields shared by every event
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -833,7 +853,7 @@ pub struct SDL_CommonEvent {
 
 /// Display state change event data (event.display.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -854,7 +874,7 @@ pub struct SDL_DisplayEvent {
 
 /// Window state change event data (event.window.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -875,7 +895,7 @@ pub struct SDL_WindowEvent {
 
 /// Keyboard device event structure (event.kdevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -898,10 +918,10 @@ pub struct SDL_KeyboardDeviceEvent {
 /// event scancode and modifiers directly from the keyboard layout, bypassing
 /// [`SDL_HINT_KEYCODE_OPTIONS`], by calling [`SDL_GetKeyFromScancode()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetKeyFromScancode`]
 /// - [`SDL_HINT_KEYCODE_OPTIONS`]
 #[repr(C)]
@@ -937,7 +957,7 @@ pub struct SDL_KeyboardEvent {
 /// will be inserted into the editing text. The length is the number of UTF-8
 /// characters that will be replaced by new typing.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -968,7 +988,7 @@ impl ::core::default::Default for SDL_TextEditingEvent {
 
 /// Keyboard IME candidates event structure (event.edit_candidates.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -989,8 +1009,11 @@ pub struct SDL_TextEditingCandidatesEvent {
     pub selected_candidate: Sint32,
     /// true if the list is horizontal, false if it's vertical
     pub horizontal: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -1007,10 +1030,10 @@ impl ::core::default::Default for SDL_TextEditingCandidatesEvent {
 /// This event will never be delivered unless text input is enabled by calling
 /// [`SDL_StartTextInput()`]. Text input is disabled by default!
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_StartTextInput`]
 /// - [`SDL_StopTextInput`]
 #[repr(C)]
@@ -1038,7 +1061,7 @@ impl ::core::default::Default for SDL_TextInputEvent {
 
 /// Mouse device event structure (event.mdevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1055,7 +1078,7 @@ pub struct SDL_MouseDeviceEvent {
 
 /// Mouse motion event structure (event.motion.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1084,7 +1107,7 @@ pub struct SDL_MouseMotionEvent {
 
 /// Mouse button event structure (event.button.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1105,6 +1128,7 @@ pub struct SDL_MouseButtonEvent {
     pub down: ::core::primitive::bool,
     /// 1 for single-click, 2 for double-click, etc.
     pub clicks: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: Uint8,
     /// X coordinate, relative to window
     pub x: ::core::ffi::c_float,
@@ -1114,7 +1138,7 @@ pub struct SDL_MouseButtonEvent {
 
 /// Mouse wheel event structure (event.wheel.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1139,11 +1163,15 @@ pub struct SDL_MouseWheelEvent {
     pub mouse_x: ::core::ffi::c_float,
     /// Y coordinate, relative to window
     pub mouse_y: ::core::ffi::c_float,
+    /// The amount scrolled horizontally, accumulated to whole scroll "ticks" (added in 3.2.12)
+    pub integer_x: Sint32,
+    /// The amount scrolled vertically, accumulated to whole scroll "ticks" (added in 3.2.12)
+    pub integer_y: Sint32,
 }
 
 /// Joystick axis motion event structure (event.jaxis.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1158,17 +1186,21 @@ pub struct SDL_JoyAxisEvent {
     pub which: SDL_JoystickID,
     /// The joystick axis index
     pub axis: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     /// The axis value (range: -32768 to 32767)
     pub value: Sint16,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding4: Uint16,
 }
 
 /// Joystick trackball motion event structure (event.jball.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1183,8 +1215,11 @@ pub struct SDL_JoyBallEvent {
     pub which: SDL_JoystickID,
     /// The joystick trackball index
     pub ball: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     /// The relative motion in the X direction
     pub xrel: Sint16,
@@ -1194,7 +1229,7 @@ pub struct SDL_JoyBallEvent {
 
 /// Joystick hat position change event structure (event.jhat.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1210,20 +1245,22 @@ pub struct SDL_JoyHatEvent {
     /// The joystick hat index
     pub hat: Uint8,
     /// The hat position value.
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HAT_LEFTUP`] [`SDL_HAT_UP`] [`SDL_HAT_RIGHTUP`]
     /// - [`SDL_HAT_LEFT`] [`SDL_HAT_CENTERED`] [`SDL_HAT_RIGHT`]
     /// - [`SDL_HAT_LEFTDOWN`] [`SDL_HAT_DOWN`] [`SDL_HAT_RIGHTDOWN`]
     ///
     /// Note that zero means the POV is centered.
     pub value: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
 /// Joystick button event structure (event.jbutton.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1240,7 +1277,9 @@ pub struct SDL_JoyButtonEvent {
     pub button: Uint8,
     /// true if the button is pressed
     pub down: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -1249,10 +1288,10 @@ pub struct SDL_JoyButtonEvent {
 /// SDL will send JOYSTICK_ADDED events for devices that are already plugged in
 /// during [`SDL_Init`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GamepadDeviceEvent`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1269,7 +1308,7 @@ pub struct SDL_JoyDeviceEvent {
 
 /// Joystick battery level change event structure (event.jbattery.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1290,7 +1329,7 @@ pub struct SDL_JoyBatteryEvent {
 
 /// Gamepad axis motion event structure (event.gaxis.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1305,17 +1344,21 @@ pub struct SDL_GamepadAxisEvent {
     pub which: SDL_JoystickID,
     /// The gamepad axis ([`SDL_GamepadAxis`])
     pub axis: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     /// The axis value (range: -32768 to 32767)
     pub value: Sint16,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding4: Uint16,
 }
 
 /// Gamepad button event structure (event.gbutton.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1332,7 +1375,9 @@ pub struct SDL_GamepadButtonEvent {
     pub button: Uint8,
     /// true if the button is pressed
     pub down: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -1345,10 +1390,10 @@ pub struct SDL_GamepadButtonEvent {
 /// in during [`SDL_Init()`] and are recognized as gamepads. It will also send
 /// events for joysticks that get gamepad mappings at runtime.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_JoyDeviceEvent`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1365,7 +1410,7 @@ pub struct SDL_GamepadDeviceEvent {
 
 /// Gamepad touchpad event structure (event.gtouchpad.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1392,7 +1437,7 @@ pub struct SDL_GamepadTouchpadEvent {
 
 /// Gamepad sensor event structure (event.gsensor.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1415,7 +1460,7 @@ pub struct SDL_GamepadSensorEvent {
 
 /// Audio device event structure (event.adevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1430,14 +1475,17 @@ pub struct SDL_AudioDeviceEvent {
     pub which: SDL_AudioDeviceID,
     /// false if a playback device, true if a recording device.
     pub recording: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
 /// Camera device event structure (event.cdevice.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1454,7 +1502,7 @@ pub struct SDL_CameraDeviceEvent {
 
 /// Renderer event structure (event.render.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1485,7 +1533,7 @@ pub struct SDL_RenderEvent {
 /// report a touch outside of the window, which will also be outside of the
 /// range.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1525,7 +1573,7 @@ pub struct SDL_TouchFingerEvent {
 /// is there." The pen touching and lifting off from the tablet while not
 /// leaving the area are handled by [`SDL_EVENT_PEN_DOWN`] and [`SDL_EVENT_PEN_UP`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1550,7 +1598,7 @@ pub struct SDL_PenProximityEvent {
 /// `pen_state & SDL_PEN_INPUT_DOWN` to decide if a pen is "drawing" when
 /// dealing with pen motion.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1578,7 +1626,7 @@ pub struct SDL_PenMotionEvent {
 /// These events come when a pen touches a surface (a tablet, etc), or lifts
 /// off from one.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1610,7 +1658,7 @@ pub struct SDL_PenTouchEvent {
 /// This is for buttons on the pen itself that the user might click. The pen
 /// itself pressing down to draw triggers a [`SDL_EVENT_PEN_DOWN`] event instead.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1642,7 +1690,7 @@ pub struct SDL_PenButtonEvent {
 /// You might get some of these events even if the pen isn't touching the
 /// tablet.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1672,7 +1720,7 @@ pub struct SDL_PenAxisEvent {
 /// An event used to drop text or request a file open by the system
 /// (event.drop.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1706,7 +1754,7 @@ impl ::core::default::Default for SDL_DropEvent {
 /// An event triggered when the clipboard contents have changed
 /// (event.clipboard.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1735,7 +1783,7 @@ impl ::core::default::Default for SDL_ClipboardEvent {
 
 /// Sensor event structure (event.sensor.*)
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -1756,7 +1804,7 @@ pub struct SDL_SensorEvent {
 
 /// The "quit requested" event
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -1777,7 +1825,7 @@ pub struct SDL_QuitEvent {
 /// the programmer; the only requirement is that '''type''' is a value obtained
 /// from [`SDL_RegisterEvents()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1811,7 +1859,7 @@ impl ::core::default::Default for SDL_UserEvent {
 /// The [`SDL_Event`] structure is the core of all event handling in SDL. [`SDL_Event`]
 /// is a union of all event structures used in SDL.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -1892,6 +1940,7 @@ pub union SDL_Event {
     pub drop: SDL_DropEvent,
     /// Clipboard event data
     pub clipboard: SDL_ClipboardEvent,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: [Uint8; 128],
 }
 
@@ -1920,13 +1969,13 @@ extern "C" {
     /// polling or waiting for events (e.g. you are filtering them), then you must
     /// call [`SDL_PumpEvents()`] to force an event queue update.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_WaitEvent`]
     pub fn SDL_PumpEvents();
@@ -1934,10 +1983,10 @@ extern "C" {
 
 /// The type of action to request from [`SDL_PeepEvents()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`ADDEVENT`](SDL_EventAction::ADDEVENT) | [`SDL_ADDEVENT`] | Add events to the back of the queue. |
@@ -1946,6 +1995,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EventAction(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_EventAction {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_EventAction> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_EventAction) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_EventAction> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1970,11 +2033,11 @@ impl ::core::fmt::Debug for SDL_EventAction {
 
 impl SDL_EventAction {
     /// Add events to the back of the queue.
-    pub const ADDEVENT: Self = Self(0);
+    pub const ADDEVENT: Self = Self((0 as ::core::ffi::c_int));
     /// Check but don't remove events from the queue front.
-    pub const PEEKEVENT: Self = Self(1);
+    pub const PEEKEVENT: Self = Self((1 as ::core::ffi::c_int));
     /// Retrieve/remove events from the front of the queue.
-    pub const GETEVENT: Self = Self(2);
+    pub const GETEVENT: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Add events to the back of the queue.
@@ -1983,6 +2046,12 @@ pub const SDL_ADDEVENT: SDL_EventAction = SDL_EventAction::ADDEVENT;
 pub const SDL_PEEKEVENT: SDL_EventAction = SDL_EventAction::PEEKEVENT;
 /// Retrieve/remove events from the front of the queue.
 pub const SDL_GETEVENT: SDL_EventAction = SDL_EventAction::GETEVENT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventAction {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::events::METADATA_SDL_EventAction;
+}
 
 extern "C" {
     /// Check the event queue for messages and optionally return them.
@@ -2004,7 +2073,7 @@ extern "C" {
     /// Otherwise, the events may not be ready to be filtered when you call
     /// [`SDL_PeepEvents()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `events`: destination buffer for the retrieved events, may be NULL to
     ///   leave the events in the queue and return the number of events
     ///   that would have been stored.
@@ -2017,17 +2086,17 @@ extern "C" {
     /// - `maxType`: maximum value of the event type to be considered;
     ///   [`SDL_EVENT_LAST`] is a safe choice.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of events actually stored or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_PumpEvents`]
     /// - [`SDL_PushEvent`]
@@ -2046,20 +2115,20 @@ extern "C" {
     /// If you need to check for a range of event types, use [`SDL_HasEvents()`]
     /// instead.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event to be queried; see [`SDL_EventType`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if events matching `type` are present, or false if events
     ///   matching `type` are not present.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HasEvents`]
     pub fn SDL_HasEvent(r#type: Uint32) -> ::core::primitive::bool;
 }
@@ -2069,23 +2138,23 @@ extern "C" {
     ///
     /// If you need to check for a single event type, use [`SDL_HasEvent()`] instead.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `minType`: the low end of event type to be queried, inclusive; see
     ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be queried, inclusive; see
     ///   [`SDL_EventType`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if events with type >= `minType` and <= `maxType` are
     ///   present, or false if not.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HasEvents`]
     pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> ::core::primitive::bool;
 }
@@ -2108,16 +2177,16 @@ extern "C" {
     /// use [`SDL_PeepEvents()`] to remove and clean up those events before calling
     /// this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event to be cleared; see [`SDL_EventType`] for details.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_FlushEvents`]
     pub fn SDL_FlushEvent(r#type: Uint32);
 }
@@ -2136,19 +2205,19 @@ extern "C" {
     /// sure that all pending OS events are flushed, you can call [`SDL_PumpEvents()`]
     /// on the main thread immediately before the flush call.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `minType`: the low end of event type to be cleared, inclusive; see
     ///   [`SDL_EventType`] for details.
     /// - `maxType`: the high end of event type to be cleared, inclusive; see
     ///   [`SDL_EventType`] for details.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_FlushEvent`]
     pub fn SDL_FlushEvents(minType: Uint32, maxType: Uint32);
 }
@@ -2185,20 +2254,20 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled with the next event from
     ///   the queue, or NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if this got an event or false if there are none available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PushEvent`]
     /// - [`SDL_WaitEvent`]
     /// - [`SDL_WaitEventTimeout`]
@@ -2214,21 +2283,21 @@ extern "C" {
     /// As this function may implicitly call [`SDL_PumpEvents()`], you can only call
     /// this function in the thread that initialized the video subsystem.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false if there was an error while waiting for
     ///   events; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_PushEvent`]
     /// - [`SDL_WaitEventTimeout`]
@@ -2248,23 +2317,23 @@ extern "C" {
     /// The timeout is not guaranteed, the actual wait time could be longer due to
     /// system scheduling.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] structure to be filled in with the next event
     ///   from the queue, or NULL.
     /// - `timeoutMS`: the maximum number of milliseconds to wait for the next
     ///   available event.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if this got an event or false if the timeout elapsed without
     ///   any events available.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_PushEvent`]
     /// - [`SDL_WaitEvent`]
@@ -2293,21 +2362,21 @@ extern "C" {
     /// get an event type that does not conflict with other code that also wants
     /// its own custom event types.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: the [`SDL_Event`] to be added to the queue.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false if the event was filtered or on failure;
     ///   call [`SDL_GetError()`] for more information. A common reason for
     ///   error is the event queue being full.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PeepEvents`]
     /// - [`SDL_PollEvent`]
     /// - [`SDL_RegisterEvents`]
@@ -2316,25 +2385,25 @@ extern "C" {
 
 /// A function pointer used for callbacks that watch the event queue.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: what was passed as `userdata` to [`SDL_SetEventFilter()`] or
 ///   [`SDL_AddEventWatch`], etc.
 /// - `event`: the event that triggered the callback.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true to permit event to be added to the queue, and false to
 ///   disallow it. When used with [`SDL_AddEventWatch`], the return value is
 ///   ignored.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// SDL may call this callback at any time from any thread; the
 ///   application is responsible for locking resources the callback
 ///   touches that need to be protected.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetEventFilter`]
 /// - [`SDL_AddEventWatch`]
 pub type SDL_EventFilter = ::core::option::Option<
@@ -2370,17 +2439,17 @@ extern "C" {
     /// the event filter, but events pushed onto the queue with [`SDL_PeepEvents()`] do
     /// not.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AddEventWatch`]
     /// - [`SDL_SetEventEnabled`]
     /// - [`SDL_GetEventFilter`]
@@ -2395,21 +2464,21 @@ extern "C" {
     /// This function can be used to "chain" filters, by saving the existing filter
     /// before replacing it with a function that will call that saved filter.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: the current callback function will be stored here.
     /// - `userdata`: the pointer that is passed to the current event filter will
     ///   be stored here.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false if there is no event filter set.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetEventFilter`]
     pub fn SDL_GetEventFilter(
         filter: *mut SDL_EventFilter,
@@ -2435,21 +2504,21 @@ extern "C" {
     /// callback set with [`SDL_SetEventFilter()`], nor for events posted by the user
     /// through [`SDL_PeepEvents()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: an [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_RemoveEventWatch`]
     /// - [`SDL_SetEventFilter`]
     pub fn SDL_AddEventWatch(
@@ -2464,17 +2533,17 @@ extern "C" {
     /// This function takes the same input as [`SDL_AddEventWatch()`] to identify and
     /// delete the corresponding callback.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: the function originally passed to [`SDL_AddEventWatch()`].
     /// - `userdata`: the pointer originally passed to [`SDL_AddEventWatch()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AddEventWatch`]
     pub fn SDL_RemoveEventWatch(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
 }
@@ -2487,17 +2556,17 @@ extern "C" {
     /// this function does not change the filter permanently, it only uses the
     /// supplied filter until this function returns.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `filter`: the [`SDL_EventFilter`] function to call when an event happens.
     /// - `userdata`: a pointer that is passed to `filter`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetEventFilter`]
     /// - [`SDL_SetEventFilter`]
     pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
@@ -2506,17 +2575,17 @@ extern "C" {
 extern "C" {
     /// Set the state of processing events by type.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
     /// - `enabled`: whether to process the event or not.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_EventEnabled`]
     pub fn SDL_SetEventEnabled(r#type: Uint32, enabled: ::core::primitive::bool);
 }
@@ -2524,19 +2593,19 @@ extern "C" {
 extern "C" {
     /// Query the state of processing events by type.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of event; see [`SDL_EventType`] for details.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the event is being processed, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetEventEnabled`]
     pub fn SDL_EventEnabled(r#type: Uint32) -> ::core::primitive::bool;
 }
@@ -2545,20 +2614,20 @@ extern "C" {
     /// Allocate a set of user-defined events, and return the beginning event
     /// number for that set of events.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `numevents`: the number of events to be allocated.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the beginning event number, or 0 if numevents is invalid or if
     ///   there are not enough user-defined events left.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PushEvent`]
     pub fn SDL_RegisterEvents(numevents: ::core::ffi::c_int) -> Uint32;
 }
@@ -2566,19 +2635,19 @@ extern "C" {
 extern "C" {
     /// Get window associated with an event.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `event`: an event containing a `windowID`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the associated window on success or NULL if there is none.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PollEvent`]
     /// - [`SDL_WaitEvent`]
     /// - [`SDL_WaitEventTimeout`]

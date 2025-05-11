@@ -1,7 +1,8 @@
 [package]
 name = "sdl3-ttf-sys"
-version = "0.1.0+SDL3-ttf-3.2.0"
+version = "0.3.0+SDL3-ttf-3.2.2"
 edition = "2021"
+rust-version = "1.81"
 authors = ["Maia S. R."]
 license = "Zlib"
 description = "Low level Rust bindings for SDL3_ttf"
@@ -27,6 +28,12 @@ build-static-vendored = ["build-from-source-static", "sdlttf-vendored"]
 # Link SDL3_ttf as a static library. The default is to link a shared/dynamic library.
 link-static = []
 
+# Link SDL3_ttf as an Apple framework. The link-static feature has no effect if this is enabled.
+link-framework = []
+
+# Don't link anything, and provide linking flags via Cargo metadata.
+no-link = []
+
 # Use pkg-config to get link flags for SDL3_ttf. Only used when not building from source.
 # This has no effect if the link-framework feature is enabled.
 use-pkg-config = ["dep:pkg-config"]
@@ -39,6 +46,13 @@ use-vcpkg = ["dep:vcpkg"]
 # Implement the Debug trait for applicable types
 debug-impls = ["sdl3-sys/debug-impls"]
 
+# Enable metadata
+metadata = []
+only-metadata = ["metadata", "no-link"]
+
+# Enable nightly features
+nightly = []
+
 sdlttf-vendored = []
 no-sdlttf-vendored = []
 
@@ -48,7 +62,7 @@ no-sdlttf-harfbuzz = []
 no-sdlttf-plutosvg = []
 
 [dependencies]
-sdl3-sys = { version = "0.4", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.6", path = "../sdl3-sys" }
 
 [build-dependencies.cmake]
 version = "0.1"
@@ -63,7 +77,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-ttf-src]
-version = "3.2.0"
+version = "3.2.2"
 path = "../sdl3-ttf-src"
 optional = true
 

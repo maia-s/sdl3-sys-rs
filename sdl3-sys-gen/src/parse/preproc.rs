@@ -1,11 +1,11 @@
 use crate::parse::is_keyword;
 
 use super::{
-    patch_parsed_define, Ambiguous, Cast, Delimited, DocComment, DocCommentPost, Expr, GetSpan,
-    Ident, IdentOrKw, IntegerLiteral, Item, Items, Literal, Op, Parse, ParseContext, ParseErr,
-    ParseRawRes, Punctuated, Span, Type, WsAndComments,
+    patch_parsed_define, Ambiguous, Delimited, DocComment, DocCommentPost, EnumVariant, Expr,
+    GetSpan, Ident, IdentOrKw, IntegerLiteral, Item, Items, Literal, Op, Parse, ParseContext,
+    ParseErr, ParseRawRes, Punctuated, Span, Type, TypeDefKind, WsAndComments,
 };
-use core::mem;
+use core::{cell::Cell, mem};
 use std::borrow::Cow;
 
 fn skip_ifdef(str: &str) -> bool {
@@ -19,6 +19,7 @@ pub struct Define {
     pub ident: IdentOrKw,
     pub args: Option<Vec<DefineArg>>,
     pub value: DefineValue,
+    pub skip: bool,
 }
 
 impl GetSpan for Define {
@@ -74,11 +75,7 @@ impl DefineValue {
     #[must_use]
     pub fn cast_expr(&self, ty: Type) -> Self {
         match self {
-            DefineValue::Expr(expr) => DefineValue::Expr(Expr::Cast(Box::new(Cast {
-                span: Span::none(),
-                ty,
-                expr: expr.clone(),
-            }))),
+            DefineValue::Expr(expr) => DefineValue::Expr(expr.cast(ty)),
             _ => todo!(),
         }
     }
@@ -446,7 +443,7 @@ impl Parse for PreProcLine {
                             .into_iter()
                             .map(|(ident, _)| {
                                 let ident = if is_keyword(ident.as_str()) {
-                                    let replacement = IdentOrKw::new_inline(format!("{}_", ident));
+                                    let replacement = IdentOrKw::new_inline(format!("{ident}_"));
                                     ctx.add_patch_ident(ident, replacement.clone());
                                     replacement
                                 } else {
@@ -467,6 +464,7 @@ impl Parse for PreProcLine {
                             ident,
                             args: Some(args),
                             value,
+                            skip: false,
                         };
                         patch_parsed_define(ctx, &mut define)?;
                         PreProcLineKind::Define(define)
@@ -475,29 +473,41 @@ impl Parse for PreProcLine {
                         let mut value_span = i.trim_wsc_start()?;
                         let doc =
                             DocComment::try_parse_rev_combine_postfix(ctx, &mut value_span, doc)?;
-                        let mut value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
-                        if let Some(td) = &mut *ctx.active_typedef.borrow_mut() {
-                            let mut associate = true;
-                            if let Some(prefix) = td.use_for_defines {
-                                if !ident.as_str().starts_with(prefix) {
-                                    associate = false;
-                                }
-                            }
-                            if associate {
-                                value = value.cast_expr(Type::ident(td.ident.clone()));
-                                td.associated_defines
-                                    .borrow_mut()
-                                    .push((ident.clone().try_into().unwrap(), doc.clone()));
-                            }
-                        }
+                        let value = DefineValue::parse_all(ctx, value_span.trim_wsc_end()?)?;
                         let mut define = Define {
                             span: span.clone(),
                             doc,
                             ident,
                             args: None,
                             value,
+                            skip: false,
                         };
                         patch_parsed_define(ctx, &mut define)?;
+                        if let Some(td) = &mut *ctx.active_typedef.borrow_mut() {
+                            if let TypeDefKind::Enum {
+                                variants,
+                                match_define,
+                                ..
+                            } = &mut td.kind
+                            {
+                                if match_define(define.ident.as_str()) {
+                                    define.skip = true;
+                                    let DefineValue::Expr(value) =
+                                        define.value.cast_expr(Type::ident(td.ident.clone()))
+                                    else {
+                                        todo!()
+                                    };
+                                    variants.borrow_mut().push(EnumVariant {
+                                        cond: Conditional::new(),
+                                        doc: define.doc.clone(),
+                                        ident: define.ident.clone().try_into().unwrap(),
+                                        expr: Some(value),
+                                        comma: None,
+                                        registered: Cell::new(false),
+                                    });
+                                }
+                            }
+                        }
                         PreProcLineKind::Define(define)
                     }
                 }

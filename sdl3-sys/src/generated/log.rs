@@ -50,10 +50,10 @@ use super::stdinc::*;
 /// level, the assert category is enabled at the WARN level, test is enabled at
 /// the VERBOSE level and all other categories are enabled at the ERROR level.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`APPLICATION`](SDL_LogCategory::APPLICATION) | [`SDL_LOG_CATEGORY_APPLICATION`] | |
@@ -79,6 +79,20 @@ use super::stdinc::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogCategory(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_LogCategory {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_LogCategory> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_LogCategory) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_LogCategory> for ::core::ffi::c_int {
     #[inline(always)]
@@ -119,26 +133,26 @@ impl ::core::fmt::Debug for SDL_LogCategory {
 }
 
 impl SDL_LogCategory {
-    pub const APPLICATION: Self = Self(0);
-    pub const ERROR: Self = Self(1);
-    pub const ASSERT: Self = Self(2);
-    pub const SYSTEM: Self = Self(3);
-    pub const AUDIO: Self = Self(4);
-    pub const VIDEO: Self = Self(5);
-    pub const RENDER: Self = Self(6);
-    pub const INPUT: Self = Self(7);
-    pub const TEST: Self = Self(8);
-    pub const GPU: Self = Self(9);
-    pub const RESERVED2: Self = Self(10);
-    pub const RESERVED3: Self = Self(11);
-    pub const RESERVED4: Self = Self(12);
-    pub const RESERVED5: Self = Self(13);
-    pub const RESERVED6: Self = Self(14);
-    pub const RESERVED7: Self = Self(15);
-    pub const RESERVED8: Self = Self(16);
-    pub const RESERVED9: Self = Self(17);
-    pub const RESERVED10: Self = Self(18);
-    pub const CUSTOM: Self = Self(19);
+    pub const APPLICATION: Self = Self((0 as ::core::ffi::c_int));
+    pub const ERROR: Self = Self((1 as ::core::ffi::c_int));
+    pub const ASSERT: Self = Self((2 as ::core::ffi::c_int));
+    pub const SYSTEM: Self = Self((3 as ::core::ffi::c_int));
+    pub const AUDIO: Self = Self((4 as ::core::ffi::c_int));
+    pub const VIDEO: Self = Self((5 as ::core::ffi::c_int));
+    pub const RENDER: Self = Self((6 as ::core::ffi::c_int));
+    pub const INPUT: Self = Self((7 as ::core::ffi::c_int));
+    pub const TEST: Self = Self((8 as ::core::ffi::c_int));
+    pub const GPU: Self = Self((9 as ::core::ffi::c_int));
+    pub const RESERVED2: Self = Self((10 as ::core::ffi::c_int));
+    pub const RESERVED3: Self = Self((11 as ::core::ffi::c_int));
+    pub const RESERVED4: Self = Self((12 as ::core::ffi::c_int));
+    pub const RESERVED5: Self = Self((13 as ::core::ffi::c_int));
+    pub const RESERVED6: Self = Self((14 as ::core::ffi::c_int));
+    pub const RESERVED7: Self = Self((15 as ::core::ffi::c_int));
+    pub const RESERVED8: Self = Self((16 as ::core::ffi::c_int));
+    pub const RESERVED9: Self = Self((17 as ::core::ffi::c_int));
+    pub const RESERVED10: Self = Self((18 as ::core::ffi::c_int));
+    pub const CUSTOM: Self = Self((19 as ::core::ffi::c_int));
 }
 
 pub const SDL_LOG_CATEGORY_APPLICATION: SDL_LogCategory = SDL_LogCategory::APPLICATION;
@@ -162,12 +176,18 @@ pub const SDL_LOG_CATEGORY_RESERVED9: SDL_LogCategory = SDL_LogCategory::RESERVE
 pub const SDL_LOG_CATEGORY_RESERVED10: SDL_LogCategory = SDL_LogCategory::RESERVED10;
 pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_LogCategory {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::log::METADATA_SDL_LogCategory;
+}
+
 /// The predefined log priorities
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_LogPriority::INVALID) | [`SDL_LOG_PRIORITY_INVALID`] | |
@@ -182,6 +202,20 @@ pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_LogPriority(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_LogPriority {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_LogPriority> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_LogPriority) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_LogPriority> for ::core::ffi::c_int {
     #[inline(always)]
@@ -211,15 +245,15 @@ impl ::core::fmt::Debug for SDL_LogPriority {
 }
 
 impl SDL_LogPriority {
-    pub const INVALID: Self = Self(0);
-    pub const TRACE: Self = Self(1);
-    pub const VERBOSE: Self = Self(2);
-    pub const DEBUG: Self = Self(3);
-    pub const INFO: Self = Self(4);
-    pub const WARN: Self = Self(5);
-    pub const ERROR: Self = Self(6);
-    pub const CRITICAL: Self = Self(7);
-    pub const COUNT: Self = Self(8);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
+    pub const TRACE: Self = Self((1 as ::core::ffi::c_int));
+    pub const VERBOSE: Self = Self((2 as ::core::ffi::c_int));
+    pub const DEBUG: Self = Self((3 as ::core::ffi::c_int));
+    pub const INFO: Self = Self((4 as ::core::ffi::c_int));
+    pub const WARN: Self = Self((5 as ::core::ffi::c_int));
+    pub const ERROR: Self = Self((6 as ::core::ffi::c_int));
+    pub const CRITICAL: Self = Self((7 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_LOG_PRIORITY_INVALID: SDL_LogPriority = SDL_LogPriority::INVALID;
@@ -232,19 +266,25 @@ pub const SDL_LOG_PRIORITY_ERROR: SDL_LogPriority = SDL_LogPriority::ERROR;
 pub const SDL_LOG_PRIORITY_CRITICAL: SDL_LogPriority = SDL_LogPriority::CRITICAL;
 pub const SDL_LOG_PRIORITY_COUNT: SDL_LogPriority = SDL_LogPriority::COUNT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_LogPriority {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::log::METADATA_SDL_LogPriority;
+}
+
 extern "C" {
     /// Set the priority of all log categories.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `priority`: the [`SDL_LogPriority`] to assign.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ResetLogPriorities`]
     /// - [`SDL_SetLogPriority`]
     pub fn SDL_SetLogPriorities(priority: SDL_LogPriority);
@@ -253,17 +293,17 @@ extern "C" {
 extern "C" {
     /// Set the priority of a particular log category.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category to assign a priority to.
     /// - `priority`: the [`SDL_LogPriority`] to assign.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetLogPriority`]
     /// - [`SDL_ResetLogPriorities`]
     /// - [`SDL_SetLogPriorities`]
@@ -273,19 +313,19 @@ extern "C" {
 extern "C" {
     /// Get the priority of a particular log category.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_LogPriority`] for the requested category.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetLogPriority`]
     pub fn SDL_GetLogPriority(category: ::core::ffi::c_int) -> SDL_LogPriority;
 }
@@ -295,13 +335,13 @@ extern "C" {
     ///
     /// This is called by [`SDL_Quit()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetLogPriorities`]
     /// - [`SDL_SetLogPriority`]
     pub fn SDL_ResetLogPriorities();
@@ -314,22 +354,22 @@ extern "C" {
     /// [`SDL_LOG_PRIORITY_WARN`] and higher have a prefix showing their priority, e.g.
     /// "WARNING: ".
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `priority`: the [`SDL_LogPriority`] to modify.
     /// - `prefix`: the prefix to use for that log priority, or NULL to use no
     ///   prefix.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetLogPriorities`]
     /// - [`SDL_SetLogPriority`]
     pub fn SDL_SetLogPriorityPrefix(
@@ -341,18 +381,18 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_CATEGORY_APPLICATION`] and [`SDL_LOG_PRIORITY_INFO`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the `fmt` string, if
     ///   any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
     /// - [`SDL_LogError`]
@@ -368,19 +408,19 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_TRACE`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
@@ -397,19 +437,19 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_VERBOSE`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
@@ -424,19 +464,19 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_DEBUG`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogError`]
@@ -452,19 +492,19 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_INFO`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
@@ -480,19 +520,19 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_WARN`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
@@ -508,19 +548,19 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_ERROR`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
@@ -536,19 +576,19 @@ extern "C" {
 extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_CRITICAL`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogDebug`]
     /// - [`SDL_LogError`]
@@ -564,20 +604,20 @@ extern "C" {
 extern "C" {
     /// Log a message with the specified category and priority.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `priority`: the priority of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `...`: additional parameters matching % tokens in the **fmt** string,
     ///   if any.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
@@ -598,19 +638,19 @@ extern "C" {
 extern "C" {
     /// Log a message with the specified category and priority.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `category`: the category of the message.
     /// - `priority`: the priority of the message.
     /// - `fmt`: a printf() style message format string.
     /// - `ap`: a variable argument list.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Log`]
     /// - [`SDL_LogCritical`]
     /// - [`SDL_LogDebug`]
@@ -634,14 +674,14 @@ extern "C" {
 /// is held so that this function is never called by more than one thread at
 /// once.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: what was passed as `userdata` to
 ///   [`SDL_SetLogOutputFunction()`].
 /// - `category`: the category of the message.
 /// - `priority`: the priority of the message.
 /// - `message`: the message being output.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_LogOutputFunction = ::core::option::Option<
     unsafe extern "C" fn(
@@ -655,16 +695,16 @@ pub type SDL_LogOutputFunction = ::core::option::Option<
 extern "C" {
     /// Get the default log output function.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the default log output callback.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetLogOutputFunction`]
     /// - [`SDL_GetLogOutputFunction`]
     pub fn SDL_GetDefaultLogOutputFunction() -> SDL_LogOutputFunction;
@@ -673,19 +713,19 @@ extern "C" {
 extern "C" {
     /// Get the current log output function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `callback`: an [`SDL_LogOutputFunction`] filled in with the current log
     ///   callback.
     /// - `userdata`: a pointer filled in with the pointer that is passed to
     ///   `callback`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDefaultLogOutputFunction`]
     /// - [`SDL_SetLogOutputFunction`]
     pub fn SDL_GetLogOutputFunction(
@@ -697,17 +737,17 @@ extern "C" {
 extern "C" {
     /// Replace the default log output function with one of your own.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `callback`: an [`SDL_LogOutputFunction`] to call instead of the default.
     /// - `userdata`: a pointer that is passed to `callback`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetDefaultLogOutputFunction`]
     /// - [`SDL_GetLogOutputFunction`]
     pub fn SDL_SetLogOutputFunction(

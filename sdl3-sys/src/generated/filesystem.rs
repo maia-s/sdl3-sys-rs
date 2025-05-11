@@ -50,16 +50,16 @@ extern "C" {
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an absolute path in UTF-8 encoding to the application data
     ///   directory. NULL will be returned on error or when the platform
     ///   doesn't implement this functionality, call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPrefPath`]
     pub fn SDL_GetBasePath() -> *const ::core::ffi::c_char;
 }
@@ -106,20 +106,20 @@ extern "C" {
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `org`: the name of your organization.
     /// - `app`: the name of your application.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a UTF-8 string of the user directory in platform-dependent
     ///   notation. NULL if there's a problem (creating directory failed,
     ///   etc.). This should be freed with [`SDL_free()`] when it is no longer
     ///   needed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetBasePath`]
     pub fn SDL_GetPrefPath(
         org: *const ::core::ffi::c_char,
@@ -151,13 +151,13 @@ extern "C" {
 ///
 /// Note that on macOS/iOS, the Videos folder is called "Movies".
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetUserFolder`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`HOME`](SDL_Folder::HOME) | [`SDL_FOLDER_HOME`] | The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents. |
@@ -175,6 +175,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Folder(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_Folder {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_Folder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_Folder) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_Folder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -208,29 +222,29 @@ impl ::core::fmt::Debug for SDL_Folder {
 
 impl SDL_Folder {
     /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
-    pub const HOME: Self = Self(0);
+    pub const HOME: Self = Self((0 as ::core::ffi::c_int));
     /// The folder of files that are displayed on the desktop. Note that the existence of a desktop folder does not guarantee that the system does show icons on its desktop; certain GNU/Linux distros with a graphical environment may not have desktop icons.
-    pub const DESKTOP: Self = Self(1);
+    pub const DESKTOP: Self = Self((1 as ::core::ffi::c_int));
     /// User document files, possibly application-specific. This is a good place to save a user's projects.
-    pub const DOCUMENTS: Self = Self(2);
+    pub const DOCUMENTS: Self = Self((2 as ::core::ffi::c_int));
     /// Standard folder for user files downloaded from the internet.
-    pub const DOWNLOADS: Self = Self(3);
+    pub const DOWNLOADS: Self = Self((3 as ::core::ffi::c_int));
     /// Music files that can be played using a standard music player (mp3, ogg...).
-    pub const MUSIC: Self = Self(4);
+    pub const MUSIC: Self = Self((4 as ::core::ffi::c_int));
     /// Image files that can be displayed using a standard viewer (png, jpg...).
-    pub const PICTURES: Self = Self(5);
+    pub const PICTURES: Self = Self((5 as ::core::ffi::c_int));
     /// Files that are meant to be shared with other users on the same computer.
-    pub const PUBLICSHARE: Self = Self(6);
+    pub const PUBLICSHARE: Self = Self((6 as ::core::ffi::c_int));
     /// Save files for games.
-    pub const SAVEDGAMES: Self = Self(7);
+    pub const SAVEDGAMES: Self = Self((7 as ::core::ffi::c_int));
     /// Application screenshots.
-    pub const SCREENSHOTS: Self = Self(8);
+    pub const SCREENSHOTS: Self = Self((8 as ::core::ffi::c_int));
     /// Template files to be used when the user requests the desktop environment to create a new file in a certain folder, such as "New Text File.txt".  Any file in the Templates folder can be used as a starting point for a new file.
-    pub const TEMPLATES: Self = Self(9);
+    pub const TEMPLATES: Self = Self((9 as ::core::ffi::c_int));
     /// Video files that can be played using a standard video player (mp4, webm...).
-    pub const VIDEOS: Self = Self(10);
+    pub const VIDEOS: Self = Self((10 as ::core::ffi::c_int));
     /// Total number of types in this enum, not a folder type by itself.
-    pub const COUNT: Self = Self(11);
+    pub const COUNT: Self = Self((11 as ::core::ffi::c_int));
 }
 
 /// The folder which contains all of the current user's data, preferences, and documents. It usually contains most of the other folders. If a requested folder does not exist, the home folder can be considered a safe fallback to store a user's documents.
@@ -258,6 +272,12 @@ pub const SDL_FOLDER_VIDEOS: SDL_Folder = SDL_Folder::VIDEOS;
 /// Total number of types in this enum, not a folder type by itself.
 pub const SDL_FOLDER_COUNT: SDL_Folder = SDL_Folder::COUNT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_Folder {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::filesystem::METADATA_SDL_Folder;
+}
+
 extern "C" {
     /// Finds the most suitable user folder for a specific purpose.
     ///
@@ -275,14 +295,14 @@ extern "C" {
     ///
     /// If NULL is returned, the error may be obtained with [`SDL_GetError()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `folder`: the type of folder to find.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns either a null-terminated C string containing the full path to the
     ///   folder, or NULL if an error happened.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetUserFolder(folder: SDL_Folder) -> *const ::core::ffi::c_char;
 }
@@ -293,13 +313,13 @@ extern "C" {
 /// symlinks, named pipes, etc. They are currently reported as
 /// [`SDL_PATHTYPE_OTHER`].
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_PathInfo`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_PathType::NONE) | [`SDL_PATHTYPE_NONE`] | path does not exist |
@@ -309,6 +329,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PathType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PathType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PathType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PathType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_PathType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -334,13 +368,13 @@ impl ::core::fmt::Debug for SDL_PathType {
 
 impl SDL_PathType {
     /// path does not exist
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
     /// a normal file
-    pub const FILE: Self = Self(1);
+    pub const FILE: Self = Self((1 as ::core::ffi::c_int));
     /// a directory
-    pub const DIRECTORY: Self = Self(2);
+    pub const DIRECTORY: Self = Self((2 as ::core::ffi::c_int));
     /// something completely different like a device node (not a symlink, those are always followed)
-    pub const OTHER: Self = Self(3);
+    pub const OTHER: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// path does not exist
@@ -352,12 +386,18 @@ pub const SDL_PATHTYPE_DIRECTORY: SDL_PathType = SDL_PathType::DIRECTORY;
 /// something completely different like a device node (not a symlink, those are always followed)
 pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PathType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::filesystem::METADATA_SDL_PathType;
+}
+
 /// Information about a path on the filesystem.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GetPathInfo`]
 /// - [`SDL_GetStoragePathInfo`]
 #[repr(C)]
@@ -378,20 +418,139 @@ pub struct SDL_PathInfo {
 
 /// Flags for path matching.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GlobDirectory`]
 /// - [`SDL_GlobStorageDirectory`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GLOB_CASEINSENSITIVE`] | |
-pub type SDL_GlobFlags = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`CASEINSENSITIVE`](SDL_GlobFlags::CASEINSENSITIVE) | [`SDL_GLOB_CASEINSENSITIVE`] | |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GlobFlags(pub Uint32);
 
-pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = ((1_u32) as SDL_GlobFlags);
+impl ::core::cmp::PartialEq<Uint32> for SDL_GlobFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GlobFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GlobFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GlobFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GlobFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GlobFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GlobFlags(")?;
+        let all_bits = all_bits | Self::CASEINSENSITIVE.0;
+        if (Self::CASEINSENSITIVE != 0 || self.0 == 0)
+            && *self & Self::CASEINSENSITIVE == Self::CASEINSENSITIVE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CASEINSENSITIVE")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GlobFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GlobFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GlobFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GlobFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GlobFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GlobFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GlobFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GlobFlags {
+    pub const CASEINSENSITIVE: Self = Self((1_u32 as Uint32));
+}
+
+pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = SDL_GlobFlags::CASEINSENSITIVE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GlobFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::filesystem::METADATA_SDL_GlobFlags;
+}
 
 extern "C" {
     /// Create a directory, and any missing parent directories.
@@ -401,27 +560,27 @@ extern "C" {
     /// If parent directories are missing, it will also create them. Note that if
     /// this fails, it will not remove any parent directories it already made.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path of the directory to create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CreateDirectory(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
 /// Possible results from an enumeration callback.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_EnumerateDirectoryCallback`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`CONTINUE`](SDL_EnumerationResult::CONTINUE) | [`SDL_ENUM_CONTINUE`] | Value that requests that enumeration continue. |
@@ -430,6 +589,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_EnumerationResult(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_EnumerationResult {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_EnumerationResult> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_EnumerationResult) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_EnumerationResult> for ::core::ffi::c_int {
     #[inline(always)]
@@ -454,11 +627,11 @@ impl ::core::fmt::Debug for SDL_EnumerationResult {
 
 impl SDL_EnumerationResult {
     /// Value that requests that enumeration continue.
-    pub const CONTINUE: Self = Self(0);
+    pub const CONTINUE: Self = Self((0 as ::core::ffi::c_int));
     /// Value that requests that enumeration stop, successfully.
-    pub const SUCCESS: Self = Self(1);
+    pub const SUCCESS: Self = Self((1 as ::core::ffi::c_int));
     /// Value that requests that enumeration stop, as a failure.
-    pub const FAILURE: Self = Self(2);
+    pub const FAILURE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Value that requests that enumeration continue.
@@ -467,6 +640,12 @@ pub const SDL_ENUM_CONTINUE: SDL_EnumerationResult = SDL_EnumerationResult::CONT
 pub const SDL_ENUM_SUCCESS: SDL_EnumerationResult = SDL_EnumerationResult::SUCCESS;
 /// Value that requests that enumeration stop, as a failure.
 pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILURE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_EnumerationResult {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::filesystem::METADATA_SDL_EnumerationResult;
+}
 
 /// Callback for directory enumeration.
 ///
@@ -482,18 +661,18 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 /// `dirname` is guaranteed to end with a path separator ('\\' on Windows, '/'
 /// on most other platforms).
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an app-controlled pointer that is passed to the callback.
 /// - `dirname`: the directory that is being enumerated.
 /// - `fname`: the next entry in the enumeration.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns how the enumeration should proceed.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_EnumerateDirectory`]
 pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<
     unsafe extern "C" fn(
@@ -516,16 +695,16 @@ extern "C" {
     /// returned [`SDL_ENUM_SUCCESS`] to halt enumeration, or all directory entries
     /// were enumerated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path of the directory to enumerate.
     /// - `callback`: a function that is called for each entry in the directory.
     /// - `userdata`: a pointer that is passed to `callback`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EnumerateDirectory(
         path: *const ::core::ffi::c_char,
@@ -540,14 +719,14 @@ extern "C" {
     /// Directories that are not empty will fail; this function will not recursely
     /// delete directory trees.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path to remove from the filesystem.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
@@ -566,15 +745,15 @@ extern "C" {
     /// for files. Renaming a non-empty directory across filesystems is
     /// dramatically more complex, however.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_RenamePath(
         oldpath: *const ::core::ffi::c_char,
@@ -613,15 +792,15 @@ extern "C" {
     /// might be half a copy, it might be the untouched data of what was already
     /// there, or it might be a zero-byte file, etc.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `oldpath`: the old path.
     /// - `newpath`: the new path.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CopyFile(
         oldpath: *const ::core::ffi::c_char,
@@ -632,16 +811,16 @@ extern "C" {
 extern "C" {
     /// Get information about a filesystem path.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path to query.
     /// - `info`: a pointer filled in with information about the path, or NULL to
     ///   check for the existence of a file.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false if the file doesn't exist, or another
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPathInfo(
         path: *const ::core::ffi::c_char,
@@ -666,7 +845,7 @@ extern "C" {
     /// convenience, but if `count` is non-NULL, on return it will contain the
     /// number of items in the array, not counting the NULL terminator.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `path`: the path of the directory to enumerate.
     /// - `pattern`: the pattern that files in the directory must match. Can be
     ///   NULL.
@@ -674,15 +853,15 @@ extern "C" {
     /// - `count`: on return, will be set to the number of items in the returned
     ///   array. Can be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an array of strings on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information. This is a single allocation
     ///   that should be freed with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GlobDirectory(
         path: *const ::core::ffi::c_char,
@@ -705,12 +884,12 @@ extern "C" {
     /// The returned path is guaranteed to end with a path separator ('\\' on
     /// Windows, '/' on most other platforms).
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a UTF-8 string of the current working directory in
     ///   platform-dependent notation. NULL if there's a problem. This
     ///   should be freed with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetCurrentDirectory() -> *mut ::core::ffi::c_char;
 }

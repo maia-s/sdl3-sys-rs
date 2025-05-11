@@ -1,0 +1,9 @@
+package_name: sdl3-ttf
+lib_name: SDL3_ttf
+lib_min_version: 3.2.0
+lib_dir: SDL_ttf
+include_dir: include/SDL3_ttf
+version_header: SDL_ttf.h
+headers_prefix: SDL_
+sym_prefix: TTF_
+define_prefix: SDL_TTF_

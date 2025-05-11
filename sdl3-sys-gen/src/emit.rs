@@ -1,12 +1,15 @@
 use crate::{
-    common_ident_prefix,
+    find_common_ident_prefix,
     parse::{
         ArgDecl, CanCmp, CanCopy, CanDefault, Conditional, ConditionalExpr, Define, DocComment,
-        DocCommentFile, Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan, Ident, IdentOrKwT,
-        Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock, PrimitiveType,
-        StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeEnum,
+        DocCommentFile, Enum, EnumKind, Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan,
+        Ident, IdentOrKwT, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
+        PrimitiveType, StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeDefKind,
+        TypeEnum,
     },
+    strip_common_ident_prefix, GroupMetadata, GroupValueMetadata, HintMetadata, PropertyMetadata,
 };
+use core::cell::Cell;
 use std::{
     collections::HashSet,
     fmt::{self, Display, Write},
@@ -27,10 +30,6 @@ use patch::{
 mod state;
 pub use state::{Cfg, DefineState, EmitContext, InnerEmitContext, Sym, SymKind};
 use state::{EmitStatus, PreProcState, StructSym};
-
-pub const fn is_valid_ident(s: &str) -> bool {
-    matches!(s.as_bytes()[0], b'a'..=b'z' | b'A'..=b'Z' | b'_')
-}
 
 pub fn doc_link_sym(s: &str) -> Option<(&str, &str)> {
     match s {
@@ -93,6 +92,46 @@ fn emit_extern_end(ctx: &mut EmitContext, _abi: &Option<FnAbi>, for_fn_ptr: bool
         ctx.decrease_indent();
         writeln!(ctx, "}}")?;
         writeln!(ctx)?;
+    }
+    Ok(())
+}
+
+fn emit_derives(
+    ctx: &mut EmitContext,
+    can_derive_copy: bool,
+    can_default: CanDefault,
+    can_derive_eq: CanCmp,
+    can_derive_ord: bool,
+    can_derive_debug: bool,
+) -> EmitResult {
+    if can_derive_copy {
+        writeln!(ctx, "#[derive(Clone, Copy)]")?;
+    }
+    if can_default == CanDefault::Derive {
+        writeln!(ctx, "#[derive(Default)]")?;
+    }
+    match can_derive_eq {
+        CanCmp::Auto => unreachable!(),
+        CanCmp::No => (),
+        CanCmp::Partial => {
+            writeln!(ctx, "#[derive(PartialEq)]")?;
+            if can_derive_ord {
+                writeln!(ctx, "#[derive(PartialOrd)]")?;
+            }
+        }
+        CanCmp::Full => {
+            write!(ctx, "#[derive(PartialEq, Eq, ")?;
+            if can_derive_ord {
+                write!(ctx, "PartialOrd, Ord, ")?;
+            }
+            writeln!(ctx, "Hash)]")?;
+        }
+    }
+    if can_derive_debug {
+        writeln!(
+            ctx,
+            r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
+        )?;
     }
     Ok(())
 }
@@ -279,12 +318,13 @@ impl DocComment {
                         .find(|c: char| {
                             c.is_ascii_whitespace()
                                 || c == ','
-                                || line.as_bytes().get(i - 1).copied() == Some(b'(') && c == ')'
+                                || line.as_bytes().get(i.wrapping_sub(1)).copied() == Some(b'(')
+                                    && c == ')'
                         })
                         .unwrap_or(line.len() - i);
                     write!(patched, "<{}>", &line[i..i0])?;
                 } else if (line[i..].starts_with("SDL_")
-                    || line[i..].starts_with(ctx.gen.sym_prefix))
+                    || line[i..].starts_with(&ctx.gen.sym_prefix))
                     && (i == 0
                         || line.as_bytes()[i - 1].is_ascii_whitespace()
                         || line.as_bytes()[i - 1] == b'('
@@ -384,7 +424,7 @@ impl DocComment {
                     writeln!(ctx, "{pfx}")?;
                 }
                 current_section = name;
-                writeln!(ctx, "{pfx} ### {name}")?;
+                writeln!(ctx, "{pfx} ## {name}")?;
             }
             Ok(())
         };
@@ -647,6 +687,8 @@ impl Emit for Define {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if patch_emit_define(ctx, self)? {
             // patched
+        } else if self.skip {
+            // skip
         } else if let Some(args) = &self.args {
             // function-like define
             if self.value.is_empty() {
@@ -765,6 +807,26 @@ impl Emit for Define {
                 value.emit(ctx)?;
                 writeln!(ctx, ";")?;
                 writeln!(ctx)?;
+                let ident_s = self.ident.as_str();
+                if ident_s.starts_with("SDL_HINT_") {
+                    ctx.register_hint_metadata(HintMetadata {
+                        name: ident_s.to_owned(),
+                        doc: ctx
+                            .capture_output(|ctx| self.doc.emit(ctx))?
+                            .lines()
+                            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+                            .collect(),
+                    });
+                } else if ident_s.starts_with("SDL_PROP_") {
+                    ctx.register_property_metadata(PropertyMetadata {
+                        name: ident_s.to_owned(),
+                        doc: ctx
+                            .capture_output(|ctx| self.doc.emit(ctx))?
+                            .lines()
+                            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+                            .collect(),
+                    });
+                }
             } else {
                 ctx.log_skipped("constant value define", self.ident.as_str())?;
             }
@@ -959,6 +1021,439 @@ impl Emit for ArgDecl {
     }
 }
 
+#[derive(Debug)]
+struct DelayedEnum {
+    e: Enum,
+    doc: Option<DocComment>,
+}
+
+impl Emit for DelayedEnum {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        self.e.emit_enum(ctx, self.doc.clone(), None)
+    }
+}
+
+impl Enum {
+    fn emit_enum(
+        &self,
+        ctx: &mut EmitContext,
+        doc: Option<DocComment>,
+        alias_ty: Option<Type>,
+    ) -> EmitResult {
+        if let Some(ident) = &self.ident {
+            if !self.registered.get() {
+                ctx.scope_mut().register_enum_sym(ident.clone())?;
+            }
+        }
+
+        let module = ctx.module().to_string();
+        let doc = if doc.is_some() { &doc } else { &self.doc };
+
+        let enum_ident = self.ident.clone().unwrap();
+        let enum_ident_s = enum_ident.as_str();
+        let enum_base_type = self.base_type.clone();
+        let enum_type = Type::ident(enum_ident.clone());
+
+        let idents = self.variants.iter().map(|v| v.ident.as_str());
+        let prefix = find_common_ident_prefix(enum_ident_s, idents.clone());
+        let known_values: Vec<_> = idents.collect();
+
+        let enum_base_type = enum_base_type.unwrap_or(Type::primitive(PrimitiveType::Int));
+        let enum_base_type_s = ctx.capture_output(|ctx| enum_base_type.emit(ctx))?;
+
+        if !self.registered.get() {
+            ctx.register_sym(
+                enum_ident.clone(),
+                alias_ty,
+                None,
+                Some(enum_base_type.clone()),
+                SymKind::Other,
+                true,
+                true,
+                CanCmp::Full,
+                CanDefault::Derive,
+            )?;
+            self.registered.set(true);
+        }
+
+        let mut doc_out = ctx.capture_output(|ctx| doc.emit(ctx))?;
+        let doc_meta = doc_out
+            .lines()
+            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+            .collect::<String>();
+        let mut ctx_doc = ctx.with_output(&mut doc_out);
+        let mut impl_consts = String::new();
+        let mut ctx_impl = ctx.with_output(&mut impl_consts);
+        let mut global_consts = String::new();
+        let mut ctx_global = ctx.with_output(&mut global_consts);
+        let mut debug_consts = String::new();
+        let mut ctx_debug = ctx.with_output(&mut debug_consts);
+        let mut values_metadata = Vec::new();
+        let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
+
+        if !known_values.is_empty() {
+            if doc.is_some() {
+                writeln!(ctx_doc, "///")?;
+            }
+            writeln!(ctx_doc, "/// ## Known values (`sdl3-sys`)")?;
+            writeln!(
+                ctx_doc,
+                "/// | Associated constant | Global constant | Description |"
+            )?;
+            writeln!(
+                ctx_doc,
+                "/// | ------------------- | --------------- | ----------- |"
+            )?;
+        }
+
+        let mut seen_target_dependent = HashSet::new();
+
+        for variant in &self.variants {
+            if !variant.registered.get() {
+                ctx.register_sym(
+                    variant.ident.clone(),
+                    None,
+                    Some(Type::ident(enum_ident.clone())),
+                    None,
+                    SymKind::Other,
+                    true,
+                    true,
+                    CanCmp::Full,
+                    CanDefault::Derive,
+                )?;
+                variant.registered.set(true);
+            }
+
+            let variant_ident = variant.ident.as_str();
+            let short_variant_ident = strip_common_ident_prefix(variant_ident, prefix);
+
+            let Some(expr) = variant.expr.as_ref().or(next_expr.as_ref()) else {
+                return Err(ParseErr::new(
+                    variant.ident.span(),
+                    "couldn't evaluate value for enum",
+                )
+                .into());
+            };
+
+            let value_expr = expr.cast(enum_type.clone());
+
+            let mut value = {
+                let _unresolved_guard = ctx.expect_unresolved_sym_dependency_guard();
+                if let Ok(value) = ctx.capture_output(|ctx| value_expr.emit(ctx)) {
+                    value
+                } else if ctx.emit_after_unresolved_sym_dependencies(DelayedEnum {
+                    e: self.clone(),
+                    doc: doc.clone(),
+                }) {
+                    return Ok(());
+                } else {
+                    todo!();
+                }
+            };
+
+            if value.starts_with(&format!("{enum_ident_s}(")) {
+                value.replace_range(0..enum_ident_s.len(), "Self");
+            }
+
+            next_expr = expr.try_eval_plus_one(ctx)?.map(Expr::Value);
+
+            if !seen_target_dependent.contains(variant_ident) {
+                write!(
+                ctx_doc,
+                "/// | [`{short_variant_ident}`]({enum_ident_s}::{short_variant_ident}) | [`{variant_ident}`] |",
+            )?;
+                if !variant.cond.is_empty() {
+                    seen_target_dependent.insert(variant_ident);
+                    write!(ctx_doc, " (target dependent)")?;
+                }
+                if let Some(doc) = &variant.doc {
+                    let doc = doc.to_string();
+                    for line in doc.lines() {
+                        write!(ctx_doc, " {}", DocComment::insert_links(ctx, line)?)?;
+                    }
+                }
+                writeln!(ctx_doc, " |")?;
+            }
+
+            variant.cond.emit_cfg(&mut ctx_impl)?;
+            variant.doc.emit(&mut ctx_impl)?;
+            let variant_doc_meta = ctx_impl.capture_output(|ctx| variant.doc.emit(ctx))?;
+            if !variant.cond.is_empty() {
+                writeln!(
+                    ctx_impl,
+                    r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                )?;
+            }
+            writeln!(ctx_impl, "pub const {short_variant_ident}: Self = {value};")?;
+
+            if self.hidden {
+                writeln!(ctx_global, "#[doc(hidden)]")?;
+            }
+            variant.cond.emit_cfg(&mut ctx_global)?;
+            variant.doc.emit(&mut ctx_global)?;
+            if !variant.cond.is_empty() {
+                writeln!(
+                    ctx_global,
+                    r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                )?;
+            }
+            writeln!(
+                ctx_global,
+                "pub const {variant_ident}: {enum_ident_s} = {enum_ident_s}::{short_variant_ident};"
+            )?;
+
+            if self.kind != EnumKind::Flags {
+                writeln!(
+                    ctx_debug,
+                    "Self::{short_variant_ident} => {variant_ident:?},"
+                )?;
+            } else {
+                write!(
+                    ctx_debug,
+                    str_block! {"
+                        let all_bits = all_bits | Self::{short_variant_ident}.0;
+                        if (Self::{short_variant_ident} != 0 || self.0 == 0) && *self & Self::{short_variant_ident} == Self::{short_variant_ident} {{
+                            if !first {{
+                                write!(f, \" | \")?;
+                            }}
+                            first = false;
+                            write!(f, \"{short_variant_ident}\")?;
+                        }}
+                    "},
+                    short_variant_ident = short_variant_ident,
+                )?;
+            }
+
+            values_metadata.push(GroupValueMetadata {
+                name: variant_ident.to_owned(),
+                short_name: short_variant_ident.to_owned(),
+                doc: variant_doc_meta
+                    .lines()
+                    .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+                    .collect(),
+            });
+        }
+
+        drop(ctx_debug);
+        drop(ctx_global);
+        drop(ctx_impl);
+        drop(ctx_doc);
+
+        if self.hidden {
+            writeln!(ctx, "#[doc(hidden)]")?;
+        }
+
+        ctx.write_str(&doc_out)?;
+
+        let can_derive_eq = if self.kind != EnumKind::Lock {
+            enum_base_type.can_derive_eq(ctx)
+        } else {
+            CanCmp::No
+        };
+        let can_derive_debug = self.variants.is_empty();
+
+        writeln!(ctx, "#[repr(transparent)]")?;
+        emit_derives(
+            ctx,
+            enum_base_type.can_derive_copy(ctx) && self.kind != EnumKind::Lock,
+            enum_base_type.can_default(ctx),
+            can_derive_eq,
+            matches!(self.kind, EnumKind::Enum | EnumKind::Id),
+            can_derive_debug,
+        )?;
+        writeln!(ctx, "pub struct {enum_ident_s}(pub {enum_base_type_s});")?;
+        writeln!(ctx)?;
+
+        if matches!(can_derive_eq, CanCmp::Partial | CanCmp::Full) {
+            writeln!(
+                ctx,
+                str_block! {"
+                    impl ::core::cmp::PartialEq<{enum_base_type_s}> for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn eq(&self, other: &{enum_base_type_s}) -> bool {{
+                            &self.0 == other
+                        }}
+                    }}
+
+                    impl ::core::cmp::PartialEq<{enum_ident_s}> for {enum_base_type_s} {{
+                        #[inline(always)]
+                        fn eq(&self, other: &{enum_ident_s}) -> bool {{
+                            self == &other.0
+                        }}
+                    }}
+                "},
+                enum_base_type_s = enum_base_type_s,
+                enum_ident_s = enum_ident_s,
+            )?;
+        }
+
+        if self.kind != EnumKind::Lock {
+            writeln!(
+                ctx,
+                str_block! {r#"
+                    impl From<{enum_ident_s}> for {enum_base_type_s} {{
+                        #[inline(always)]
+                        fn from(value: {enum_ident_s}) -> Self {{
+                            value.0
+                        }}
+                    }}
+                "#},
+                enum_base_type_s = enum_base_type_s,
+                enum_ident_s = enum_ident_s,
+            )?;
+        }
+
+        if !can_derive_debug {
+            if self.kind != EnumKind::Flags {
+                writeln!(
+                    ctx,
+                    str_block! {"
+                        #[cfg(feature = \"debug-impls\")]
+                        impl ::core::fmt::Debug for {enum_ident_s} {{
+                            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
+                                #[allow(unreachable_patterns)]
+                                f.write_str(match *self {{
+                                    {debug_consts}
+                                    _ => return write!(f, \"{enum_ident_s}({{}})\", self.0),
+                                }})
+                            }}
+                        }}
+                    "},
+                    enum_ident_s = enum_ident_s,
+                    debug_consts = debug_consts,
+                )?;
+            } else {
+                writeln!(
+                    ctx,
+                    str_block! {"
+                        #[cfg(feature = \"debug-impls\")]
+                        impl ::core::fmt::Debug for {enum_ident_s} {{
+                            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
+                                let mut first = true;
+                                let all_bits = 0;
+                                write!(f, \"{enum_ident_s}(\")?;
+                                {debug_consts}
+                                if self.0 & !all_bits != 0 {{
+                                    if !first {{
+                                        write!(f, \" | \")?;
+                                    }}
+                                    write!(f, \"{{:#x}}\", self.0)?;
+                                }} else if first {{
+                                    write!(f, \"0\")?;
+                                }}
+                                write!(f, \")\")
+                            }}
+                        }}
+                    "},
+                    enum_ident_s = enum_ident_s,
+                    debug_consts = debug_consts,
+                )?;
+            };
+        }
+
+        if self.kind == EnumKind::Flags {
+            writeln!(
+                ctx,
+                str_block! {r"
+                    impl ::core::ops::BitAnd for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn bitand(self, rhs: Self) -> Self::Output {{
+                            Self(self.0 & rhs.0)
+                        }}
+                    }}
+
+                    impl ::core::ops::BitAndAssign for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn bitand_assign(&mut self, rhs: Self) {{
+                            self.0 &= rhs.0;
+                        }}
+                    }}
+
+                    impl ::core::ops::BitOr for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn bitor(self, rhs: Self) -> Self::Output {{
+                            Self(self.0 | rhs.0)
+                        }}
+                    }}
+
+                    impl ::core::ops::BitOrAssign for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn bitor_assign(&mut self, rhs: Self) {{
+                            self.0 |= rhs.0;
+                        }}
+                    }}
+
+                    impl ::core::ops::BitXor for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn bitxor(self, rhs: Self) -> Self::Output {{
+                            Self(self.0 ^ rhs.0)
+                        }}
+                    }}
+
+                    impl ::core::ops::BitXorAssign for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn bitxor_assign(&mut self, rhs: Self) {{
+                            self.0 ^= rhs.0;
+                        }}
+                    }}
+
+                    impl ::core::ops::Not for {enum_ident_s} {{
+                        type Output = Self;
+
+                        #[inline(always)]
+                        fn not(self) -> Self::Output {{
+                            Self(!self.0)
+                        }}
+                    }}
+                "},
+                enum_ident_s = enum_ident_s,
+            )?;
+        }
+
+        if !impl_consts.is_empty() {
+            writeln!(ctx, "impl {enum_ident_s} {{")?;
+            ctx.increase_indent();
+            ctx.write_str(&impl_consts)?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+        }
+        ctx.write_str(&global_consts)?;
+        writeln!(ctx)?;
+
+        if self.emit_metadata {
+            ctx.register_group_metadata(GroupMetadata {
+                kind: self.kind,
+                name: enum_ident_s.to_owned(),
+                doc: doc_meta,
+                values: values_metadata,
+            });
+
+            writeln!(
+                ctx,
+                str_block! {r#"
+                    #[cfg(feature = "metadata")]
+                    impl sdl3_sys::metadata::HasGroupMetadata for {enum_ident_s} {{
+                        const GROUP_METADATA: &'static sdl3_sys::metadata::Group = &crate::metadata::{module}::METADATA_{enum_ident_s};
+                    }}
+                "#},
+                enum_ident_s = enum_ident_s,
+                module = module,
+            )?;
+            writeln!(ctx)?;
+        }
+
+        ctx.flush_ool_output()?;
+        Ok(())
+    }
+}
+
 impl StructOrUnion {
     pub fn can_derive_copy(
         &self,
@@ -1107,28 +1602,14 @@ impl StructOrUnion {
             }
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
-            if !sym.can_construct {
-                // !!!FIXME
-                writeln!(ctx_ool, "// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699")?;
-            }
-            if can_derive_copy {
-                writeln!(ctx_ool, "#[derive(Clone, Copy)]")?;
-            }
-            if can_default == CanDefault::Derive {
-                writeln!(ctx_ool, "#[derive(Default)]")?;
-            }
-            match can_derive_eq {
-                CanCmp::Auto => unreachable!(),
-                CanCmp::No => (),
-                CanCmp::Partial => writeln!(ctx_ool, "#[derive(PartialEq)]")?,
-                CanCmp::Full => writeln!(ctx_ool, "#[derive(PartialEq, Eq, Hash)]")?,
-            }
-            if self.can_derive_debug(ctx_ool) {
-                writeln!(
-                    ctx_ool,
-                    r#"#[cfg_attr(feature = "debug-impls", derive(Debug))]"#
-                )?;
-            }
+            emit_derives(
+                ctx_ool,
+                can_derive_copy,
+                can_default,
+                can_derive_eq,
+                false,
+                self.can_derive_debug(ctx_ool),
+            )?;
             writeln!(
                 ctx_ool,
                 "pub {} {} {{",
@@ -1139,11 +1620,19 @@ impl StructOrUnion {
 
             for field in fields.fields.iter() {
                 field.doc.emit(ctx_ool)?;
+                if field.ident.as_str().starts_with("padding") {
+                    writeln!(ctx_ool, "#[deprecated(note = \"padding fields are exempt from semver; init with `..Default::default()`\")]")?;
+                }
                 write!(ctx_ool, "pub ")?;
                 field.ident.emit(ctx_ool)?;
                 write!(ctx_ool, ": ")?;
                 field.ty.emit(ctx_ool)?;
                 writeln!(ctx_ool, ",")?;
+            }
+            if !sym.can_construct {
+                // see https://github.com/rust-lang/rust/issues/132699
+                writeln!(ctx_ool, "#[doc(hidden)]")?;
+                writeln!(ctx_ool, "__non_exhaustive: ::sdl3_sys::NonExhaustive,")?;
             }
 
             ctx_ool.decrease_indent();
@@ -1311,7 +1800,7 @@ impl Emit for Type {
                 i.emit(ctx)?;
             }
 
-            TypeEnum::Enum(_) => todo!(),
+            TypeEnum::Enum(e) => e.emit_enum(ctx, None, None)?,
 
             TypeEnum::Struct(s) => return s.emit_with_doc_and_ident(ctx, None, true),
 
@@ -1379,434 +1868,193 @@ impl Emit for TypeDef {
             return Ok(());
         }
 
-        let mut assoc_doc = String::new();
-        let mut ctx_assoc_doc = ctx.with_output(&mut assoc_doc);
-        if !self.associated_defines.borrow().is_empty() {
-            if self.doc.is_some() {
-                writeln!(ctx_assoc_doc, "///")?;
-            }
-            writeln!(ctx_assoc_doc, "/// ### Known values (`sdl3-sys`)")?;
-            writeln!(ctx_assoc_doc, "/// | Constant | Description |")?;
-            writeln!(ctx_assoc_doc, "/// | -------- | ----------- |")?;
-            for (ident, doc) in self.associated_defines.borrow().iter() {
-                write!(ctx_assoc_doc, "/// | [`{ident}`] |")?;
-                if let Some(doc) = doc {
-                    let doc = doc.to_string();
-                    for line in doc.lines() {
-                        write!(ctx_assoc_doc, " {}", DocComment::insert_links(ctx, line)?)?;
-                    }
-                }
-                writeln!(ctx_assoc_doc, " |")?;
-            }
-        }
-        drop(ctx_assoc_doc);
-
-        match &self.ty.ty {
-            TypeEnum::Primitive(pt) => {
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    None,
-                    SymKind::Other,
-                    true,
-                    true,
-                    pt.can_cmp(),
-                    CanDefault::Derive,
-                )?;
-                self.doc.emit(ctx)?;
-                write!(ctx, "{assoc_doc}")?;
-                write!(ctx, "pub type ")?;
-                self.ident.emit(ctx)?;
-                write!(ctx, " = ")?;
-                self.ty.emit(ctx)?;
-                writeln!(ctx, ";")?;
-                writeln!(ctx)?;
-                Ok(())
-            }
-
-            TypeEnum::Ident(sym) => {
-                let sym = ctx.lookup_sym(sym).ok_or_else(|| {
-                    ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
-                })?;
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    sym.enum_base_ty,
-                    sym.kind,
-                    sym.can_derive_copy,
-                    sym.can_derive_debug,
-                    sym.can_derive_eq,
-                    sym.can_default,
-                )?;
-                self.doc.emit(ctx)?;
-                write!(ctx, "{assoc_doc}")?;
-                write!(ctx, "pub type ")?;
-                self.ident.emit(ctx)?;
-                write!(ctx, " = ")?;
-                sym.ident.emit(ctx)?;
-                writeln!(ctx, ";")?;
-                writeln!(ctx)?;
-                Ok(())
-            }
-
-            TypeEnum::Enum(e) => {
-                if let Some(ident) = &e.ident {
-                    ctx.scope_mut().register_enum_sym(ident.clone())?;
-                }
-
-                if e.hidden {
-                    writeln!(ctx, "#[doc(hidden)]")?;
-                }
-                self.doc.emit(ctx)?;
-                assert!(e.doc.is_none());
-
-                let enum_ident = self.ident.as_str();
-                let enum_base_type = e.base_type.clone();
-                let mut known_values = Vec::new();
-
-                let prefix = if e.variants.len() > 1 {
-                    let mut prefix = e
-                        .variants
-                        .first()
-                        .map(|v| v.ident.as_str())
-                        .unwrap_or_default();
-
-                    for variant in &e.variants {
-                        known_values.push(variant.ident.as_str());
-                        prefix = common_ident_prefix(prefix, variant.ident.as_str());
-                    }
-                    prefix
-                } else {
-                    if let Some(variant) = e.variants.first() {
-                        known_values.push(variant.ident.as_str());
-                    }
-                    ""
-                };
-
-                let enum_base_type = enum_base_type.unwrap_or(Type::primitive(PrimitiveType::Int));
-
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    Some(enum_base_type.clone()),
-                    SymKind::Other,
-                    true,
-                    true,
-                    CanCmp::Full,
-                    CanDefault::Derive,
-                )?;
-
-                let mut doc_consts = String::new();
-                let mut ctx_doc = ctx.with_output(&mut doc_consts);
-                let mut impl_consts = String::new();
-                let mut ctx_impl = ctx.with_output(&mut impl_consts);
-                let mut global_consts = String::new();
-                let mut ctx_global = ctx.with_output(&mut global_consts);
-                let mut debug_consts = String::new();
-                let mut ctx_debug = ctx.with_output(&mut debug_consts);
-                let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
-
-                if !known_values.is_empty() {
-                    if self.doc.is_some() {
-                        writeln!(ctx_doc, "///")?;
-                    }
-                    writeln!(ctx_doc, "/// ### Known values (`sdl3-sys`)")?;
-                    writeln!(
-                        ctx_doc,
-                        "/// | Associated constant | Global constant | Description |"
-                    )?;
-                    writeln!(
-                        ctx_doc,
-                        "/// | ------------------- | --------------- | ----------- |"
-                    )?;
-                }
-
-                let mut seen_target_dependent = HashSet::new();
-
-                for variant in &e.variants {
+        match &self.kind {
+            TypeDefKind::Alias => match &self.ty.ty {
+                TypeEnum::Primitive(pt) => {
                     ctx.register_sym(
-                        variant.ident.clone(),
+                        self.ident.clone(),
+                        Some(self.ty.clone()),
                         None,
-                        Some(Type::ident(self.ident.clone())),
                         None,
                         SymKind::Other,
                         true,
                         true,
-                        CanCmp::Full,
+                        pt.can_cmp(),
                         CanDefault::Derive,
                     )?;
+                    self.doc.emit(ctx)?;
+                    write!(ctx, "pub type ")?;
+                    self.ident.emit(ctx)?;
+                    write!(ctx, " = ")?;
+                    self.ty.emit(ctx)?;
+                    writeln!(ctx, ";")?;
+                    writeln!(ctx)?;
+                    Ok(())
+                }
 
-                    let variant_ident = variant.ident.as_str();
-                    let mut short_variant_ident = variant_ident.strip_prefix(prefix).unwrap();
-                    if !is_valid_ident(short_variant_ident) {
-                        short_variant_ident =
-                            &variant_ident[variant_ident.len() - short_variant_ident.len() - 1..];
-                    }
-
-                    let Some(expr) = variant.expr.as_ref().or(next_expr.as_ref()) else {
-                        return Err(ParseErr::new(
-                            variant.ident.span(),
-                            "couldn't evaluate value for enum",
-                        )
-                        .into());
-                    };
-
-                    let mut value = ctx.capture_output(|ctx| expr.emit(ctx))?;
-                    let need_wrap = if let Expr::Ident(ident) = &expr {
-                        if let Some(TypeEnum::Ident(tid)) = ctx
-                            .lookup_sym(&ident.clone().try_into().unwrap())
-                            .and_then(|s| s.value_ty)
-                            .map(|t| t.ty)
-                        {
-                            tid.as_str() != enum_ident
-                        } else {
-                            true
-                        }
-                    } else {
-                        true
-                    };
-                    if need_wrap {
-                        value.insert_str(0, "Self(");
-                        value.push(')');
-                    }
-
-                    next_expr = expr.try_eval_plus_one(ctx)?.map(Expr::Value);
-
-                    if !seen_target_dependent.contains(variant_ident) {
-                        write!(
-                            ctx_doc,
-                            "/// | [`{short_variant_ident}`]({enum_ident}::{short_variant_ident}) | [`{variant_ident}`] |",
-                        )?;
-                        if !variant.cond.is_empty() {
-                            seen_target_dependent.insert(variant_ident);
-                            write!(ctx_doc, " (target dependent)")?;
-                        }
-                        if let Some(doc) = &variant.doc {
-                            let doc = doc.to_string();
-                            for line in doc.lines() {
-                                write!(ctx_doc, " {}", DocComment::insert_links(ctx, line)?)?;
-                            }
-                        }
-                        writeln!(ctx_doc, " |")?;
-                    }
-
-                    variant.cond.emit_cfg(&mut ctx_impl)?;
-                    variant.doc.emit(&mut ctx_impl)?;
-                    if !variant.cond.is_empty() {
-                        writeln!(
-                            ctx_impl,
-                            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-                        )?;
-                    }
-                    writeln!(ctx_impl, "pub const {short_variant_ident}: Self = {value};")?;
-
-                    if e.hidden {
-                        writeln!(ctx_global, "#[doc(hidden)]")?;
-                    }
-                    variant.cond.emit_cfg(&mut ctx_global)?;
-                    variant.doc.emit(&mut ctx_global)?;
-                    if !variant.cond.is_empty() {
-                        writeln!(
-                            ctx_global,
-                            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
-                        )?;
-                    }
-                    writeln!(ctx_global, "pub const {variant_ident}: {enum_ident} = {enum_ident}::{short_variant_ident};")?;
-
-                    writeln!(
-                        ctx_debug,
-                        "Self::{short_variant_ident} => {variant_ident:?},"
+                TypeEnum::Ident(sym) => {
+                    let sym = ctx.lookup_sym(sym).ok_or_else(|| {
+                        ParseErr::new(sym.span(), format!("`{}` not defined", sym.as_str()))
+                    })?;
+                    ctx.register_sym(
+                        self.ident.clone(),
+                        Some(self.ty.clone()),
+                        None,
+                        sym.enum_base_ty,
+                        sym.kind,
+                        sym.can_derive_copy,
+                        sym.can_derive_debug,
+                        sym.can_derive_eq,
+                        sym.can_default,
                     )?;
+                    self.doc.emit(ctx)?;
+                    write!(ctx, "pub type ")?;
+                    self.ident.emit(ctx)?;
+                    write!(ctx, " = ")?;
+                    sym.ident.emit(ctx)?;
+                    writeln!(ctx, ";")?;
+                    writeln!(ctx)?;
+                    Ok(())
                 }
 
-                drop(ctx_debug);
-                drop(ctx_global);
-                drop(ctx_impl);
-                drop(ctx_doc);
+                TypeEnum::Enum(e) => e.emit_enum(ctx, self.doc.clone(), Some(self.ty.clone())),
 
-                ctx.write_str(&doc_consts)?;
+                TypeEnum::Struct(s) => {
+                    s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
 
-                writeln!(ctx, "#[repr(transparent)]")?;
-                writeln!(
-                    ctx,
-                    "#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]"
-                )?;
-                write!(ctx, "pub struct {enum_ident}(pub ")?;
-                enum_base_type.emit(ctx)?;
-                writeln!(ctx, ");")?;
-                writeln!(ctx)?;
+                    ctx.register_sym(
+                        self.ident.clone(),
+                        Some(self.ty.clone()),
+                        None,
+                        None,
+                        if s.kind == StructKind::Struct {
+                            SymKind::StructAlias
+                        } else {
+                            SymKind::UnionAlias
+                        }(s.ident.clone().unwrap()),
+                        s.can_derive_copy(ctx, None),
+                        s.can_derive_debug(ctx),
+                        s.can_derive_eq(ctx, None),
+                        s.can_default(ctx),
+                    )?;
 
-                write!(ctx, "impl From<{enum_ident}> for ")?;
-                enum_base_type.emit(ctx)?;
-                writeln!(
-                    ctx,
-                    str_block! {r#"
-                        {{
-                            #[inline(always)]
-                            fn from(value: {}) -> Self {{
-                                value.0
-                            }}
-                        }}
-                    "#},
-                    enum_ident
-                )?;
+                    ctx.flush_ool_output()?;
 
-                writeln!(
-                    ctx,
-                    str_block! {"
-                        #[cfg(feature = \"debug-impls\")]
-                        impl ::core::fmt::Debug for {} {{
-                            fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
-                                #[allow(unreachable_patterns)]
-                                f.write_str(match *self {{
-                                    {}
-                                    _ => return write!(f, {}, self.0),
-                                }})
-                            }}
-                        }}
-                    "},
-                    enum_ident,
-                    debug_consts,
-                    format!("\"{}({{}})\"", enum_ident)
-                )?;
-
-                writeln!(ctx, "impl {enum_ident} {{")?;
-                ctx.increase_indent();
-                ctx.write_str(&impl_consts)?;
-                ctx.decrease_indent();
-                writeln!(ctx, "}}")?;
-                writeln!(ctx)?;
-                ctx.write_str(&global_consts)?;
-                writeln!(ctx)?;
-                ctx.flush_ool_output()?;
-                Ok(())
-            }
-
-            TypeEnum::Struct(s) => {
-                s.emit_with_doc_and_ident(ctx, self.doc.clone(), false)?;
-
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    None,
-                    if s.kind == StructKind::Struct {
-                        SymKind::StructAlias
-                    } else {
-                        SymKind::UnionAlias
-                    }(s.ident.clone().unwrap()),
-                    s.can_derive_copy(ctx, None),
-                    s.can_derive_debug(ctx),
-                    s.can_derive_eq(ctx, None),
-                    s.can_default(ctx),
-                )?;
-
-                ctx.flush_ool_output()?;
-
-                if let Some(ident) = &s.ident {
-                    if self.ident.as_str() != ident.as_str() {
-                        write!(ctx, "pub type ")?;
-                        self.ident.emit(ctx)?;
-                        write!(ctx, " = ")?;
-                        ident.emit(ctx)?;
-                        writeln!(ctx, ";")?;
-                        writeln!(ctx)?;
+                    if let Some(ident) = &s.ident {
+                        if self.ident.as_str() != ident.as_str() {
+                            write!(ctx, "pub type ")?;
+                            self.ident.emit(ctx)?;
+                            write!(ctx, " = ")?;
+                            ident.emit(ctx)?;
+                            writeln!(ctx, ";")?;
+                            writeln!(ctx)?;
+                        }
                     }
+
+                    Ok(())
                 }
 
-                Ok(())
-            }
-
-            TypeEnum::Pointer(_) => {
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    None,
-                    SymKind::Other,
-                    false,
-                    true,
-                    CanCmp::No,
-                    CanDefault::Manual,
-                )?;
-                self.doc.emit(ctx)?;
-                write!(ctx, "pub type {} = ", self.ident.as_str())?;
-                self.ty.emit(ctx)?;
-                writeln!(ctx, ";")?;
-                writeln!(ctx)?;
-                Ok(())
-            }
-
-            TypeEnum::Array(ty, _) => {
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    None,
-                    SymKind::Other,
-                    ty.can_derive_copy(ctx),
-                    ty.can_derive_debug(ctx),
-                    ty.can_derive_eq(ctx),
-                    ty.can_default(ctx),
-                )?;
-                self.doc.emit(ctx)?;
-                todo!()
-            }
-
-            TypeEnum::FnPointer(f) => {
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    None,
-                    SymKind::Other,
-                    false,
-                    true,
-                    CanCmp::No,
-                    CanDefault::Derive,
-                )?;
-                self.doc.emit(ctx)?;
-                write!(
-                    ctx,
-                    "pub type {} = ::core::option::Option<unsafe ",
-                    self.ident.as_str()
-                )?;
-                emit_extern_start(ctx, &f.abi, true)?;
-                write!(ctx, "fn")?;
-                f.args.emit(ctx)?;
-                if !f.return_type.is_void() {
-                    write!(ctx, " -> ")?;
-                    f.return_type.emit(ctx)?;
+                TypeEnum::Pointer(_) => {
+                    ctx.register_sym(
+                        self.ident.clone(),
+                        Some(self.ty.clone()),
+                        None,
+                        None,
+                        SymKind::Other,
+                        false,
+                        true,
+                        CanCmp::No,
+                        CanDefault::Manual,
+                    )?;
+                    self.doc.emit(ctx)?;
+                    write!(ctx, "pub type {} = ", self.ident.as_str())?;
+                    self.ty.emit(ctx)?;
+                    writeln!(ctx, ";")?;
+                    writeln!(ctx)?;
+                    Ok(())
                 }
-                emit_extern_end(ctx, &f.abi, true)?;
-                writeln!(ctx, ">;")?;
-                writeln!(ctx)?;
-                Ok(())
+
+                TypeEnum::Array(ty, _) => {
+                    ctx.register_sym(
+                        self.ident.clone(),
+                        Some(self.ty.clone()),
+                        None,
+                        None,
+                        SymKind::Other,
+                        ty.can_derive_copy(ctx),
+                        ty.can_derive_debug(ctx),
+                        ty.can_derive_eq(ctx),
+                        ty.can_default(ctx),
+                    )?;
+                    self.doc.emit(ctx)?;
+                    todo!()
+                }
+
+                TypeEnum::FnPointer(f) => {
+                    ctx.register_sym(
+                        self.ident.clone(),
+                        Some(self.ty.clone()),
+                        None,
+                        None,
+                        SymKind::Other,
+                        false,
+                        true,
+                        CanCmp::No,
+                        CanDefault::Derive,
+                    )?;
+                    self.doc.emit(ctx)?;
+                    write!(
+                        ctx,
+                        "pub type {} = ::core::option::Option<unsafe ",
+                        self.ident.as_str()
+                    )?;
+                    emit_extern_start(ctx, &f.abi, true)?;
+                    write!(ctx, "fn")?;
+                    f.args.emit(ctx)?;
+                    if !f.return_type.is_void() {
+                        write!(ctx, " -> ")?;
+                        f.return_type.emit(ctx)?;
+                    }
+                    emit_extern_end(ctx, &f.abi, true)?;
+                    writeln!(ctx, ">;")?;
+                    writeln!(ctx)?;
+                    Ok(())
+                }
+
+                TypeEnum::DotDotDot => todo!(),
+
+                TypeEnum::Rust(r) => {
+                    ctx.register_sym(
+                        self.ident.clone(),
+                        Some(self.ty.clone()),
+                        None,
+                        None,
+                        SymKind::Other,
+                        r.can_derive_copy,
+                        r.can_derive_debug,
+                        r.can_derive_eq,
+                        r.can_default,
+                    )?;
+                    writeln!(ctx, "pub type {} = {};", self.ident.as_str(), r.string)?;
+                    Ok(())
+                }
+
+                TypeEnum::Function(_) => todo!(),
+                TypeEnum::Infer(_) => todo!(),
+            },
+
+            TypeDefKind::Enum { kind, variants, .. } => Enum {
+                span: self.span.clone(),
+                doc: self.doc.clone(),
+                ident: Some(self.ident.clone()),
+                variants: variants.borrow().clone(),
+                base_type: Some(self.ty.clone()),
+                hidden: false,
+                kind: *kind,
+                registered: Cell::new(false),
+                emit_metadata: true,
             }
-
-            TypeEnum::DotDotDot => todo!(),
-
-            TypeEnum::Rust(r) => {
-                ctx.register_sym(
-                    self.ident.clone(),
-                    Some(self.ty.clone()),
-                    None,
-                    None,
-                    SymKind::Other,
-                    r.can_derive_copy,
-                    r.can_derive_debug,
-                    r.can_derive_eq,
-                    r.can_default,
-                )?;
-                writeln!(ctx, "pub type {} = {};", self.ident.as_str(), r.string)?;
-                Ok(())
-            }
-
-            TypeEnum::Function(_) => todo!(),
-            TypeEnum::Infer(_) => todo!(),
+            .emit_enum(ctx, None, None),
         }
     }
 }

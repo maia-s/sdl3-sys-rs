@@ -5,7 +5,7 @@ use crate::{
         IdentOrKw, ParseErr, PrimitiveType, RustCode, Span, StructFields, StructKind, Type,
         TypeEnum,
     },
-    Defer, Gen,
+    Defer, Gen, GroupMetadata, HintMetadata, Metadata, PropertyMetadata,
 };
 use core::{fmt::Display, mem};
 use std::{
@@ -178,6 +178,7 @@ pub struct InnerEmitContext {
     pending_emits: Vec<(Vec<Ident>, Option<Box<dyn Emit>>)>,
     pending_enabled: bool,
     function_return_type: Type,
+    pub metadata: Metadata,
 }
 
 impl<'a, 'b> EmitContext<'a, 'b> {
@@ -214,6 +215,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             ".sdl3-sys.big-endian" = CfgExpr(r#"target_endian = "big""#);
             ".sdl3-sys.little-endian" = CfgExpr(r#"target_endian = "little""#);
             "__aarch64__" = CfgExpr(r#"target_arch = "aarch64""#);
+            "__APPLE__" = CfgExpr(r#"target_vendor = "apple""#);
             "__arm__" = CfgExpr(r#"target_arch = "arm""#);
             "__ARM_ARCH_7__" = CfgExpr(r#"all(target_arch = "arm", target_feature = "v7")"#);
             "__ARM_ARCH_7A__" = CfgExpr(r#"target_feature = "armv7-a""#);
@@ -297,6 +299,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_DEFINE_STDBOOL",
             "SDL_EndThreadFunction",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
+            "SDL_INCLUDE_STDBOOL_H",
             "SDL_INTERNAL",
             "SDL_MAIN_AVAILABLE",
             "SDL_MAIN_EXPORTED",
@@ -382,6 +385,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                 pending_emits: Vec::new(),
                 pending_enabled: true,
                 function_return_type: Type::void(),
+                metadata: Metadata::default(),
             })),
             output,
             indent: 0,
@@ -565,6 +569,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             pending_emits: Vec::new(),
             pending_enabled: true,
             function_return_type: Type::void(),
+            metadata: Metadata::default(),
         }));
         drop(i);
         EmitContext {
@@ -885,6 +890,18 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
     pub fn set_function_return_type(&self, return_type: Type) {
         self.inner_mut().function_return_type = return_type;
+    }
+
+    pub fn register_hint_metadata(&self, metadata: HintMetadata) {
+        self.inner_mut().metadata.hints.push(metadata);
+    }
+
+    pub fn register_property_metadata(&self, metadata: PropertyMetadata) {
+        self.inner_mut().metadata.properties.push(metadata);
+    }
+
+    pub fn register_group_metadata(&self, metadata: GroupMetadata) {
+        self.inner_mut().metadata.groups.push(metadata);
     }
 }
 

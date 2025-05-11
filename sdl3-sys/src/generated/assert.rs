@@ -53,7 +53,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// - 3: Paranoid settings: All SDL assertion macros enabled, including
     ///   [`SDL_assert_paranoid`].
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 1;
 
@@ -82,10 +82,10 @@ apply_cfg!(#[cfg(doc)] => {
     /// likely terminate the app, possibly without warning. If the current platform
     /// isn't supported, this macro is left undefined.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this macro from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     #[inline(always)]
     pub unsafe fn SDL_TriggerBreakpoint() {
@@ -164,10 +164,10 @@ pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
 /// generates no code and has no side effects, but avoid compiler warnings
 /// about unused variables.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `condition`: the condition to assert (but not actually run here).
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[doc(hidden)]
 #[macro_export]
@@ -191,10 +191,10 @@ pub use SDL_disabled_assert;
 /// condition, try to break in a debugger, kill the program, or ignore the
 /// problem).
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`RETRY`](SDL_AssertState::RETRY) | [`SDL_ASSERTION_RETRY`] | Retry the assert immediately. |
@@ -205,6 +205,20 @@ pub use SDL_disabled_assert;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_AssertState(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_AssertState {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_AssertState> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_AssertState) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_AssertState> for ::core::ffi::c_int {
     #[inline(always)]
@@ -231,15 +245,15 @@ impl ::core::fmt::Debug for SDL_AssertState {
 
 impl SDL_AssertState {
     /// Retry the assert immediately.
-    pub const RETRY: Self = Self(0);
+    pub const RETRY: Self = Self((0 as ::core::ffi::c_int));
     /// Make the debugger trigger a breakpoint.
-    pub const BREAK: Self = Self(1);
+    pub const BREAK: Self = Self((1 as ::core::ffi::c_int));
     /// Terminate the program.
-    pub const ABORT: Self = Self(2);
+    pub const ABORT: Self = Self((2 as ::core::ffi::c_int));
     /// Ignore the assert.
-    pub const IGNORE: Self = Self(3);
+    pub const IGNORE: Self = Self((3 as ::core::ffi::c_int));
     /// Ignore the assert from now on.
-    pub const ALWAYS_IGNORE: Self = Self(4);
+    pub const ALWAYS_IGNORE: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// Retry the assert immediately.
@@ -253,13 +267,19 @@ pub const SDL_ASSERTION_IGNORE: SDL_AssertState = SDL_AssertState::IGNORE;
 /// Ignore the assert from now on.
 pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS_IGNORE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_AssertState {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::assert::METADATA_SDL_AssertState;
+}
+
 /// Information about an assertion failure.
 ///
 /// This structure is filled in with information about a triggered assertion,
 /// used by the assertion handler, then added to the assertion report. This is
 /// returned as a linked list from [`SDL_GetAssertionReport()`].
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -294,19 +314,19 @@ extern "C" {
     ///
     /// Use the [`SDL_assert`] macros instead.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `data`: assert data structure.
     /// - `func`: function name.
     /// - `file`: file name.
     /// - `line`: line number.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns assert state.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReportAssertion(
         data: *mut SDL_AssertData,
@@ -322,7 +342,7 @@ apply_cfg!(#[cfg(doc)] => {
     /// This isn't for direct use by apps; use [`SDL_assert`] or [`SDL_TriggerBreakpoint`]
     /// instead.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     #[inline(always)]
     pub unsafe fn SDL_AssertBreakpoint() {
@@ -354,10 +374,10 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// static vars, and break points. The heavy lifting is handled in
 /// [`SDL_ReportAssertion()`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `condition`: the condition to assert.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[doc(hidden)]
 #[macro_export]
@@ -428,13 +448,13 @@ apply_cfg!(#[cfg(doc)] => {
     /// "break" so that your debugger takes control as soon as assert is triggered,
     /// instead of risking a bad UI interaction (deadlock, etc) in the application.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `condition`: boolean value to test.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this macro from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     #[doc(hidden)]
     #[macro_export]
@@ -468,13 +488,13 @@ apply_cfg!(#[cfg(doc)] => {
     /// instead of risking a bad UI interaction (deadlock, etc) in the application.
     /// *
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `condition`: boolean value to test.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this macro from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     #[doc(hidden)]
     #[macro_export]
@@ -504,13 +524,13 @@ apply_cfg!(#[cfg(doc)] => {
     /// "break" so that your debugger takes control as soon as assert is triggered,
     /// instead of risking a bad UI interaction (deadlock, etc) in the application.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `condition`: boolean value to test.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this macro from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     #[doc(hidden)]
     #[macro_export]
@@ -655,13 +675,13 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// "break" so that your debugger takes control as soon as assert is triggered,
 /// instead of risking a bad UI interaction (deadlock, etc) in the application.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `condition`: boolean value to test.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[doc(hidden)]
 #[macro_export]
@@ -675,19 +695,19 @@ pub use SDL_assert_always;
 
 /// A callback that fires when an SDL assertion fails.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `data`: a pointer to the [`SDL_AssertData`] structure corresponding to the
 ///   current assertion.
 /// - `userdata`: what was passed as `userdata` to [`SDL_SetAssertionHandler()`].
 ///
-/// ### Return value
+/// ## Return value
 /// Returns an [`SDL_AssertState`] value indicating how to handle the failure.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// This callback may be called from any thread that triggers an
 ///   assert at any time.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_AssertionHandler = ::core::option::Option<
     unsafe extern "C" fn(
@@ -709,18 +729,18 @@ extern "C" {
     ///
     /// This callback is NOT reset to SDL's internal handler upon [`SDL_Quit()`]!
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `handler`: the [`SDL_AssertionHandler`] function to call when an assertion
     ///   fails or NULL for the default handler.
     /// - `userdata`: a pointer that is passed to `handler`.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetAssertionHandler`]
     pub fn SDL_SetAssertionHandler(
         handler: SDL_AssertionHandler,
@@ -736,17 +756,17 @@ extern "C" {
     /// is used for assertions when [`SDL_SetAssertionHandler()`] hasn't been used to
     /// provide a different function.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the default [`SDL_AssertionHandler`] that is called when an assert
     ///   triggers.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetAssertionHandler`]
     pub fn SDL_GetDefaultAssertionHandler() -> SDL_AssertionHandler;
 }
@@ -764,20 +784,20 @@ extern "C" {
     /// will always be NULL for the default handler. If you don't care about this
     /// data, it is safe to pass a NULL pointer to this function to ignore it.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `puserdata`: pointer which is filled with the "userdata" pointer that
     ///   was passed to [`SDL_SetAssertionHandler()`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_AssertionHandler`] that is called when an assert triggers.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetAssertionHandler`]
     pub fn SDL_GetAssertionHandler(
         puserdata: *mut *mut ::core::ffi::c_void,
@@ -803,21 +823,21 @@ extern "C" {
     /// }
     /// ```
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a list of all failed assertions or NULL if the list is empty. This
     ///   memory should not be modified or freed by the application. This
     ///   pointer remains valid until the next call to [`SDL_Quit()`] or
     ///   [`SDL_ResetAssertionReport()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe. Other threads calling
     ///   [`SDL_ResetAssertionReport()`] simultaneously, may render the
     ///   returned pointer invalid.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ResetAssertionReport`]
     pub fn SDL_GetAssertionReport() -> *const SDL_AssertData;
 }
@@ -830,15 +850,15 @@ extern "C" {
     /// no items. In addition, any previously-triggered assertions will be reset to
     /// a trigger_count of zero, and their always_ignore state will be false.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe. Other threads triggering an
     ///   assertion, or simultaneously calling this function may cause
     ///   memory leaks or crashes.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetAssertionReport`]
     pub fn SDL_ResetAssertionReport();
 }

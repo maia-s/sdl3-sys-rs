@@ -2,7 +2,8 @@ use super::{
     Asm, Define, Delimited, DocCommentFile, Enum, EnumVariant, Expr, ExprNoComma, FnCall, Function,
     GetSpan, Ident, Include, Kw_break, Kw_continue, Kw_do, Kw_for, Kw_if, Kw_return, Kw_static, Op,
     Parse, ParseContext, ParseErr, ParseRawRes, PreProcBlock, PreProcLine, PreProcLineKind,
-    Punctuated, Span, StructOrUnion, Terminated, Type, TypeDef, TypeWithReqIdent, WsAndComments,
+    Punctuated, Span, StructOrUnion, Terminated, Type, TypeDef, TypeDefKind, TypeWithReqIdent,
+    WsAndComments,
 };
 use crate::{
     parse::{Kw_else, Kw_while},
@@ -111,7 +112,7 @@ impl Parse for Item {
         } else if let (rest, Some(f)) = Function::try_parse_raw(ctx, input)? {
             Ok((rest, Some(Item::Function(f))))
         } else if let (rest, Some(t)) = TypeDef::try_parse_raw(ctx, input)? {
-            if t.use_for_defines.is_some() {
+            if matches!(t.kind, TypeDefKind::Enum { .. }) {
                 clear_td.disable();
                 *ctx.active_typedef.borrow_mut() = Some(t.clone());
             }

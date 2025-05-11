@@ -343,11 +343,6 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
                             }
                         }
 
-                        unsafe {
-                            // safety: this is the main thread
-                            MainThreadToken::init();
-                        }
-
                         if unsafe { run_app(sdl_main) } == 0 {
                             Result::Ok(())
                         } else {
@@ -368,11 +363,6 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
 
                         unsafe extern "C" fn sdl_main(argc: c_int, argv: *mut *mut c_char) -> c_int {
                             unsafe { #app_main.main(MainThreadToken::assert(), argc, argv) }
-                        }
-
-                        unsafe {
-                            // safety: this is the main thread
-                            MainThreadToken::init();
                         }
 
                         unsafe { SDL_RunApp(argc, argv, Option::Some(sdl_main), ptr::null_mut()) }
@@ -403,11 +393,6 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
                             );
                         };
                         0
-                    }
-
-                    unsafe {
-                        // safety: this is the main thread
-                        MainThreadToken::init();
                     }
 
                     unsafe {

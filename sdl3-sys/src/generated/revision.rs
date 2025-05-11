@@ -10,14 +10,14 @@ apply_cfg!(#[cfg(doc)] => {
     /// clue in debugging forensics and not something the app will parse in any
     /// way.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_REVISION: *const ::core::ffi::c_char = c"Some arbitrary string decided at SDL build time".as_ptr();
 
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-release-3.2.8".as_ptr();
+    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-3.2.12".as_ptr();
 
 });
 

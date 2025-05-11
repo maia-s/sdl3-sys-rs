@@ -1,6 +1,6 @@
 use super::{
-    CanCmp, CanCopy, Cast, Define, DefineValue, Enum, Expr, GetSpan, ParseContext, ParseErr,
-    PrimitiveType, StructOrUnion, Type, TypeDef,
+    CanCmp, CanCopy, Cast, Define, DefineValue, Enum, EnumKind, Expr, GetSpan, ParseContext,
+    ParseErr, PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
 };
 
 struct Patch<T: ?Sized> {
@@ -378,6 +378,7 @@ const ENUM_PATCHES: &[EnumPatch] = &[
         match_ident: |i| i == "SDL_DUMMY_ENUM",
         patch: |_, e| {
             e.hidden = true;
+            e.emit_metadata = false;
             Ok(true)
         },
     },
@@ -501,10 +502,69 @@ type TypeDefPatch = Patch<TypeDef>;
 
 const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
     TypeDefPatch {
+        module: Some("atomic"),
+        match_ident: |i| i == "SDL_SpinLock",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Lock);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("blendmode"),
+        match_ident: |i| i == "SDL_BlendMode",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Flags);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("gpu"),
+        match_ident: |i| i == "SDL_GPUShaderFormat",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Flags);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("haptic"),
+        match_ident: |i| i == "SDL_HapticDirectionType",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Enum);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("haptic"),
+        match_ident: |i| i == "SDL_HapticEffectType",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Flags);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("keycode"),
+        match_ident: |i| i == "SDL_Keymod",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Flags);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("keycode"),
+        match_ident: |i| i == "SDL_Keycode",
+        patch: |_, td| {
+            td.kind = TypeDefKind::new_enum(EnumKind::Id);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
         module: Some("mouse"),
         match_ident: |i| i == "SDL_MouseButtonFlags",
         patch: |_, td| {
-            td.use_for_defines = None;
+            let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
+                unreachable!()
+            };
+            *match_define = |s| s.starts_with("SDL_BUTTON_") && s.ends_with("MASK");
             Ok(true)
         },
     },
@@ -512,7 +572,10 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
         module: Some("pen"),
         match_ident: |i| i == "SDL_PenID",
         patch: |_, td| {
-            td.use_for_defines = None;
+            let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
+                unreachable!()
+            };
+            *match_define = |_| false;
             Ok(true)
         },
     },
@@ -520,7 +583,10 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
         module: Some("sensor"),
         match_ident: |i| i == "SDL_SensorID",
         patch: |_, td| {
-            td.use_for_defines = None;
+            let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
+                unreachable!()
+            };
+            *match_define = |_| false;
             Ok(true)
         },
     },
@@ -528,7 +594,10 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
         module: Some("video"),
         match_ident: |i| i == "SDL_WindowID",
         patch: |_, td| {
-            td.use_for_defines = None;
+            let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
+                unreachable!()
+            };
+            *match_define = |_| false;
             Ok(true)
         },
     },
@@ -536,7 +605,10 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
         module: Some("video"),
         match_ident: |i| i == "SDL_WindowFlags",
         patch: |_, td| {
-            td.use_for_defines = Some("SDL_WINDOW_");
+            let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
+                unreachable!()
+            };
+            *match_define = |s| s.starts_with("SDL_WINDOW_");
             Ok(true)
         },
     },
@@ -553,6 +625,15 @@ const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
         },
         patch: |_, td| {
             td.ty = Type::ident_str("Sint32");
+            td.kind = TypeDefKind::new_enum(EnumKind::Flags);
+            Ok(true)
+        },
+    },
+    TypeDefPatch {
+        module: Some("ttf"),
+        match_ident: |i| matches!(i, "TTF_HintingFlags"),
+        patch: |_, td| {
+            td.kind = TypeDefKind::Alias;
             Ok(true)
         },
     },

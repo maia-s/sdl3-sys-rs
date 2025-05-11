@@ -304,13 +304,13 @@ use super::video::*;
 /// topology for both compatibility and performance reasons. You WILL regret
 /// using it.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`TRIANGLELIST`](SDL_GPUPrimitiveType::TRIANGLELIST) | [`SDL_GPU_PRIMITIVETYPE_TRIANGLELIST`] | A series of separate triangles. |
@@ -321,6 +321,20 @@ use super::video::*;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPrimitiveType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUPrimitiveType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUPrimitiveType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUPrimitiveType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -347,15 +361,15 @@ impl ::core::fmt::Debug for SDL_GPUPrimitiveType {
 
 impl SDL_GPUPrimitiveType {
     /// A series of separate triangles.
-    pub const TRIANGLELIST: Self = Self(0);
+    pub const TRIANGLELIST: Self = Self((0 as ::core::ffi::c_int));
     /// A series of connected triangles.
-    pub const TRIANGLESTRIP: Self = Self(1);
+    pub const TRIANGLESTRIP: Self = Self((1 as ::core::ffi::c_int));
     /// A series of separate lines.
-    pub const LINELIST: Self = Self(2);
+    pub const LINELIST: Self = Self((2 as ::core::ffi::c_int));
     /// A series of connected lines.
-    pub const LINESTRIP: Self = Self(3);
+    pub const LINESTRIP: Self = Self((3 as ::core::ffi::c_int));
     /// A series of separate points.
-    pub const POINTLIST: Self = Self(4);
+    pub const POINTLIST: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// A series of separate triangles.
@@ -371,16 +385,22 @@ pub const SDL_GPU_PRIMITIVETYPE_LINESTRIP: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 /// A series of separate points.
 pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimitiveType::POINTLIST;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUPrimitiveType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUPrimitiveType;
+}
+
 /// Specifies how the contents of a texture attached to a render pass are
 /// treated at the beginning of the render pass.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPURenderPass`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`LOAD`](SDL_GPULoadOp::LOAD) | [`SDL_GPU_LOADOP_LOAD`] | The previous contents of the texture will be preserved. |
@@ -389,6 +409,20 @@ pub const SDL_GPU_PRIMITIVETYPE_POINTLIST: SDL_GPUPrimitiveType = SDL_GPUPrimiti
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPULoadOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPULoadOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPULoadOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPULoadOp) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPULoadOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -413,11 +447,11 @@ impl ::core::fmt::Debug for SDL_GPULoadOp {
 
 impl SDL_GPULoadOp {
     /// The previous contents of the texture will be preserved.
-    pub const LOAD: Self = Self(0);
+    pub const LOAD: Self = Self((0 as ::core::ffi::c_int));
     /// The contents of the texture will be cleared to a color.
-    pub const CLEAR: Self = Self(1);
+    pub const CLEAR: Self = Self((1 as ::core::ffi::c_int));
     /// The previous contents of the texture need not be preserved. The contents will be undefined.
-    pub const DONT_CARE: Self = Self(2);
+    pub const DONT_CARE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// The previous contents of the texture will be preserved.
@@ -427,16 +461,22 @@ pub const SDL_GPU_LOADOP_CLEAR: SDL_GPULoadOp = SDL_GPULoadOp::CLEAR;
 /// The previous contents of the texture need not be preserved. The contents will be undefined.
 pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPULoadOp {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPULoadOp;
+}
+
 /// Specifies how the contents of a texture attached to a render pass are
 /// treated at the end of the render pass.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPURenderPass`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`STORE`](SDL_GPUStoreOp::STORE) | [`SDL_GPU_STOREOP_STORE`] | The contents generated during the render pass will be written to memory. |
@@ -446,6 +486,20 @@ pub const SDL_GPU_LOADOP_DONT_CARE: SDL_GPULoadOp = SDL_GPULoadOp::DONT_CARE;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStoreOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUStoreOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUStoreOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUStoreOp) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUStoreOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -471,13 +525,13 @@ impl ::core::fmt::Debug for SDL_GPUStoreOp {
 
 impl SDL_GPUStoreOp {
     /// The contents generated during the render pass will be written to memory.
-    pub const STORE: Self = Self(0);
+    pub const STORE: Self = Self((0 as ::core::ffi::c_int));
     /// The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.
-    pub const DONT_CARE: Self = Self(1);
+    pub const DONT_CARE: Self = Self((1 as ::core::ffi::c_int));
     /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.
-    pub const RESOLVE: Self = Self(2);
+    pub const RESOLVE: Self = Self((2 as ::core::ffi::c_int));
     /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.
-    pub const RESOLVE_AND_STORE: Self = Self(3);
+    pub const RESOLVE_AND_STORE: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// The contents generated during the render pass will be written to memory.
@@ -489,15 +543,21 @@ pub const SDL_GPU_STOREOP_RESOLVE: SDL_GPUStoreOp = SDL_GPUStoreOp::RESOLVE;
 /// The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.
 pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RESOLVE_AND_STORE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUStoreOp {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUStoreOp;
+}
+
 /// Specifies the size of elements in an index buffer.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`_16BIT`](SDL_GPUIndexElementSize::_16BIT) | [`SDL_GPU_INDEXELEMENTSIZE_16BIT`] | The index elements are 16-bit. |
@@ -505,6 +565,20 @@ pub const SDL_GPU_STOREOP_RESOLVE_AND_STORE: SDL_GPUStoreOp = SDL_GPUStoreOp::RE
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUIndexElementSize(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUIndexElementSize {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUIndexElementSize) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUIndexElementSize> for ::core::ffi::c_int {
     #[inline(always)]
@@ -528,15 +602,21 @@ impl ::core::fmt::Debug for SDL_GPUIndexElementSize {
 
 impl SDL_GPUIndexElementSize {
     /// The index elements are 16-bit.
-    pub const _16BIT: Self = Self(0);
+    pub const _16BIT: Self = Self((0 as ::core::ffi::c_int));
     /// The index elements are 32-bit.
-    pub const _32BIT: Self = Self(1);
+    pub const _32BIT: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// The index elements are 16-bit.
 pub const SDL_GPU_INDEXELEMENTSIZE_16BIT: SDL_GPUIndexElementSize = SDL_GPUIndexElementSize::_16BIT;
 /// The index elements are 32-bit.
 pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndexElementSize::_32BIT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUIndexElementSize {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUIndexElementSize;
+}
 
 /// Specifies the pixel format of a texture.
 ///
@@ -617,14 +697,14 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 /// Unless D16_UNORM is sufficient for your purposes, always check which of
 /// D24/D32 is supported before creating a depth-stencil texture!
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTexture`]
 /// - [`SDL_GPUTextureSupportsFormat`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_GPUTextureFormat::INVALID) | [`SDL_GPU_TEXTUREFORMAT_INVALID`] | |
@@ -735,6 +815,20 @@ pub const SDL_GPU_INDEXELEMENTSIZE_32BIT: SDL_GPUIndexElementSize = SDL_GPUIndex
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureFormat(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTextureFormat {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUTextureFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTextureFormat) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUTextureFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -860,111 +954,111 @@ impl ::core::fmt::Debug for SDL_GPUTextureFormat {
 }
 
 impl SDL_GPUTextureFormat {
-    pub const INVALID: Self = Self(0);
-    pub const A8_UNORM: Self = Self(1);
-    pub const R8_UNORM: Self = Self(2);
-    pub const R8G8_UNORM: Self = Self(3);
-    pub const R8G8B8A8_UNORM: Self = Self(4);
-    pub const R16_UNORM: Self = Self(5);
-    pub const R16G16_UNORM: Self = Self(6);
-    pub const R16G16B16A16_UNORM: Self = Self(7);
-    pub const R10G10B10A2_UNORM: Self = Self(8);
-    pub const B5G6R5_UNORM: Self = Self(9);
-    pub const B5G5R5A1_UNORM: Self = Self(10);
-    pub const B4G4R4A4_UNORM: Self = Self(11);
-    pub const B8G8R8A8_UNORM: Self = Self(12);
-    pub const BC1_RGBA_UNORM: Self = Self(13);
-    pub const BC2_RGBA_UNORM: Self = Self(14);
-    pub const BC3_RGBA_UNORM: Self = Self(15);
-    pub const BC4_R_UNORM: Self = Self(16);
-    pub const BC5_RG_UNORM: Self = Self(17);
-    pub const BC7_RGBA_UNORM: Self = Self(18);
-    pub const BC6H_RGB_FLOAT: Self = Self(19);
-    pub const BC6H_RGB_UFLOAT: Self = Self(20);
-    pub const R8_SNORM: Self = Self(21);
-    pub const R8G8_SNORM: Self = Self(22);
-    pub const R8G8B8A8_SNORM: Self = Self(23);
-    pub const R16_SNORM: Self = Self(24);
-    pub const R16G16_SNORM: Self = Self(25);
-    pub const R16G16B16A16_SNORM: Self = Self(26);
-    pub const R16_FLOAT: Self = Self(27);
-    pub const R16G16_FLOAT: Self = Self(28);
-    pub const R16G16B16A16_FLOAT: Self = Self(29);
-    pub const R32_FLOAT: Self = Self(30);
-    pub const R32G32_FLOAT: Self = Self(31);
-    pub const R32G32B32A32_FLOAT: Self = Self(32);
-    pub const R11G11B10_UFLOAT: Self = Self(33);
-    pub const R8_UINT: Self = Self(34);
-    pub const R8G8_UINT: Self = Self(35);
-    pub const R8G8B8A8_UINT: Self = Self(36);
-    pub const R16_UINT: Self = Self(37);
-    pub const R16G16_UINT: Self = Self(38);
-    pub const R16G16B16A16_UINT: Self = Self(39);
-    pub const R32_UINT: Self = Self(40);
-    pub const R32G32_UINT: Self = Self(41);
-    pub const R32G32B32A32_UINT: Self = Self(42);
-    pub const R8_INT: Self = Self(43);
-    pub const R8G8_INT: Self = Self(44);
-    pub const R8G8B8A8_INT: Self = Self(45);
-    pub const R16_INT: Self = Self(46);
-    pub const R16G16_INT: Self = Self(47);
-    pub const R16G16B16A16_INT: Self = Self(48);
-    pub const R32_INT: Self = Self(49);
-    pub const R32G32_INT: Self = Self(50);
-    pub const R32G32B32A32_INT: Self = Self(51);
-    pub const R8G8B8A8_UNORM_SRGB: Self = Self(52);
-    pub const B8G8R8A8_UNORM_SRGB: Self = Self(53);
-    pub const BC1_RGBA_UNORM_SRGB: Self = Self(54);
-    pub const BC2_RGBA_UNORM_SRGB: Self = Self(55);
-    pub const BC3_RGBA_UNORM_SRGB: Self = Self(56);
-    pub const BC7_RGBA_UNORM_SRGB: Self = Self(57);
-    pub const D16_UNORM: Self = Self(58);
-    pub const D24_UNORM: Self = Self(59);
-    pub const D32_FLOAT: Self = Self(60);
-    pub const D24_UNORM_S8_UINT: Self = Self(61);
-    pub const D32_FLOAT_S8_UINT: Self = Self(62);
-    pub const ASTC_4x4_UNORM: Self = Self(63);
-    pub const ASTC_5x4_UNORM: Self = Self(64);
-    pub const ASTC_5x5_UNORM: Self = Self(65);
-    pub const ASTC_6x5_UNORM: Self = Self(66);
-    pub const ASTC_6x6_UNORM: Self = Self(67);
-    pub const ASTC_8x5_UNORM: Self = Self(68);
-    pub const ASTC_8x6_UNORM: Self = Self(69);
-    pub const ASTC_8x8_UNORM: Self = Self(70);
-    pub const ASTC_10x5_UNORM: Self = Self(71);
-    pub const ASTC_10x6_UNORM: Self = Self(72);
-    pub const ASTC_10x8_UNORM: Self = Self(73);
-    pub const ASTC_10x10_UNORM: Self = Self(74);
-    pub const ASTC_12x10_UNORM: Self = Self(75);
-    pub const ASTC_12x12_UNORM: Self = Self(76);
-    pub const ASTC_4x4_UNORM_SRGB: Self = Self(77);
-    pub const ASTC_5x4_UNORM_SRGB: Self = Self(78);
-    pub const ASTC_5x5_UNORM_SRGB: Self = Self(79);
-    pub const ASTC_6x5_UNORM_SRGB: Self = Self(80);
-    pub const ASTC_6x6_UNORM_SRGB: Self = Self(81);
-    pub const ASTC_8x5_UNORM_SRGB: Self = Self(82);
-    pub const ASTC_8x6_UNORM_SRGB: Self = Self(83);
-    pub const ASTC_8x8_UNORM_SRGB: Self = Self(84);
-    pub const ASTC_10x5_UNORM_SRGB: Self = Self(85);
-    pub const ASTC_10x6_UNORM_SRGB: Self = Self(86);
-    pub const ASTC_10x8_UNORM_SRGB: Self = Self(87);
-    pub const ASTC_10x10_UNORM_SRGB: Self = Self(88);
-    pub const ASTC_12x10_UNORM_SRGB: Self = Self(89);
-    pub const ASTC_12x12_UNORM_SRGB: Self = Self(90);
-    pub const ASTC_4x4_FLOAT: Self = Self(91);
-    pub const ASTC_5x4_FLOAT: Self = Self(92);
-    pub const ASTC_5x5_FLOAT: Self = Self(93);
-    pub const ASTC_6x5_FLOAT: Self = Self(94);
-    pub const ASTC_6x6_FLOAT: Self = Self(95);
-    pub const ASTC_8x5_FLOAT: Self = Self(96);
-    pub const ASTC_8x6_FLOAT: Self = Self(97);
-    pub const ASTC_8x8_FLOAT: Self = Self(98);
-    pub const ASTC_10x5_FLOAT: Self = Self(99);
-    pub const ASTC_10x6_FLOAT: Self = Self(100);
-    pub const ASTC_10x8_FLOAT: Self = Self(101);
-    pub const ASTC_10x10_FLOAT: Self = Self(102);
-    pub const ASTC_12x10_FLOAT: Self = Self(103);
-    pub const ASTC_12x12_FLOAT: Self = Self(104);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
+    pub const A8_UNORM: Self = Self((1 as ::core::ffi::c_int));
+    pub const R8_UNORM: Self = Self((2 as ::core::ffi::c_int));
+    pub const R8G8_UNORM: Self = Self((3 as ::core::ffi::c_int));
+    pub const R8G8B8A8_UNORM: Self = Self((4 as ::core::ffi::c_int));
+    pub const R16_UNORM: Self = Self((5 as ::core::ffi::c_int));
+    pub const R16G16_UNORM: Self = Self((6 as ::core::ffi::c_int));
+    pub const R16G16B16A16_UNORM: Self = Self((7 as ::core::ffi::c_int));
+    pub const R10G10B10A2_UNORM: Self = Self((8 as ::core::ffi::c_int));
+    pub const B5G6R5_UNORM: Self = Self((9 as ::core::ffi::c_int));
+    pub const B5G5R5A1_UNORM: Self = Self((10 as ::core::ffi::c_int));
+    pub const B4G4R4A4_UNORM: Self = Self((11 as ::core::ffi::c_int));
+    pub const B8G8R8A8_UNORM: Self = Self((12 as ::core::ffi::c_int));
+    pub const BC1_RGBA_UNORM: Self = Self((13 as ::core::ffi::c_int));
+    pub const BC2_RGBA_UNORM: Self = Self((14 as ::core::ffi::c_int));
+    pub const BC3_RGBA_UNORM: Self = Self((15 as ::core::ffi::c_int));
+    pub const BC4_R_UNORM: Self = Self((16 as ::core::ffi::c_int));
+    pub const BC5_RG_UNORM: Self = Self((17 as ::core::ffi::c_int));
+    pub const BC7_RGBA_UNORM: Self = Self((18 as ::core::ffi::c_int));
+    pub const BC6H_RGB_FLOAT: Self = Self((19 as ::core::ffi::c_int));
+    pub const BC6H_RGB_UFLOAT: Self = Self((20 as ::core::ffi::c_int));
+    pub const R8_SNORM: Self = Self((21 as ::core::ffi::c_int));
+    pub const R8G8_SNORM: Self = Self((22 as ::core::ffi::c_int));
+    pub const R8G8B8A8_SNORM: Self = Self((23 as ::core::ffi::c_int));
+    pub const R16_SNORM: Self = Self((24 as ::core::ffi::c_int));
+    pub const R16G16_SNORM: Self = Self((25 as ::core::ffi::c_int));
+    pub const R16G16B16A16_SNORM: Self = Self((26 as ::core::ffi::c_int));
+    pub const R16_FLOAT: Self = Self((27 as ::core::ffi::c_int));
+    pub const R16G16_FLOAT: Self = Self((28 as ::core::ffi::c_int));
+    pub const R16G16B16A16_FLOAT: Self = Self((29 as ::core::ffi::c_int));
+    pub const R32_FLOAT: Self = Self((30 as ::core::ffi::c_int));
+    pub const R32G32_FLOAT: Self = Self((31 as ::core::ffi::c_int));
+    pub const R32G32B32A32_FLOAT: Self = Self((32 as ::core::ffi::c_int));
+    pub const R11G11B10_UFLOAT: Self = Self((33 as ::core::ffi::c_int));
+    pub const R8_UINT: Self = Self((34 as ::core::ffi::c_int));
+    pub const R8G8_UINT: Self = Self((35 as ::core::ffi::c_int));
+    pub const R8G8B8A8_UINT: Self = Self((36 as ::core::ffi::c_int));
+    pub const R16_UINT: Self = Self((37 as ::core::ffi::c_int));
+    pub const R16G16_UINT: Self = Self((38 as ::core::ffi::c_int));
+    pub const R16G16B16A16_UINT: Self = Self((39 as ::core::ffi::c_int));
+    pub const R32_UINT: Self = Self((40 as ::core::ffi::c_int));
+    pub const R32G32_UINT: Self = Self((41 as ::core::ffi::c_int));
+    pub const R32G32B32A32_UINT: Self = Self((42 as ::core::ffi::c_int));
+    pub const R8_INT: Self = Self((43 as ::core::ffi::c_int));
+    pub const R8G8_INT: Self = Self((44 as ::core::ffi::c_int));
+    pub const R8G8B8A8_INT: Self = Self((45 as ::core::ffi::c_int));
+    pub const R16_INT: Self = Self((46 as ::core::ffi::c_int));
+    pub const R16G16_INT: Self = Self((47 as ::core::ffi::c_int));
+    pub const R16G16B16A16_INT: Self = Self((48 as ::core::ffi::c_int));
+    pub const R32_INT: Self = Self((49 as ::core::ffi::c_int));
+    pub const R32G32_INT: Self = Self((50 as ::core::ffi::c_int));
+    pub const R32G32B32A32_INT: Self = Self((51 as ::core::ffi::c_int));
+    pub const R8G8B8A8_UNORM_SRGB: Self = Self((52 as ::core::ffi::c_int));
+    pub const B8G8R8A8_UNORM_SRGB: Self = Self((53 as ::core::ffi::c_int));
+    pub const BC1_RGBA_UNORM_SRGB: Self = Self((54 as ::core::ffi::c_int));
+    pub const BC2_RGBA_UNORM_SRGB: Self = Self((55 as ::core::ffi::c_int));
+    pub const BC3_RGBA_UNORM_SRGB: Self = Self((56 as ::core::ffi::c_int));
+    pub const BC7_RGBA_UNORM_SRGB: Self = Self((57 as ::core::ffi::c_int));
+    pub const D16_UNORM: Self = Self((58 as ::core::ffi::c_int));
+    pub const D24_UNORM: Self = Self((59 as ::core::ffi::c_int));
+    pub const D32_FLOAT: Self = Self((60 as ::core::ffi::c_int));
+    pub const D24_UNORM_S8_UINT: Self = Self((61 as ::core::ffi::c_int));
+    pub const D32_FLOAT_S8_UINT: Self = Self((62 as ::core::ffi::c_int));
+    pub const ASTC_4x4_UNORM: Self = Self((63 as ::core::ffi::c_int));
+    pub const ASTC_5x4_UNORM: Self = Self((64 as ::core::ffi::c_int));
+    pub const ASTC_5x5_UNORM: Self = Self((65 as ::core::ffi::c_int));
+    pub const ASTC_6x5_UNORM: Self = Self((66 as ::core::ffi::c_int));
+    pub const ASTC_6x6_UNORM: Self = Self((67 as ::core::ffi::c_int));
+    pub const ASTC_8x5_UNORM: Self = Self((68 as ::core::ffi::c_int));
+    pub const ASTC_8x6_UNORM: Self = Self((69 as ::core::ffi::c_int));
+    pub const ASTC_8x8_UNORM: Self = Self((70 as ::core::ffi::c_int));
+    pub const ASTC_10x5_UNORM: Self = Self((71 as ::core::ffi::c_int));
+    pub const ASTC_10x6_UNORM: Self = Self((72 as ::core::ffi::c_int));
+    pub const ASTC_10x8_UNORM: Self = Self((73 as ::core::ffi::c_int));
+    pub const ASTC_10x10_UNORM: Self = Self((74 as ::core::ffi::c_int));
+    pub const ASTC_12x10_UNORM: Self = Self((75 as ::core::ffi::c_int));
+    pub const ASTC_12x12_UNORM: Self = Self((76 as ::core::ffi::c_int));
+    pub const ASTC_4x4_UNORM_SRGB: Self = Self((77 as ::core::ffi::c_int));
+    pub const ASTC_5x4_UNORM_SRGB: Self = Self((78 as ::core::ffi::c_int));
+    pub const ASTC_5x5_UNORM_SRGB: Self = Self((79 as ::core::ffi::c_int));
+    pub const ASTC_6x5_UNORM_SRGB: Self = Self((80 as ::core::ffi::c_int));
+    pub const ASTC_6x6_UNORM_SRGB: Self = Self((81 as ::core::ffi::c_int));
+    pub const ASTC_8x5_UNORM_SRGB: Self = Self((82 as ::core::ffi::c_int));
+    pub const ASTC_8x6_UNORM_SRGB: Self = Self((83 as ::core::ffi::c_int));
+    pub const ASTC_8x8_UNORM_SRGB: Self = Self((84 as ::core::ffi::c_int));
+    pub const ASTC_10x5_UNORM_SRGB: Self = Self((85 as ::core::ffi::c_int));
+    pub const ASTC_10x6_UNORM_SRGB: Self = Self((86 as ::core::ffi::c_int));
+    pub const ASTC_10x8_UNORM_SRGB: Self = Self((87 as ::core::ffi::c_int));
+    pub const ASTC_10x10_UNORM_SRGB: Self = Self((88 as ::core::ffi::c_int));
+    pub const ASTC_12x10_UNORM_SRGB: Self = Self((89 as ::core::ffi::c_int));
+    pub const ASTC_12x12_UNORM_SRGB: Self = Self((90 as ::core::ffi::c_int));
+    pub const ASTC_4x4_FLOAT: Self = Self((91 as ::core::ffi::c_int));
+    pub const ASTC_5x4_FLOAT: Self = Self((92 as ::core::ffi::c_int));
+    pub const ASTC_5x5_FLOAT: Self = Self((93 as ::core::ffi::c_int));
+    pub const ASTC_6x5_FLOAT: Self = Self((94 as ::core::ffi::c_int));
+    pub const ASTC_6x6_FLOAT: Self = Self((95 as ::core::ffi::c_int));
+    pub const ASTC_8x5_FLOAT: Self = Self((96 as ::core::ffi::c_int));
+    pub const ASTC_8x6_FLOAT: Self = Self((97 as ::core::ffi::c_int));
+    pub const ASTC_8x8_FLOAT: Self = Self((98 as ::core::ffi::c_int));
+    pub const ASTC_10x5_FLOAT: Self = Self((99 as ::core::ffi::c_int));
+    pub const ASTC_10x6_FLOAT: Self = Self((100 as ::core::ffi::c_int));
+    pub const ASTC_10x8_FLOAT: Self = Self((101 as ::core::ffi::c_int));
+    pub const ASTC_10x10_FLOAT: Self = Self((102 as ::core::ffi::c_int));
+    pub const ASTC_12x10_FLOAT: Self = Self((103 as ::core::ffi::c_int));
+    pub const ASTC_12x12_FLOAT: Self = Self((104 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_TEXTUREFORMAT_INVALID: SDL_GPUTextureFormat = SDL_GPUTextureFormat::INVALID;
@@ -1155,6 +1249,12 @@ pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x10_FLOAT: SDL_GPUTextureFormat =
 pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT: SDL_GPUTextureFormat =
     SDL_GPUTextureFormat::ASTC_12x12_FLOAT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTextureFormat {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUTextureFormat;
+}
+
 /// Specifies how a texture is intended to be used by the client.
 ///
 /// A texture must have at least one usage flag. Note that some usage flag
@@ -1170,61 +1270,246 @@ pub const SDL_GPU_TEXTUREFORMAT_ASTC_12x12_FLOAT: SDL_GPUTextureFormat =
 /// within a compute pass. Note that SIMULTANEOUS usage is only supported by a
 /// limited number of texture formats.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTexture`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_TEXTUREUSAGE_SAMPLER`] | Texture supports sampling. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`] | Texture is a color render target. |
-/// | [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`] | Texture is a depth stencil target. |
-/// | [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`] | Texture supports storage reads in graphics stages. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`] | Texture supports storage reads in the compute stage. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE`] | Texture supports storage writes in the compute stage. |
-/// | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`] | Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE. |
-pub type SDL_GPUTextureUsageFlags = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`SAMPLER`](SDL_GPUTextureUsageFlags::SAMPLER) | [`SDL_GPU_TEXTUREUSAGE_SAMPLER`] | Texture supports sampling. |
+/// | [`COLOR_TARGET`](SDL_GPUTextureUsageFlags::COLOR_TARGET) | [`SDL_GPU_TEXTUREUSAGE_COLOR_TARGET`] | Texture is a color render target. |
+/// | [`DEPTH_STENCIL_TARGET`](SDL_GPUTextureUsageFlags::DEPTH_STENCIL_TARGET) | [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`] | Texture is a depth stencil target. |
+/// | [`GRAPHICS_STORAGE_READ`](SDL_GPUTextureUsageFlags::GRAPHICS_STORAGE_READ) | [`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`] | Texture supports storage reads in graphics stages. |
+/// | [`COMPUTE_STORAGE_READ`](SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_READ) | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`] | Texture supports storage reads in the compute stage. |
+/// | [`COMPUTE_STORAGE_WRITE`](SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_WRITE) | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE`] | Texture supports storage writes in the compute stage. |
+/// | [`COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`](SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE) | [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`] | Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUTextureUsageFlags(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUTextureUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTextureUsageFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GPUTextureUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GPUTextureUsageFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUTextureUsageFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUTextureUsageFlags(")?;
+        let all_bits = all_bits | Self::SAMPLER.0;
+        if (Self::SAMPLER != 0 || self.0 == 0) && *self & Self::SAMPLER == Self::SAMPLER {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SAMPLER")?;
+        }
+        let all_bits = all_bits | Self::COLOR_TARGET.0;
+        if (Self::COLOR_TARGET != 0 || self.0 == 0)
+            && *self & Self::COLOR_TARGET == Self::COLOR_TARGET
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COLOR_TARGET")?;
+        }
+        let all_bits = all_bits | Self::DEPTH_STENCIL_TARGET.0;
+        if (Self::DEPTH_STENCIL_TARGET != 0 || self.0 == 0)
+            && *self & Self::DEPTH_STENCIL_TARGET == Self::DEPTH_STENCIL_TARGET
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DEPTH_STENCIL_TARGET")?;
+        }
+        let all_bits = all_bits | Self::GRAPHICS_STORAGE_READ.0;
+        if (Self::GRAPHICS_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::GRAPHICS_STORAGE_READ == Self::GRAPHICS_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "GRAPHICS_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_READ.0;
+        if (Self::COMPUTE_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_READ == Self::COMPUTE_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_WRITE.0;
+        if (Self::COMPUTE_STORAGE_WRITE != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_WRITE == Self::COMPUTE_STORAGE_WRITE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_WRITE")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE.0;
+        if (Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE
+                == Self::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUTextureUsageFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUTextureUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GPUTextureUsageFlags {
+    /// Texture supports sampling.
+    pub const SAMPLER: Self = Self((1_u32 as Uint32));
+    /// Texture is a color render target.
+    pub const COLOR_TARGET: Self = Self((2_u32 as Uint32));
+    /// Texture is a depth stencil target.
+    pub const DEPTH_STENCIL_TARGET: Self = Self((4_u32 as Uint32));
+    /// Texture supports storage reads in graphics stages.
+    pub const GRAPHICS_STORAGE_READ: Self = Self((8_u32 as Uint32));
+    /// Texture supports storage reads in the compute stage.
+    pub const COMPUTE_STORAGE_READ: Self = Self((16_u32 as Uint32));
+    /// Texture supports storage writes in the compute stage.
+    pub const COMPUTE_STORAGE_WRITE: Self = Self((32_u32 as Uint32));
+    /// Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.
+    pub const COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: Self = Self((64_u32 as Uint32));
+}
 
 /// Texture supports sampling.
 pub const SDL_GPU_TEXTUREUSAGE_SAMPLER: SDL_GPUTextureUsageFlags =
-    ((1_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::SAMPLER;
 /// Texture is a color render target.
 pub const SDL_GPU_TEXTUREUSAGE_COLOR_TARGET: SDL_GPUTextureUsageFlags =
-    ((2_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::COLOR_TARGET;
 /// Texture is a depth stencil target.
 pub const SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET: SDL_GPUTextureUsageFlags =
-    ((4_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::DEPTH_STENCIL_TARGET;
 /// Texture supports storage reads in graphics stages.
 pub const SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ: SDL_GPUTextureUsageFlags =
-    ((8_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::GRAPHICS_STORAGE_READ;
 /// Texture supports storage reads in the compute stage.
 pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ: SDL_GPUTextureUsageFlags =
-    ((16_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_READ;
 /// Texture supports storage writes in the compute stage.
 pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUTextureUsageFlags =
-    ((32_u32) as SDL_GPUTextureUsageFlags);
-
+    SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_WRITE;
 /// Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.
 pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUTextureUsageFlags =
-    ((64_u32) as SDL_GPUTextureUsageFlags);
+    SDL_GPUTextureUsageFlags::COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTextureUsageFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUTextureUsageFlags;
+}
 
 /// Specifies the type of a texture.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTexture`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`_2D`](SDL_GPUTextureType::_2D) | [`SDL_GPU_TEXTURETYPE_2D`] | The texture is a 2-dimensional image. |
@@ -1235,6 +1520,20 @@ pub const SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE: SDL_GPUT
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTextureType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTextureType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUTextureType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTextureType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUTextureType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1261,15 +1560,15 @@ impl ::core::fmt::Debug for SDL_GPUTextureType {
 
 impl SDL_GPUTextureType {
     /// The texture is a 2-dimensional image.
-    pub const _2D: Self = Self(0);
+    pub const _2D: Self = Self((0 as ::core::ffi::c_int));
     /// The texture is a 2-dimensional array image.
-    pub const _2D_ARRAY: Self = Self(1);
+    pub const _2D_ARRAY: Self = Self((1 as ::core::ffi::c_int));
     /// The texture is a 3-dimensional image.
-    pub const _3D: Self = Self(2);
+    pub const _3D: Self = Self((2 as ::core::ffi::c_int));
     /// The texture is a cube image.
-    pub const CUBE: Self = Self(3);
+    pub const CUBE: Self = Self((3 as ::core::ffi::c_int));
     /// The texture is a cube array image.
-    pub const CUBE_ARRAY: Self = Self(4);
+    pub const CUBE_ARRAY: Self = Self((4 as ::core::ffi::c_int));
 }
 
 /// The texture is a 2-dimensional image.
@@ -1283,19 +1582,25 @@ pub const SDL_GPU_TEXTURETYPE_CUBE: SDL_GPUTextureType = SDL_GPUTextureType::CUB
 /// The texture is a cube array image.
 pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureType::CUBE_ARRAY;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTextureType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUTextureType;
+}
+
 /// Specifies the sample count of a texture.
 ///
 /// Used in multisampling. Note that this value only applies when the texture
 /// is used as a render target.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTexture`]
 /// - [`SDL_GPUTextureSupportsSampleCount`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`_1`](SDL_GPUSampleCount::_1) | [`SDL_GPU_SAMPLECOUNT_1`] | No multisampling. |
@@ -1305,6 +1610,20 @@ pub const SDL_GPU_TEXTURETYPE_CUBE_ARRAY: SDL_GPUTextureType = SDL_GPUTextureTyp
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSampleCount(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSampleCount {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUSampleCount> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSampleCount) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUSampleCount> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1330,13 +1649,13 @@ impl ::core::fmt::Debug for SDL_GPUSampleCount {
 
 impl SDL_GPUSampleCount {
     /// No multisampling.
-    pub const _1: Self = Self(0);
+    pub const _1: Self = Self((0 as ::core::ffi::c_int));
     /// MSAA 2x
-    pub const _2: Self = Self(1);
+    pub const _2: Self = Self((1 as ::core::ffi::c_int));
     /// MSAA 4x
-    pub const _4: Self = Self(2);
+    pub const _4: Self = Self((2 as ::core::ffi::c_int));
     /// MSAA 8x
-    pub const _8: Self = Self(3);
+    pub const _8: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// No multisampling.
@@ -1348,14 +1667,20 @@ pub const SDL_GPU_SAMPLECOUNT_4: SDL_GPUSampleCount = SDL_GPUSampleCount::_4;
 /// MSAA 8x
 pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSampleCount {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUSampleCount;
+}
+
 /// Specifies the face of a cube map.
 ///
 /// Can be passed in as the layer field in texture-related structs.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`POSITIVEX`](SDL_GPUCubeMapFace::POSITIVEX) | [`SDL_GPU_CUBEMAPFACE_POSITIVEX`] | |
@@ -1367,6 +1692,20 @@ pub const SDL_GPU_SAMPLECOUNT_8: SDL_GPUSampleCount = SDL_GPUSampleCount::_8;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCubeMapFace(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCubeMapFace {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUCubeMapFace) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUCubeMapFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1393,12 +1732,12 @@ impl ::core::fmt::Debug for SDL_GPUCubeMapFace {
 }
 
 impl SDL_GPUCubeMapFace {
-    pub const POSITIVEX: Self = Self(0);
-    pub const NEGATIVEX: Self = Self(1);
-    pub const POSITIVEY: Self = Self(2);
-    pub const NEGATIVEY: Self = Self(3);
-    pub const POSITIVEZ: Self = Self(4);
-    pub const NEGATIVEZ: Self = Self(5);
+    pub const POSITIVEX: Self = Self((0 as ::core::ffi::c_int));
+    pub const NEGATIVEX: Self = Self((1 as ::core::ffi::c_int));
+    pub const POSITIVEY: Self = Self((2 as ::core::ffi::c_int));
+    pub const NEGATIVEY: Self = Self((3 as ::core::ffi::c_int));
+    pub const POSITIVEZ: Self = Self((4 as ::core::ffi::c_int));
+    pub const NEGATIVEZ: Self = Self((5 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_CUBEMAPFACE_POSITIVEX: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::POSITIVEX;
@@ -1407,6 +1746,12 @@ pub const SDL_GPU_CUBEMAPFACE_POSITIVEY: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 pub const SDL_GPU_CUBEMAPFACE_NEGATIVEY: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::NEGATIVEY;
 pub const SDL_GPU_CUBEMAPFACE_POSITIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::POSITIVEZ;
 pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace::NEGATIVEZ;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUCubeMapFace {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUCubeMapFace;
+}
 
 /// Specifies how a buffer is intended to be used by the client.
 ///
@@ -1420,58 +1765,225 @@ pub const SDL_GPU_CUBEMAPFACE_NEGATIVEZ: SDL_GPUCubeMapFace = SDL_GPUCubeMapFace
 /// layout conventions. In practical terms this means you must ensure that vec3
 /// and vec4 fields are 16-byte aligned.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUBuffer`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_BUFFERUSAGE_VERTEX`] | Buffer is a vertex buffer. |
-/// | [`SDL_GPU_BUFFERUSAGE_INDEX`] | Buffer is an index buffer. |
-/// | [`SDL_GPU_BUFFERUSAGE_INDIRECT`] | Buffer is an indirect buffer. |
-/// | [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`] | Buffer supports storage reads in graphics stages. |
-/// | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`] | Buffer supports storage reads in the compute stage. |
-/// | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE`] | Buffer supports storage writes in the compute stage. |
-pub type SDL_GPUBufferUsageFlags = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`VERTEX`](SDL_GPUBufferUsageFlags::VERTEX) | [`SDL_GPU_BUFFERUSAGE_VERTEX`] | Buffer is a vertex buffer. |
+/// | [`INDEX`](SDL_GPUBufferUsageFlags::INDEX) | [`SDL_GPU_BUFFERUSAGE_INDEX`] | Buffer is an index buffer. |
+/// | [`INDIRECT`](SDL_GPUBufferUsageFlags::INDIRECT) | [`SDL_GPU_BUFFERUSAGE_INDIRECT`] | Buffer is an indirect buffer. |
+/// | [`GRAPHICS_STORAGE_READ`](SDL_GPUBufferUsageFlags::GRAPHICS_STORAGE_READ) | [`SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ`] | Buffer supports storage reads in graphics stages. |
+/// | [`COMPUTE_STORAGE_READ`](SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_READ) | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`] | Buffer supports storage reads in the compute stage. |
+/// | [`COMPUTE_STORAGE_WRITE`](SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_WRITE) | [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE`] | Buffer supports storage writes in the compute stage. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUBufferUsageFlags(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUBufferUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUBufferUsageFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GPUBufferUsageFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GPUBufferUsageFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUBufferUsageFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUBufferUsageFlags(")?;
+        let all_bits = all_bits | Self::VERTEX.0;
+        if (Self::VERTEX != 0 || self.0 == 0) && *self & Self::VERTEX == Self::VERTEX {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "VERTEX")?;
+        }
+        let all_bits = all_bits | Self::INDEX.0;
+        if (Self::INDEX != 0 || self.0 == 0) && *self & Self::INDEX == Self::INDEX {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INDEX")?;
+        }
+        let all_bits = all_bits | Self::INDIRECT.0;
+        if (Self::INDIRECT != 0 || self.0 == 0) && *self & Self::INDIRECT == Self::INDIRECT {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INDIRECT")?;
+        }
+        let all_bits = all_bits | Self::GRAPHICS_STORAGE_READ.0;
+        if (Self::GRAPHICS_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::GRAPHICS_STORAGE_READ == Self::GRAPHICS_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "GRAPHICS_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_READ.0;
+        if (Self::COMPUTE_STORAGE_READ != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_READ == Self::COMPUTE_STORAGE_READ
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_READ")?;
+        }
+        let all_bits = all_bits | Self::COMPUTE_STORAGE_WRITE.0;
+        if (Self::COMPUTE_STORAGE_WRITE != 0 || self.0 == 0)
+            && *self & Self::COMPUTE_STORAGE_WRITE == Self::COMPUTE_STORAGE_WRITE
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "COMPUTE_STORAGE_WRITE")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUBufferUsageFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUBufferUsageFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GPUBufferUsageFlags {
+    /// Buffer is a vertex buffer.
+    pub const VERTEX: Self = Self((1_u32 as Uint32));
+    /// Buffer is an index buffer.
+    pub const INDEX: Self = Self((2_u32 as Uint32));
+    /// Buffer is an indirect buffer.
+    pub const INDIRECT: Self = Self((4_u32 as Uint32));
+    /// Buffer supports storage reads in graphics stages.
+    pub const GRAPHICS_STORAGE_READ: Self = Self((8_u32 as Uint32));
+    /// Buffer supports storage reads in the compute stage.
+    pub const COMPUTE_STORAGE_READ: Self = Self((16_u32 as Uint32));
+    /// Buffer supports storage writes in the compute stage.
+    pub const COMPUTE_STORAGE_WRITE: Self = Self((32_u32 as Uint32));
+}
 
 /// Buffer is a vertex buffer.
-pub const SDL_GPU_BUFFERUSAGE_VERTEX: SDL_GPUBufferUsageFlags =
-    ((1_u32) as SDL_GPUBufferUsageFlags);
-
+pub const SDL_GPU_BUFFERUSAGE_VERTEX: SDL_GPUBufferUsageFlags = SDL_GPUBufferUsageFlags::VERTEX;
 /// Buffer is an index buffer.
-pub const SDL_GPU_BUFFERUSAGE_INDEX: SDL_GPUBufferUsageFlags = ((2_u32) as SDL_GPUBufferUsageFlags);
-
+pub const SDL_GPU_BUFFERUSAGE_INDEX: SDL_GPUBufferUsageFlags = SDL_GPUBufferUsageFlags::INDEX;
 /// Buffer is an indirect buffer.
-pub const SDL_GPU_BUFFERUSAGE_INDIRECT: SDL_GPUBufferUsageFlags =
-    ((4_u32) as SDL_GPUBufferUsageFlags);
-
+pub const SDL_GPU_BUFFERUSAGE_INDIRECT: SDL_GPUBufferUsageFlags = SDL_GPUBufferUsageFlags::INDIRECT;
 /// Buffer supports storage reads in graphics stages.
 pub const SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ: SDL_GPUBufferUsageFlags =
-    ((8_u32) as SDL_GPUBufferUsageFlags);
-
+    SDL_GPUBufferUsageFlags::GRAPHICS_STORAGE_READ;
 /// Buffer supports storage reads in the compute stage.
 pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ: SDL_GPUBufferUsageFlags =
-    ((16_u32) as SDL_GPUBufferUsageFlags);
-
+    SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_READ;
 /// Buffer supports storage writes in the compute stage.
 pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
-    ((32_u32) as SDL_GPUBufferUsageFlags);
+    SDL_GPUBufferUsageFlags::COMPUTE_STORAGE_WRITE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUBufferUsageFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUBufferUsageFlags;
+}
 
 /// Specifies how a transfer buffer is intended to be used by the client.
 ///
 /// Note that mapping and copying FROM an upload transfer buffer or TO a
 /// download transfer buffer is undefined behavior.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTransferBuffer`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UPLOAD`](SDL_GPUTransferBufferUsage::UPLOAD) | [`SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD`] | |
@@ -1479,6 +1991,20 @@ pub const SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE: SDL_GPUBufferUsageFlags =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUTransferBufferUsage(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUTransferBufferUsage {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUTransferBufferUsage) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUTransferBufferUsage> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1501,8 +2027,8 @@ impl ::core::fmt::Debug for SDL_GPUTransferBufferUsage {
 }
 
 impl SDL_GPUTransferBufferUsage {
-    pub const UPLOAD: Self = Self(0);
-    pub const DOWNLOAD: Self = Self(1);
+    pub const UPLOAD: Self = Self((0 as ::core::ffi::c_int));
+    pub const DOWNLOAD: Self = Self((1 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD: SDL_GPUTransferBufferUsage =
@@ -1510,15 +2036,21 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD: SDL_GPUTransferBufferUsage =
 pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
     SDL_GPUTransferBufferUsage::DOWNLOAD;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUTransferBufferUsage {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUTransferBufferUsage;
+}
+
 /// Specifies which stage a shader program corresponds to.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUShader`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`VERTEX`](SDL_GPUShaderStage::VERTEX) | [`SDL_GPU_SHADERSTAGE_VERTEX`] | |
@@ -1526,6 +2058,20 @@ pub const SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD: SDL_GPUTransferBufferUsage =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUShaderStage(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUShaderStage {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUShaderStage> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUShaderStage) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUShaderStage> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1548,64 +2094,241 @@ impl ::core::fmt::Debug for SDL_GPUShaderStage {
 }
 
 impl SDL_GPUShaderStage {
-    pub const VERTEX: Self = Self(0);
-    pub const FRAGMENT: Self = Self(1);
+    pub const VERTEX: Self = Self((0 as ::core::ffi::c_int));
+    pub const FRAGMENT: Self = Self((1 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_SHADERSTAGE_VERTEX: SDL_GPUShaderStage = SDL_GPUShaderStage::VERTEX;
 pub const SDL_GPU_SHADERSTAGE_FRAGMENT: SDL_GPUShaderStage = SDL_GPUShaderStage::FRAGMENT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUShaderStage {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUShaderStage;
+}
+
 /// Specifies the format of shader code.
 ///
 /// Each format corresponds to a specific backend that accepts it.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUShader`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_SHADERFORMAT_INVALID`] | |
-/// | [`SDL_GPU_SHADERFORMAT_PRIVATE`] | Shaders for NDA'd platforms. |
-/// | [`SDL_GPU_SHADERFORMAT_SPIRV`] | SPIR-V shaders for Vulkan. |
-/// | [`SDL_GPU_SHADERFORMAT_DXBC`] | DXBC SM5_1 shaders for D3D12. |
-/// | [`SDL_GPU_SHADERFORMAT_DXIL`] | DXIL SM6_0 shaders for D3D12. |
-/// | [`SDL_GPU_SHADERFORMAT_MSL`] | MSL shaders for Metal. |
-/// | [`SDL_GPU_SHADERFORMAT_METALLIB`] | Precompiled metallib shaders for Metal. |
-pub type SDL_GPUShaderFormat = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](SDL_GPUShaderFormat::INVALID) | [`SDL_GPU_SHADERFORMAT_INVALID`] | |
+/// | [`PRIVATE`](SDL_GPUShaderFormat::PRIVATE) | [`SDL_GPU_SHADERFORMAT_PRIVATE`] | Shaders for NDA'd platforms. |
+/// | [`SPIRV`](SDL_GPUShaderFormat::SPIRV) | [`SDL_GPU_SHADERFORMAT_SPIRV`] | SPIR-V shaders for Vulkan. |
+/// | [`DXBC`](SDL_GPUShaderFormat::DXBC) | [`SDL_GPU_SHADERFORMAT_DXBC`] | DXBC SM5_1 shaders for D3D12. |
+/// | [`DXIL`](SDL_GPUShaderFormat::DXIL) | [`SDL_GPU_SHADERFORMAT_DXIL`] | DXIL SM6_0 shaders for D3D12. |
+/// | [`MSL`](SDL_GPUShaderFormat::MSL) | [`SDL_GPU_SHADERFORMAT_MSL`] | MSL shaders for Metal. |
+/// | [`METALLIB`](SDL_GPUShaderFormat::METALLIB) | [`SDL_GPU_SHADERFORMAT_METALLIB`] | Precompiled metallib shaders for Metal. |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUShaderFormat(pub Uint32);
 
-pub const SDL_GPU_SHADERFORMAT_INVALID: SDL_GPUShaderFormat = (0 as SDL_GPUShaderFormat);
+impl ::core::cmp::PartialEq<Uint32> for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
 
+impl ::core::cmp::PartialEq<SDL_GPUShaderFormat> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUShaderFormat) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GPUShaderFormat> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_GPUShaderFormat) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUShaderFormat {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUShaderFormat(")?;
+        let all_bits = all_bits | Self::INVALID.0;
+        if (Self::INVALID != 0 || self.0 == 0) && *self & Self::INVALID == Self::INVALID {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INVALID")?;
+        }
+        let all_bits = all_bits | Self::PRIVATE.0;
+        if (Self::PRIVATE != 0 || self.0 == 0) && *self & Self::PRIVATE == Self::PRIVATE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "PRIVATE")?;
+        }
+        let all_bits = all_bits | Self::SPIRV.0;
+        if (Self::SPIRV != 0 || self.0 == 0) && *self & Self::SPIRV == Self::SPIRV {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "SPIRV")?;
+        }
+        let all_bits = all_bits | Self::DXBC.0;
+        if (Self::DXBC != 0 || self.0 == 0) && *self & Self::DXBC == Self::DXBC {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DXBC")?;
+        }
+        let all_bits = all_bits | Self::DXIL.0;
+        if (Self::DXIL != 0 || self.0 == 0) && *self & Self::DXIL == Self::DXIL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DXIL")?;
+        }
+        let all_bits = all_bits | Self::MSL.0;
+        if (Self::MSL != 0 || self.0 == 0) && *self & Self::MSL == Self::MSL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "MSL")?;
+        }
+        let all_bits = all_bits | Self::METALLIB.0;
+        if (Self::METALLIB != 0 || self.0 == 0) && *self & Self::METALLIB == Self::METALLIB {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "METALLIB")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUShaderFormat {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUShaderFormat {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GPUShaderFormat {
+    pub const INVALID: Self = Self((0 as Uint32));
+    /// Shaders for NDA'd platforms.
+    pub const PRIVATE: Self = Self((1_u32 as Uint32));
+    /// SPIR-V shaders for Vulkan.
+    pub const SPIRV: Self = Self((2_u32 as Uint32));
+    /// DXBC SM5_1 shaders for D3D12.
+    pub const DXBC: Self = Self((4_u32 as Uint32));
+    /// DXIL SM6_0 shaders for D3D12.
+    pub const DXIL: Self = Self((8_u32 as Uint32));
+    /// MSL shaders for Metal.
+    pub const MSL: Self = Self((16_u32 as Uint32));
+    /// Precompiled metallib shaders for Metal.
+    pub const METALLIB: Self = Self((32_u32 as Uint32));
+}
+
+pub const SDL_GPU_SHADERFORMAT_INVALID: SDL_GPUShaderFormat = SDL_GPUShaderFormat::INVALID;
 /// Shaders for NDA'd platforms.
-pub const SDL_GPU_SHADERFORMAT_PRIVATE: SDL_GPUShaderFormat = ((1_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_PRIVATE: SDL_GPUShaderFormat = SDL_GPUShaderFormat::PRIVATE;
 /// SPIR-V shaders for Vulkan.
-pub const SDL_GPU_SHADERFORMAT_SPIRV: SDL_GPUShaderFormat = ((2_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_SPIRV: SDL_GPUShaderFormat = SDL_GPUShaderFormat::SPIRV;
 /// DXBC SM5_1 shaders for D3D12.
-pub const SDL_GPU_SHADERFORMAT_DXBC: SDL_GPUShaderFormat = ((4_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_DXBC: SDL_GPUShaderFormat = SDL_GPUShaderFormat::DXBC;
 /// DXIL SM6_0 shaders for D3D12.
-pub const SDL_GPU_SHADERFORMAT_DXIL: SDL_GPUShaderFormat = ((8_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_DXIL: SDL_GPUShaderFormat = SDL_GPUShaderFormat::DXIL;
 /// MSL shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_MSL: SDL_GPUShaderFormat = ((16_u32) as SDL_GPUShaderFormat);
-
+pub const SDL_GPU_SHADERFORMAT_MSL: SDL_GPUShaderFormat = SDL_GPUShaderFormat::MSL;
 /// Precompiled metallib shaders for Metal.
-pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = ((32_u32) as SDL_GPUShaderFormat);
+pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = SDL_GPUShaderFormat::METALLIB;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUShaderFormat {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUShaderFormat;
+}
 
 /// Specifies the format of a vertex attribute.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_GPUVertexElementFormat::INVALID) | [`SDL_GPU_VERTEXELEMENTFORMAT_INVALID`] | |
@@ -1642,6 +2365,20 @@ pub const SDL_GPU_SHADERFORMAT_METALLIB: SDL_GPUShaderFormat = ((32_u32) as SDL_
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexElementFormat(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUVertexElementFormat {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUVertexElementFormat) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUVertexElementFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1693,37 +2430,37 @@ impl ::core::fmt::Debug for SDL_GPUVertexElementFormat {
 }
 
 impl SDL_GPUVertexElementFormat {
-    pub const INVALID: Self = Self(0);
-    pub const INT: Self = Self(1);
-    pub const INT2: Self = Self(2);
-    pub const INT3: Self = Self(3);
-    pub const INT4: Self = Self(4);
-    pub const UINT: Self = Self(5);
-    pub const UINT2: Self = Self(6);
-    pub const UINT3: Self = Self(7);
-    pub const UINT4: Self = Self(8);
-    pub const FLOAT: Self = Self(9);
-    pub const FLOAT2: Self = Self(10);
-    pub const FLOAT3: Self = Self(11);
-    pub const FLOAT4: Self = Self(12);
-    pub const BYTE2: Self = Self(13);
-    pub const BYTE4: Self = Self(14);
-    pub const UBYTE2: Self = Self(15);
-    pub const UBYTE4: Self = Self(16);
-    pub const BYTE2_NORM: Self = Self(17);
-    pub const BYTE4_NORM: Self = Self(18);
-    pub const UBYTE2_NORM: Self = Self(19);
-    pub const UBYTE4_NORM: Self = Self(20);
-    pub const SHORT2: Self = Self(21);
-    pub const SHORT4: Self = Self(22);
-    pub const USHORT2: Self = Self(23);
-    pub const USHORT4: Self = Self(24);
-    pub const SHORT2_NORM: Self = Self(25);
-    pub const SHORT4_NORM: Self = Self(26);
-    pub const USHORT2_NORM: Self = Self(27);
-    pub const USHORT4_NORM: Self = Self(28);
-    pub const HALF2: Self = Self(29);
-    pub const HALF4: Self = Self(30);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
+    pub const INT: Self = Self((1 as ::core::ffi::c_int));
+    pub const INT2: Self = Self((2 as ::core::ffi::c_int));
+    pub const INT3: Self = Self((3 as ::core::ffi::c_int));
+    pub const INT4: Self = Self((4 as ::core::ffi::c_int));
+    pub const UINT: Self = Self((5 as ::core::ffi::c_int));
+    pub const UINT2: Self = Self((6 as ::core::ffi::c_int));
+    pub const UINT3: Self = Self((7 as ::core::ffi::c_int));
+    pub const UINT4: Self = Self((8 as ::core::ffi::c_int));
+    pub const FLOAT: Self = Self((9 as ::core::ffi::c_int));
+    pub const FLOAT2: Self = Self((10 as ::core::ffi::c_int));
+    pub const FLOAT3: Self = Self((11 as ::core::ffi::c_int));
+    pub const FLOAT4: Self = Self((12 as ::core::ffi::c_int));
+    pub const BYTE2: Self = Self((13 as ::core::ffi::c_int));
+    pub const BYTE4: Self = Self((14 as ::core::ffi::c_int));
+    pub const UBYTE2: Self = Self((15 as ::core::ffi::c_int));
+    pub const UBYTE4: Self = Self((16 as ::core::ffi::c_int));
+    pub const BYTE2_NORM: Self = Self((17 as ::core::ffi::c_int));
+    pub const BYTE4_NORM: Self = Self((18 as ::core::ffi::c_int));
+    pub const UBYTE2_NORM: Self = Self((19 as ::core::ffi::c_int));
+    pub const UBYTE4_NORM: Self = Self((20 as ::core::ffi::c_int));
+    pub const SHORT2: Self = Self((21 as ::core::ffi::c_int));
+    pub const SHORT4: Self = Self((22 as ::core::ffi::c_int));
+    pub const USHORT2: Self = Self((23 as ::core::ffi::c_int));
+    pub const USHORT4: Self = Self((24 as ::core::ffi::c_int));
+    pub const SHORT2_NORM: Self = Self((25 as ::core::ffi::c_int));
+    pub const SHORT4_NORM: Self = Self((26 as ::core::ffi::c_int));
+    pub const USHORT2_NORM: Self = Self((27 as ::core::ffi::c_int));
+    pub const USHORT4_NORM: Self = Self((28 as ::core::ffi::c_int));
+    pub const HALF2: Self = Self((29 as ::core::ffi::c_int));
+    pub const HALF4: Self = Self((30 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_VERTEXELEMENTFORMAT_INVALID: SDL_GPUVertexElementFormat =
@@ -1789,15 +2526,21 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF2: SDL_GPUVertexElementFormat =
 pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
     SDL_GPUVertexElementFormat::HALF4;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUVertexElementFormat {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUVertexElementFormat;
+}
+
 /// Specifies the rate at which vertex attributes are pulled from buffers.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`VERTEX`](SDL_GPUVertexInputRate::VERTEX) | [`SDL_GPU_VERTEXINPUTRATE_VERTEX`] | Attribute addressing is a function of the vertex index. |
@@ -1805,6 +2548,20 @@ pub const SDL_GPU_VERTEXELEMENTFORMAT_HALF4: SDL_GPUVertexElementFormat =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUVertexInputRate(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUVertexInputRate {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUVertexInputRate) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUVertexInputRate> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1828,9 +2585,9 @@ impl ::core::fmt::Debug for SDL_GPUVertexInputRate {
 
 impl SDL_GPUVertexInputRate {
     /// Attribute addressing is a function of the vertex index.
-    pub const VERTEX: Self = Self(0);
+    pub const VERTEX: Self = Self((0 as ::core::ffi::c_int));
     /// Attribute addressing is a function of the instance index.
-    pub const INSTANCE: Self = Self(1);
+    pub const INSTANCE: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Attribute addressing is a function of the vertex index.
@@ -1839,15 +2596,21 @@ pub const SDL_GPU_VERTEXINPUTRATE_VERTEX: SDL_GPUVertexInputRate = SDL_GPUVertex
 pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
     SDL_GPUVertexInputRate::INSTANCE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUVertexInputRate {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUVertexInputRate;
+}
+
 /// Specifies the fill mode of the graphics pipeline.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`FILL`](SDL_GPUFillMode::FILL) | [`SDL_GPU_FILLMODE_FILL`] | Polygons will be rendered via rasterization. |
@@ -1855,6 +2618,20 @@ pub const SDL_GPU_VERTEXINPUTRATE_INSTANCE: SDL_GPUVertexInputRate =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFillMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFillMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUFillMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUFillMode) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUFillMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1878,9 +2655,9 @@ impl ::core::fmt::Debug for SDL_GPUFillMode {
 
 impl SDL_GPUFillMode {
     /// Polygons will be rendered via rasterization.
-    pub const FILL: Self = Self(0);
+    pub const FILL: Self = Self((0 as ::core::ffi::c_int));
     /// Polygon edges will be drawn as line segments.
-    pub const LINE: Self = Self(1);
+    pub const LINE: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Polygons will be rendered via rasterization.
@@ -1888,15 +2665,21 @@ pub const SDL_GPU_FILLMODE_FILL: SDL_GPUFillMode = SDL_GPUFillMode::FILL;
 /// Polygon edges will be drawn as line segments.
 pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUFillMode {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUFillMode;
+}
+
 /// Specifies the facing direction in which triangle faces will be culled.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_GPUCullMode::NONE) | [`SDL_GPU_CULLMODE_NONE`] | No triangles are culled. |
@@ -1905,6 +2688,20 @@ pub const SDL_GPU_FILLMODE_LINE: SDL_GPUFillMode = SDL_GPUFillMode::LINE;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCullMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCullMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUCullMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUCullMode) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUCullMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1929,11 +2726,11 @@ impl ::core::fmt::Debug for SDL_GPUCullMode {
 
 impl SDL_GPUCullMode {
     /// No triangles are culled.
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
     /// Front-facing triangles are culled.
-    pub const FRONT: Self = Self(1);
+    pub const FRONT: Self = Self((1 as ::core::ffi::c_int));
     /// Back-facing triangles are culled.
-    pub const BACK: Self = Self(2);
+    pub const BACK: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// No triangles are culled.
@@ -1943,16 +2740,22 @@ pub const SDL_GPU_CULLMODE_FRONT: SDL_GPUCullMode = SDL_GPUCullMode::FRONT;
 /// Back-facing triangles are culled.
 pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUCullMode {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUCullMode;
+}
+
 /// Specifies the vertex winding that will cause a triangle to be determined to
 /// be front-facing.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`COUNTER_CLOCKWISE`](SDL_GPUFrontFace::COUNTER_CLOCKWISE) | [`SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE`] | A triangle with counter-clockwise vertex winding will be considered front-facing. |
@@ -1960,6 +2763,20 @@ pub const SDL_GPU_CULLMODE_BACK: SDL_GPUCullMode = SDL_GPUCullMode::BACK;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFrontFace(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFrontFace {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUFrontFace> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUFrontFace) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUFrontFace> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1983,9 +2800,9 @@ impl ::core::fmt::Debug for SDL_GPUFrontFace {
 
 impl SDL_GPUFrontFace {
     /// A triangle with counter-clockwise vertex winding will be considered front-facing.
-    pub const COUNTER_CLOCKWISE: Self = Self(0);
+    pub const COUNTER_CLOCKWISE: Self = Self((0 as ::core::ffi::c_int));
     /// A triangle with clockwise vertex winding will be considered front-facing.
-    pub const CLOCKWISE: Self = Self(1);
+    pub const CLOCKWISE: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// A triangle with counter-clockwise vertex winding will be considered front-facing.
@@ -1994,15 +2811,21 @@ pub const SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE: SDL_GPUFrontFace =
 /// A triangle with clockwise vertex winding will be considered front-facing.
 pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOCKWISE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUFrontFace {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUFrontFace;
+}
+
 /// Specifies a comparison operator for depth, stencil and sampler operations.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_GPUCompareOp::INVALID) | [`SDL_GPU_COMPAREOP_INVALID`] | |
@@ -2017,6 +2840,20 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUCompareOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUCompareOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUCompareOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUCompareOp) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUCompareOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2046,23 +2883,23 @@ impl ::core::fmt::Debug for SDL_GPUCompareOp {
 }
 
 impl SDL_GPUCompareOp {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// The comparison always evaluates false.
-    pub const NEVER: Self = Self(1);
+    pub const NEVER: Self = Self((1 as ::core::ffi::c_int));
     /// The comparison evaluates reference < test.
-    pub const LESS: Self = Self(2);
+    pub const LESS: Self = Self((2 as ::core::ffi::c_int));
     /// The comparison evaluates reference == test.
-    pub const EQUAL: Self = Self(3);
+    pub const EQUAL: Self = Self((3 as ::core::ffi::c_int));
     /// The comparison evaluates reference <= test.
-    pub const LESS_OR_EQUAL: Self = Self(4);
+    pub const LESS_OR_EQUAL: Self = Self((4 as ::core::ffi::c_int));
     /// The comparison evaluates reference > test.
-    pub const GREATER: Self = Self(5);
+    pub const GREATER: Self = Self((5 as ::core::ffi::c_int));
     /// The comparison evaluates reference != test.
-    pub const NOT_EQUAL: Self = Self(6);
+    pub const NOT_EQUAL: Self = Self((6 as ::core::ffi::c_int));
     /// The comparison evalutes reference >= test.
-    pub const GREATER_OR_EQUAL: Self = Self(7);
+    pub const GREATER_OR_EQUAL: Self = Self((7 as ::core::ffi::c_int));
     /// The comparison always evaluates true.
-    pub const ALWAYS: Self = Self(8);
+    pub const ALWAYS: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_COMPAREOP_INVALID: SDL_GPUCompareOp = SDL_GPUCompareOp::INVALID;
@@ -2083,16 +2920,22 @@ pub const SDL_GPU_COMPAREOP_GREATER_OR_EQUAL: SDL_GPUCompareOp = SDL_GPUCompareO
 /// The comparison always evaluates true.
 pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUCompareOp {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUCompareOp;
+}
+
 /// Specifies what happens to a stored stencil value if stencil tests fail or
 /// pass.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_GPUStencilOp::INVALID) | [`SDL_GPU_STENCILOP_INVALID`] | |
@@ -2107,6 +2950,20 @@ pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUStencilOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUStencilOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUStencilOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUStencilOp) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUStencilOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2136,23 +2993,23 @@ impl ::core::fmt::Debug for SDL_GPUStencilOp {
 }
 
 impl SDL_GPUStencilOp {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// Keeps the current value.
-    pub const KEEP: Self = Self(1);
+    pub const KEEP: Self = Self((1 as ::core::ffi::c_int));
     /// Sets the value to 0.
-    pub const ZERO: Self = Self(2);
+    pub const ZERO: Self = Self((2 as ::core::ffi::c_int));
     /// Sets the value to reference.
-    pub const REPLACE: Self = Self(3);
+    pub const REPLACE: Self = Self((3 as ::core::ffi::c_int));
     /// Increments the current value and clamps to the maximum value.
-    pub const INCREMENT_AND_CLAMP: Self = Self(4);
+    pub const INCREMENT_AND_CLAMP: Self = Self((4 as ::core::ffi::c_int));
     /// Decrements the current value and clamps to 0.
-    pub const DECREMENT_AND_CLAMP: Self = Self(5);
+    pub const DECREMENT_AND_CLAMP: Self = Self((5 as ::core::ffi::c_int));
     /// Bitwise-inverts the current value.
-    pub const INVERT: Self = Self(6);
+    pub const INVERT: Self = Self((6 as ::core::ffi::c_int));
     /// Increments the current value and wraps back to 0.
-    pub const INCREMENT_AND_WRAP: Self = Self(7);
+    pub const INCREMENT_AND_WRAP: Self = Self((7 as ::core::ffi::c_int));
     /// Decrements the current value and wraps to the maximum value.
-    pub const DECREMENT_AND_WRAP: Self = Self(8);
+    pub const DECREMENT_AND_WRAP: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_STENCILOP_INVALID: SDL_GPUStencilOp = SDL_GPUStencilOp::INVALID;
@@ -2177,19 +3034,25 @@ pub const SDL_GPU_STENCILOP_INCREMENT_AND_WRAP: SDL_GPUStencilOp =
 pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
     SDL_GPUStencilOp::DECREMENT_AND_WRAP;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUStencilOp {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUStencilOp;
+}
+
 /// Specifies the operator to be used when pixels in a render target are
 /// blended with existing pixels in the texture.
 ///
 /// The source color is the value written by the fragment shader. The
 /// destination color is the value currently existing in the texture.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_GPUBlendOp::INVALID) | [`SDL_GPU_BLENDOP_INVALID`] | |
@@ -2201,6 +3064,20 @@ pub const SDL_GPU_STENCILOP_DECREMENT_AND_WRAP: SDL_GPUStencilOp =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendOp(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUBlendOp {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUBlendOp> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUBlendOp) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUBlendOp> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2227,17 +3104,17 @@ impl ::core::fmt::Debug for SDL_GPUBlendOp {
 }
 
 impl SDL_GPUBlendOp {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// (source * source_factor) + (destination * destination_factor)
-    pub const ADD: Self = Self(1);
+    pub const ADD: Self = Self((1 as ::core::ffi::c_int));
     /// (source * source_factor) - (destination * destination_factor)
-    pub const SUBTRACT: Self = Self(2);
+    pub const SUBTRACT: Self = Self((2 as ::core::ffi::c_int));
     /// (destination * destination_factor) - (source * source_factor)
-    pub const REVERSE_SUBTRACT: Self = Self(3);
+    pub const REVERSE_SUBTRACT: Self = Self((3 as ::core::ffi::c_int));
     /// min(source, destination)
-    pub const MIN: Self = Self(4);
+    pub const MIN: Self = Self((4 as ::core::ffi::c_int));
     /// max(source, destination)
-    pub const MAX: Self = Self(5);
+    pub const MAX: Self = Self((5 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_BLENDOP_INVALID: SDL_GPUBlendOp = SDL_GPUBlendOp::INVALID;
@@ -2252,19 +3129,25 @@ pub const SDL_GPU_BLENDOP_MIN: SDL_GPUBlendOp = SDL_GPUBlendOp::MIN;
 /// max(source, destination)
 pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUBlendOp {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUBlendOp;
+}
+
 /// Specifies a blending factor to be used when pixels in a render target are
 /// blended with existing pixels in the texture.
 ///
 /// The source color is the value written by the fragment shader. The
 /// destination color is the value currently existing in the texture.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](SDL_GPUBlendFactor::INVALID) | [`SDL_GPU_BLENDFACTOR_INVALID`] | |
@@ -2284,6 +3167,20 @@ pub const SDL_GPU_BLENDOP_MAX: SDL_GPUBlendOp = SDL_GPUBlendOp::MAX;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUBlendFactor(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUBlendFactor {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUBlendFactor> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUBlendFactor) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUBlendFactor> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2318,33 +3215,33 @@ impl ::core::fmt::Debug for SDL_GPUBlendFactor {
 }
 
 impl SDL_GPUBlendFactor {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// 0
-    pub const ZERO: Self = Self(1);
+    pub const ZERO: Self = Self((1 as ::core::ffi::c_int));
     /// 1
-    pub const ONE: Self = Self(2);
+    pub const ONE: Self = Self((2 as ::core::ffi::c_int));
     /// source color
-    pub const SRC_COLOR: Self = Self(3);
+    pub const SRC_COLOR: Self = Self((3 as ::core::ffi::c_int));
     /// 1 - source color
-    pub const ONE_MINUS_SRC_COLOR: Self = Self(4);
+    pub const ONE_MINUS_SRC_COLOR: Self = Self((4 as ::core::ffi::c_int));
     /// destination color
-    pub const DST_COLOR: Self = Self(5);
+    pub const DST_COLOR: Self = Self((5 as ::core::ffi::c_int));
     /// 1 - destination color
-    pub const ONE_MINUS_DST_COLOR: Self = Self(6);
+    pub const ONE_MINUS_DST_COLOR: Self = Self((6 as ::core::ffi::c_int));
     /// source alpha
-    pub const SRC_ALPHA: Self = Self(7);
+    pub const SRC_ALPHA: Self = Self((7 as ::core::ffi::c_int));
     /// 1 - source alpha
-    pub const ONE_MINUS_SRC_ALPHA: Self = Self(8);
+    pub const ONE_MINUS_SRC_ALPHA: Self = Self((8 as ::core::ffi::c_int));
     /// destination alpha
-    pub const DST_ALPHA: Self = Self(9);
+    pub const DST_ALPHA: Self = Self((9 as ::core::ffi::c_int));
     /// 1 - destination alpha
-    pub const ONE_MINUS_DST_ALPHA: Self = Self(10);
+    pub const ONE_MINUS_DST_ALPHA: Self = Self((10 as ::core::ffi::c_int));
     /// blend constant
-    pub const CONSTANT_COLOR: Self = Self(11);
+    pub const CONSTANT_COLOR: Self = Self((11 as ::core::ffi::c_int));
     /// 1 - blend constant
-    pub const ONE_MINUS_CONSTANT_COLOR: Self = Self(12);
+    pub const ONE_MINUS_CONSTANT_COLOR: Self = Self((12 as ::core::ffi::c_int));
     /// min(source alpha, 1 - destination alpha)
-    pub const SRC_ALPHA_SATURATE: Self = Self(13);
+    pub const SRC_ALPHA_SATURATE: Self = Self((13 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_BLENDFACTOR_INVALID: SDL_GPUBlendFactor = SDL_GPUBlendFactor::INVALID;
@@ -2382,48 +3279,195 @@ pub const SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR: SDL_GPUBlendFactor =
 pub const SDL_GPU_BLENDFACTOR_SRC_ALPHA_SATURATE: SDL_GPUBlendFactor =
     SDL_GPUBlendFactor::SRC_ALPHA_SATURATE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUBlendFactor {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUBlendFactor;
+}
+
 /// Specifies which color components are written in a graphics pipeline.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_GPU_COLORCOMPONENT_R`] | the red component |
-/// | [`SDL_GPU_COLORCOMPONENT_G`] | the green component |
-/// | [`SDL_GPU_COLORCOMPONENT_B`] | the blue component |
-/// | [`SDL_GPU_COLORCOMPONENT_A`] | the alpha component |
-pub type SDL_GPUColorComponentFlags = Uint8;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`R`](SDL_GPUColorComponentFlags::R) | [`SDL_GPU_COLORCOMPONENT_R`] | the red component |
+/// | [`G`](SDL_GPUColorComponentFlags::G) | [`SDL_GPU_COLORCOMPONENT_G`] | the green component |
+/// | [`B`](SDL_GPUColorComponentFlags::B) | [`SDL_GPU_COLORCOMPONENT_B`] | the blue component |
+/// | [`A`](SDL_GPUColorComponentFlags::A) | [`SDL_GPU_COLORCOMPONENT_A`] | the alpha component |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_GPUColorComponentFlags(pub Uint8);
+
+impl ::core::cmp::PartialEq<Uint8> for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint8) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUColorComponentFlags> for Uint8 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUColorComponentFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_GPUColorComponentFlags> for Uint8 {
+    #[inline(always)]
+    fn from(value: SDL_GPUColorComponentFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_GPUColorComponentFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_GPUColorComponentFlags(")?;
+        let all_bits = all_bits | Self::R.0;
+        if (Self::R != 0 || self.0 == 0) && *self & Self::R == Self::R {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "R")?;
+        }
+        let all_bits = all_bits | Self::G.0;
+        if (Self::G != 0 || self.0 == 0) && *self & Self::G == Self::G {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "G")?;
+        }
+        let all_bits = all_bits | Self::B.0;
+        if (Self::B != 0 || self.0 == 0) && *self & Self::B == Self::B {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "B")?;
+        }
+        let all_bits = all_bits | Self::A.0;
+        if (Self::A != 0 || self.0 == 0) && *self & Self::A == Self::A {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "A")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_GPUColorComponentFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_GPUColorComponentFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_GPUColorComponentFlags {
+    /// the red component
+    pub const R: Self = Self((1_u32 as Uint8));
+    /// the green component
+    pub const G: Self = Self((2_u32 as Uint8));
+    /// the blue component
+    pub const B: Self = Self((4_u32 as Uint8));
+    /// the alpha component
+    pub const A: Self = Self((8_u32 as Uint8));
+}
 
 /// the red component
-pub const SDL_GPU_COLORCOMPONENT_R: SDL_GPUColorComponentFlags =
-    ((1_u32) as SDL_GPUColorComponentFlags);
-
+pub const SDL_GPU_COLORCOMPONENT_R: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::R;
 /// the green component
-pub const SDL_GPU_COLORCOMPONENT_G: SDL_GPUColorComponentFlags =
-    ((2_u32) as SDL_GPUColorComponentFlags);
-
+pub const SDL_GPU_COLORCOMPONENT_G: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::G;
 /// the blue component
-pub const SDL_GPU_COLORCOMPONENT_B: SDL_GPUColorComponentFlags =
-    ((4_u32) as SDL_GPUColorComponentFlags);
-
+pub const SDL_GPU_COLORCOMPONENT_B: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::B;
 /// the alpha component
-pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags =
-    ((8_u32) as SDL_GPUColorComponentFlags);
+pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags = SDL_GPUColorComponentFlags::A;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUColorComponentFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUColorComponentFlags;
+}
 
 /// Specifies a filter operation used by a sampler.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUSampler`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NEAREST`](SDL_GPUFilter::NEAREST) | [`SDL_GPU_FILTER_NEAREST`] | Point filtering. |
@@ -2431,6 +3475,20 @@ pub const SDL_GPU_COLORCOMPONENT_A: SDL_GPUColorComponentFlags =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUFilter(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUFilter {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUFilter> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUFilter) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUFilter> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2454,9 +3512,9 @@ impl ::core::fmt::Debug for SDL_GPUFilter {
 
 impl SDL_GPUFilter {
     /// Point filtering.
-    pub const NEAREST: Self = Self(0);
+    pub const NEAREST: Self = Self((0 as ::core::ffi::c_int));
     /// Linear filtering.
-    pub const LINEAR: Self = Self(1);
+    pub const LINEAR: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Point filtering.
@@ -2464,15 +3522,21 @@ pub const SDL_GPU_FILTER_NEAREST: SDL_GPUFilter = SDL_GPUFilter::NEAREST;
 /// Linear filtering.
 pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUFilter {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUFilter;
+}
+
 /// Specifies a mipmap mode used by a sampler.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUSampler`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NEAREST`](SDL_GPUSamplerMipmapMode::NEAREST) | [`SDL_GPU_SAMPLERMIPMAPMODE_NEAREST`] | Point filtering. |
@@ -2480,6 +3544,20 @@ pub const SDL_GPU_FILTER_LINEAR: SDL_GPUFilter = SDL_GPUFilter::LINEAR;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerMipmapMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSamplerMipmapMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSamplerMipmapMode) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUSamplerMipmapMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2503,9 +3581,9 @@ impl ::core::fmt::Debug for SDL_GPUSamplerMipmapMode {
 
 impl SDL_GPUSamplerMipmapMode {
     /// Point filtering.
-    pub const NEAREST: Self = Self(0);
+    pub const NEAREST: Self = Self((0 as ::core::ffi::c_int));
     /// Linear filtering.
-    pub const LINEAR: Self = Self(1);
+    pub const LINEAR: Self = Self((1 as ::core::ffi::c_int));
 }
 
 /// Point filtering.
@@ -2515,16 +3593,22 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_NEAREST: SDL_GPUSamplerMipmapMode =
 pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
     SDL_GPUSamplerMipmapMode::LINEAR;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSamplerMipmapMode {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUSamplerMipmapMode;
+}
+
 /// Specifies behavior of texture sampling when the coordinates exceed the 0-1
 /// range.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUSampler`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`REPEAT`](SDL_GPUSamplerAddressMode::REPEAT) | [`SDL_GPU_SAMPLERADDRESSMODE_REPEAT`] | Specifies that the coordinates will wrap around. |
@@ -2533,6 +3617,20 @@ pub const SDL_GPU_SAMPLERMIPMAPMODE_LINEAR: SDL_GPUSamplerMipmapMode =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSamplerAddressMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSamplerAddressMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSamplerAddressMode) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUSamplerAddressMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2557,11 +3655,11 @@ impl ::core::fmt::Debug for SDL_GPUSamplerAddressMode {
 
 impl SDL_GPUSamplerAddressMode {
     /// Specifies that the coordinates will wrap around.
-    pub const REPEAT: Self = Self(0);
+    pub const REPEAT: Self = Self((0 as ::core::ffi::c_int));
     /// Specifies that the coordinates will wrap around mirrored.
-    pub const MIRRORED_REPEAT: Self = Self(1);
+    pub const MIRRORED_REPEAT: Self = Self((1 as ::core::ffi::c_int));
     /// Specifies that the coordinates will clamp to the 0-1 range.
-    pub const CLAMP_TO_EDGE: Self = Self(2);
+    pub const CLAMP_TO_EDGE: Self = Self((2 as ::core::ffi::c_int));
 }
 
 /// Specifies that the coordinates will wrap around.
@@ -2573,6 +3671,12 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_MIRRORED_REPEAT: SDL_GPUSamplerAddressMode 
 /// Specifies that the coordinates will clamp to the 0-1 range.
 pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
     SDL_GPUSamplerAddressMode::CLAMP_TO_EDGE;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSamplerAddressMode {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUSamplerAddressMode;
+}
 
 /// Specifies the timing that will be used to present swapchain textures to the
 /// OS.
@@ -2592,15 +3696,15 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 ///   there is a pending image to present, the pending image is replaced by the
 ///   new image. Similar to VSYNC, but with reduced visual latency.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetGPUSwapchainParameters`]
 /// - [`SDL_WindowSupportsGPUPresentMode`]
 /// - [`SDL_WaitAndAcquireGPUSwapchainTexture`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`VSYNC`](SDL_GPUPresentMode::VSYNC) | [`SDL_GPU_PRESENTMODE_VSYNC`] | |
@@ -2609,6 +3713,20 @@ pub const SDL_GPU_SAMPLERADDRESSMODE_CLAMP_TO_EDGE: SDL_GPUSamplerAddressMode =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUPresentMode(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUPresentMode {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUPresentMode> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUPresentMode) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUPresentMode> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2632,14 +3750,20 @@ impl ::core::fmt::Debug for SDL_GPUPresentMode {
 }
 
 impl SDL_GPUPresentMode {
-    pub const VSYNC: Self = Self(0);
-    pub const IMMEDIATE: Self = Self(1);
-    pub const MAILBOX: Self = Self(2);
+    pub const VSYNC: Self = Self((0 as ::core::ffi::c_int));
+    pub const IMMEDIATE: Self = Self((1 as ::core::ffi::c_int));
+    pub const MAILBOX: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_PRESENTMODE_VSYNC: SDL_GPUPresentMode = SDL_GPUPresentMode::VSYNC;
 pub const SDL_GPU_PRESENTMODE_IMMEDIATE: SDL_GPUPresentMode = SDL_GPUPresentMode::IMMEDIATE;
 pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::MAILBOX;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUPresentMode {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUPresentMode;
+}
 
 /// Specifies the texture format and colorspace of the swapchain textures.
 ///
@@ -2660,15 +3784,15 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 /// - HDR10_ST2084: A2R10G10B10 or A2B10G10R10 swapchain. Pixel values are in
 ///   BT.2020 ST2084 (PQ) encoding.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetGPUSwapchainParameters`]
 /// - [`SDL_WindowSupportsGPUSwapchainComposition`]
 /// - [`SDL_WaitAndAcquireGPUSwapchainTexture`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`SDR`](SDL_GPUSwapchainComposition::SDR) | [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR`] | |
@@ -2678,6 +3802,20 @@ pub const SDL_GPU_PRESENTMODE_MAILBOX: SDL_GPUPresentMode = SDL_GPUPresentMode::
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_GPUSwapchainComposition(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_GPUSwapchainComposition {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_GPUSwapchainComposition) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_GPUSwapchainComposition> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2702,10 +3840,10 @@ impl ::core::fmt::Debug for SDL_GPUSwapchainComposition {
 }
 
 impl SDL_GPUSwapchainComposition {
-    pub const SDR: Self = Self(0);
-    pub const SDR_LINEAR: Self = Self(1);
-    pub const HDR_EXTENDED_LINEAR: Self = Self(2);
-    pub const HDR10_ST2084: Self = Self(3);
+    pub const SDR: Self = Self((0 as ::core::ffi::c_int));
+    pub const SDR_LINEAR: Self = Self((1 as ::core::ffi::c_int));
+    pub const HDR_EXTENDED_LINEAR: Self = Self((2 as ::core::ffi::c_int));
+    pub const HDR10_ST2084: Self = Self((3 as ::core::ffi::c_int));
 }
 
 pub const SDL_GPU_SWAPCHAINCOMPOSITION_SDR: SDL_GPUSwapchainComposition =
@@ -2717,12 +3855,18 @@ pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR: SDL_GPUSwapchainComp
 pub const SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084: SDL_GPUSwapchainComposition =
     SDL_GPUSwapchainComposition::HDR10_ST2084;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_GPUSwapchainComposition {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::gpu::METADATA_SDL_GPUSwapchainComposition;
+}
+
 /// A structure specifying a viewport.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetGPUViewport`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -2745,10 +3889,10 @@ pub struct SDL_GPUViewport {
 /// A structure specifying parameters related to transferring data to or from a
 /// texture.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_UploadToGPUTexture`]
 /// - [`SDL_DownloadFromGPUTexture`]
 #[repr(C)]
@@ -2777,10 +3921,10 @@ impl ::core::default::Default for SDL_GPUTextureTransferInfo {
 ///
 /// Used when transferring buffer data to or from a transfer buffer.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_UploadToGPUBuffer`]
 /// - [`SDL_DownloadFromGPUBuffer`]
 #[repr(C)]
@@ -2805,10 +3949,10 @@ impl ::core::default::Default for SDL_GPUTransferBufferLocation {
 ///
 /// Used when copying data from one texture to another.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CopyGPUTextureToTexture`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -2840,10 +3984,10 @@ impl ::core::default::Default for SDL_GPUTextureLocation {
 ///
 /// Used when transferring data to or from a texture.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_UploadToGPUTexture`]
 /// - [`SDL_DownloadFromGPUTexture`]
 /// - [`SDL_CreateGPUTexture`]
@@ -2881,10 +4025,10 @@ impl ::core::default::Default for SDL_GPUTextureRegion {
 
 /// A structure specifying a region of a texture used in the blit operation.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BlitGPUTexture`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -2918,10 +4062,10 @@ impl ::core::default::Default for SDL_GPUBlitRegion {
 ///
 /// Used when copying data between buffers.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CopyGPUBufferToBuffer`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -2945,10 +4089,10 @@ impl ::core::default::Default for SDL_GPUBufferLocation {
 ///
 /// Used when transferring data to or from buffers.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_UploadToGPUBuffer`]
 /// - [`SDL_DownloadFromGPUBuffer`]
 #[repr(C)]
@@ -2980,10 +4124,10 @@ impl ::core::default::Default for SDL_GPUBufferRegion {
 /// only way to keep behavior consistent and portable is to always pass 0 for
 /// the correlating parameter in the draw calls.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_DrawGPUPrimitivesIndirect`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3008,10 +4152,10 @@ pub struct SDL_GPUIndirectDrawCommand {
 /// only way to keep behavior consistent and portable is to always pass 0 for
 /// the correlating parameter in the draw calls.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_DrawGPUIndexedPrimitivesIndirect`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3031,10 +4175,10 @@ pub struct SDL_GPUIndexedIndirectDrawCommand {
 
 /// A structure specifying the parameters of an indexed dispatch command.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_DispatchGPUComputeIndirect`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3053,10 +4197,10 @@ pub struct SDL_GPUIndirectDispatchCommand {
 /// Note that mip_lod_bias is a no-op for the Metal driver. For Metal, LOD bias
 /// must be applied via shader instead.
 ///
-/// ### Availability
+/// ## Availability
 /// This function is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUSampler`]
 /// - [`SDL_GPUFilter`]
 /// - [`SDL_GPUSamplerMipmapMode`]
@@ -3092,7 +4236,9 @@ pub struct SDL_GPUSamplerCreateInfo {
     pub enable_anisotropy: ::core::primitive::bool,
     /// true to enable comparison against a reference value during lookups.
     pub enable_compare: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
     /// A properties ID for extensions. Should be 0 if no extensions are needed.
     pub props: SDL_PropertiesID,
@@ -3110,10 +4256,10 @@ pub struct SDL_GPUSamplerCreateInfo {
 /// [`SDL_GPUVertexAttribute`]. For example, if an attribute has a buffer_slot of
 /// 0, then that attribute belongs to the vertex buffer bound at slot 0.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUVertexAttribute`]
 /// - [`SDL_GPUVertexInputRate`]
 #[repr(C)]
@@ -3135,10 +4281,10 @@ pub struct SDL_GPUVertexBufferDescription {
 /// All vertex attribute locations provided to an [`SDL_GPUVertexInputState`] must
 /// be unique.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUVertexBufferDescription`]
 /// - [`SDL_GPUVertexInputState`]
 /// - [`SDL_GPUVertexElementFormat`]
@@ -3159,10 +4305,10 @@ pub struct SDL_GPUVertexAttribute {
 /// A structure specifying the parameters of a graphics pipeline vertex input
 /// state.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 /// - [`SDL_GPUVertexBufferDescription`]
 /// - [`SDL_GPUVertexAttribute`]
@@ -3190,10 +4336,10 @@ impl ::core::default::Default for SDL_GPUVertexInputState {
 
 /// A structure specifying the stencil operation state of a graphics pipeline.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUDepthStencilState`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3211,10 +4357,10 @@ pub struct SDL_GPUStencilOpState {
 
 /// A structure specifying the blend state of a color target.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUColorTargetDescription`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3238,16 +4384,18 @@ pub struct SDL_GPUColorTargetBlendState {
     pub enable_blend: ::core::primitive::bool,
     /// Whether the color write mask is enabled.
     pub enable_color_write_mask: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
 /// A structure specifying code and metadata for creating a shader object.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUShader`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -3289,10 +4437,10 @@ impl ::core::default::Default for SDL_GPUShaderCreateInfo {
 /// that certain usage combinations are invalid, for example SAMPLER and
 /// GRAPHICS_STORAGE.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTexture`]
 /// - [`SDL_GPUTextureType`]
 /// - [`SDL_GPUTextureFormat`]
@@ -3327,10 +4475,10 @@ pub struct SDL_GPUTextureCreateInfo {
 /// Usage flags can be bitwise OR'd together for combinations of usages. Note
 /// that certain combinations are invalid, for example VERTEX and INDEX.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUBuffer`]
 /// - [`SDL_GPUBufferUsageFlags`]
 #[repr(C)]
@@ -3347,10 +4495,10 @@ pub struct SDL_GPUBufferCreateInfo {
 
 /// A structure specifying the parameters of a transfer buffer.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTransferBuffer`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3375,10 +4523,10 @@ pub struct SDL_GPUTransferBufferCreateInfo {
 /// enabling depth clip and then manually clamping depth in your fragment
 /// shaders on Metal and Vulkan.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -3400,17 +4548,19 @@ pub struct SDL_GPURasterizerState {
     pub enable_depth_bias: ::core::primitive::bool,
     /// true to enable depth clip, false to enable depth clamp.
     pub enable_depth_clip: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
 /// A structure specifying the parameters of the graphics pipeline multisample
 /// state.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3422,18 +4572,21 @@ pub struct SDL_GPUMultisampleState {
     pub sample_mask: Uint32,
     /// Reserved for future use. Must be set to false.
     pub enable_mask: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
 /// A structure specifying the parameters of the graphics pipeline depth
 /// stencil state.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3455,18 +4608,21 @@ pub struct SDL_GPUDepthStencilState {
     pub enable_depth_write: ::core::primitive::bool,
     /// true enables the stencil test.
     pub enable_stencil_test: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
 /// A structure specifying the parameters of color targets used in a graphics
 /// pipeline.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUGraphicsPipelineTargetInfo`]
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -3481,10 +4637,10 @@ pub struct SDL_GPUColorTargetDescription {
 /// A structure specifying the descriptions of render targets used in a
 /// graphics pipeline.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 /// - [`SDL_GPUColorTargetDescription`]
 /// - [`SDL_GPUTextureFormat`]
@@ -3500,8 +4656,11 @@ pub struct SDL_GPUGraphicsPipelineTargetInfo {
     pub depth_stencil_format: SDL_GPUTextureFormat,
     /// true specifies that the pipeline uses a depth-stencil target.
     pub has_depth_stencil_target: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -3515,10 +4674,10 @@ impl ::core::default::Default for SDL_GPUGraphicsPipelineTargetInfo {
 
 /// A structure specifying the parameters of a graphics pipeline state.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 /// - [`SDL_GPUShader`]
 /// - [`SDL_GPUVertexInputState`]
@@ -3561,10 +4720,10 @@ impl ::core::default::Default for SDL_GPUGraphicsPipelineCreateInfo {
 
 /// A structure specifying the parameters of a compute pipeline state.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUComputePipeline`]
 /// - [`SDL_GPUShaderFormat`]
 #[repr(C)]
@@ -3639,10 +4798,10 @@ impl ::core::default::Default for SDL_GPUComputePipelineCreateInfo {
 ///   stores the multisample texture's contents. Not recommended as it requires
 ///   significant memory bandwidth.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPURenderPass`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -3670,7 +4829,9 @@ pub struct SDL_GPUColorTargetInfo {
     pub cycle: ::core::primitive::bool,
     /// true cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used.
     pub cycle_resolve_texture: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -3721,10 +4882,10 @@ impl ::core::default::Default for SDL_GPUColorTargetInfo {
 ///
 /// Note that depth/stencil targets do not support multisample resolves.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPURenderPass`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -3746,7 +4907,9 @@ pub struct SDL_GPUDepthStencilTargetInfo {
     pub cycle: ::core::primitive::bool,
     /// The value to clear the stencil component to at the beginning of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.
     pub clear_stencil: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
 }
 
@@ -3760,10 +4923,10 @@ impl ::core::default::Default for SDL_GPUDepthStencilTargetInfo {
 
 /// A structure containing parameters for a blit command.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BlitGPUTexture`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -3783,8 +4946,11 @@ pub struct SDL_GPUBlitInfo {
     pub filter: SDL_GPUFilter,
     /// true cycles the destination texture if it is already bound.
     pub cycle: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -3798,10 +4964,10 @@ impl ::core::default::Default for SDL_GPUBlitInfo {
 
 /// A structure specifying parameters in a buffer binding call.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BindGPUVertexBuffers`]
 /// - [`SDL_BindGPUIndexBuffer`]
 #[repr(C)]
@@ -3824,10 +4990,10 @@ impl ::core::default::Default for SDL_GPUBufferBinding {
 
 /// A structure specifying parameters in a sampler binding call.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BindGPUVertexSamplers`]
 /// - [`SDL_BindGPUFragmentSamplers`]
 #[repr(C)]
@@ -3851,10 +5017,10 @@ impl ::core::default::Default for SDL_GPUTextureSamplerBinding {
 /// A structure specifying parameters related to binding buffers in a compute
 /// pass.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPUComputePass`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -3864,8 +5030,11 @@ pub struct SDL_GPUStorageBufferReadWriteBinding {
     pub buffer: *mut SDL_GPUBuffer,
     /// true cycles the buffer if it is already bound.
     pub cycle: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -3880,10 +5049,10 @@ impl ::core::default::Default for SDL_GPUStorageBufferReadWriteBinding {
 /// A structure specifying parameters related to binding textures in a compute
 /// pass.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPUComputePass`]
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -3897,8 +5066,11 @@ pub struct SDL_GPUStorageTextureReadWriteBinding {
     pub layer: Uint32,
     /// true cycles the texture if it is already bound.
     pub cycle: ::core::primitive::bool,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding1: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
 }
 
@@ -3913,19 +5085,19 @@ impl ::core::default::Default for SDL_GPUStorageTextureReadWriteBinding {
 extern "C" {
     /// Checks for GPU runtime support.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format_flags`: a bitflag indicating which shader formats the app is
     ///   able to provide.
     /// - `name`: the preferred GPU driver, or NULL to let SDL pick the optimal
     ///   driver.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if supported, false otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUDevice`]
     pub fn SDL_GPUSupportsShaderFormats(
         format_flags: SDL_GPUShaderFormat,
@@ -3936,16 +5108,16 @@ extern "C" {
 extern "C" {
     /// Checks for GPU runtime support.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if supported, false otherwise.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUDeviceWithProperties`]
     pub fn SDL_GPUSupportsProperties(props: SDL_PropertiesID) -> ::core::primitive::bool;
 }
@@ -3953,21 +5125,21 @@ extern "C" {
 extern "C" {
     /// Creates a GPU context.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format_flags`: a bitflag indicating which shader formats the app is
     ///   able to provide.
     /// - `debug_mode`: enable debug mode properties and validations.
     /// - `name`: the preferred GPU driver, or NULL to let SDL pick the optimal
     ///   driver.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a GPU context on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetGPUShaderFormats`]
     /// - [`SDL_GetGPUDeviceDriver`]
     /// - [`SDL_DestroyGPUDevice`]
@@ -4011,17 +5183,17 @@ extern "C" {
     /// - [`SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING`]\: the prefix to
     ///   use for all vertex semantics, default is "TEXCOORD".
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a GPU context on success or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetGPUShaderFormats`]
     /// - [`SDL_GetGPUDeviceDriver`]
     /// - [`SDL_DestroyGPUDevice`]
@@ -4062,13 +5234,13 @@ pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: *const ::core::
 extern "C" {
     /// Destroys a GPU context previously returned by [`SDL_CreateGPUDevice`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context to destroy.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUDevice`]
     pub fn SDL_DestroyGPUDevice(device: *mut SDL_GPUDevice);
 }
@@ -4076,13 +5248,13 @@ extern "C" {
 extern "C" {
     /// Get the number of GPU drivers compiled into SDL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of built in GPU drivers.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetGPUDriver`]
     pub fn SDL_GetNumGPUDrivers() -> ::core::ffi::c_int;
 }
@@ -4097,16 +5269,16 @@ extern "C" {
     /// "metal" or "direct3d12". These never have Unicode characters, and are not
     /// meant to be proper names.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `index`: the index of a GPU driver.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of the GPU driver with the given **index**.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetNumGPUDrivers`]
     pub fn SDL_GetGPUDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
@@ -4114,13 +5286,13 @@ extern "C" {
 extern "C" {
     /// Returns the name of the backend used to create this GPU context.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of the device's driver, or NULL on error.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGPUDeviceDriver(device: *mut SDL_GPUDevice) -> *const ::core::ffi::c_char;
 }
@@ -4128,14 +5300,14 @@ extern "C" {
 extern "C" {
     /// Returns the supported shader formats for this GPU context.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a bitflag indicating which shader formats the driver is able to
     ///   consume.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGPUShaderFormats(device: *mut SDL_GPUDevice) -> SDL_GPUShaderFormat;
 }
@@ -4174,19 +5346,19 @@ extern "C" {
     /// - [`SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING`]\: a name that can be
     ///   displayed in debugging tools.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the compute pipeline to
     ///   create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a compute pipeline object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_BindGPUComputePipeline`]
     /// - [`SDL_ReleaseGPUComputePipeline`]
     pub fn SDL_CreateGPUComputePipeline(
@@ -4207,19 +5379,19 @@ extern "C" {
     /// - [`SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING`]\: a name that can be
     ///   displayed in debugging tools.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the graphics pipeline to
     ///   create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a graphics pipeline object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     /// - [`SDL_BindGPUGraphicsPipeline`]
     /// - [`SDL_ReleaseGPUGraphicsPipeline`]
@@ -4242,18 +5414,18 @@ extern "C" {
     /// - [`SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING`]\: a name that can be displayed
     ///   in debugging tools.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the sampler to create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a sampler object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_BindGPUVertexSamplers`]
     /// - [`SDL_BindGPUFragmentSamplers`]
     /// - [`SDL_ReleaseGPUSampler`]
@@ -4329,18 +5501,18 @@ extern "C" {
     /// - [`SDL_PROP_GPU_SHADER_CREATE_NAME_STRING`]\: a name that can be displayed in
     ///   debugging tools.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the shader to create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a shader object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUGraphicsPipeline`]
     /// - [`SDL_ReleaseGPUShader`]
     pub fn SDL_CreateGPUShader(
@@ -4383,24 +5555,24 @@ extern "C" {
     /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT`]\: (Direct3D 12 only)
     ///   if the texture usage is [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`], clear
     ///   the texture to a depth of this value. Defaults to zero.
-    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8`]\: (Direct3D 12
+    /// - [`SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER`]\: (Direct3D 12
     ///   only) if the texture usage is [`SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET`],
-    ///   clear the texture to a stencil of this value. Defaults to zero.
+    ///   clear the texture to a stencil of this Uint8 value. Defaults to zero.
     /// - [`SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING`]\: a name that can be displayed
     ///   in debugging tools.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the texture to create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a texture object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_UploadToGPUTexture`]
     /// - [`SDL_DownloadFromGPUTexture`]
     /// - [`SDL_BindGPUVertexSamplers`]
@@ -4432,7 +5604,7 @@ pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT: *const ::core::ffi::c
 pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT: *const ::core::ffi::c_char =
     c"SDL.gpu.texture.create.d3d12.clear.depth".as_ptr();
 
-pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char =
+pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER: *const ::core::ffi::c_char =
     c"SDL.gpu.texture.create.d3d12.clear.stencil".as_ptr();
 
 pub const SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
@@ -4462,18 +5634,18 @@ extern "C" {
     /// - [`SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING`]\: a name that can be displayed in
     ///   debugging tools.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the buffer to create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a buffer object on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_UploadToGPUBuffer`]
     /// - [`SDL_DownloadFromGPUBuffer`]
     /// - [`SDL_CopyGPUBufferToBuffer`]
@@ -4508,19 +5680,19 @@ extern "C" {
     /// - [`SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING`]\: a name that can be
     ///   displayed in debugging tools.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `createinfo`: a struct describing the state of the transfer buffer to
     ///   create.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a transfer buffer on success, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_UploadToGPUBuffer`]
     /// - [`SDL_DownloadFromGPUBuffer`]
     /// - [`SDL_UploadToGPUTexture`]
@@ -4541,19 +5713,19 @@ extern "C" {
     /// You should use [`SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING`] with
     /// [`SDL_CreateGPUBuffer`] instead of this function to avoid thread safety issues.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `buffer`: a buffer to attach the name to.
     /// - `text`: a UTF-8 string constant to mark as the name of the buffer.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe, you must make sure the
     ///   buffer is not simultaneously used by any other thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUBuffer`]
     pub fn SDL_SetGPUBufferName(
         device: *mut SDL_GPUDevice,
@@ -4569,19 +5741,19 @@ extern "C" {
     /// [`SDL_CreateGPUTexture`] instead of this function to avoid thread safety
     /// issues.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU Context.
     /// - `texture`: a texture to attach the name to.
     /// - `text`: a UTF-8 string constant to mark as the name of the texture.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe, you must make sure the
     ///   texture is not simultaneously used by any other thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUTexture`]
     pub fn SDL_SetGPUTextureName(
         device: *mut SDL_GPUDevice,
@@ -4595,11 +5767,11 @@ extern "C" {
     ///
     /// Useful for debugging.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `text`: a UTF-8 string constant to insert as the label.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_InsertGPUDebugLabel(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -4621,14 +5793,14 @@ extern "C" {
     /// pass rather than the command buffer. For best results, if you push a debug
     /// group during a pass, always pop it in the same pass.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `name`: a UTF-8 string constant that names the group.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PopGPUDebugGroup`]
     pub fn SDL_PushGPUDebugGroup(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -4639,13 +5811,13 @@ extern "C" {
 extern "C" {
     /// Ends the most-recently pushed debug group.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PushGPUDebugGroup`]
     pub fn SDL_PopGPUDebugGroup(command_buffer: *mut SDL_GPUCommandBuffer);
 }
@@ -4655,11 +5827,11 @@ extern "C" {
     ///
     /// You must not reference the texture after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `texture`: a texture to be destroyed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReleaseGPUTexture(device: *mut SDL_GPUDevice, texture: *mut SDL_GPUTexture);
 }
@@ -4669,11 +5841,11 @@ extern "C" {
     ///
     /// You must not reference the sampler after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `sampler`: a sampler to be destroyed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReleaseGPUSampler(device: *mut SDL_GPUDevice, sampler: *mut SDL_GPUSampler);
 }
@@ -4683,11 +5855,11 @@ extern "C" {
     ///
     /// You must not reference the buffer after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `buffer`: a buffer to be destroyed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReleaseGPUBuffer(device: *mut SDL_GPUDevice, buffer: *mut SDL_GPUBuffer);
 }
@@ -4697,11 +5869,11 @@ extern "C" {
     ///
     /// You must not reference the transfer buffer after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `transfer_buffer`: a transfer buffer to be destroyed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReleaseGPUTransferBuffer(
         device: *mut SDL_GPUDevice,
@@ -4714,11 +5886,11 @@ extern "C" {
     ///
     /// You must not reference the compute pipeline after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `compute_pipeline`: a compute pipeline to be destroyed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReleaseGPUComputePipeline(
         device: *mut SDL_GPUDevice,
@@ -4731,11 +5903,11 @@ extern "C" {
     ///
     /// You must not reference the shader after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `shader`: a shader to be destroyed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReleaseGPUShader(device: *mut SDL_GPUDevice, shader: *mut SDL_GPUShader);
 }
@@ -4745,11 +5917,11 @@ extern "C" {
     ///
     /// You must not reference the graphics pipeline after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `graphics_pipeline`: a graphics pipeline to be destroyed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_ReleaseGPUGraphicsPipeline(
         device: *mut SDL_GPUDevice,
@@ -4772,17 +5944,17 @@ extern "C" {
     /// mipmaps. Interleaving commands between the two command buffers reduces the
     /// total amount of passes overall which improves rendering performance.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a command buffer, or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SubmitGPUCommandBuffer`]
     /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
     pub fn SDL_AcquireGPUCommandBuffer(device: *mut SDL_GPUDevice) -> *mut SDL_GPUCommandBuffer;
@@ -4797,13 +5969,13 @@ extern "C" {
     /// terms this means you must ensure that vec3 and vec4 fields are 16-byte
     /// aligned.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `slot_index`: the vertex uniform slot to push data to.
     /// - `data`: client data to write.
     /// - `length`: the length of the data to write.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_PushGPUVertexUniformData(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -4822,13 +5994,13 @@ extern "C" {
     /// terms this means you must ensure that vec3 and vec4 fields are 16-byte
     /// aligned.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `slot_index`: the fragment uniform slot to push data to.
     /// - `data`: client data to write.
     /// - `length`: the length of the data to write.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_PushGPUFragmentUniformData(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -4847,13 +6019,13 @@ extern "C" {
     /// terms this means you must ensure that vec3 and vec4 fields are 16-byte
     /// aligned.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `slot_index`: the uniform slot to push data to.
     /// - `data`: client data to write.
     /// - `length`: the length of the data to write.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_PushGPUComputeUniformData(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -4874,7 +6046,7 @@ extern "C" {
     /// is called. You cannot begin another render pass, or begin a compute pass or
     /// copy pass until you have ended the render pass.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `color_target_infos`: an array of texture subresources with
     ///   corresponding clear values and load/store ops.
@@ -4884,13 +6056,13 @@ extern "C" {
     ///   clear value and load/store ops, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a render pass handle.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_EndGPURenderPass`]
     pub fn SDL_BeginGPURenderPass(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -4905,11 +6077,11 @@ extern "C" {
     ///
     /// A graphics pipeline must be bound before making any draw calls.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `graphics_pipeline`: the graphics pipeline to bind.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_BindGPUGraphicsPipeline(
         render_pass: *mut SDL_GPURenderPass,
@@ -4920,11 +6092,11 @@ extern "C" {
 extern "C" {
     /// Sets the current viewport state on a command buffer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `viewport`: the viewport to set.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetGPUViewport(
         render_pass: *mut SDL_GPURenderPass,
@@ -4935,11 +6107,11 @@ extern "C" {
 extern "C" {
     /// Sets the current scissor state on a command buffer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `scissor`: the scissor area to set.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetGPUScissor(render_pass: *mut SDL_GPURenderPass, scissor: *const SDL_Rect);
 }
@@ -4947,14 +6119,14 @@ extern "C" {
 extern "C" {
     /// Sets the current blend constants on a command buffer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `blend_constants`: the blend constant color.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GPU_BLENDFACTOR_CONSTANT_COLOR`]
     /// - [`SDL_GPU_BLENDFACTOR_ONE_MINUS_CONSTANT_COLOR`]
     pub fn SDL_SetGPUBlendConstants(
@@ -4966,11 +6138,11 @@ extern "C" {
 extern "C" {
     /// Sets the current stencil reference value on a command buffer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `reference`: the stencil reference value to set.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetGPUStencilReference(render_pass: *mut SDL_GPURenderPass, reference: Uint8);
 }
@@ -4979,14 +6151,14 @@ extern "C" {
     /// Binds vertex buffers on a command buffer for use with subsequent draw
     /// calls.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex buffer slot to begin binding from.
     /// - `bindings`: an array of [`SDL_GPUBufferBinding`] structs containing vertex
     ///   buffers and offset values.
     /// - `num_bindings`: the number of bindings in the bindings array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_BindGPUVertexBuffers(
         render_pass: *mut SDL_GPURenderPass,
@@ -5000,13 +6172,13 @@ extern "C" {
     /// Binds an index buffer on a command buffer for use with subsequent draw
     /// calls.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `binding`: a pointer to a struct containing an index buffer and offset.
     /// - `index_element_size`: whether the index values in the buffer are 16- or
     ///   32-bit.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_BindGPUIndexBuffer(
         render_pass: *mut SDL_GPURenderPass,
@@ -5023,7 +6195,7 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex sampler slot to begin binding from.
     /// - `texture_sampler_bindings`: an array of texture-sampler binding
@@ -5031,10 +6203,10 @@ extern "C" {
     /// - `num_bindings`: the number of texture-sampler pairs to bind from the
     ///   array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUVertexSamplers(
         render_pass: *mut SDL_GPURenderPass,
@@ -5053,16 +6225,16 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex storage texture slot to begin binding from.
     /// - `storage_textures`: an array of storage textures.
     /// - `num_bindings`: the number of storage texture to bind from the array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUVertexStorageTextures(
         render_pass: *mut SDL_GPURenderPass,
@@ -5081,16 +6253,16 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the vertex storage buffer slot to begin binding from.
     /// - `storage_buffers`: an array of buffers.
     /// - `num_bindings`: the number of buffers to bind from the array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUVertexStorageBuffers(
         render_pass: *mut SDL_GPURenderPass,
@@ -5108,7 +6280,7 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment sampler slot to begin binding from.
     /// - `texture_sampler_bindings`: an array of texture-sampler binding
@@ -5116,10 +6288,10 @@ extern "C" {
     /// - `num_bindings`: the number of texture-sampler pairs to bind from the
     ///   array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUFragmentSamplers(
         render_pass: *mut SDL_GPURenderPass,
@@ -5138,16 +6310,16 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment storage texture slot to begin binding from.
     /// - `storage_textures`: an array of storage textures.
     /// - `num_bindings`: the number of storage textures to bind from the array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUFragmentStorageTextures(
         render_pass: *mut SDL_GPURenderPass,
@@ -5166,16 +6338,16 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `first_slot`: the fragment storage buffer slot to begin binding from.
     /// - `storage_buffers`: an array of storage buffers.
     /// - `num_bindings`: the number of storage buffers to bind from the array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUFragmentStorageBuffers(
         render_pass: *mut SDL_GPURenderPass,
@@ -5198,7 +6370,7 @@ extern "C" {
     /// only way to keep behavior consistent and portable is to always pass 0 for
     /// the correlating parameter in the draw calls.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `num_indices`: the number of indices to draw per instance.
     /// - `num_instances`: the number of instances to draw.
@@ -5207,7 +6379,7 @@ extern "C" {
     ///   vertex buffer.
     /// - `first_instance`: the ID of the first instance to draw.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DrawGPUIndexedPrimitives(
         render_pass: *mut SDL_GPURenderPass,
@@ -5231,14 +6403,14 @@ extern "C" {
     /// only way to keep behavior consistent and portable is to always pass 0 for
     /// the correlating parameter in the draw calls.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `num_vertices`: the number of vertices to draw.
     /// - `num_instances`: the number of instances that will be drawn.
     /// - `first_vertex`: the index of the first vertex to draw.
     /// - `first_instance`: the ID of the first instance to draw.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DrawGPUPrimitives(
         render_pass: *mut SDL_GPURenderPass,
@@ -5257,14 +6429,14 @@ extern "C" {
     /// match the layout of [`SDL_GPUIndirectDrawCommand`]. You must not call this
     /// function before binding a graphics pipeline.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `buffer`: a buffer containing draw parameters.
     /// - `offset`: the offset to start reading from the draw buffer.
     /// - `draw_count`: the number of draw parameter sets that should be read
     ///   from the draw buffer.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DrawGPUPrimitivesIndirect(
         render_pass: *mut SDL_GPURenderPass,
@@ -5282,14 +6454,14 @@ extern "C" {
     /// match the layout of [`SDL_GPUIndexedIndirectDrawCommand`]. You must not call
     /// this function before binding a graphics pipeline.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     /// - `buffer`: a buffer containing draw parameters.
     /// - `offset`: the offset to start reading from the draw buffer.
     /// - `draw_count`: the number of draw parameter sets that should be read
     ///   from the draw buffer.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DrawGPUIndexedPrimitivesIndirect(
         render_pass: *mut SDL_GPURenderPass,
@@ -5305,10 +6477,10 @@ extern "C" {
     /// All bound graphics state on the render pass command buffer is unset. The
     /// render pass handle is now invalid.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `render_pass`: a render pass handle.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EndGPURenderPass(render_pass: *mut SDL_GPURenderPass);
 }
@@ -5335,7 +6507,7 @@ extern "C" {
     /// texture in the same compute pass is only supported by specific texture
     /// formats. Make sure you check the format support!
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `storage_texture_bindings`: an array of writeable storage texture
     ///   binding structs.
@@ -5346,13 +6518,13 @@ extern "C" {
     /// - `num_storage_buffer_bindings`: the number of storage buffers to bind
     ///   from the array.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a compute pass handle.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_EndGPUComputePass`]
     pub fn SDL_BeginGPUComputePass(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -5366,11 +6538,11 @@ extern "C" {
 extern "C" {
     /// Binds a compute pipeline on a command buffer for use in compute dispatch.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `compute_pipeline`: a compute pipeline to bind.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_BindGPUComputePipeline(
         compute_pass: *mut SDL_GPUComputePass,
@@ -5386,7 +6558,7 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute sampler slot to begin binding from.
     /// - `texture_sampler_bindings`: an array of texture-sampler binding
@@ -5394,10 +6566,10 @@ extern "C" {
     /// - `num_bindings`: the number of texture-sampler bindings to bind from the
     ///   array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUComputeSamplers(
         compute_pass: *mut SDL_GPUComputePass,
@@ -5416,16 +6588,16 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute storage texture slot to begin binding from.
     /// - `storage_textures`: an array of storage textures.
     /// - `num_bindings`: the number of storage textures to bind from the array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUComputeStorageTextures(
         compute_pass: *mut SDL_GPUComputePass,
@@ -5444,16 +6616,16 @@ extern "C" {
     /// Be sure your shader is set up according to the requirements documented in
     /// [`SDL_CreateGPUShader()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `first_slot`: the compute storage buffer slot to begin binding from.
     /// - `storage_buffers`: an array of storage buffer binding structs.
     /// - `num_bindings`: the number of storage buffers to bind from the array.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreateGPUShader`]
     pub fn SDL_BindGPUComputeStorageBuffers(
         compute_pass: *mut SDL_GPUComputePass,
@@ -5473,7 +6645,7 @@ extern "C" {
     /// guarantee of which order the writes will occur. If the write order matters,
     /// you MUST end the compute pass and begin another one.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `groupcount_x`: number of local workgroups to dispatch in the X
     ///   dimension.
@@ -5482,7 +6654,7 @@ extern "C" {
     /// - `groupcount_z`: number of local workgroups to dispatch in the Z
     ///   dimension.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DispatchGPUCompute(
         compute_pass: *mut SDL_GPUComputePass,
@@ -5504,12 +6676,12 @@ extern "C" {
     /// guarantee of which order the writes will occur. If the write order matters,
     /// you MUST end the compute pass and begin another one.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
     /// - `buffer`: a buffer containing dispatch parameters.
     /// - `offset`: the offset to start reading from the dispatch buffer.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DispatchGPUComputeIndirect(
         compute_pass: *mut SDL_GPUComputePass,
@@ -5524,10 +6696,10 @@ extern "C" {
     /// All bound compute state on the command buffer is unset. The compute pass
     /// handle is now invalid.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EndGPUComputePass(compute_pass: *mut SDL_GPUComputePass);
 }
@@ -5539,16 +6711,16 @@ extern "C" {
     /// memory is owned by the graphics driver - do NOT call [`SDL_free()`] on the
     /// returned pointer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `transfer_buffer`: a transfer buffer.
     /// - `cycle`: if true, cycles the transfer buffer if it is already bound.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the address of the mapped transfer buffer memory, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_MapGPUTransferBuffer(
         device: *mut SDL_GPUDevice,
@@ -5560,11 +6732,11 @@ extern "C" {
 extern "C" {
     /// Unmaps a previously mapped transfer buffer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `transfer_buffer`: a previously mapped transfer buffer.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_UnmapGPUTransferBuffer(
         device: *mut SDL_GPUDevice,
@@ -5579,13 +6751,13 @@ extern "C" {
     /// inside a copy pass. You must not begin another copy pass, or a render pass
     /// or compute pass before ending the copy pass.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a copy pass handle.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_BeginGPUCopyPass(command_buffer: *mut SDL_GPUCommandBuffer) -> *mut SDL_GPUCopyPass;
 }
@@ -5599,14 +6771,14 @@ extern "C" {
     /// You must align the data in the transfer buffer to a multiple of the texel
     /// size of the texture format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source transfer buffer with image layout information.
     /// - `destination`: the destination texture region.
     /// - `cycle`: if true, cycles the texture if the texture is bound, otherwise
     ///   overwrites the data.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_UploadToGPUTexture(
         copy_pass: *mut SDL_GPUCopyPass,
@@ -5622,14 +6794,14 @@ extern "C" {
     /// The upload occurs on the GPU timeline. You may assume that the upload has
     /// finished in subsequent commands.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source transfer buffer with offset.
     /// - `destination`: the destination buffer with offset and size.
     /// - `cycle`: if true, cycles the buffer if it is already bound, otherwise
     ///   overwrites the data.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_UploadToGPUBuffer(
         copy_pass: *mut SDL_GPUCopyPass,
@@ -5645,7 +6817,7 @@ extern "C" {
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
     /// in subsequent commands.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: a source texture region.
     /// - `destination`: a destination texture region.
@@ -5655,7 +6827,7 @@ extern "C" {
     /// - `cycle`: if true, cycles the destination texture if the destination
     ///   texture is bound, otherwise overwrites the data.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CopyGPUTextureToTexture(
         copy_pass: *mut SDL_GPUCopyPass,
@@ -5674,7 +6846,7 @@ extern "C" {
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
     /// in subsequent commands.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the buffer and offset to copy from.
     /// - `destination`: the buffer and offset to copy to.
@@ -5682,7 +6854,7 @@ extern "C" {
     /// - `cycle`: if true, cycles the destination buffer if it is already bound,
     ///   otherwise overwrites the data.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CopyGPUBufferToBuffer(
         copy_pass: *mut SDL_GPUCopyPass,
@@ -5699,13 +6871,13 @@ extern "C" {
     /// This data is not guaranteed to be copied until the command buffer fence is
     /// signaled.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source texture region.
     /// - `destination`: the destination transfer buffer with image layout
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DownloadFromGPUTexture(
         copy_pass: *mut SDL_GPUCopyPass,
@@ -5720,12 +6892,12 @@ extern "C" {
     /// This data is not guaranteed to be copied until the command buffer fence is
     /// signaled.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `copy_pass`: a copy pass handle.
     /// - `source`: the source buffer with offset and size.
     /// - `destination`: the destination transfer buffer with offset.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DownloadFromGPUBuffer(
         copy_pass: *mut SDL_GPUCopyPass,
@@ -5737,10 +6909,10 @@ extern "C" {
 extern "C" {
     /// Ends the current copy pass.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `copy_pass`: a copy pass handle.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_EndGPUCopyPass(copy_pass: *mut SDL_GPUCopyPass);
 }
@@ -5750,11 +6922,11 @@ extern "C" {
     ///
     /// This function must not be called inside of any pass.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command_buffer.
     /// - `texture`: a texture with more than 1 mip level.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GenerateMipmapsForGPUTexture(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -5767,11 +6939,11 @@ extern "C" {
     ///
     /// This function must not be called inside of any pass.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `info`: the blit info struct containing the blit parameters.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_BlitGPUTexture(
         command_buffer: *mut SDL_GPUCommandBuffer,
@@ -5784,18 +6956,18 @@ extern "C" {
     ///
     /// The window must be claimed before calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`].
     /// - `swapchain_composition`: the swapchain composition to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if supported, false if unsupported.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ClaimWindowForGPUDevice`]
     pub fn SDL_WindowSupportsGPUSwapchainComposition(
         device: *mut SDL_GPUDevice,
@@ -5809,18 +6981,18 @@ extern "C" {
     ///
     /// The window must be claimed before calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`].
     /// - `present_mode`: the presentation mode to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if supported, false if unsupported.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ClaimWindowForGPUDevice`]
     pub fn SDL_WindowSupportsGPUPresentMode(
         device: *mut SDL_GPUDevice,
@@ -5841,22 +7013,22 @@ extern "C" {
     /// parameters, you must call [`SDL_SetGPUSwapchainParameters`] after claiming the
     /// window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called from the thread that
     ///   created the window.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WaitAndAcquireGPUSwapchainTexture`]
     /// - [`SDL_ReleaseWindowFromGPUDevice`]
     /// - [`SDL_WindowSupportsGPUPresentMode`]
@@ -5870,14 +7042,14 @@ extern "C" {
 extern "C" {
     /// Unclaims a window, destroying its swapchain structure.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`] that has been claimed.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ClaimWindowForGPUDevice`]
     pub fn SDL_ReleaseWindowFromGPUDevice(device: *mut SDL_GPUDevice, window: *mut SDL_Window);
 }
@@ -5890,23 +7062,23 @@ extern "C" {
     /// supported via [`SDL_WindowSupportsGPUPresentMode`] /
     /// [`SDL_WindowSupportsGPUSwapchainComposition`] prior to calling this function.
     ///
-    /// [`SDL_GPU_PRESENTMODE_VSYNC`] and [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR`] are always
+    /// [`SDL_GPU_PRESENTMODE_VSYNC`] with [`SDL_GPU_SWAPCHAINCOMPOSITION_SDR`] are always
     /// supported.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`] that has been claimed.
     /// - `swapchain_composition`: the desired composition of the swapchain.
     /// - `present_mode`: the desired present mode for the swapchain.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if successful, false on error; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WindowSupportsGPUPresentMode`]
     /// - [`SDL_WindowSupportsGPUSwapchainComposition`]
     pub fn SDL_SetGPUSwapchainParameters(
@@ -5934,16 +7106,16 @@ extern "C" {
     ///
     /// The minimum value of allowed frames in flight is 1, and the maximum is 3.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `allowed_frames_in_flight`: the maximum number of frames that can be
     ///   pending on the GPU.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if successful, false on error; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetGPUAllowedFramesInFlight(
         device: *mut SDL_GPUDevice,
@@ -5956,14 +7128,14 @@ extern "C" {
     ///
     /// Note that this format can change if the swapchain parameters change.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `window`: an [`SDL_Window`] that has been claimed.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the texture format of the swapchain.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGPUSwapchainTextureFormat(
         device: *mut SDL_GPUDevice,
@@ -5992,7 +7164,7 @@ extern "C" {
     /// freed by the user. You MUST NOT call this function from any thread other
     /// than the one that created the window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `window`: a window that has been claimed.
     /// - `swapchain_texture`: a pointer filled in with a swapchain texture
@@ -6002,18 +7174,18 @@ extern "C" {
     /// - `swapchain_texture_height`: a pointer filled in with the swapchain
     ///   texture height, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false on error; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called from the thread that
     ///   created the window.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ClaimWindowForGPUDevice`]
     /// - [`SDL_SubmitGPUCommandBuffer`]
     /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
@@ -6034,22 +7206,22 @@ extern "C" {
 extern "C" {
     /// Blocks the thread until a swapchain texture is available to be acquired.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `window`: a window that has been claimed.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called from the thread that
     ///   created the window.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AcquireGPUSwapchainTexture`]
     /// - [`SDL_WaitAndAcquireGPUSwapchainTexture`]
     /// - [`SDL_SetGPUAllowedFramesInFlight`]
@@ -6081,7 +7253,7 @@ extern "C" {
     /// The swapchain texture is write-only and cannot be used as a sampler or for
     /// another reading operation.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `window`: a window that has been claimed.
     /// - `swapchain_texture`: a pointer filled in with a swapchain texture
@@ -6091,18 +7263,18 @@ extern "C" {
     /// - `swapchain_texture_height`: a pointer filled in with the swapchain
     ///   texture height, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false on error; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called from the thread that
     ///   created the window.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SubmitGPUCommandBuffer`]
     /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
     /// - [`SDL_AcquireGPUSwapchainTexture`]
@@ -6125,17 +7297,17 @@ extern "C" {
     /// All commands in the submission are guaranteed to begin executing before any
     /// command in a subsequent submission begins executing.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AcquireGPUCommandBuffer`]
     /// - [`SDL_WaitAndAcquireGPUSwapchainTexture`]
     /// - [`SDL_AcquireGPUSwapchainTexture`]
@@ -6157,17 +7329,17 @@ extern "C" {
     /// All commands in the submission are guaranteed to begin executing before any
     /// command in a subsequent submission begins executing.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a fence associated with the command buffer, or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AcquireGPUCommandBuffer`]
     /// - [`SDL_WaitAndAcquireGPUSwapchainTexture`]
     /// - [`SDL_AcquireGPUSwapchainTexture`]
@@ -6190,17 +7362,17 @@ extern "C" {
     ///
     /// You must not reference the command buffer after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `command_buffer`: a command buffer.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false on error; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WaitAndAcquireGPUSwapchainTexture`]
     /// - [`SDL_AcquireGPUCommandBuffer`]
     /// - [`SDL_AcquireGPUSwapchainTexture`]
@@ -6212,17 +7384,17 @@ extern "C" {
 extern "C" {
     /// Blocks the thread until the GPU is completely idle.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_WaitForGPUFences`]
     pub fn SDL_WaitForGPUIdle(device: *mut SDL_GPUDevice) -> ::core::primitive::bool;
 }
@@ -6230,21 +7402,21 @@ extern "C" {
 extern "C" {
     /// Blocks the thread until the given fences are signaled.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `wait_all`: if 0, wait for any fence to be signaled, if 1, wait for all
     ///   fences to be signaled.
     /// - `fences`: an array of fences to wait on.
     /// - `num_fences`: the number of fences in the fences array.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success, false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
     /// - [`SDL_WaitForGPUIdle`]
     pub fn SDL_WaitForGPUFences(
@@ -6258,17 +7430,17 @@ extern "C" {
 extern "C" {
     /// Checks the status of a fence.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `fence`: a fence.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the fence is signaled, false if it is not.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
     pub fn SDL_QueryGPUFence(
         device: *mut SDL_GPUDevice,
@@ -6281,14 +7453,14 @@ extern "C" {
     ///
     /// You must not reference the fence after calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `fence`: a fence.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
     pub fn SDL_ReleaseGPUFence(device: *mut SDL_GPUDevice, fence: *mut SDL_GPUFence);
 }
@@ -6296,16 +7468,16 @@ extern "C" {
 extern "C" {
     /// Obtains the texel block size for a texture format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: the texture format you want to know the texel size of.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the texel block size of the texture format.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_UploadToGPUTexture`]
     pub fn SDL_GPUTextureFormatTexelBlockSize(format: SDL_GPUTextureFormat) -> Uint32;
 }
@@ -6314,16 +7486,16 @@ extern "C" {
     /// Determines whether a texture format is supported for a given type and
     /// usage.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `format`: the texture format to check.
     /// - `type`: the type of texture (2D, 3D, Cube).
     /// - `usage`: a bitmask of all usage scenarios to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns whether the texture format is supported for this type and usage.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GPUTextureSupportsFormat(
         device: *mut SDL_GPUDevice,
@@ -6336,15 +7508,15 @@ extern "C" {
 extern "C" {
     /// Determines if a sample count for a texture format is supported.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: a GPU context.
     /// - `format`: the texture format to check.
     /// - `sample_count`: the sample count to check.
     ///
-    /// ### Return value
-    /// Returns a hardware-specific version of min(preferred, possible).
+    /// ## Return value
+    /// Returns whether the sample count is supported for this texture format.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GPUTextureSupportsSampleCount(
         device: *mut SDL_GPUDevice,
@@ -6356,16 +7528,16 @@ extern "C" {
 extern "C" {
     /// Calculate the size in bytes of a texture format with dimensions.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: a texture format.
     /// - `width`: width in pixels.
     /// - `height`: height in pixels.
     /// - `depth_or_layer_count`: depth for 3D textures or layer count otherwise.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the size of a texture with this format and dimensions.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_CalculateGPUTextureFormatSize(
         format: SDL_GPUTextureFormat,
@@ -6383,13 +7555,13 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
         /// Do NOT call any SDL_GPU functions after calling this function! This must
         /// also be called before calling [`SDL_GDKSuspendComplete`].
         ///
-        /// ### Parameters
+        /// ## Parameters
         /// - `device`: a GPU context.
         ///
-        /// ### Availability
+        /// ## Availability
         /// This function is available since SDL 3.2.0.
         ///
-        /// ### See also
+        /// ## See also
         /// - [`SDL_AddEventWatch`]
         pub fn SDL_GDKSuspendGPU(device: *mut SDL_GPUDevice);
     }
@@ -6401,13 +7573,13 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
         /// When resuming, this function MUST be called before calling any other
         /// SDL_GPU functions.
         ///
-        /// ### Parameters
+        /// ## Parameters
         /// - `device`: a GPU context.
         ///
-        /// ### Availability
+        /// ## Availability
         /// This function is available since SDL 3.2.0.
         ///
-        /// ### See also
+        /// ## See also
         /// - [`SDL_AddEventWatch`]
         pub fn SDL_GDKResumeGPU(device: *mut SDL_GPUDevice);
     }
@@ -6419,10 +7591,10 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
 /// Used for vertices, indices, indirect draw commands, and general compute
 /// data.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUBuffer`]
 /// - [`SDL_UploadToGPUBuffer`]
 /// - [`SDL_DownloadFromGPUBuffer`]
@@ -6457,10 +7629,10 @@ pub struct SDL_GPUBuffer {
 /// In multi-threading scenarios, you should only access a command buffer on
 /// the thread you acquired it from.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_AcquireGPUCommandBuffer`]
 /// - [`SDL_SubmitGPUCommandBuffer`]
 /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
@@ -6474,10 +7646,10 @@ pub struct SDL_GPUCommandBuffer {
 /// This handle is transient and should not be held or referenced after
 /// [`SDL_EndGPUComputePass`] is called.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPUComputePass`]
 /// - [`SDL_EndGPUComputePass`]
 #[repr(C)]
@@ -6489,10 +7661,10 @@ pub struct SDL_GPUComputePass {
 ///
 /// Used during compute passes.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUComputePipeline`]
 /// - [`SDL_BindGPUComputePipeline`]
 /// - [`SDL_ReleaseGPUComputePipeline`]
@@ -6506,10 +7678,10 @@ pub struct SDL_GPUComputePipeline {
 /// This handle is transient and should not be held or referenced after
 /// [`SDL_EndGPUCopyPass`] is called.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPUCopyPass`]
 /// - [`SDL_EndGPUCopyPass`]
 #[repr(C)]
@@ -6519,7 +7691,7 @@ pub struct SDL_GPUCopyPass {
 
 /// An opaque handle representing the SDL_GPU context.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 pub struct SDL_GPUDevice {
@@ -6528,10 +7700,10 @@ pub struct SDL_GPUDevice {
 
 /// An opaque handle representing a fence.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SubmitGPUCommandBufferAndAcquireFence`]
 /// - [`SDL_QueryGPUFence`]
 /// - [`SDL_WaitForGPUFences`]
@@ -6545,10 +7717,10 @@ pub struct SDL_GPUFence {
 ///
 /// Used during render passes.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 /// - [`SDL_BindGPUGraphicsPipeline`]
 /// - [`SDL_ReleaseGPUGraphicsPipeline`]
@@ -6562,10 +7734,10 @@ pub struct SDL_GPUGraphicsPipeline {
 /// This handle is transient and should not be held or referenced after
 /// [`SDL_EndGPURenderPass`] is called.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BeginGPURenderPass`]
 /// - [`SDL_EndGPURenderPass`]
 #[repr(C)]
@@ -6575,10 +7747,10 @@ pub struct SDL_GPURenderPass {
 
 /// An opaque handle representing a sampler.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUSampler`]
 /// - [`SDL_BindGPUVertexSamplers`]
 /// - [`SDL_BindGPUFragmentSamplers`]
@@ -6590,10 +7762,10 @@ pub struct SDL_GPUSampler {
 
 /// An opaque handle representing a compiled shader object.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUShader`]
 /// - [`SDL_CreateGPUGraphicsPipeline`]
 /// - [`SDL_ReleaseGPUShader`]
@@ -6604,10 +7776,10 @@ pub struct SDL_GPUShader {
 
 /// An opaque handle representing a texture.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTexture`]
 /// - [`SDL_UploadToGPUTexture`]
 /// - [`SDL_DownloadFromGPUTexture`]
@@ -6629,10 +7801,10 @@ pub struct SDL_GPUTexture {
 ///
 /// Used for transferring data to and from the device.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_CreateGPUTransferBuffer`]
 /// - [`SDL_MapGPUTransferBuffer`]
 /// - [`SDL_UnmapGPUTransferBuffer`]

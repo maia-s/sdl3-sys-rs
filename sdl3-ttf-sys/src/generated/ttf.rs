@@ -10,7 +10,7 @@ pub const SDL_TTF_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
 pub const SDL_TTF_MINOR_VERSION: ::core::primitive::i32 = 2;
 
-pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 0;
+pub const SDL_TTF_MICRO_VERSION: ::core::primitive::i32 = 2;
 
 /// * This is the version number macro for the current SDL_ttf version.
 pub const SDL_TTF_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
@@ -35,13 +35,13 @@ pub const fn SDL_TTF_VERSION_ATLEAST(
 extern "C" {
     /// This function gets the version of the dynamically linked SDL_ttf library.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns SDL_ttf version.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_Version() -> ::core::ffi::c_int;
 }
@@ -51,18 +51,18 @@ extern "C" {
     ///
     /// [`TTF_Init()`] should be called before calling this function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `major`: to be filled in with the major version number. Can be NULL.
     /// - `minor`: to be filled in with the minor version number. Can be NULL.
     /// - `patch`: to be filled in with the param version number. Can be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_Init`]
     pub fn TTF_GetFreeTypeVersion(
         major: *mut ::core::ffi::c_int,
@@ -76,15 +76,15 @@ extern "C" {
     ///
     /// If HarfBuzz is not available, the version reported is 0.0.0.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `major`: to be filled in with the major version number. Can be NULL.
     /// - `minor`: to be filled in with the minor version number. Can be NULL.
     /// - `patch`: to be filled in with the param version number. Can be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetHarfBuzzVersion(
         major: *mut ::core::ffi::c_int,
@@ -102,14 +102,14 @@ extern "C" {
     /// It is safe to call this more than once, and each successful [`TTF_Init()`] call
     /// should be paired with a matching [`TTF_Quit()`] call.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_Quit`]
     pub fn TTF_Init() -> ::core::primitive::bool;
 }
@@ -123,21 +123,21 @@ extern "C" {
     ///
     /// When done with the returned [`TTF_Font`], use [`TTF_CloseFont()`] to dispose of it.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `file`: path to font file.
     /// - `ptsize`: point size to use for the newly-opened font.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid [`TTF_Font`], or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CloseFont`]
     pub fn TTF_OpenFont(
         file: *const ::core::ffi::c_char,
@@ -157,23 +157,23 @@ extern "C" {
     ///
     /// When done with the returned [`TTF_Font`], use [`TTF_CloseFont()`] to dispose of it.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `src`: an [`SDL_IOStream`] to provide a font file's data.
     /// - `closeio`: true to close `src` when the font is closed, false to leave
     ///   it open.
     /// - `ptsize`: point size to use for the newly-opened font.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid [`TTF_Font`], or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CloseFont`]
     pub fn TTF_OpenFontIO(
         src: *mut SDL_IOStream,
@@ -215,20 +215,20 @@ extern "C" {
     ///   will be used as the font data source and the initial size and style of
     ///   the new font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid [`TTF_Font`], or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CloseFont`]
     pub fn TTF_OpenFontWithProperties(props: SDL_PropertiesID) -> *mut TTF_Font;
 }
@@ -268,21 +268,21 @@ extern "C" {
     ///
     /// When done with the returned [`TTF_Font`], use [`TTF_CloseFont()`] to dispose of it.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `existing_font`: the font to copy.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid [`TTF_Font`], or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   original font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CloseFont`]
     pub fn TTF_CopyFont(existing_font: *mut TTF_Font) -> *mut TTF_Font;
 }
@@ -301,17 +301,17 @@ extern "C" {
     /// - [`TTF_PROP_FONT_OUTLINE_MITER_LIMIT_NUMBER`]\: The FT_Fixed miter limit used
     ///   when setting the font outline, defaults to 0.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontProperties(font: *mut TTF_Font) -> SDL_PropertiesID;
 }
@@ -331,18 +331,18 @@ extern "C" {
     /// The generation is incremented each time font properties change that require
     /// rebuilding glyphs, such as style, size, etc.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font generation or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontGeneration(font: *mut TTF_Font) -> Uint32;
 }
@@ -357,22 +357,22 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to modify.
     /// - `fallback`: the font to add as a fallback.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created
     ///   both fonts.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_ClearFallbackFonts`]
     /// - [`TTF_RemoveFallbackFont`]
     pub fn TTF_AddFallbackFont(
@@ -386,18 +386,18 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to modify.
     /// - `fallback`: the font to remove as a fallback.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created
     ///   both fonts.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_AddFallbackFont`]
     /// - [`TTF_ClearFallbackFonts`]
     pub fn TTF_RemoveFallbackFont(font: *mut TTF_Font, fallback: *mut TTF_Font);
@@ -408,17 +408,17 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to modify.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_AddFallbackFont`]
     /// - [`TTF_RemoveFallbackFont`]
     pub fn TTF_ClearFallbackFonts(font: *mut TTF_Font);
@@ -430,22 +430,22 @@ extern "C" {
     /// This updates any [`TTF_Text`] objects using this font, and clears
     /// already-generated glyphs, if any, from the cache.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to resize.
     /// - `ptsize`: the new point size.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontSize`]
     pub fn TTF_SetFontSize(
         font: *mut TTF_Font,
@@ -459,24 +459,24 @@ extern "C" {
     /// This updates any [`TTF_Text`] objects using this font, and clears
     /// already-generated glyphs, if any, from the cache.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to resize.
     /// - `ptsize`: the new point size.
     /// - `hdpi`: the target horizontal DPI.
     /// - `vdpi`: the target vertical DPI.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontSize`]
     /// - [`TTF_GetFontSizeDPI`]
     pub fn TTF_SetFontSizeDPI(
@@ -490,21 +490,21 @@ extern "C" {
 extern "C" {
     /// Get the size of a font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the size of the font, or 0.0f on failure; call [`SDL_GetError()`] for
     ///   more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontSize`]
     /// - [`TTF_SetFontSizeDPI`]
     pub fn TTF_GetFontSize(font: *mut TTF_Font) -> ::core::ffi::c_float;
@@ -513,23 +513,23 @@ extern "C" {
 extern "C" {
     /// Get font target resolutions, in dots per inch.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `hdpi`: a pointer filled in with the target horizontal DPI.
     /// - `vdpi`: a pointer filled in with the target vertical DPI.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontSizeDPI`]
     pub fn TTF_GetFontDPI(
         font: *mut TTF_Font,
@@ -544,37 +544,193 @@ extern "C" {
 /// SDL_ttf. A combination of these flags can be used with functions that set
 /// or query font style, such as [`TTF_SetFontStyle`] or [`TTF_GetFontStyle`].
 ///
-/// ### Availability
-/// This function is available since SDL_ttf 3.0.0.
+/// ## Availability
+/// This datatype is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_SetFontStyle`]
 /// - [`TTF_GetFontStyle`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`TTF_STYLE_NORMAL`] | No special style |
-/// | [`TTF_STYLE_BOLD`] | Bold style |
-/// | [`TTF_STYLE_ITALIC`] | Italic style |
-/// | [`TTF_STYLE_UNDERLINE`] | Underlined text |
-/// | [`TTF_STYLE_STRIKETHROUGH`] | Strikethrough text |
-pub type TTF_FontStyleFlags = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`NORMAL`](TTF_FontStyleFlags::NORMAL) | [`TTF_STYLE_NORMAL`] | No special style |
+/// | [`BOLD`](TTF_FontStyleFlags::BOLD) | [`TTF_STYLE_BOLD`] | Bold style |
+/// | [`ITALIC`](TTF_FontStyleFlags::ITALIC) | [`TTF_STYLE_ITALIC`] | Italic style |
+/// | [`UNDERLINE`](TTF_FontStyleFlags::UNDERLINE) | [`TTF_STYLE_UNDERLINE`] | Underlined text |
+/// | [`STRIKETHROUGH`](TTF_FontStyleFlags::STRIKETHROUGH) | [`TTF_STYLE_STRIKETHROUGH`] | Strikethrough text |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct TTF_FontStyleFlags(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_FontStyleFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_FontStyleFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<TTF_FontStyleFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: TTF_FontStyleFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for TTF_FontStyleFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "TTF_FontStyleFlags(")?;
+        let all_bits = all_bits | Self::NORMAL.0;
+        if (Self::NORMAL != 0 || self.0 == 0) && *self & Self::NORMAL == Self::NORMAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NORMAL")?;
+        }
+        let all_bits = all_bits | Self::BOLD.0;
+        if (Self::BOLD != 0 || self.0 == 0) && *self & Self::BOLD == Self::BOLD {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BOLD")?;
+        }
+        let all_bits = all_bits | Self::ITALIC.0;
+        if (Self::ITALIC != 0 || self.0 == 0) && *self & Self::ITALIC == Self::ITALIC {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ITALIC")?;
+        }
+        let all_bits = all_bits | Self::UNDERLINE.0;
+        if (Self::UNDERLINE != 0 || self.0 == 0) && *self & Self::UNDERLINE == Self::UNDERLINE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "UNDERLINE")?;
+        }
+        let all_bits = all_bits | Self::STRIKETHROUGH.0;
+        if (Self::STRIKETHROUGH != 0 || self.0 == 0)
+            && *self & Self::STRIKETHROUGH == Self::STRIKETHROUGH
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "STRIKETHROUGH")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for TTF_FontStyleFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for TTF_FontStyleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl TTF_FontStyleFlags {
+    /// No special style
+    pub const NORMAL: Self = Self((0x00 as Uint32));
+    /// Bold style
+    pub const BOLD: Self = Self((0x01 as Uint32));
+    /// Italic style
+    pub const ITALIC: Self = Self((0x02 as Uint32));
+    /// Underlined text
+    pub const UNDERLINE: Self = Self((0x04 as Uint32));
+    /// Strikethrough text
+    pub const STRIKETHROUGH: Self = Self((0x08 as Uint32));
+}
 
 /// No special style
-pub const TTF_STYLE_NORMAL: TTF_FontStyleFlags = (0x00 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_NORMAL: TTF_FontStyleFlags = TTF_FontStyleFlags::NORMAL;
 /// Bold style
-pub const TTF_STYLE_BOLD: TTF_FontStyleFlags = (0x01 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_BOLD: TTF_FontStyleFlags = TTF_FontStyleFlags::BOLD;
 /// Italic style
-pub const TTF_STYLE_ITALIC: TTF_FontStyleFlags = (0x02 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_ITALIC: TTF_FontStyleFlags = TTF_FontStyleFlags::ITALIC;
 /// Underlined text
-pub const TTF_STYLE_UNDERLINE: TTF_FontStyleFlags = (0x04 as TTF_FontStyleFlags);
-
+pub const TTF_STYLE_UNDERLINE: TTF_FontStyleFlags = TTF_FontStyleFlags::UNDERLINE;
 /// Strikethrough text
-pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = (0x08 as TTF_FontStyleFlags);
+pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = TTF_FontStyleFlags::STRIKETHROUGH;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_FontStyleFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::ttf::METADATA_TTF_FontStyleFlags;
+}
 
 extern "C" {
     /// Set a font's current style.
@@ -590,18 +746,18 @@ extern "C" {
     /// - [`TTF_STYLE_UNDERLINE`]
     /// - [`TTF_STYLE_STRIKETHROUGH`]
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to set a new style on.
     /// - `style`: the new style values to set, OR'd together.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontStyle`]
     pub fn TTF_SetFontStyle(font: *mut TTF_Font, style: TTF_FontStyleFlags);
 }
@@ -617,19 +773,19 @@ extern "C" {
     /// - [`TTF_STYLE_UNDERLINE`]
     /// - [`TTF_STYLE_STRIKETHROUGH`]
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current font style, as a set of bit flags.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontStyle`]
     pub fn TTF_GetFontStyle(font: *const TTF_Font) -> TTF_FontStyleFlags;
 }
@@ -644,22 +800,22 @@ extern "C" {
     /// This updates any [`TTF_Text`] objects using this font, and clears
     /// already-generated glyphs, if any, from the cache.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to set a new outline on.
     /// - `outline`: positive outline value, 0 to default.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontOutline`]
     pub fn TTF_SetFontOutline(
         font: *mut TTF_Font,
@@ -670,19 +826,19 @@ extern "C" {
 extern "C" {
     /// Query a font's current outline.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's current outline value.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontOutline`]
     pub fn TTF_GetFontOutline(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
@@ -693,16 +849,17 @@ extern "C" {
 /// rendering. The hinting level determines how much the font's outlines are
 /// adjusted for better alignment on the pixel grid.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_SetFontHinting`]
 /// - [`TTF_GetFontHinting`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
+/// | [`INVALID`](TTF_HintingFlags::INVALID) | [`TTF_HINTING_INVALID`] | |
 /// | [`NORMAL`](TTF_HintingFlags::NORMAL) | [`TTF_HINTING_NORMAL`] | Normal hinting applies standard grid-fitting. |
 /// | [`LIGHT`](TTF_HintingFlags::LIGHT) | [`TTF_HINTING_LIGHT`] | Light hinting applies subtle adjustments to improve rendering. |
 /// | [`MONO`](TTF_HintingFlags::MONO) | [`TTF_HINTING_MONO`] | Monochrome hinting adjusts the font for better rendering at lower resolutions. |
@@ -711,6 +868,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_HintingFlags(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_HintingFlags {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_HintingFlags> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_HintingFlags) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<TTF_HintingFlags> for ::core::ffi::c_int {
     #[inline(always)]
@@ -724,6 +895,7 @@ impl ::core::fmt::Debug for TTF_HintingFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         #[allow(unreachable_patterns)]
         f.write_str(match *self {
+            Self::INVALID => "TTF_HINTING_INVALID",
             Self::NORMAL => "TTF_HINTING_NORMAL",
             Self::LIGHT => "TTF_HINTING_LIGHT",
             Self::MONO => "TTF_HINTING_MONO",
@@ -736,18 +908,20 @@ impl ::core::fmt::Debug for TTF_HintingFlags {
 }
 
 impl TTF_HintingFlags {
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
     /// Normal hinting applies standard grid-fitting.
-    pub const NORMAL: Self = Self(0);
+    pub const NORMAL: Self = Self((0_i32 as ::core::ffi::c_int));
     /// Light hinting applies subtle adjustments to improve rendering.
-    pub const LIGHT: Self = Self(1);
+    pub const LIGHT: Self = Self((1_i32 as ::core::ffi::c_int));
     /// Monochrome hinting adjusts the font for better rendering at lower resolutions.
-    pub const MONO: Self = Self(2);
+    pub const MONO: Self = Self((2_i32 as ::core::ffi::c_int));
     /// No hinting, the font is rendered without any grid-fitting.
-    pub const NONE: Self = Self(3);
+    pub const NONE: Self = Self((3_i32 as ::core::ffi::c_int));
     /// Light hinting with subpixel rendering for more precise font edges.
-    pub const LIGHT_SUBPIXEL: Self = Self(4);
+    pub const LIGHT_SUBPIXEL: Self = Self((4_i32 as ::core::ffi::c_int));
 }
 
+pub const TTF_HINTING_INVALID: TTF_HintingFlags = TTF_HintingFlags::INVALID;
 /// Normal hinting applies standard grid-fitting.
 pub const TTF_HINTING_NORMAL: TTF_HintingFlags = TTF_HintingFlags::NORMAL;
 /// Light hinting applies subtle adjustments to improve rendering.
@@ -758,6 +932,12 @@ pub const TTF_HINTING_MONO: TTF_HintingFlags = TTF_HintingFlags::MONO;
 pub const TTF_HINTING_NONE: TTF_HintingFlags = TTF_HintingFlags::NONE;
 /// Light hinting with subpixel rendering for more precise font edges.
 pub const TTF_HINTING_LIGHT_SUBPIXEL: TTF_HintingFlags = TTF_HintingFlags::LIGHT_SUBPIXEL;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_HintingFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::ttf::METADATA_TTF_HintingFlags;
+}
 
 extern "C" {
     /// Set a font's current hinter setting.
@@ -773,18 +953,18 @@ extern "C" {
     /// - [`TTF_HINTING_NONE`]
     /// - [`TTF_HINTING_LIGHT_SUBPIXEL`] (available in SDL_ttf 3.0.0 and later)
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to set a new hinter setting on.
     /// - `hinting`: the new hinter setting.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontHinting`]
     pub fn TTF_SetFontHinting(font: *mut TTF_Font, hinting: TTF_HintingFlags);
 }
@@ -792,16 +972,16 @@ extern "C" {
 extern "C" {
     /// Query the number of faces of a font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the number of FreeType font faces.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetNumFontFaces(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
@@ -817,19 +997,20 @@ extern "C" {
     /// - [`TTF_HINTING_NONE`]
     /// - [`TTF_HINTING_LIGHT_SUBPIXEL`] (available in SDL_ttf 3.0.0 and later)
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
-    /// Returns the font's current hinter value.
+    /// ## Return value
+    /// Returns the font's current hinter value, or [`TTF_HINTING_INVALID`] if the
+    ///   font is invalid.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontHinting`]
     pub fn TTF_GetFontHinting(font: *const TTF_Font) -> TTF_HintingFlags;
 }
@@ -846,22 +1027,22 @@ extern "C" {
     /// This updates any [`TTF_Text`] objects using this font, and clears
     /// already-generated glyphs, if any, from the cache.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to set SDF support on.
     /// - `enabled`: true to enable SDF, false to disable.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontSDF`]
     pub fn TTF_SetFontSDF(
         font: *mut TTF_Font,
@@ -872,29 +1053,77 @@ extern "C" {
 extern "C" {
     /// Query whether Signed Distance Field rendering is enabled for a font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if enabled, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontSDF`]
     pub fn TTF_GetFontSDF(font: *const TTF_Font) -> ::core::primitive::bool;
 }
 
+extern "C" {
+    /// Query a font's weight, in terms of the lightness/heaviness of the strokes.
+    ///
+    /// ## Parameters
+    /// - `font`: the font to query.
+    ///
+    /// ## Return value
+    /// Returns the font's current weight.
+    ///
+    /// ## Thread safety
+    /// This function should be called on the thread that created the
+    ///   font.
+    ///
+    /// ## Availability
+    /// This function is available since SDL_ttf 3.4.0.
+    pub fn TTF_GetFontWeight(font: *const TTF_Font) -> ::core::ffi::c_int;
+}
+
+/// Thin (100) named font weight value
+pub const TTF_FONT_WEIGHT_THIN: ::core::primitive::i32 = 100;
+
+/// ExtraLight (200) named font weight value
+pub const TTF_FONT_WEIGHT_EXTRA_LIGHT: ::core::primitive::i32 = 200;
+
+/// Light (300) named font weight value
+pub const TTF_FONT_WEIGHT_LIGHT: ::core::primitive::i32 = 300;
+
+/// Normal (400) named font weight value
+pub const TTF_FONT_WEIGHT_NORMAL: ::core::primitive::i32 = 400;
+
+/// Medium (500) named font weight value
+pub const TTF_FONT_WEIGHT_MEDIUM: ::core::primitive::i32 = 500;
+
+/// SemiBold (600) named font weight value
+pub const TTF_FONT_WEIGHT_SEMI_BOLD: ::core::primitive::i32 = 600;
+
+/// Bold (700) named font weight value
+pub const TTF_FONT_WEIGHT_BOLD: ::core::primitive::i32 = 700;
+
+/// ExtraBold (800) named font weight value
+pub const TTF_FONT_WEIGHT_EXTRA_BOLD: ::core::primitive::i32 = 800;
+
+/// Black (900) named font weight value
+pub const TTF_FONT_WEIGHT_BLACK: ::core::primitive::i32 = 900;
+
+/// ExtraBlack (950) named font weight value
+pub const TTF_FONT_WEIGHT_EXTRA_BLACK: ::core::primitive::i32 = 950;
+
 /// The horizontal alignment used when rendering wrapped text.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL_ttf 3.0.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](TTF_HorizontalAlignment::INVALID) | [`TTF_HORIZONTAL_ALIGN_INVALID`] | |
@@ -904,6 +1133,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_HorizontalAlignment(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_HorizontalAlignment {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_HorizontalAlignment> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_HorizontalAlignment) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<TTF_HorizontalAlignment> for ::core::ffi::c_int {
     #[inline(always)]
@@ -928,10 +1171,10 @@ impl ::core::fmt::Debug for TTF_HorizontalAlignment {
 }
 
 impl TTF_HorizontalAlignment {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const LEFT: Self = Self(0_i32);
-    pub const CENTER: Self = Self(1_i32);
-    pub const RIGHT: Self = Self(2_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    pub const LEFT: Self = Self((0_i32 as ::core::ffi::c_int));
+    pub const CENTER: Self = Self((1_i32 as ::core::ffi::c_int));
+    pub const RIGHT: Self = Self((2_i32 as ::core::ffi::c_int));
 }
 
 pub const TTF_HORIZONTAL_ALIGN_INVALID: TTF_HorizontalAlignment = TTF_HorizontalAlignment::INVALID;
@@ -939,23 +1182,29 @@ pub const TTF_HORIZONTAL_ALIGN_LEFT: TTF_HorizontalAlignment = TTF_HorizontalAli
 pub const TTF_HORIZONTAL_ALIGN_CENTER: TTF_HorizontalAlignment = TTF_HorizontalAlignment::CENTER;
 pub const TTF_HORIZONTAL_ALIGN_RIGHT: TTF_HorizontalAlignment = TTF_HorizontalAlignment::RIGHT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_HorizontalAlignment {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::ttf::METADATA_TTF_HorizontalAlignment;
+}
+
 extern "C" {
     /// Set a font's current wrap alignment option.
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to set a new wrap alignment option on.
     /// - `align`: the new wrap alignment option.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontWrapAlignment`]
     pub fn TTF_SetFontWrapAlignment(font: *mut TTF_Font, align: TTF_HorizontalAlignment);
 }
@@ -963,19 +1212,19 @@ extern "C" {
 extern "C" {
     /// Query a font's current wrap alignment option.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's current wrap alignment option.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontWrapAlignment`]
     pub fn TTF_GetFontWrapAlignment(font: *const TTF_Font) -> TTF_HorizontalAlignment;
 }
@@ -985,16 +1234,16 @@ extern "C" {
     ///
     /// This is usually equal to point size.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's height.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontHeight(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
@@ -1004,16 +1253,16 @@ extern "C" {
     ///
     /// This is a positive value, relative to the baseline.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's ascent.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontAscent(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
@@ -1023,16 +1272,16 @@ extern "C" {
     ///
     /// This is a negative value, relative to the baseline.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's descent.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontDescent(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
@@ -1042,18 +1291,18 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to modify.
     /// - `lineskip`: the new line spacing for the font.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontLineSkip`]
     pub fn TTF_SetFontLineSkip(font: *mut TTF_Font, lineskip: ::core::ffi::c_int);
 }
@@ -1061,19 +1310,19 @@ extern "C" {
 extern "C" {
     /// Query the spacing between lines of text for a font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's recommended spacing.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontLineSkip`]
     pub fn TTF_GetFontLineSkip(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
@@ -1088,18 +1337,18 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to set kerning on.
     /// - `enabled`: true to enable kerning, false to disable.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetFontKerning`]
     pub fn TTF_SetFontKerning(font: *mut TTF_Font, enabled: ::core::primitive::bool);
 }
@@ -1107,19 +1356,19 @@ extern "C" {
 extern "C" {
     /// Query whether or not kerning is enabled for a font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if kerning is enabled, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontKerning`]
     pub fn TTF_GetFontKerning(font: *const TTF_Font) -> ::core::primitive::bool;
 }
@@ -1133,16 +1382,16 @@ extern "C" {
     /// text as a grid. Most other things (WYSIWYG word processors, web pages, etc)
     /// are more likely to not be fixed-width in most cases.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the font is fixed-width, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_FontIsFixedWidth(font: *const TTF_Font) -> ::core::primitive::bool;
 }
@@ -1152,19 +1401,19 @@ extern "C" {
     ///
     /// Scalability lets us distinguish between outline and bitmap fonts.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the font is scalable, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetFontSDF`]
     pub fn TTF_FontIsScalable(font: *const TTF_Font) -> ::core::primitive::bool;
 }
@@ -1178,16 +1427,16 @@ extern "C" {
     /// modified or free'd by the caller. The string becomes invalid, with the rest
     /// of the font, when `font` is handed to [`TTF_CloseFont()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's family name.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontFamilyName(font: *const TTF_Font) -> *const ::core::ffi::c_char;
 }
@@ -1201,16 +1450,16 @@ extern "C" {
     /// modified or free'd by the caller. The string becomes invalid, with the rest
     /// of the font, when `font` is handed to [`TTF_CloseFont()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the font's style name.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontStyleName(font: *const TTF_Font) -> *const ::core::ffi::c_char;
 }
@@ -1221,13 +1470,13 @@ extern "C" {
 /// [hb_direction_t](https://harfbuzz.github.io/harfbuzz-hb-common.html#hb-direction-t)
 /// .
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_SetFontDirection`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](TTF_Direction::INVALID) | [`TTF_DIRECTION_INVALID`] | |
@@ -1238,6 +1487,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_Direction(pub ::core::primitive::u32);
+
+impl ::core::cmp::PartialEq<::core::primitive::u32> for TTF_Direction {
+    #[inline(always)]
+    fn eq(&self, other: &::core::primitive::u32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_Direction> for ::core::primitive::u32 {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_Direction) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<TTF_Direction> for ::core::primitive::u32 {
     #[inline(always)]
@@ -1263,15 +1526,15 @@ impl ::core::fmt::Debug for TTF_Direction {
 }
 
 impl TTF_Direction {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::primitive::u32));
     /// Left to Right
-    pub const LTR: Self = Self(4);
+    pub const LTR: Self = Self((4 as ::core::primitive::u32));
     /// Right to Left
-    pub const RTL: Self = Self(5);
+    pub const RTL: Self = Self((5 as ::core::primitive::u32));
     /// Top to Bottom
-    pub const TTB: Self = Self(6);
+    pub const TTB: Self = Self((6 as ::core::primitive::u32));
     /// Bottom to Top
-    pub const BTT: Self = Self(7);
+    pub const BTT: Self = Self((7 as ::core::primitive::u32));
 }
 
 pub const TTF_DIRECTION_INVALID: TTF_Direction = TTF_Direction::INVALID;
@@ -1284,6 +1547,12 @@ pub const TTF_DIRECTION_TTB: TTF_Direction = TTF_Direction::TTB;
 /// Bottom to Top
 pub const TTF_DIRECTION_BTT: TTF_Direction = TTF_Direction::BTT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_Direction {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::ttf::METADATA_TTF_Direction;
+}
+
 extern "C" {
     /// Set the direction to be used for text shaping by a font.
     ///
@@ -1292,19 +1561,19 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to modify.
     /// - `direction`: the new direction for text to flow.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_SetFontDirection(
         font: *mut TTF_Font,
@@ -1317,17 +1586,17 @@ extern "C" {
     ///
     /// This defaults to [`TTF_DIRECTION_INVALID`] if it hasn't been set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the direction to be used for text shaping.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetFontDirection(font: *mut TTF_Font) -> TTF_Direction;
 }
@@ -1335,19 +1604,19 @@ extern "C" {
 extern "C" {
     /// Convert from a 4 character string to a 32-bit tag.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `string`: the 4 character string to convert.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the 32-bit representation of the string.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_TagToString`]
     pub fn TTF_StringToTag(string: *const ::core::ffi::c_char) -> Uint32;
 }
@@ -1355,20 +1624,20 @@ extern "C" {
 extern "C" {
     /// Convert from a 32-bit tag to a 4 character string.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `tag`: the 32-bit tag to convert.
     /// - `string`: a pointer filled in with the 4 character representation of
     ///   the tag.
     /// - `size`: the size of the buffer pointed at by string, should be at least
     ///   4.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_TagToString`]
     pub fn TTF_TagToString(
         tag: Uint32,
@@ -1384,24 +1653,24 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to modify.
     /// - `script`: an
     ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
     ///   .
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_StringToTag`]
     pub fn TTF_SetFontScript(font: *mut TTF_Font, script: Uint32) -> ::core::primitive::bool;
 }
@@ -1409,22 +1678,22 @@ extern "C" {
 extern "C" {
     /// Get the script used for text shaping a font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an
     ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
     ///   or 0 if a script hasn't been set.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_TagToString`]
     pub fn TTF_GetFontScript(font: *mut TTF_Font) -> Uint32;
 }
@@ -1432,22 +1701,22 @@ extern "C" {
 extern "C" {
     /// Get the script used by a 32-bit codepoint.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ch`: the character code to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an
     ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
     ///   on success, or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is thread-safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_TagToString`]
     pub fn TTF_GetGlyphScript(ch: Uint32) -> Uint32;
 }
@@ -1460,20 +1729,20 @@ extern "C" {
     ///
     /// This updates any [`TTF_Text`] objects using this font.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to specify a language for.
     /// - `language_bcp47`: a null-terminated string containing the desired
     ///   language's BCP47 code. Or null to reset the value.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_SetFontLanguage(
         font: *mut TTF_Font,
@@ -1484,28 +1753,28 @@ extern "C" {
 extern "C" {
     /// Check whether a glyph is provided by the font for a UNICODE codepoint.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `ch`: the codepoint to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if font provides a glyph for this character, false if not.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_FontHasGlyph(font: *mut TTF_Font, ch: Uint32) -> ::core::primitive::bool;
 }
 
 /// The type of data in a glyph image
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL_ttf 3.0.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](TTF_ImageType::INVALID) | [`TTF_IMAGE_INVALID`] | |
@@ -1515,6 +1784,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_ImageType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_ImageType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_ImageType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_ImageType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<TTF_ImageType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -1539,13 +1822,13 @@ impl ::core::fmt::Debug for TTF_ImageType {
 }
 
 impl TTF_ImageType {
-    pub const INVALID: Self = Self(0);
+    pub const INVALID: Self = Self((0 as ::core::ffi::c_int));
     /// The color channels are white
-    pub const ALPHA: Self = Self(1);
+    pub const ALPHA: Self = Self((1 as ::core::ffi::c_int));
     /// The color channels have image data
-    pub const COLOR: Self = Self(2);
+    pub const COLOR: Self = Self((2 as ::core::ffi::c_int));
     /// The alpha channel has signed distance field information
-    pub const SDF: Self = Self(3);
+    pub const SDF: Self = Self((3 as ::core::ffi::c_int));
 }
 
 pub const TTF_IMAGE_INVALID: TTF_ImageType = TTF_ImageType::INVALID;
@@ -1556,24 +1839,30 @@ pub const TTF_IMAGE_COLOR: TTF_ImageType = TTF_ImageType::COLOR;
 /// The alpha channel has signed distance field information
 pub const TTF_IMAGE_SDF: TTF_ImageType = TTF_ImageType::SDF;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_ImageType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::ttf::METADATA_TTF_ImageType;
+}
+
 extern "C" {
     /// Get the pixel image for a UNICODE codepoint.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `ch`: the codepoint to check.
     /// - `image_type`: a pointer filled in with the glyph image type, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an [`SDL_Surface`] containing the glyph, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetGlyphImage(
         font: *mut TTF_Font,
@@ -1588,21 +1877,21 @@ extern "C" {
     /// This is useful for text engine implementations, which can call this with
     /// the `glyph_index` in a [`TTF_CopyOperation`]
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `glyph_index`: the index of the glyph to return.
     /// - `image_type`: a pointer filled in with the glyph image type, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an [`SDL_Surface`] containing the glyph, or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetGlyphImageForIndex(
         font: *mut TTF_Font,
@@ -1618,7 +1907,7 @@ extern "C" {
     ///
     /// <https://freetype.sourceforge.net/freetype2/docs/tutorial/step2.html>
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `ch`: the codepoint to check.
     /// - `minx`: a pointer filled in with the minimum x coordinate of the glyph
@@ -1634,15 +1923,15 @@ extern "C" {
     /// - `advance`: a pointer filled in with the distance to the next glyph from
     ///   the left edge of this glyph's bounding box.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetGlyphMetrics(
         font: *mut TTF_Font,
@@ -1658,22 +1947,22 @@ extern "C" {
 extern "C" {
     /// Query the kerning size between the glyphs of two UNICODE codepoints.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `previous_ch`: the previous codepoint.
     /// - `ch`: the current codepoint.
     /// - `kerning`: a pointer filled in with the kerning size between the two
     ///   glyphs, in pixels, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetGlyphKerning(
         font: *mut TTF_Font,
@@ -1689,7 +1978,7 @@ extern "C" {
     /// This will report the width and height, in pixels, of the space that the
     /// specified string will take to fully render.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `text`: text to calculate, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -1697,15 +1986,15 @@ extern "C" {
     /// - `w`: will be filled with width, in pixels, on return.
     /// - `h`: will be filled with height, in pixels, on return.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetStringSize(
         font: *mut TTF_Font,
@@ -1727,7 +2016,7 @@ extern "C" {
     ///
     /// If wrap_width is 0, this function will only wrap on newline characters.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `text`: text to calculate, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -1736,15 +2025,15 @@ extern "C" {
     /// - `w`: will be filled with width, in pixels, on return.
     /// - `h`: will be filled with height, in pixels, on return.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetStringSizeWrapped(
         font: *mut TTF_Font,
@@ -1764,7 +2053,7 @@ extern "C" {
     ///
     /// This does not need to render the string to do this calculation.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to query.
     /// - `text`: text to calculate, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -1776,15 +2065,15 @@ extern "C" {
     /// - `measured_length`: a pointer filled in with the length, in bytes, of
     ///   the string that will fit, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_MeasureString(
         font: *mut TTF_Font,
@@ -1813,24 +2102,24 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Shaded`],
     /// [`TTF_RenderText_Blended`], and [`TTF_RenderText_LCD`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
     ///   text.
     /// - `fg`: the foreground color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 8-bit, palettized surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended`]
     /// - [`TTF_RenderText_LCD`]
     /// - [`TTF_RenderText_Shaded`]
@@ -1859,7 +2148,7 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Shaded_Wrapped`],
     /// [`TTF_RenderText_Blended_Wrapped`], and [`TTF_RenderText_LCD_Wrapped`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -1868,17 +2157,17 @@ extern "C" {
     /// - `wrapLength`: the maximum width of the text surface or 0 to wrap on
     ///   newline characters.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 8-bit, palettized surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended_Wrapped`]
     /// - [`TTF_RenderText_LCD_Wrapped`]
     /// - [`TTF_RenderText_Shaded_Wrapped`]
@@ -1905,22 +2194,22 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderGlyph_Shaded`],
     /// [`TTF_RenderGlyph_Blended`], and [`TTF_RenderGlyph_LCD`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `ch`: the character to render.
     /// - `fg`: the foreground color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 8-bit, palettized surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderGlyph_Blended`]
     /// - [`TTF_RenderGlyph_LCD`]
     /// - [`TTF_RenderGlyph_Shaded`]
@@ -1949,7 +2238,7 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Solid`],
     /// [`TTF_RenderText_Blended`], and [`TTF_RenderText_LCD`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -1957,17 +2246,17 @@ extern "C" {
     /// - `fg`: the foreground color for the text.
     /// - `bg`: the background color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 8-bit, palettized surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended`]
     /// - [`TTF_RenderText_LCD`]
     /// - [`TTF_RenderText_Shaded_Wrapped`]
@@ -1997,7 +2286,7 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Solid_Wrapped`],
     /// [`TTF_RenderText_Blended_Wrapped`], and [`TTF_RenderText_LCD_Wrapped`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -2007,17 +2296,17 @@ extern "C" {
     /// - `wrap_width`: the maximum width of the text surface or 0 to wrap on
     ///   newline characters.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 8-bit, palettized surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended_Wrapped`]
     /// - [`TTF_RenderText_LCD_Wrapped`]
     /// - [`TTF_RenderText_Shaded`]
@@ -2046,23 +2335,23 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderGlyph_Solid`],
     /// [`TTF_RenderGlyph_Blended`], and [`TTF_RenderGlyph_LCD`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `ch`: the codepoint to render.
     /// - `fg`: the foreground color for the text.
     /// - `bg`: the background color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 8-bit, palettized surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderGlyph_Blended`]
     /// - [`TTF_RenderGlyph_LCD`]
     /// - [`TTF_RenderGlyph_Solid`]
@@ -2091,24 +2380,24 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Solid`],
     /// [`TTF_RenderText_Shaded`], and [`TTF_RenderText_LCD`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
     ///   text.
     /// - `fg`: the foreground color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 32-bit, ARGB surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended_Wrapped`]
     /// - [`TTF_RenderText_LCD`]
     /// - [`TTF_RenderText_Shaded`]
@@ -2136,7 +2425,7 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Solid_Wrapped`],
     /// [`TTF_RenderText_Shaded_Wrapped`], and [`TTF_RenderText_LCD_Wrapped`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -2145,17 +2434,17 @@ extern "C" {
     /// - `wrap_width`: the maximum width of the text surface or 0 to wrap on
     ///   newline characters.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 32-bit, ARGB surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended`]
     /// - [`TTF_RenderText_LCD_Wrapped`]
     /// - [`TTF_RenderText_Shaded_Wrapped`]
@@ -2182,22 +2471,22 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderGlyph_Solid`],
     /// [`TTF_RenderGlyph_Shaded`], and [`TTF_RenderGlyph_LCD`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `ch`: the codepoint to render.
     /// - `fg`: the foreground color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 32-bit, ARGB surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderGlyph_LCD`]
     /// - [`TTF_RenderGlyph_Shaded`]
     /// - [`TTF_RenderGlyph_Solid`]
@@ -2225,7 +2514,7 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Solid`],
     /// [`TTF_RenderText_Shaded`], and [`TTF_RenderText_Blended`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -2233,17 +2522,17 @@ extern "C" {
     /// - `fg`: the foreground color for the text.
     /// - `bg`: the background color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 32-bit, ARGB surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended`]
     /// - [`TTF_RenderText_LCD_Wrapped`]
     /// - [`TTF_RenderText_Shaded`]
@@ -2273,7 +2562,7 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderText_Solid_Wrapped`],
     /// [`TTF_RenderText_Shaded_Wrapped`], and [`TTF_RenderText_Blended_Wrapped`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `text`: text to render, in UTF-8 encoding.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
@@ -2283,17 +2572,17 @@ extern "C" {
     /// - `wrap_width`: the maximum width of the text surface or 0 to wrap on
     ///   newline characters.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 32-bit, ARGB surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderText_Blended_Wrapped`]
     /// - [`TTF_RenderText_LCD`]
     /// - [`TTF_RenderText_Shaded_Wrapped`]
@@ -2322,23 +2611,23 @@ extern "C" {
     /// You can render at other quality levels with [`TTF_RenderGlyph_Solid`],
     /// [`TTF_RenderGlyph_Shaded`], and [`TTF_RenderGlyph_Blended`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to render with.
     /// - `ch`: the codepoint to render.
     /// - `fg`: the foreground color for the text.
     /// - `bg`: the background color for the text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new 32-bit, ARGB surface, or NULL if there was an error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_RenderGlyph_Blended`]
     /// - [`TTF_RenderGlyph_Shaded`]
     /// - [`TTF_RenderGlyph_Solid`]
@@ -2354,15 +2643,14 @@ pub use super::textengine::TTF_TextEngine;
 
 /// Text created with [`TTF_CreateText()`]
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_CreateText`]
 /// - [`TTF_GetTextProperties`]
 /// - [`TTF_DestroyText`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct TTF_Text {
     /// A copy of the UTF-8 string that this text object represents, useful for layout, debugging and retrieving substring text. This is updated when the text object is modified and will be freed automatically when the object is destroyed.
@@ -2373,22 +2661,24 @@ pub struct TTF_Text {
     pub refcount: ::core::ffi::c_int,
     /// Private
     pub internal: *mut TTF_TextData,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 extern "C" {
     /// Create a text engine for drawing text on SDL surfaces.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a [`TTF_TextEngine`] object or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_DestroySurfaceTextEngine`]
     /// - [`TTF_DrawSurfaceText`]
     pub fn TTF_CreateSurfaceTextEngine() -> *mut TTF_TextEngine;
@@ -2400,7 +2690,7 @@ extern "C" {
     /// `text` must have been created using a [`TTF_TextEngine`] from
     /// [`TTF_CreateSurfaceTextEngine()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to draw.
     /// - `x`: the x coordinate in pixels, positive from the left edge towards
     ///   the right.
@@ -2408,18 +2698,18 @@ extern "C" {
     ///   bottom.
     /// - `surface`: the surface to draw on.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateSurfaceTextEngine`]
     /// - [`TTF_CreateText`]
     pub fn TTF_DrawSurfaceText(
@@ -2436,18 +2726,18 @@ extern "C" {
     /// All text created by this engine should be destroyed before calling this
     /// function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `engine`: a [`TTF_TextEngine`] object created with
     ///   [`TTF_CreateSurfaceTextEngine()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   engine.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateSurfaceTextEngine`]
     pub fn TTF_DestroySurfaceTextEngine(engine: *mut TTF_TextEngine);
 }
@@ -2455,21 +2745,21 @@ extern "C" {
 extern "C" {
     /// Create a text engine for drawing text on an SDL renderer.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `renderer`: the renderer to use for creating textures and drawing text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a [`TTF_TextEngine`] object or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   renderer.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_DestroyRendererTextEngine`]
     /// - [`TTF_DrawRendererText`]
     /// - [`TTF_CreateRendererTextEngineWithProperties`]
@@ -2487,21 +2777,21 @@ extern "C" {
     /// - [`TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE`]\: the size of the
     ///   texture atlas
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a [`TTF_TextEngine`] object or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   renderer.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateRendererTextEngine`]
     /// - [`TTF_DestroyRendererTextEngine`]
     /// - [`TTF_DrawRendererText`]
@@ -2523,25 +2813,25 @@ extern "C" {
     /// [`TTF_CreateRendererTextEngine()`], and will draw using the renderer passed to
     /// that function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to draw.
     /// - `x`: the x coordinate in pixels, positive from the left edge towards
     ///   the right.
     /// - `y`: the y coordinate in pixels, positive from the top edge towards the
     ///   bottom.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateRendererTextEngine`]
     /// - [`TTF_CreateText`]
     pub fn TTF_DrawRendererText(
@@ -2557,18 +2847,18 @@ extern "C" {
     /// All text created by this engine should be destroyed before calling this
     /// function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `engine`: a [`TTF_TextEngine`] object created with
     ///   [`TTF_CreateRendererTextEngine()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   engine.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateRendererTextEngine`]
     pub fn TTF_DestroyRendererTextEngine(engine: *mut TTF_TextEngine);
 }
@@ -2576,22 +2866,22 @@ extern "C" {
 extern "C" {
     /// Create a text engine for drawing text with the SDL GPU API.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `device`: the [`SDL_GPUDevice`] to use for creating textures and drawing
     ///   text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a [`TTF_TextEngine`] object or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   device.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateGPUTextEngineWithProperties`]
     /// - [`TTF_DestroyGPUTextEngine`]
     /// - [`TTF_GetGPUTextDrawData`]
@@ -2609,21 +2899,21 @@ extern "C" {
     /// - [`TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE`]\: the size of the texture
     ///   atlas
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a [`TTF_TextEngine`] object or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   device.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateGPUTextEngine`]
     /// - [`TTF_DestroyGPUTextEngine`]
     /// - [`TTF_GetGPUTextDrawData`]
@@ -2638,10 +2928,10 @@ pub const TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE: *const ::core::ffi::c_cha
 
 /// Draw sequence returned by [`TTF_GetGPUTextDrawData`]
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_GetGPUTextDrawData`]
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -2686,22 +2976,22 @@ extern "C" {
     ///
     /// If the text looks blocky use linear filtering.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to draw.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL terminated linked list of [`TTF_GPUAtlasDrawSequence`] objects
     ///   or NULL if the passed text is empty or in case of failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateGPUTextEngine`]
     /// - [`TTF_CreateText`]
     pub fn TTF_GetGPUTextDrawData(text: *mut TTF_Text) -> *mut TTF_GPUAtlasDrawSequence;
@@ -2713,28 +3003,28 @@ extern "C" {
     /// All text created by this engine should be destroyed before calling this
     /// function.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `engine`: a [`TTF_TextEngine`] object created with
     ///   [`TTF_CreateGPUTextEngine()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   engine.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateGPUTextEngine`]
     pub fn TTF_DestroyGPUTextEngine(engine: *mut TTF_TextEngine);
 }
 
 /// The winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL_ttf 3.0.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`INVALID`](TTF_GPUTextEngineWinding::INVALID) | [`TTF_GPU_TEXTENGINE_WINDING_INVALID`] | |
@@ -2743,6 +3033,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct TTF_GPUTextEngineWinding(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for TTF_GPUTextEngineWinding {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_GPUTextEngineWinding> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_GPUTextEngineWinding) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<TTF_GPUTextEngineWinding> for ::core::ffi::c_int {
     #[inline(always)]
@@ -2766,9 +3070,9 @@ impl ::core::fmt::Debug for TTF_GPUTextEngineWinding {
 }
 
 impl TTF_GPUTextEngineWinding {
-    pub const INVALID: Self = Self(-1_i32);
-    pub const CLOCKWISE: Self = Self(0_i32);
-    pub const COUNTER_CLOCKWISE: Self = Self(1_i32);
+    pub const INVALID: Self = Self((-1_i32 as ::core::ffi::c_int));
+    pub const CLOCKWISE: Self = Self((0_i32 as ::core::ffi::c_int));
+    pub const COUNTER_CLOCKWISE: Self = Self((1_i32 as ::core::ffi::c_int));
 }
 
 pub const TTF_GPU_TEXTENGINE_WINDING_INVALID: TTF_GPUTextEngineWinding =
@@ -2778,23 +3082,29 @@ pub const TTF_GPU_TEXTENGINE_WINDING_CLOCKWISE: TTF_GPUTextEngineWinding =
 pub const TTF_GPU_TEXTENGINE_WINDING_COUNTER_CLOCKWISE: TTF_GPUTextEngineWinding =
     TTF_GPUTextEngineWinding::COUNTER_CLOCKWISE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_GPUTextEngineWinding {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::ttf::METADATA_TTF_GPUTextEngineWinding;
+}
+
 extern "C" {
     /// Sets the winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]
     /// for a particular GPU text engine.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `engine`: a [`TTF_TextEngine`] object created with
     ///   [`TTF_CreateGPUTextEngine()`].
     /// - `winding`: the new winding order option.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   engine.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetGPUTextEngineWinding`]
     pub fn TTF_SetGPUTextEngineWinding(
         engine: *mut TTF_TextEngine,
@@ -2806,22 +3116,22 @@ extern "C" {
     /// Get the winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]
     /// for a particular GPU text engine
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `engine`: a [`TTF_TextEngine`] object created with
     ///   [`TTF_CreateGPUTextEngine()`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the winding order used by the GPU text engine or
     ///   [`TTF_GPU_TEXTENGINE_WINDING_INVALID`] in case of error.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   engine.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetGPUTextEngineWinding`]
     pub fn TTF_GetGPUTextEngineWinding(engine: *const TTF_TextEngine) -> TTF_GPUTextEngineWinding;
 }
@@ -2829,7 +3139,7 @@ extern "C" {
 extern "C" {
     /// Create a text object from UTF-8 text and a text engine.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `engine`: the text engine to use when creating the text object, may be
     ///   NULL.
     /// - `font`: the font to render with.
@@ -2837,18 +3147,18 @@ extern "C" {
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
     ///   text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a [`TTF_Text`] object or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   font and text engine.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_DestroyText`]
     pub fn TTF_CreateText(
         engine: *mut TTF_TextEngine,
@@ -2861,18 +3171,18 @@ extern "C" {
 extern "C" {
     /// Get the properties associated with a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetTextProperties(text: *mut TTF_Text) -> SDL_PropertiesID;
 }
@@ -2882,22 +3192,22 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `engine`: the text engine to use for drawing.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextEngine`]
     pub fn TTF_SetTextEngine(
         text: *mut TTF_Text,
@@ -2908,21 +3218,21 @@ extern "C" {
 extern "C" {
     /// Get the text engine used by a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`TTF_TextEngine`] used by the text on success or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetTextEngine`]
     pub fn TTF_GetTextEngine(text: *mut TTF_Text) -> *mut TTF_TextEngine;
 }
@@ -2936,22 +3246,22 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `font`: the font to use, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns false if the text pointer is null; otherwise, true. call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextFont`]
     pub fn TTF_SetTextFont(text: *mut TTF_Text, font: *mut TTF_Font) -> ::core::primitive::bool;
 }
@@ -2959,21 +3269,21 @@ extern "C" {
 extern "C" {
     /// Get the font used by a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`TTF_Font`] used by the text on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetTextFont`]
     pub fn TTF_GetTextFont(text: *mut TTF_Text) -> *mut TTF_Font;
 }
@@ -2984,19 +3294,19 @@ extern "C" {
     /// This function only supports left-to-right text shaping if SDL_ttf was not
     /// built with HarfBuzz support.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to modify.
     /// - `direction`: the new direction for text to flow.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_SetTextDirection(
         text: *mut TTF_Text,
@@ -3009,17 +3319,17 @@ extern "C" {
     ///
     /// This defaults to the direction of the font used by the text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the direction to be used for text shaping.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetTextDirection(text: *mut TTF_Text) -> TTF_Direction;
 }
@@ -3029,24 +3339,24 @@ extern "C" {
     ///
     /// This returns false if SDL_ttf isn't built with HarfBuzz support.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to modify.
     /// - `script`: an
     ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
     ///   .
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_StringToTag`]
     pub fn TTF_SetTextScript(text: *mut TTF_Text, script: Uint32) -> ::core::primitive::bool;
 }
@@ -3056,23 +3366,23 @@ extern "C" {
     ///
     /// This defaults to the script of the font used by the text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an
     ///   [ISO 15924 code](https://unicode.org/iso15924/iso15924-codes.html)
     ///   or 0 if a script hasn't been set on either the text object or the
     ///   font.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_TagToString`]
     pub fn TTF_GetTextScript(text: *mut TTF_Text) -> Uint32;
 }
@@ -3082,25 +3392,25 @@ extern "C" {
     ///
     /// The default text color is white (255, 255, 255, 255).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `r`: the red color value in the range of 0-255.
     /// - `g`: the green color value in the range of 0-255.
     /// - `b`: the blue color value in the range of 0-255.
     /// - `a`: the alpha value in the range of 0-255.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextColor`]
     /// - [`TTF_SetTextColorFloat`]
     pub fn TTF_SetTextColor(
@@ -3117,25 +3427,25 @@ extern "C" {
     ///
     /// The default text color is white (1.0f, 1.0f, 1.0f, 1.0f).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `r`: the red color value, normally in the range of 0-1.
     /// - `g`: the green color value, normally in the range of 0-1.
     /// - `b`: the blue color value, normally in the range of 0-1.
     /// - `a`: the alpha value in the range of 0-1.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextColorFloat`]
     /// - [`TTF_SetTextColor`]
     pub fn TTF_SetTextColorFloat(
@@ -3150,7 +3460,7 @@ extern "C" {
 extern "C" {
     /// Get the color of a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `r`: a pointer filled in with the red color value in the range of
     ///   0-255, may be NULL.
@@ -3161,18 +3471,18 @@ extern "C" {
     /// - `a`: a pointer filled in with the alpha value in the range of 0-255,
     ///   may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextColorFloat`]
     /// - [`TTF_SetTextColor`]
     pub fn TTF_GetTextColor(
@@ -3187,7 +3497,7 @@ extern "C" {
 extern "C" {
     /// Get the color of a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `r`: a pointer filled in with the red color value, normally in the
     ///   range of 0-1, may be NULL.
@@ -3198,18 +3508,18 @@ extern "C" {
     /// - `a`: a pointer filled in with the alpha value in the range of 0-1, may
     ///   be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextColor`]
     /// - [`TTF_SetTextColorFloat`]
     pub fn TTF_GetTextColorFloat(
@@ -3229,19 +3539,19 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `x`: the x offset of the upper left corner of this text in pixels.
     /// - `y`: the y offset of the upper left corner of this text in pixels.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextPosition`]
     pub fn TTF_SetTextPosition(
         text: *mut TTF_Text,
@@ -3253,21 +3563,21 @@ extern "C" {
 extern "C" {
     /// Get the position of a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `x`: a pointer filled in with the x offset of the upper left corner of
     ///   this text in pixels, may be NULL.
     /// - `y`: a pointer filled in with the y offset of the upper left corner of
     ///   this text in pixels, may be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetTextPosition`]
     pub fn TTF_GetTextPosition(
         text: *mut TTF_Text,
@@ -3281,23 +3591,23 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `wrap_width`: the maximum width in pixels, 0 to wrap on newline
     ///   characters.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_GetTextWrapWidth`]
     pub fn TTF_SetTextWrapWidth(
         text: *mut TTF_Text,
@@ -3308,23 +3618,23 @@ extern "C" {
 extern "C" {
     /// Get whether wrapping is enabled on a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `wrap_width`: a pointer filled in with the maximum width in pixels or 0
     ///   if the text is being wrapped on newline characters.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetTextWrapWidth`]
     pub fn TTF_GetTextWrapWidth(
         text: *mut TTF_Text,
@@ -3342,23 +3652,23 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `visible`: true to show whitespace when wrapping text, false to hide
     ///   it.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_TextWrapWhitespaceVisible`]
     pub fn TTF_SetTextWrapWhitespaceVisible(
         text: *mut TTF_Text,
@@ -3369,21 +3679,21 @@ extern "C" {
 extern "C" {
     /// Return whether whitespace is shown when wrapping a text object.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if whitespace is shown when wrapping text, or false
     ///   otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_SetTextWrapWhitespaceVisible`]
     pub fn TTF_TextWrapWhitespaceVisible(text: *mut TTF_Text) -> ::core::primitive::bool;
 }
@@ -3393,24 +3703,24 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `string`: the UTF-8 text to use, may be NULL.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
     ///   text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_AppendTextString`]
     /// - [`TTF_DeleteTextString`]
     /// - [`TTF_InsertTextString`]
@@ -3426,7 +3736,7 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `offset`: the offset, in bytes, from the beginning of the string if >=
     ///   0, the offset from the end of the string if < 0. Note that
@@ -3436,18 +3746,18 @@ extern "C" {
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
     ///   text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_AppendTextString`]
     /// - [`TTF_DeleteTextString`]
     /// - [`TTF_SetTextString`]
@@ -3464,24 +3774,24 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `string`: the UTF-8 text to insert.
     /// - `length`: the length of the text, in bytes, or 0 for null terminated
     ///   text.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_DeleteTextString`]
     /// - [`TTF_InsertTextString`]
     /// - [`TTF_SetTextString`]
@@ -3497,7 +3807,7 @@ extern "C" {
     ///
     /// This function may cause the internal text representation to be rebuilt.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to modify.
     /// - `offset`: the offset, in bytes, from the beginning of the string if >=
     ///   0, the offset from the end of the string if < 0. Note that
@@ -3506,18 +3816,18 @@ extern "C" {
     /// - `length`: the length of text to delete, in bytes, or -1 for the
     ///   remainder of the string.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_AppendTextString`]
     /// - [`TTF_InsertTextString`]
     /// - [`TTF_SetTextString`]
@@ -3534,22 +3844,22 @@ extern "C" {
     /// The size of the text may change when the font or font style and size
     /// change.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `w`: a pointer filled in with the width of the text, in pixels, may be
     ///   NULL.
     /// - `h`: a pointer filled in with the height of the text, in pixels, may be
     ///   NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetTextSize(
         text: *mut TTF_Text,
@@ -3560,43 +3870,199 @@ extern "C" {
 
 /// Flags for [`TTF_SubString`]
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_SubString`]
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`TTF_SUBSTRING_DIRECTION_MASK`] | The mask for the flow direction for this substring |
-/// | [`TTF_SUBSTRING_TEXT_START`] | This substring contains the beginning of the text |
-/// | [`TTF_SUBSTRING_LINE_START`] | This substring contains the beginning of line `line_index` |
-/// | [`TTF_SUBSTRING_LINE_END`] | This substring contains the end of line `line_index` |
-/// | [`TTF_SUBSTRING_TEXT_END`] | This substring contains the end of the text |
-pub type TTF_SubStringFlags = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`DIRECTION_MASK`](TTF_SubStringFlags::DIRECTION_MASK) | [`TTF_SUBSTRING_DIRECTION_MASK`] | The mask for the flow direction for this substring |
+/// | [`TEXT_START`](TTF_SubStringFlags::TEXT_START) | [`TTF_SUBSTRING_TEXT_START`] | This substring contains the beginning of the text |
+/// | [`LINE_START`](TTF_SubStringFlags::LINE_START) | [`TTF_SUBSTRING_LINE_START`] | This substring contains the beginning of line `line_index` |
+/// | [`LINE_END`](TTF_SubStringFlags::LINE_END) | [`TTF_SUBSTRING_LINE_END`] | This substring contains the end of line `line_index` |
+/// | [`TEXT_END`](TTF_SubStringFlags::TEXT_END) | [`TTF_SUBSTRING_TEXT_END`] | This substring contains the end of the text |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct TTF_SubStringFlags(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for TTF_SubStringFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<TTF_SubStringFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &TTF_SubStringFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<TTF_SubStringFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: TTF_SubStringFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for TTF_SubStringFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "TTF_SubStringFlags(")?;
+        let all_bits = all_bits | Self::DIRECTION_MASK.0;
+        if (Self::DIRECTION_MASK != 0 || self.0 == 0)
+            && *self & Self::DIRECTION_MASK == Self::DIRECTION_MASK
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "DIRECTION_MASK")?;
+        }
+        let all_bits = all_bits | Self::TEXT_START.0;
+        if (Self::TEXT_START != 0 || self.0 == 0) && *self & Self::TEXT_START == Self::TEXT_START {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TEXT_START")?;
+        }
+        let all_bits = all_bits | Self::LINE_START.0;
+        if (Self::LINE_START != 0 || self.0 == 0) && *self & Self::LINE_START == Self::LINE_START {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LINE_START")?;
+        }
+        let all_bits = all_bits | Self::LINE_END.0;
+        if (Self::LINE_END != 0 || self.0 == 0) && *self & Self::LINE_END == Self::LINE_END {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "LINE_END")?;
+        }
+        let all_bits = all_bits | Self::TEXT_END.0;
+        if (Self::TEXT_END != 0 || self.0 == 0) && *self & Self::TEXT_END == Self::TEXT_END {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "TEXT_END")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for TTF_SubStringFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for TTF_SubStringFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for TTF_SubStringFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for TTF_SubStringFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl TTF_SubStringFlags {
+    /// The mask for the flow direction for this substring
+    pub const DIRECTION_MASK: Self = Self((0x000000ff as Uint32));
+    /// This substring contains the beginning of the text
+    pub const TEXT_START: Self = Self((0x00000100 as Uint32));
+    /// This substring contains the beginning of line `line_index`
+    pub const LINE_START: Self = Self((0x00000200 as Uint32));
+    /// This substring contains the end of line `line_index`
+    pub const LINE_END: Self = Self((0x00000400 as Uint32));
+    /// This substring contains the end of the text
+    pub const TEXT_END: Self = Self((0x00000800 as Uint32));
+}
 
 /// The mask for the flow direction for this substring
-pub const TTF_SUBSTRING_DIRECTION_MASK: TTF_SubStringFlags = (0x000000ff as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_DIRECTION_MASK: TTF_SubStringFlags = TTF_SubStringFlags::DIRECTION_MASK;
 /// This substring contains the beginning of the text
-pub const TTF_SUBSTRING_TEXT_START: TTF_SubStringFlags = (0x00000100 as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_TEXT_START: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_START;
 /// This substring contains the beginning of line `line_index`
-pub const TTF_SUBSTRING_LINE_START: TTF_SubStringFlags = (0x00000200 as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_LINE_START: TTF_SubStringFlags = TTF_SubStringFlags::LINE_START;
 /// This substring contains the end of line `line_index`
-pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = (0x00000400 as TTF_SubStringFlags);
-
+pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = TTF_SubStringFlags::LINE_END;
 /// This substring contains the end of the text
-pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = (0x00000800 as TTF_SubStringFlags);
+pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_END;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for TTF_SubStringFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::ttf::METADATA_TTF_SubStringFlags;
+}
 
 /// The representation of a substring within text.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`TTF_GetNextTextSubString`]
 /// - [`TTF_GetPreviousTextSubString`]
 /// - [`TTF_GetTextSubString`]
@@ -3630,21 +4096,21 @@ extern "C" {
     /// will return a zero length substring at the end of the text with the
     /// [`TTF_SUBSTRING_TEXT_END`] flag set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `offset`: a byte offset into the text string.
     /// - `substring`: a pointer filled in with the substring containing the
     ///   offset.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetTextSubString(
         text: *mut TTF_Text,
@@ -3662,21 +4128,21 @@ extern "C" {
     /// length substring at the end of the text with the [`TTF_SUBSTRING_TEXT_END`]
     /// flag set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `line`: a zero-based line index, in the range \[0 .. text->num_lines-1\].
     /// - `substring`: a pointer filled in with the substring containing the
     ///   offset.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetTextSubStringForLine(
         text: *mut TTF_Text,
@@ -3688,7 +4154,7 @@ extern "C" {
 extern "C" {
     /// Get the substrings of a text object that contain a range of text.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `offset`: a byte offset into the text string.
     /// - `length`: the length of the range being queried, in bytes, or -1 for
@@ -3696,17 +4162,17 @@ extern "C" {
     /// - `count`: a pointer filled in with the number of substrings returned,
     ///   may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a NULL terminated array of substring pointers or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This is a single
     ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetTextSubStringsForRange(
         text: *mut TTF_Text,
@@ -3721,7 +4187,7 @@ extern "C" {
     ///
     /// This will return the closest substring of text to the given point.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `x`: the x coordinate relative to the left side of the text, may be
     ///   outside the bounds of the text area.
@@ -3730,15 +4196,15 @@ extern "C" {
     /// - `substring`: a pointer filled in with the closest substring of text to
     ///   the given point.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetTextSubStringForPoint(
         text: *mut TTF_Text,
@@ -3754,19 +4220,19 @@ extern "C" {
     /// If called at the start of the text, this will return a zero length
     /// substring with the [`TTF_SUBSTRING_TEXT_START`] flag set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `substring`: the [`TTF_SubString`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetPreviousTextSubString(
         text: *mut TTF_Text,
@@ -3781,20 +4247,20 @@ extern "C" {
     /// If called at the end of the text, this will return a zero length substring
     /// with the [`TTF_SUBSTRING_TEXT_END`] flag set.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to query.
     /// - `substring`: the [`TTF_SubString`] to query.
     /// - `next`: a pointer filled in with the next substring.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_GetNextTextSubString(
         text: *mut TTF_Text,
@@ -3810,18 +4276,18 @@ extern "C" {
     /// rendered, but you can call this if you need more control over the timing of
     /// when the layout and text engine representation are updated.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the [`TTF_Text`] to update.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_UpdateText(text: *mut TTF_Text) -> ::core::primitive::bool;
 }
@@ -3829,17 +4295,17 @@ extern "C" {
 extern "C" {
     /// Destroy a text object created by a text engine.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `text`: the text to destroy.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called on the thread that created the
     ///   text.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_CreateText`]
     pub fn TTF_DestroyText(text: *mut TTF_Text);
 }
@@ -3856,17 +4322,17 @@ extern "C" {
     /// [`TTF_GetFontFamilyName()`] and [`TTF_GetFontStyleName()`], are no longer valid
     /// after this call, as well.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `font`: the font to dispose of.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should not be called while any other thread is
     ///   using the font.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_OpenFont`]
     /// - [`TTF_OpenFontIO`]
     pub fn TTF_CloseFont(font: *mut TTF_Font);
@@ -3888,10 +4354,10 @@ extern "C" {
     /// deal with it. A well-written program should call [`TTF_CloseFont()`] on any
     /// open fonts before calling this function!
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     pub fn TTF_Quit();
 }
@@ -3908,17 +4374,17 @@ extern "C" {
     /// Despite the return value being a signed integer, this function should not
     /// return a negative number.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current number of initialization calls, that need to
     ///   eventually be paired with this many calls to [`TTF_Quit()`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`TTF_Init`]
     /// - [`TTF_Quit`]
     pub fn TTF_WasInit() -> ::core::ffi::c_int;
@@ -3934,7 +4400,7 @@ pub struct TTF_Font {
 
 /// Internal data for [`TTF_Text`]
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL_ttf 3.0.0.
 #[repr(C)]
 pub struct TTF_TextData {

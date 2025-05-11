@@ -21,59 +21,349 @@ use super::video::*;
 ///
 /// If supported will display warning icon, etc.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_MESSAGEBOX_ERROR`] | error dialog |
-/// | [`SDL_MESSAGEBOX_WARNING`] | warning dialog |
-/// | [`SDL_MESSAGEBOX_INFORMATION`] | informational dialog |
-/// | [`SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT`] | buttons placed left to right |
-/// | [`SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT`] | buttons placed right to left |
-pub type SDL_MessageBoxFlags = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`ERROR`](SDL_MessageBoxFlags::ERROR) | [`SDL_MESSAGEBOX_ERROR`] | error dialog |
+/// | [`WARNING`](SDL_MessageBoxFlags::WARNING) | [`SDL_MESSAGEBOX_WARNING`] | warning dialog |
+/// | [`INFORMATION`](SDL_MessageBoxFlags::INFORMATION) | [`SDL_MESSAGEBOX_INFORMATION`] | informational dialog |
+/// | [`BUTTONS_LEFT_TO_RIGHT`](SDL_MessageBoxFlags::BUTTONS_LEFT_TO_RIGHT) | [`SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT`] | buttons placed left to right |
+/// | [`BUTTONS_RIGHT_TO_LEFT`](SDL_MessageBoxFlags::BUTTONS_RIGHT_TO_LEFT) | [`SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT`] | buttons placed right to left |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_MessageBoxFlags(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MessageBoxFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MessageBoxFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_MessageBoxFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_MessageBoxFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MessageBoxFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_MessageBoxFlags(")?;
+        let all_bits = all_bits | Self::ERROR.0;
+        if (Self::ERROR != 0 || self.0 == 0) && *self & Self::ERROR == Self::ERROR {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ERROR")?;
+        }
+        let all_bits = all_bits | Self::WARNING.0;
+        if (Self::WARNING != 0 || self.0 == 0) && *self & Self::WARNING == Self::WARNING {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "WARNING")?;
+        }
+        let all_bits = all_bits | Self::INFORMATION.0;
+        if (Self::INFORMATION != 0 || self.0 == 0) && *self & Self::INFORMATION == Self::INFORMATION
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "INFORMATION")?;
+        }
+        let all_bits = all_bits | Self::BUTTONS_LEFT_TO_RIGHT.0;
+        if (Self::BUTTONS_LEFT_TO_RIGHT != 0 || self.0 == 0)
+            && *self & Self::BUTTONS_LEFT_TO_RIGHT == Self::BUTTONS_LEFT_TO_RIGHT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTONS_LEFT_TO_RIGHT")?;
+        }
+        let all_bits = all_bits | Self::BUTTONS_RIGHT_TO_LEFT.0;
+        if (Self::BUTTONS_RIGHT_TO_LEFT != 0 || self.0 == 0)
+            && *self & Self::BUTTONS_RIGHT_TO_LEFT == Self::BUTTONS_RIGHT_TO_LEFT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "BUTTONS_RIGHT_TO_LEFT")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_MessageBoxFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_MessageBoxFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_MessageBoxFlags {
+    /// error dialog
+    pub const ERROR: Self = Self((0x00000010 as Uint32));
+    /// warning dialog
+    pub const WARNING: Self = Self((0x00000020 as Uint32));
+    /// informational dialog
+    pub const INFORMATION: Self = Self((0x00000040 as Uint32));
+    /// buttons placed left to right
+    pub const BUTTONS_LEFT_TO_RIGHT: Self = Self((0x00000080 as Uint32));
+    /// buttons placed right to left
+    pub const BUTTONS_RIGHT_TO_LEFT: Self = Self((0x00000100 as Uint32));
+}
 
 /// error dialog
-pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = (0x00000010 as SDL_MessageBoxFlags);
-
+pub const SDL_MESSAGEBOX_ERROR: SDL_MessageBoxFlags = SDL_MessageBoxFlags::ERROR;
 /// warning dialog
-pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags = (0x00000020 as SDL_MessageBoxFlags);
-
+pub const SDL_MESSAGEBOX_WARNING: SDL_MessageBoxFlags = SDL_MessageBoxFlags::WARNING;
 /// informational dialog
-pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags = (0x00000040 as SDL_MessageBoxFlags);
-
+pub const SDL_MESSAGEBOX_INFORMATION: SDL_MessageBoxFlags = SDL_MessageBoxFlags::INFORMATION;
 /// buttons placed left to right
 pub const SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT: SDL_MessageBoxFlags =
-    (0x00000080 as SDL_MessageBoxFlags);
-
+    SDL_MessageBoxFlags::BUTTONS_LEFT_TO_RIGHT;
 /// buttons placed right to left
 pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
-    (0x00000100 as SDL_MessageBoxFlags);
+    SDL_MessageBoxFlags::BUTTONS_RIGHT_TO_LEFT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::messagebox::METADATA_SDL_MessageBoxFlags;
+}
 
 /// [`SDL_MessageBoxButtonData`] flags.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
-/// | Constant | Description |
-/// | -------- | ----------- |
-/// | [`SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT`] | Marks the default button when return is hit |
-/// | [`SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT`] | Marks the default button when escape is hit |
-pub type SDL_MessageBoxButtonFlags = Uint32;
+/// ## Known values (`sdl3-sys`)
+/// | Associated constant | Global constant | Description |
+/// | ------------------- | --------------- | ----------- |
+/// | [`RETURNKEY_DEFAULT`](SDL_MessageBoxButtonFlags::RETURNKEY_DEFAULT) | [`SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT`] | Marks the default button when return is hit |
+/// | [`ESCAPEKEY_DEFAULT`](SDL_MessageBoxButtonFlags::ESCAPEKEY_DEFAULT) | [`SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT`] | Marks the default button when escape is hit |
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct SDL_MessageBoxButtonFlags(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MessageBoxButtonFlags> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MessageBoxButtonFlags) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_MessageBoxButtonFlags> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_MessageBoxButtonFlags) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "debug-impls")]
+impl ::core::fmt::Debug for SDL_MessageBoxButtonFlags {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_MessageBoxButtonFlags(")?;
+        let all_bits = all_bits | Self::RETURNKEY_DEFAULT.0;
+        if (Self::RETURNKEY_DEFAULT != 0 || self.0 == 0)
+            && *self & Self::RETURNKEY_DEFAULT == Self::RETURNKEY_DEFAULT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "RETURNKEY_DEFAULT")?;
+        }
+        let all_bits = all_bits | Self::ESCAPEKEY_DEFAULT.0;
+        if (Self::ESCAPEKEY_DEFAULT != 0 || self.0 == 0)
+            && *self & Self::ESCAPEKEY_DEFAULT == Self::ESCAPEKEY_DEFAULT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ESCAPEKEY_DEFAULT")?;
+        }
+
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_MessageBoxButtonFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_MessageBoxButtonFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
+    }
+}
+
+impl SDL_MessageBoxButtonFlags {
+    /// Marks the default button when return is hit
+    pub const RETURNKEY_DEFAULT: Self = Self((0x00000001 as Uint32));
+    /// Marks the default button when escape is hit
+    pub const ESCAPEKEY_DEFAULT: Self = Self((0x00000002 as Uint32));
+}
 
 /// Marks the default button when return is hit
 pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT: SDL_MessageBoxButtonFlags =
-    (0x00000001 as SDL_MessageBoxButtonFlags);
-
+    SDL_MessageBoxButtonFlags::RETURNKEY_DEFAULT;
 /// Marks the default button when escape is hit
 pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags =
-    (0x00000002 as SDL_MessageBoxButtonFlags);
+    SDL_MessageBoxButtonFlags::ESCAPEKEY_DEFAULT;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxButtonFlags {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::messagebox::METADATA_SDL_MessageBoxButtonFlags;
+}
 
 /// Individual button data.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -96,7 +386,7 @@ impl ::core::default::Default for SDL_MessageBoxButtonData {
 
 /// RGB value used in a message box color scheme
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -110,7 +400,7 @@ pub struct SDL_MessageBoxColor {
 /// An enumeration of indices inside the colors array of
 /// [`SDL_MessageBoxColorScheme`].
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`BACKGROUND`](SDL_MessageBoxColorType::BACKGROUND) | [`SDL_MESSAGEBOX_COLOR_BACKGROUND`] | |
@@ -122,6 +412,20 @@ pub struct SDL_MessageBoxColor {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MessageBoxColorType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_MessageBoxColorType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MessageBoxColorType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MessageBoxColorType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_MessageBoxColorType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -148,13 +452,13 @@ impl ::core::fmt::Debug for SDL_MessageBoxColorType {
 }
 
 impl SDL_MessageBoxColorType {
-    pub const BACKGROUND: Self = Self(0);
-    pub const TEXT: Self = Self(1);
-    pub const BUTTON_BORDER: Self = Self(2);
-    pub const BUTTON_BACKGROUND: Self = Self(3);
-    pub const BUTTON_SELECTED: Self = Self(4);
+    pub const BACKGROUND: Self = Self((0 as ::core::ffi::c_int));
+    pub const TEXT: Self = Self((1 as ::core::ffi::c_int));
+    pub const BUTTON_BORDER: Self = Self((2 as ::core::ffi::c_int));
+    pub const BUTTON_BACKGROUND: Self = Self((3 as ::core::ffi::c_int));
+    pub const BUTTON_SELECTED: Self = Self((4 as ::core::ffi::c_int));
     /// Size of the colors array of [`SDL_MessageBoxColorScheme`].
-    pub const COUNT: Self = Self(5);
+    pub const COUNT: Self = Self((5 as ::core::ffi::c_int));
 }
 
 pub const SDL_MESSAGEBOX_COLOR_BACKGROUND: SDL_MessageBoxColorType =
@@ -169,9 +473,15 @@ pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType =
 /// Size of the colors array of [`SDL_MessageBoxColorScheme`].
 pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxColorType::COUNT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxColorType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::messagebox::METADATA_SDL_MessageBoxColorType;
+}
+
 /// A set of colors to use for message box dialogs
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -182,7 +492,7 @@ pub struct SDL_MessageBoxColorScheme {
 
 /// MessageBox structure containing title, text, window, etc.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -231,20 +541,20 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `messageboxdata`: the [`SDL_MessageBoxData`] structure with title, text and
     ///   other options.
     /// - `buttonid`: the pointer to which user id of hit button should be
     ///   copied.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ShowSimpleMessageBox`]
     pub fn SDL_ShowMessageBox(
         messageboxdata: *const SDL_MessageBoxData,
@@ -281,20 +591,20 @@ extern "C" {
     /// concern, check the return value from this function and fall back to writing
     /// to stderr if you can.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `flags`: an [`SDL_MessageBoxFlags`] value.
     /// - `title`: UTF-8 title text.
     /// - `message`: UTF-8 message text.
     /// - `window`: the parent window, or NULL for no parent.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_ShowMessageBox`]
     pub fn SDL_ShowSimpleMessageBox(
         flags: SDL_MessageBoxFlags,

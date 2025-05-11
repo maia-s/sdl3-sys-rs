@@ -27,10 +27,10 @@ use super::video::*;
 /// hyphens, underscores and periods. Alternatively, the whole string can be a
 /// single asterisk ("*"), which serves as an "All files" filter.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_DialogFileCallback`]
 /// - [`SDL_ShowOpenFileDialog`]
 /// - [`SDL_ShowSaveFileDialog`]
@@ -76,15 +76,15 @@ impl ::core::default::Default for SDL_DialogFileFilter {
 /// using [`SDL_IOFromFile()`] with appropriate modes. This applies both to open
 /// and save file dialog.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an app-provided pointer, for the callback's use.
 /// - `filelist`: the file(s) chosen by the user.
 /// - `filter`: index of the selected filter.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_DialogFileFilter`]
 /// - [`SDL_ShowOpenFileDialog`]
 /// - [`SDL_ShowSaveFileDialog`]
@@ -118,7 +118,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `callback`: a function pointer to be invoked when the user selects a
     ///   file and accepts, or cancels the dialog, or an error
     ///   occurs.
@@ -136,15 +136,15 @@ extern "C" {
     /// - `allow_many`: if non-zero, the user will be allowed to select multiple
     ///   entries. Not all platforms support this option.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called only from the main thread. The
     ///   callback may be invoked from the same thread or from a
     ///   different one, depending on the OS's constraints.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DialogFileCallback`]
     /// - [`SDL_DialogFileFilter`]
     /// - [`SDL_ShowSaveFileDialog`]
@@ -181,7 +181,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `callback`: a function pointer to be invoked when the user selects a
     ///   file and accepts, or cancels the dialog, or an error
     ///   occurs.
@@ -197,15 +197,15 @@ extern "C" {
     /// - `default_location`: the default folder or file to start the dialog at,
     ///   may be NULL. Not all platforms support this option.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called only from the main thread. The
     ///   callback may be invoked from the same thread or from a
     ///   different one, depending on the OS's constraints.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DialogFileCallback`]
     /// - [`SDL_DialogFileFilter`]
     /// - [`SDL_ShowOpenFileDialog`]
@@ -241,7 +241,7 @@ extern "C" {
     /// requires an event-handling loop. Apps that do not use SDL to handle events
     /// should add a call to [`SDL_PumpEvents`] in their main loop.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `callback`: a function pointer to be invoked when the user selects a
     ///   file and accepts, or cancels the dialog, or an error
     ///   occurs.
@@ -254,15 +254,15 @@ extern "C" {
     /// - `allow_many`: if non-zero, the user will be allowed to select multiple
     ///   entries. Not all platforms support this option.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called only from the main thread. The
     ///   callback may be invoked from the same thread or from a
     ///   different one, depending on the OS's constraints.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DialogFileCallback`]
     /// - [`SDL_ShowOpenFileDialog`]
     /// - [`SDL_ShowSaveFileDialog`]
@@ -281,13 +281,13 @@ extern "C" {
 /// This is used by [`SDL_ShowFileDialogWithProperties()`] to decide what kind of
 /// dialog to present to the user.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ShowFileDialogWithProperties`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`OPENFILE`](SDL_FileDialogType::OPENFILE) | [`SDL_FILEDIALOG_OPENFILE`] | |
@@ -296,6 +296,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_FileDialogType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FileDialogType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_FileDialogType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_FileDialogType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_FileDialogType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -319,14 +333,20 @@ impl ::core::fmt::Debug for SDL_FileDialogType {
 }
 
 impl SDL_FileDialogType {
-    pub const OPENFILE: Self = Self(0);
-    pub const SAVEFILE: Self = Self(1);
-    pub const OPENFOLDER: Self = Self(2);
+    pub const OPENFILE: Self = Self((0 as ::core::ffi::c_int));
+    pub const SAVEFILE: Self = Self((1 as ::core::ffi::c_int));
+    pub const OPENFOLDER: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_FILEDIALOG_OPENFILE: SDL_FileDialogType = SDL_FileDialogType::OPENFILE;
 pub const SDL_FILEDIALOG_SAVEFILE: SDL_FileDialogType = SDL_FileDialogType::SAVEFILE;
 pub const SDL_FILEDIALOG_OPENFOLDER: SDL_FileDialogType = SDL_FileDialogType::OPENFOLDER;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_FileDialogType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::dialog::METADATA_SDL_FileDialogType;
+}
 
 extern "C" {
     /// Create and launch a file dialog with the specified properties.
@@ -354,7 +374,7 @@ extern "C" {
     ///
     /// Note that each platform may or may not support any of the properties.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `type`: the type of file dialog.
     /// - `callback`: a function pointer to be invoked when the user selects a
     ///   file and accepts, or cancels the dialog, or an error
@@ -363,15 +383,15 @@ extern "C" {
     ///   it will be invoked.
     /// - `props`: the properties to use.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should be called only from the main thread. The
     ///   callback may be invoked from the same thread or from a
     ///   different one, depending on the OS's constraints.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_FileDialogType`]
     /// - [`SDL_DialogFileCallback`]
     /// - [`SDL_DialogFileFilter`]

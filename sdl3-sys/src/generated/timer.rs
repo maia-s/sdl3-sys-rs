@@ -21,7 +21,7 @@ use super::error::*;
 ///
 /// This is always 1000.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_MS_PER_SECOND: ::core::primitive::i32 = 1000;
 
@@ -29,7 +29,7 @@ pub const SDL_MS_PER_SECOND: ::core::primitive::i32 = 1000;
 ///
 /// This is always 1000000.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_US_PER_SECOND: ::core::primitive::i32 = 1000000;
 
@@ -37,7 +37,7 @@ pub const SDL_US_PER_SECOND: ::core::primitive::i32 = 1000000;
 ///
 /// This is always 1000000000.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_NS_PER_SECOND: ::core::primitive::i64 = 1000000000_i64;
 
@@ -45,7 +45,7 @@ pub const SDL_NS_PER_SECOND: ::core::primitive::i64 = 1000000000_i64;
 ///
 /// This is always 1000000.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_NS_PER_MS: ::core::primitive::i32 = 1000000;
 
@@ -53,7 +53,7 @@ pub const SDL_NS_PER_MS: ::core::primitive::i32 = 1000000;
 ///
 /// This is always 1000.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 
@@ -61,16 +61,16 @@ pub const SDL_NS_PER_US: ::core::primitive::i32 = 1000;
 ///
 /// This only converts whole numbers, not fractional seconds.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `S`: the number of seconds to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns S, expressed in nanoseconds.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_SECONDS_TO_NS(S: Uint64) -> Uint64 {
@@ -82,16 +82,16 @@ pub const fn SDL_SECONDS_TO_NS(S: Uint64) -> Uint64 {
 /// This performs a division, so the results can be dramatically different if
 /// `NS` is an integer or floating point value.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `NS`: the number of nanoseconds to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns NS, expressed in seconds.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_NS_TO_SECONDS(NS: Uint64) -> Uint64 {
@@ -102,16 +102,16 @@ pub const fn SDL_NS_TO_SECONDS(NS: Uint64) -> Uint64 {
 ///
 /// This only converts whole numbers, not fractional milliseconds.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `MS`: the number of milliseconds to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns MS, expressed in nanoseconds.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_MS_TO_NS(MS: Uint64) -> Uint64 {
@@ -123,16 +123,16 @@ pub const fn SDL_MS_TO_NS(MS: Uint64) -> Uint64 {
 /// This performs a division, so the results can be dramatically different if
 /// `NS` is an integer or floating point value.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `NS`: the number of nanoseconds to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns NS, expressed in milliseconds.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_NS_TO_MS(NS: Uint64) -> Uint64 {
@@ -143,16 +143,16 @@ pub const fn SDL_NS_TO_MS(NS: Uint64) -> Uint64 {
 ///
 /// This only converts whole numbers, not fractional microseconds.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `US`: the number of microseconds to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns US, expressed in nanoseconds.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_US_TO_NS(US: Uint64) -> Uint64 {
@@ -164,16 +164,16 @@ pub const fn SDL_US_TO_NS(US: Uint64) -> Uint64 {
 /// This performs a division, so the results can be dramatically different if
 /// `NS` is an integer or floating point value.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `NS`: the number of nanoseconds to convert.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns NS, expressed in microseconds.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_NS_TO_US(NS: Uint64) -> Uint64 {
@@ -183,14 +183,14 @@ pub const fn SDL_NS_TO_US(NS: Uint64) -> Uint64 {
 extern "C" {
     /// Get the number of milliseconds since SDL library initialization.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an unsigned 64-bit value representing the number of milliseconds
     ///   since the SDL library initialized.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTicks() -> Uint64;
 }
@@ -198,14 +198,14 @@ extern "C" {
 extern "C" {
     /// Get the number of nanoseconds since SDL library initialization.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an unsigned 64-bit value representing the number of nanoseconds
     ///   since the SDL library initialized.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetTicksNS() -> Uint64;
 }
@@ -219,16 +219,16 @@ extern "C" {
     /// between values can be converted to times by using
     /// [`SDL_GetPerformanceFrequency()`].
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the current counter value.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPerformanceFrequency`]
     pub fn SDL_GetPerformanceCounter() -> Uint64;
 }
@@ -236,16 +236,16 @@ extern "C" {
 extern "C" {
     /// Get the count per second of the high resolution counter.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a platform-specific count per second.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPerformanceCounter`]
     pub fn SDL_GetPerformanceFrequency() -> Uint64;
 }
@@ -257,16 +257,16 @@ extern "C" {
     /// waits at least the specified time, but possibly longer due to OS
     /// scheduling.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ms`: the number of milliseconds to delay.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DelayNS`]
     /// - [`SDL_DelayPrecise`]
     pub fn SDL_Delay(ms: Uint32);
@@ -279,16 +279,16 @@ extern "C" {
     /// waits at least the specified time, but possibly longer due to OS
     /// scheduling.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ns`: the number of nanoseconds to delay.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Delay`]
     /// - [`SDL_DelayPrecise`]
     pub fn SDL_DelayNS(ns: Uint64);
@@ -301,16 +301,16 @@ extern "C" {
     /// will attempt to wait as close to the requested time as possible, busy
     /// waiting if necessary, but could return later due to OS scheduling.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ns`: the number of nanoseconds to delay.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_Delay`]
     /// - [`SDL_DelayNS`]
     pub fn SDL_DelayPrecise(ns: Uint64);
@@ -318,9 +318,39 @@ extern "C" {
 
 /// Definition of the timer ID type.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_TimerID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_TimerID(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_TimerID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_TimerID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TimerID) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_TimerID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_TimerID) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TimerID {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::timer::METADATA_SDL_TimerID;
+}
 
 /// Function prototype for the millisecond timer callback function.
 ///
@@ -330,25 +360,25 @@ pub type SDL_TimerID = Uint32;
 /// scheduled. If the callback returns 0, the periodic alarm is canceled and
 /// will be removed.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an arbitrary pointer provided by the app through
 ///   [`SDL_AddTimer`], for its own use.
 /// - `timerID`: the current timer being processed.
 /// - `interval`: the current callback time interval.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the new callback time interval, or 0 to disable further runs of
 ///   the callback.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// SDL may call this callback at any time from a background
 ///   thread; the application is responsible for locking resources
 ///   the callback touches that need to be protected.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_AddTimer`]
 pub type SDL_TimerCallback = ::core::option::Option<
     unsafe extern "C" fn(
@@ -378,23 +408,23 @@ extern "C" {
     /// time with [`SDL_GetTicksNS()`] or [`SDL_GetPerformanceCounter()`] in case your
     /// callback needs to adjust for variances.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `interval`: the timer delay, in milliseconds, passed to `callback`.
     /// - `callback`: the [`SDL_TimerCallback`] function to call when the specified
     ///   `interval` elapses.
     /// - `userdata`: a pointer that is passed to `callback`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a timer ID or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AddTimerNS`]
     /// - [`SDL_RemoveTimer`]
     pub fn SDL_AddTimer(
@@ -412,25 +442,25 @@ extern "C" {
 /// scheduled. If the callback returns 0, the periodic alarm is canceled and
 /// will be removed.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `userdata`: an arbitrary pointer provided by the app through
 ///   [`SDL_AddTimer`], for its own use.
 /// - `timerID`: the current timer being processed.
 /// - `interval`: the current callback time interval.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the new callback time interval, or 0 to disable further runs of
 ///   the callback.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// SDL may call this callback at any time from a background
 ///   thread; the application is responsible for locking resources
 ///   the callback touches that need to be protected.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_AddTimerNS`]
 pub type SDL_NSTimerCallback = ::core::option::Option<
     unsafe extern "C" fn(
@@ -460,23 +490,23 @@ extern "C" {
     /// time with [`SDL_GetTicksNS()`] or [`SDL_GetPerformanceCounter()`] in case your
     /// callback needs to adjust for variances.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `interval`: the timer delay, in nanoseconds, passed to `callback`.
     /// - `callback`: the [`SDL_TimerCallback`] function to call when the specified
     ///   `interval` elapses.
     /// - `userdata`: a pointer that is passed to `callback`.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a timer ID or 0 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AddTimer`]
     /// - [`SDL_RemoveTimer`]
     pub fn SDL_AddTimerNS(
@@ -489,20 +519,20 @@ extern "C" {
 extern "C" {
     /// Remove a timer created with [`SDL_AddTimer()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `id`: the ID of the timer to remove.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_AddTimer`]
     pub fn SDL_RemoveTimer(id: SDL_TimerID) -> ::core::primitive::bool;
 }

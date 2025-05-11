@@ -11,7 +11,7 @@ jobs:
         fetch-depth: 0
         fetch-tags: true
         submodules: recursive
-    - name: Install Rust 1.79 and nightly
-      run: rustup update 1.79.0 nightly
+    - name: Install Rust 1.81 and nightly
+      run: rustup update 1.81.0 nightly
     - name: Generate and check
       run: ./generate-and-check.sh --require-clean

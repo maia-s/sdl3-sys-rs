@@ -2,7 +2,16 @@ use super::{
     patch_parsed_enum, Conditional, DocComment, Expr, ExprNoComma, GetSpan, Ident, Item, Kw_enum,
     Op, Parse, ParseContext, ParseErr, ParseRawRes, PreProcBlock, Span, Type, WsAndComments,
 };
+use core::cell::Cell;
 use std::borrow::Cow;
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum EnumKind {
+    Enum,
+    Flags,
+    Id,
+    Lock,
+}
 
 #[derive(Clone, Debug)]
 pub struct Enum {
@@ -12,8 +21,12 @@ pub struct Enum {
     pub variants: Vec<EnumVariant>,
     pub base_type: Option<Type>,
     pub hidden: bool,
+    pub kind: EnumKind,
+    pub registered: Cell<bool>,
+    pub emit_metadata: bool,
 }
 
+// parse a c enum to EnumKind::Enum
 impl Parse for Enum {
     fn desc() -> Cow<'static, str> {
         "enum".into()
@@ -81,6 +94,9 @@ impl Parse for Enum {
                 variants,
                 base_type: None,
                 hidden: false,
+                kind: EnumKind::Enum,
+                registered: Cell::new(false),
+                emit_metadata: true,
             };
             patch_parsed_enum(ctx, &mut e)?;
             Ok((rest, Some(e)))
@@ -97,6 +113,7 @@ pub struct EnumVariant {
     pub ident: Ident,
     pub expr: Option<Expr>,
     pub comma: Option<Op![,]>,
+    pub registered: Cell<bool>,
 }
 
 impl Parse for EnumVariant {
@@ -127,6 +144,7 @@ impl Parse for EnumVariant {
                     ident,
                     expr,
                     comma,
+                    registered: Cell::new(false),
                 }),
             ))
         } else {

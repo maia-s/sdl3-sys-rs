@@ -1,7 +1,3 @@
-const PACKAGE_NAME: &str = "sdl3";
-const LIB_NAME: &str = "SDL3";
-const LIB_MIN_VERSION: &str = "3.1.3";
-
 #[cfg(feature = "build-from-source")]
 const SOURCE_DIR: &str = sdl3_src::SOURCE_DIR;
 
@@ -10,6 +6,11 @@ const LINK_FRAMEWORK: bool = cfg!(feature = "link-framework");
 include!("build-common.rs");
 
 fn main() -> Result<(), Box<dyn Error>> {
+    println!(r#"cargo::rustc-check-cfg=cfg(feature, values("-core-float"))"#);
+    if rust_version_at_least(1, 84) {
+        println!(r#"cargo::rustc-cfg=feature="-core-float""#);
+    }
+
     build(|config| {
         let _ = config;
         #[cfg(feature = "build-from-source")]
@@ -22,8 +23,13 @@ fn main() -> Result<(), Box<dyn Error>> {
                 config.define("SDL_STATIC", "ON");
             }
 
-            if cfg!(feature = "sdl-unix-console-build") {
-                config.define("SDL_UNIX_CONSOLE_BUILD", "ON");
+            cmake_vars! { config =>
+                SDL_ASAN,
+                SDL_CCACHE,
+                SDL_GPU_DXVK,
+                SDL_LIBC,
+                SDL_RPATH,
+                SDL_UNIX_CONSOLE_BUILD,
             }
         }
         Ok(())

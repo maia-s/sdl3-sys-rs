@@ -26,23 +26,53 @@ use super::video::*;
 ///
 /// The value 0 is an invalid ID.
 ///
-/// ### Availability
+/// ## Availability
 /// This datatype is available since SDL 3.2.0.
-pub type SDL_KeyboardID = Uint32;
+#[repr(transparent)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_KeyboardID(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_KeyboardID {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_KeyboardID> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_KeyboardID) -> bool {
+        self == &other.0
+    }
+}
+
+impl From<SDL_KeyboardID> for Uint32 {
+    #[inline(always)]
+    fn from(value: SDL_KeyboardID) -> Self {
+        value.0
+    }
+}
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_KeyboardID {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::keyboard::METADATA_SDL_KeyboardID;
+}
 
 extern "C" {
     /// Return whether a keyboard is currently connected.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if a keyboard is connected, false otherwise.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyboards`]
     pub fn SDL_HasKeyboard() -> ::core::primitive::bool;
 }
@@ -55,22 +85,22 @@ extern "C" {
     /// power buttons, etc. You should wait for input from a device before you
     /// consider it actively in use.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `count`: a pointer filled in with the number of keyboards returned, may
     ///   be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a 0 terminated array of keyboards instance IDs or NULL on failure;
     ///   call [`SDL_GetError()`] for more information. This should be freed
     ///   with [`SDL_free()`] when it is no longer needed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyboardNameForID`]
     /// - [`SDL_HasKeyboard`]
     pub fn SDL_GetKeyboards(count: *mut ::core::ffi::c_int) -> *mut SDL_KeyboardID;
@@ -81,20 +111,20 @@ extern "C" {
     ///
     /// This function returns "" if the keyboard doesn't have a name.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `instance_id`: the keyboard instance ID.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the name of the selected keyboard or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyboards`]
     pub fn SDL_GetKeyboardNameForID(instance_id: SDL_KeyboardID) -> *const ::core::ffi::c_char;
 }
@@ -102,13 +132,13 @@ extern "C" {
 extern "C" {
     /// Query the window which currently has keyboard focus.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the window with keyboard focus.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetKeyboardFocus() -> *mut SDL_Window;
 }
@@ -134,19 +164,19 @@ extern "C" {
     /// Note: This function doesn't take into account whether shift has been
     /// pressed or not.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `numkeys`: if non-NULL, receives the length of the returned array.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to an array of key states.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_PumpEvents`]
     /// - [`SDL_ResetKeyboard`]
     pub fn SDL_GetKeyboardState(numkeys: *mut ::core::ffi::c_int)
@@ -158,13 +188,13 @@ extern "C" {
     ///
     /// This function will generate key up events for all pressed keys.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyboardState`]
     pub fn SDL_ResetKeyboard();
 }
@@ -172,17 +202,17 @@ extern "C" {
 extern "C" {
     /// Get the current key modifier state for the keyboard.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns an OR'd combination of the modifier keys for the keyboard. See
     ///   [`SDL_Keymod`] for details.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyboardState`]
     /// - [`SDL_SetModState`]
     pub fn SDL_GetModState() -> SDL_Keymod;
@@ -199,16 +229,16 @@ extern "C" {
     /// This does not change the keyboard state, only the key modifier flags that
     /// SDL reports.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `modstate`: the desired [`SDL_Keymod`] for the keyboard.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetModState`]
     pub fn SDL_SetModState(modstate: SDL_Keymod);
 }
@@ -222,22 +252,22 @@ extern "C" {
     /// pass `key_event` as true. Otherwise this function simply translates the
     /// scancode based on the given modifier state.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `scancode`: the desired [`SDL_Scancode`] to query.
     /// - `modstate`: the modifier state to use when translating the scancode to
     ///   a keycode.
     /// - `key_event`: true if the keycode will be used in key events.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_Keycode`] that corresponds to the given [`SDL_Scancode`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyName`]
     /// - [`SDL_GetScancodeFromKey`]
     pub fn SDL_GetKeyFromScancode(
@@ -254,21 +284,21 @@ extern "C" {
     /// Note that there may be multiple scancode+modifier states that can generate
     /// this keycode, this will just return the first one found.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `key`: the desired [`SDL_Keycode`] to query.
     /// - `modstate`: a pointer to the modifier state that would be used when the
     ///   scancode generates this key, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_Scancode`] that corresponds to the given [`SDL_Keycode`].
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyFromScancode`]
     /// - [`SDL_GetScancodeName`]
     pub fn SDL_GetScancodeFromKey(key: SDL_Keycode, modstate: *mut SDL_Keymod) -> SDL_Scancode;
@@ -277,23 +307,23 @@ extern "C" {
 extern "C" {
     /// Set a human-readable name for a scancode.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `scancode`: the desired [`SDL_Scancode`].
     /// - `name`: the name to use for the scancode, encoded as UTF-8. The string
     ///   is not copied, so the pointer given to this function must stay
     ///   valid while SDL is being used.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetScancodeName`]
     pub fn SDL_SetScancodeName(
         scancode: SDL_Scancode,
@@ -313,20 +343,20 @@ extern "C" {
     /// unsuitable for creating a stable cross-platform two-way mapping between
     /// strings and scancodes.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `scancode`: the desired [`SDL_Scancode`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to the name for the scancode. If the scancode doesn't
     ///   have a name this function returns an empty string ("").
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetScancodeFromKey`]
     /// - [`SDL_GetScancodeFromName`]
     /// - [`SDL_SetScancodeName`]
@@ -336,20 +366,20 @@ extern "C" {
 extern "C" {
     /// Get a scancode from a human-readable name.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the human-readable scancode name.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_Scancode`], or [`SDL_SCANCODE_UNKNOWN`] if the name wasn't
     ///   recognized; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyFromName`]
     /// - [`SDL_GetScancodeFromKey`]
     /// - [`SDL_GetScancodeName`]
@@ -363,19 +393,19 @@ extern "C" {
     ///
     /// Letters will be presented in their uppercase form, if applicable.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `key`: the desired [`SDL_Keycode`] to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a UTF-8 encoded string of the key name.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyFromName`]
     /// - [`SDL_GetKeyFromScancode`]
     /// - [`SDL_GetScancodeFromKey`]
@@ -385,20 +415,20 @@ extern "C" {
 extern "C" {
     /// Get a key code from a human-readable name.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `name`: the human-readable key name.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns key code, or `SDLK_UNKNOWN` if the name wasn't recognized; call
     ///   [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function is not thread safe.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetKeyFromScancode`]
     /// - [`SDL_GetKeyName`]
     /// - [`SDL_GetScancodeFromName`]
@@ -418,20 +448,20 @@ extern "C" {
     /// activates an IME, which can prevent some key press events from being passed
     /// through.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to enable text input.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetTextInputArea`]
     /// - [`SDL_StartTextInputWithProperties`]
     /// - [`SDL_StopTextInput`]
@@ -445,13 +475,13 @@ extern "C" {
 /// value is valid on every platform, but where a value isn't supported, a
 /// reasonable fallback will be used.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_StartTextInputWithProperties`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`TEXT`](SDL_TextInputType::TEXT) | [`SDL_TEXTINPUT_TYPE_TEXT`] | The input is text |
@@ -466,6 +496,20 @@ extern "C" {
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TextInputType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_TextInputType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_TextInputType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TextInputType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_TextInputType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -496,23 +540,23 @@ impl ::core::fmt::Debug for SDL_TextInputType {
 
 impl SDL_TextInputType {
     /// The input is text
-    pub const TEXT: Self = Self(0);
+    pub const TEXT: Self = Self((0 as ::core::ffi::c_int));
     /// The input is a person's name
-    pub const TEXT_NAME: Self = Self(1);
+    pub const TEXT_NAME: Self = Self((1 as ::core::ffi::c_int));
     /// The input is an e-mail address
-    pub const TEXT_EMAIL: Self = Self(2);
+    pub const TEXT_EMAIL: Self = Self((2 as ::core::ffi::c_int));
     /// The input is a username
-    pub const TEXT_USERNAME: Self = Self(3);
+    pub const TEXT_USERNAME: Self = Self((3 as ::core::ffi::c_int));
     /// The input is a secure password that is hidden
-    pub const TEXT_PASSWORD_HIDDEN: Self = Self(4);
+    pub const TEXT_PASSWORD_HIDDEN: Self = Self((4 as ::core::ffi::c_int));
     /// The input is a secure password that is visible
-    pub const TEXT_PASSWORD_VISIBLE: Self = Self(5);
+    pub const TEXT_PASSWORD_VISIBLE: Self = Self((5 as ::core::ffi::c_int));
     /// The input is a number
-    pub const NUMBER: Self = Self(6);
+    pub const NUMBER: Self = Self((6 as ::core::ffi::c_int));
     /// The input is a secure PIN that is hidden
-    pub const NUMBER_PASSWORD_HIDDEN: Self = Self(7);
+    pub const NUMBER_PASSWORD_HIDDEN: Self = Self((7 as ::core::ffi::c_int));
     /// The input is a secure PIN that is visible
-    pub const NUMBER_PASSWORD_VISIBLE: Self = Self(8);
+    pub const NUMBER_PASSWORD_VISIBLE: Self = Self((8 as ::core::ffi::c_int));
 }
 
 /// The input is text
@@ -538,19 +582,25 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN: SDL_TextInputType =
 pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
     SDL_TextInputType::NUMBER_PASSWORD_VISIBLE;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TextInputType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::keyboard::METADATA_SDL_TextInputType;
+}
+
 /// Auto capitalization type.
 ///
 /// These are the valid values for [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`].
 /// Not every value is valid on every platform, but where a value isn't
 /// supported, a reasonable fallback will be used.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_StartTextInputWithProperties`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_Capitalization::NONE) | [`SDL_CAPITALIZE_NONE`] | No auto-capitalization will be done |
@@ -560,6 +610,20 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Capitalization(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_Capitalization {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_Capitalization> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_Capitalization) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_Capitalization> for ::core::ffi::c_int {
     #[inline(always)]
@@ -585,13 +649,13 @@ impl ::core::fmt::Debug for SDL_Capitalization {
 
 impl SDL_Capitalization {
     /// No auto-capitalization will be done
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
     /// The first letter of sentences will be capitalized
-    pub const SENTENCES: Self = Self(1);
+    pub const SENTENCES: Self = Self((1 as ::core::ffi::c_int));
     /// The first letter of words will be capitalized
-    pub const WORDS: Self = Self(2);
+    pub const WORDS: Self = Self((2 as ::core::ffi::c_int));
     /// All letters will be capitalized
-    pub const LETTERS: Self = Self(3);
+    pub const LETTERS: Self = Self((3 as ::core::ffi::c_int));
 }
 
 /// No auto-capitalization will be done
@@ -602,6 +666,12 @@ pub const SDL_CAPITALIZE_SENTENCES: SDL_Capitalization = SDL_Capitalization::SEN
 pub const SDL_CAPITALIZE_WORDS: SDL_Capitalization = SDL_Capitalization::WORDS;
 /// All letters will be capitalized
 pub const SDL_CAPITALIZE_LETTERS: SDL_Capitalization = SDL_Capitalization::LETTERS;
+
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_Capitalization {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::keyboard::METADATA_SDL_Capitalization;
+}
 
 extern "C" {
     /// Start accepting Unicode text input events in a window, with properties
@@ -639,21 +709,21 @@ extern "C" {
     ///   use, overriding other properties. This is documented at
     ///   <https://developer.android.com/reference/android/text/InputType>
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to enable text input.
     /// - `props`: the properties to use.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetTextInputArea`]
     /// - [`SDL_StartTextInput`]
     /// - [`SDL_StopTextInput`]
@@ -682,19 +752,19 @@ pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: *const ::core::ffi::c_cha
 extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to check.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if text input events are enabled else false.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_StartTextInput`]
     pub fn SDL_TextInputActive(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
@@ -705,20 +775,20 @@ extern "C" {
     /// If [`SDL_StartTextInput()`] showed the screen keyboard, this function will hide
     /// it.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to disable text input.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_StartTextInput`]
     pub fn SDL_StopTextInput(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
@@ -726,20 +796,20 @@ extern "C" {
 extern "C" {
     /// Dismiss the composition window/IME without disabling the subsystem.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window to affect.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_StartTextInput`]
     /// - [`SDL_StopTextInput`]
     pub fn SDL_ClearComposition(window: *mut SDL_Window) -> ::core::primitive::bool;
@@ -751,24 +821,24 @@ extern "C" {
     /// Native input methods may place a window with word suggestions near the
     /// cursor, without covering the text being entered.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window for which to set the text input area.
     /// - `rect`: the [`SDL_Rect`] representing the text input area, in window
     ///   coordinates, or NULL to clear it.
     /// - `cursor`: the offset of the current cursor location relative to
     ///   `rect->x`, in window coordinates.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetTextInputArea`]
     /// - [`SDL_StartTextInput`]
     pub fn SDL_SetTextInputArea(
@@ -783,24 +853,24 @@ extern "C" {
     ///
     /// This returns the values previously set by [`SDL_SetTextInputArea()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window for which to query the text input area.
     /// - `rect`: a pointer to an [`SDL_Rect`] filled in with the text input area,
     ///   may be NULL.
     /// - `cursor`: a pointer to the offset of the current cursor location
     ///   relative to `rect->x`, may be NULL.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_SetTextInputArea`]
     pub fn SDL_GetTextInputArea(
         window: *mut SDL_Window,
@@ -812,17 +882,17 @@ extern "C" {
 extern "C" {
     /// Check whether the platform has screen keyboard support.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if the platform has some screen keyboard support or false if
     ///   not.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_StartTextInput`]
     /// - [`SDL_ScreenKeyboardShown`]
     pub fn SDL_HasScreenKeyboardSupport() -> ::core::primitive::bool;
@@ -831,19 +901,19 @@ extern "C" {
 extern "C" {
     /// Check whether the screen keyboard is shown for given window.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `window`: the window for which screen keyboard should be queried.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true if screen keyboard is shown or false if not.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// This function should only be called on the main thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_HasScreenKeyboardSupport`]
     pub fn SDL_ScreenKeyboardShown(window: *mut SDL_Window) -> ::core::primitive::bool;
 }

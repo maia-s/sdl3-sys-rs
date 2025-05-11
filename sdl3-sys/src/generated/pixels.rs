@@ -58,46 +58,46 @@ use super::error::*;
 
 /// A fully opaque 8-bit alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_TRANSPARENT`]
 pub const SDL_ALPHA_OPAQUE: Uint8 = (255 as Uint8);
 
 /// A fully opaque floating point alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_TRANSPARENT_FLOAT`]
 pub const SDL_ALPHA_OPAQUE_FLOAT: ::core::ffi::c_float = 1.0_f32;
 
 /// A fully transparent 8-bit alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_OPAQUE`]
 pub const SDL_ALPHA_TRANSPARENT: Uint8 = (0 as Uint8);
 
 /// A fully transparent floating point alpha value.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ALPHA_OPAQUE_FLOAT`]
 pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 
 /// Pixel type.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_PixelType::UNKNOWN) | [`SDL_PIXELTYPE_UNKNOWN`] | |
@@ -116,6 +116,20 @@ pub const SDL_ALPHA_TRANSPARENT_FLOAT: ::core::ffi::c_float = 0.0_f32;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelType(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PixelType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PixelType> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PixelType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_PixelType> for ::core::ffi::c_int {
     #[inline(always)]
@@ -149,19 +163,19 @@ impl ::core::fmt::Debug for SDL_PixelType {
 }
 
 impl SDL_PixelType {
-    pub const UNKNOWN: Self = Self(0);
-    pub const INDEX1: Self = Self(1);
-    pub const INDEX4: Self = Self(2);
-    pub const INDEX8: Self = Self(3);
-    pub const PACKED8: Self = Self(4);
-    pub const PACKED16: Self = Self(5);
-    pub const PACKED32: Self = Self(6);
-    pub const ARRAYU8: Self = Self(7);
-    pub const ARRAYU16: Self = Self(8);
-    pub const ARRAYU32: Self = Self(9);
-    pub const ARRAYF16: Self = Self(10);
-    pub const ARRAYF32: Self = Self(11);
-    pub const INDEX2: Self = Self(12);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const INDEX1: Self = Self((1 as ::core::ffi::c_int));
+    pub const INDEX4: Self = Self((2 as ::core::ffi::c_int));
+    pub const INDEX8: Self = Self((3 as ::core::ffi::c_int));
+    pub const PACKED8: Self = Self((4 as ::core::ffi::c_int));
+    pub const PACKED16: Self = Self((5 as ::core::ffi::c_int));
+    pub const PACKED32: Self = Self((6 as ::core::ffi::c_int));
+    pub const ARRAYU8: Self = Self((7 as ::core::ffi::c_int));
+    pub const ARRAYU16: Self = Self((8 as ::core::ffi::c_int));
+    pub const ARRAYU32: Self = Self((9 as ::core::ffi::c_int));
+    pub const ARRAYF16: Self = Self((10 as ::core::ffi::c_int));
+    pub const ARRAYF32: Self = Self((11 as ::core::ffi::c_int));
+    pub const INDEX2: Self = Self((12 as ::core::ffi::c_int));
 }
 
 pub const SDL_PIXELTYPE_UNKNOWN: SDL_PixelType = SDL_PixelType::UNKNOWN;
@@ -178,12 +192,18 @@ pub const SDL_PIXELTYPE_ARRAYF16: SDL_PixelType = SDL_PixelType::ARRAYF16;
 pub const SDL_PIXELTYPE_ARRAYF32: SDL_PixelType = SDL_PixelType::ARRAYF32;
 pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_PixelType;
+}
+
 /// Bitmap pixel order, high bit -> low bit.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_BitmapOrder::NONE) | [`SDL_BITMAPORDER_NONE`] | |
@@ -192,6 +212,20 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_BitmapOrder(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_BitmapOrder {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_BitmapOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_BitmapOrder) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_BitmapOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -215,21 +249,27 @@ impl ::core::fmt::Debug for SDL_BitmapOrder {
 }
 
 impl SDL_BitmapOrder {
-    pub const NONE: Self = Self(0);
-    pub const _4321: Self = Self(1);
-    pub const _1234: Self = Self(2);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const _4321: Self = Self((1 as ::core::ffi::c_int));
+    pub const _1234: Self = Self((2 as ::core::ffi::c_int));
 }
 
 pub const SDL_BITMAPORDER_NONE: SDL_BitmapOrder = SDL_BitmapOrder::NONE;
 pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder::_4321;
 pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_BitmapOrder {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_BitmapOrder;
+}
+
 /// Packed component order, high bit -> low bit.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_PackedOrder::NONE) | [`SDL_PACKEDORDER_NONE`] | |
@@ -244,6 +284,20 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedOrder(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PackedOrder {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PackedOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PackedOrder) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_PackedOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -273,15 +327,15 @@ impl ::core::fmt::Debug for SDL_PackedOrder {
 }
 
 impl SDL_PackedOrder {
-    pub const NONE: Self = Self(0);
-    pub const XRGB: Self = Self(1);
-    pub const RGBX: Self = Self(2);
-    pub const ARGB: Self = Self(3);
-    pub const RGBA: Self = Self(4);
-    pub const XBGR: Self = Self(5);
-    pub const BGRX: Self = Self(6);
-    pub const ABGR: Self = Self(7);
-    pub const BGRA: Self = Self(8);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const XRGB: Self = Self((1 as ::core::ffi::c_int));
+    pub const RGBX: Self = Self((2 as ::core::ffi::c_int));
+    pub const ARGB: Self = Self((3 as ::core::ffi::c_int));
+    pub const RGBA: Self = Self((4 as ::core::ffi::c_int));
+    pub const XBGR: Self = Self((5 as ::core::ffi::c_int));
+    pub const BGRX: Self = Self((6 as ::core::ffi::c_int));
+    pub const ABGR: Self = Self((7 as ::core::ffi::c_int));
+    pub const BGRA: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_PACKEDORDER_NONE: SDL_PackedOrder = SDL_PackedOrder::NONE;
@@ -294,12 +348,18 @@ pub const SDL_PACKEDORDER_BGRX: SDL_PackedOrder = SDL_PackedOrder::BGRX;
 pub const SDL_PACKEDORDER_ABGR: SDL_PackedOrder = SDL_PackedOrder::ABGR;
 pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedOrder {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_PackedOrder;
+}
+
 /// Array component order, low byte -> high byte.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_ArrayOrder::NONE) | [`SDL_ARRAYORDER_NONE`] | |
@@ -312,6 +372,20 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ArrayOrder(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_ArrayOrder {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ArrayOrder> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ArrayOrder) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_ArrayOrder> for ::core::ffi::c_int {
     #[inline(always)]
@@ -339,13 +413,13 @@ impl ::core::fmt::Debug for SDL_ArrayOrder {
 }
 
 impl SDL_ArrayOrder {
-    pub const NONE: Self = Self(0);
-    pub const RGB: Self = Self(1);
-    pub const RGBA: Self = Self(2);
-    pub const ARGB: Self = Self(3);
-    pub const BGR: Self = Self(4);
-    pub const BGRA: Self = Self(5);
-    pub const ABGR: Self = Self(6);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const RGB: Self = Self((1 as ::core::ffi::c_int));
+    pub const RGBA: Self = Self((2 as ::core::ffi::c_int));
+    pub const ARGB: Self = Self((3 as ::core::ffi::c_int));
+    pub const BGR: Self = Self((4 as ::core::ffi::c_int));
+    pub const BGRA: Self = Self((5 as ::core::ffi::c_int));
+    pub const ABGR: Self = Self((6 as ::core::ffi::c_int));
 }
 
 pub const SDL_ARRAYORDER_NONE: SDL_ArrayOrder = SDL_ArrayOrder::NONE;
@@ -356,12 +430,18 @@ pub const SDL_ARRAYORDER_BGR: SDL_ArrayOrder = SDL_ArrayOrder::BGR;
 pub const SDL_ARRAYORDER_BGRA: SDL_ArrayOrder = SDL_ArrayOrder::BGRA;
 pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ArrayOrder {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_ArrayOrder;
+}
+
 /// Packed component layout.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_PackedLayout::NONE) | [`SDL_PACKEDLAYOUT_NONE`] | |
@@ -376,6 +456,20 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PackedLayout(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PackedLayout {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PackedLayout> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PackedLayout) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_PackedLayout> for ::core::ffi::c_int {
     #[inline(always)]
@@ -405,15 +499,15 @@ impl ::core::fmt::Debug for SDL_PackedLayout {
 }
 
 impl SDL_PackedLayout {
-    pub const NONE: Self = Self(0);
-    pub const _332: Self = Self(1);
-    pub const _4444: Self = Self(2);
-    pub const _1555: Self = Self(3);
-    pub const _5551: Self = Self(4);
-    pub const _565: Self = Self(5);
-    pub const _8888: Self = Self(6);
-    pub const _2101010: Self = Self(7);
-    pub const _1010102: Self = Self(8);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const _332: Self = Self((1 as ::core::ffi::c_int));
+    pub const _4444: Self = Self((2 as ::core::ffi::c_int));
+    pub const _1555: Self = Self((3 as ::core::ffi::c_int));
+    pub const _5551: Self = Self((4 as ::core::ffi::c_int));
+    pub const _565: Self = Self((5 as ::core::ffi::c_int));
+    pub const _8888: Self = Self((6 as ::core::ffi::c_int));
+    pub const _2101010: Self = Self((7 as ::core::ffi::c_int));
+    pub const _1010102: Self = Self((8 as ::core::ffi::c_int));
 }
 
 pub const SDL_PACKEDLAYOUT_NONE: SDL_PackedLayout = SDL_PackedLayout::NONE;
@@ -426,6 +520,12 @@ pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedLayout {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_PackedLayout;
+}
+
 /// A macro for defining custom FourCC pixel formats.
 ///
 /// For example, defining [`SDL_PIXELFORMAT_YV12`] looks like this:
@@ -434,19 +534,19 @@ pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_101010
 /// SDL_DEFINE_PIXELFOURCC('Y', 'V', '1', '2')
 /// ```
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `A`: the first character of the FourCC code.
 /// - `B`: the second character of the FourCC code.
 /// - `C`: the third character of the FourCC code.
 /// - `D`: the fourth character of the FourCC code.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a format value in the style of [`SDL_PixelFormat`].
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> Uint32 {
@@ -487,10 +587,10 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 /// an alias for ABGR8888 on little-endian CPUs like x86, or an alias for
 /// RGBA8888 on big-endian CPUs.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_PixelFormat::UNKNOWN) | [`SDL_PIXELFORMAT_UNKNOWN`] | |
@@ -569,6 +669,20 @@ pub const fn SDL_DEFINE_PIXELFOURCC(A: Uint8, B: Uint8, C: Uint8, D: Uint8) -> U
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_PixelFormat(pub ::core::ffi::c_int);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_PixelFormat {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_PixelFormat> for ::core::ffi::c_int {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_PixelFormat) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_PixelFormat> for ::core::ffi::c_int {
     #[inline(always)]
@@ -670,81 +784,81 @@ impl ::core::fmt::Debug for SDL_PixelFormat {
 }
 
 impl SDL_PixelFormat {
-    pub const UNKNOWN: Self = Self(0);
-    pub const INDEX1LSB: Self = Self(0x11100100);
-    pub const INDEX1MSB: Self = Self(0x11200100);
-    pub const INDEX2LSB: Self = Self(0x1c100200);
-    pub const INDEX2MSB: Self = Self(0x1c200200);
-    pub const INDEX4LSB: Self = Self(0x12100400);
-    pub const INDEX4MSB: Self = Self(0x12200400);
-    pub const INDEX8: Self = Self(0x13000801);
-    pub const RGB332: Self = Self(0x14110801);
-    pub const XRGB4444: Self = Self(0x15120c02);
-    pub const XBGR4444: Self = Self(0x15520c02);
-    pub const XRGB1555: Self = Self(0x15130f02);
-    pub const XBGR1555: Self = Self(0x15530f02);
-    pub const ARGB4444: Self = Self(0x15321002);
-    pub const RGBA4444: Self = Self(0x15421002);
-    pub const ABGR4444: Self = Self(0x15721002);
-    pub const BGRA4444: Self = Self(0x15821002);
-    pub const ARGB1555: Self = Self(0x15331002);
-    pub const RGBA5551: Self = Self(0x15441002);
-    pub const ABGR1555: Self = Self(0x15731002);
-    pub const BGRA5551: Self = Self(0x15841002);
-    pub const RGB565: Self = Self(0x15151002);
-    pub const BGR565: Self = Self(0x15551002);
-    pub const RGB24: Self = Self(0x17101803);
-    pub const BGR24: Self = Self(0x17401803);
-    pub const XRGB8888: Self = Self(0x16161804);
-    pub const RGBX8888: Self = Self(0x16261804);
-    pub const XBGR8888: Self = Self(0x16561804);
-    pub const BGRX8888: Self = Self(0x16661804);
-    pub const ARGB8888: Self = Self(0x16362004);
-    pub const RGBA8888: Self = Self(0x16462004);
-    pub const ABGR8888: Self = Self(0x16762004);
-    pub const BGRA8888: Self = Self(0x16862004);
-    pub const XRGB2101010: Self = Self(0x16172004);
-    pub const XBGR2101010: Self = Self(0x16572004);
-    pub const ARGB2101010: Self = Self(0x16372004);
-    pub const ABGR2101010: Self = Self(0x16772004);
-    pub const RGB48: Self = Self(0x18103006);
-    pub const BGR48: Self = Self(0x18403006);
-    pub const RGBA64: Self = Self(0x18204008);
-    pub const ARGB64: Self = Self(0x18304008);
-    pub const BGRA64: Self = Self(0x18504008);
-    pub const ABGR64: Self = Self(0x18604008);
-    pub const RGB48_FLOAT: Self = Self(0x1a103006);
-    pub const BGR48_FLOAT: Self = Self(0x1a403006);
-    pub const RGBA64_FLOAT: Self = Self(0x1a204008);
-    pub const ARGB64_FLOAT: Self = Self(0x1a304008);
-    pub const BGRA64_FLOAT: Self = Self(0x1a504008);
-    pub const ABGR64_FLOAT: Self = Self(0x1a604008);
-    pub const RGB96_FLOAT: Self = Self(0x1b10600c);
-    pub const BGR96_FLOAT: Self = Self(0x1b40600c);
-    pub const RGBA128_FLOAT: Self = Self(0x1b208010);
-    pub const ARGB128_FLOAT: Self = Self(0x1b308010);
-    pub const BGRA128_FLOAT: Self = Self(0x1b508010);
-    pub const ABGR128_FLOAT: Self = Self(0x1b608010);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_int));
+    pub const INDEX1LSB: Self = Self((0x11100100 as ::core::ffi::c_int));
+    pub const INDEX1MSB: Self = Self((0x11200100 as ::core::ffi::c_int));
+    pub const INDEX2LSB: Self = Self((0x1c100200 as ::core::ffi::c_int));
+    pub const INDEX2MSB: Self = Self((0x1c200200 as ::core::ffi::c_int));
+    pub const INDEX4LSB: Self = Self((0x12100400 as ::core::ffi::c_int));
+    pub const INDEX4MSB: Self = Self((0x12200400 as ::core::ffi::c_int));
+    pub const INDEX8: Self = Self((0x13000801 as ::core::ffi::c_int));
+    pub const RGB332: Self = Self((0x14110801 as ::core::ffi::c_int));
+    pub const XRGB4444: Self = Self((0x15120c02 as ::core::ffi::c_int));
+    pub const XBGR4444: Self = Self((0x15520c02 as ::core::ffi::c_int));
+    pub const XRGB1555: Self = Self((0x15130f02 as ::core::ffi::c_int));
+    pub const XBGR1555: Self = Self((0x15530f02 as ::core::ffi::c_int));
+    pub const ARGB4444: Self = Self((0x15321002 as ::core::ffi::c_int));
+    pub const RGBA4444: Self = Self((0x15421002 as ::core::ffi::c_int));
+    pub const ABGR4444: Self = Self((0x15721002 as ::core::ffi::c_int));
+    pub const BGRA4444: Self = Self((0x15821002 as ::core::ffi::c_int));
+    pub const ARGB1555: Self = Self((0x15331002 as ::core::ffi::c_int));
+    pub const RGBA5551: Self = Self((0x15441002 as ::core::ffi::c_int));
+    pub const ABGR1555: Self = Self((0x15731002 as ::core::ffi::c_int));
+    pub const BGRA5551: Self = Self((0x15841002 as ::core::ffi::c_int));
+    pub const RGB565: Self = Self((0x15151002 as ::core::ffi::c_int));
+    pub const BGR565: Self = Self((0x15551002 as ::core::ffi::c_int));
+    pub const RGB24: Self = Self((0x17101803 as ::core::ffi::c_int));
+    pub const BGR24: Self = Self((0x17401803 as ::core::ffi::c_int));
+    pub const XRGB8888: Self = Self((0x16161804 as ::core::ffi::c_int));
+    pub const RGBX8888: Self = Self((0x16261804 as ::core::ffi::c_int));
+    pub const XBGR8888: Self = Self((0x16561804 as ::core::ffi::c_int));
+    pub const BGRX8888: Self = Self((0x16661804 as ::core::ffi::c_int));
+    pub const ARGB8888: Self = Self((0x16362004 as ::core::ffi::c_int));
+    pub const RGBA8888: Self = Self((0x16462004 as ::core::ffi::c_int));
+    pub const ABGR8888: Self = Self((0x16762004 as ::core::ffi::c_int));
+    pub const BGRA8888: Self = Self((0x16862004 as ::core::ffi::c_int));
+    pub const XRGB2101010: Self = Self((0x16172004 as ::core::ffi::c_int));
+    pub const XBGR2101010: Self = Self((0x16572004 as ::core::ffi::c_int));
+    pub const ARGB2101010: Self = Self((0x16372004 as ::core::ffi::c_int));
+    pub const ABGR2101010: Self = Self((0x16772004 as ::core::ffi::c_int));
+    pub const RGB48: Self = Self((0x18103006 as ::core::ffi::c_int));
+    pub const BGR48: Self = Self((0x18403006 as ::core::ffi::c_int));
+    pub const RGBA64: Self = Self((0x18204008 as ::core::ffi::c_int));
+    pub const ARGB64: Self = Self((0x18304008 as ::core::ffi::c_int));
+    pub const BGRA64: Self = Self((0x18504008 as ::core::ffi::c_int));
+    pub const ABGR64: Self = Self((0x18604008 as ::core::ffi::c_int));
+    pub const RGB48_FLOAT: Self = Self((0x1a103006 as ::core::ffi::c_int));
+    pub const BGR48_FLOAT: Self = Self((0x1a403006 as ::core::ffi::c_int));
+    pub const RGBA64_FLOAT: Self = Self((0x1a204008 as ::core::ffi::c_int));
+    pub const ARGB64_FLOAT: Self = Self((0x1a304008 as ::core::ffi::c_int));
+    pub const BGRA64_FLOAT: Self = Self((0x1a504008 as ::core::ffi::c_int));
+    pub const ABGR64_FLOAT: Self = Self((0x1a604008 as ::core::ffi::c_int));
+    pub const RGB96_FLOAT: Self = Self((0x1b10600c as ::core::ffi::c_int));
+    pub const BGR96_FLOAT: Self = Self((0x1b40600c as ::core::ffi::c_int));
+    pub const RGBA128_FLOAT: Self = Self((0x1b208010 as ::core::ffi::c_int));
+    pub const ARGB128_FLOAT: Self = Self((0x1b308010 as ::core::ffi::c_int));
+    pub const BGRA128_FLOAT: Self = Self((0x1b508010 as ::core::ffi::c_int));
+    pub const ABGR128_FLOAT: Self = Self((0x1b608010 as ::core::ffi::c_int));
     /// Planar mode: Y + V + U  (3 planes)
-    pub const YV12: Self = Self(0x32315659);
+    pub const YV12: Self = Self((0x32315659 as ::core::ffi::c_int));
     /// Planar mode: Y + U + V  (3 planes)
-    pub const IYUV: Self = Self(0x56555949);
+    pub const IYUV: Self = Self((0x56555949 as ::core::ffi::c_int));
     /// Packed mode: Y0+U0+Y1+V0 (1 plane)
-    pub const YUY2: Self = Self(0x32595559);
+    pub const YUY2: Self = Self((0x32595559 as ::core::ffi::c_int));
     /// Packed mode: U0+Y0+V0+Y1 (1 plane)
-    pub const UYVY: Self = Self(0x59565955);
+    pub const UYVY: Self = Self((0x59565955 as ::core::ffi::c_int));
     /// Packed mode: Y0+V0+Y1+U0 (1 plane)
-    pub const YVYU: Self = Self(0x55595659);
+    pub const YVYU: Self = Self((0x55595659 as ::core::ffi::c_int));
     /// Planar mode: Y + U/V interleaved  (2 planes)
-    pub const NV12: Self = Self(0x3231564e);
+    pub const NV12: Self = Self((0x3231564e as ::core::ffi::c_int));
     /// Planar mode: Y + V/U interleaved  (2 planes)
-    pub const NV21: Self = Self(0x3132564e);
+    pub const NV21: Self = Self((0x3132564e as ::core::ffi::c_int));
     /// Planar mode: Y + U/V interleaved  (2 planes)
-    pub const P010: Self = Self(0x30313050);
+    pub const P010: Self = Self((0x30313050 as ::core::ffi::c_int));
     /// Android video texture format
-    pub const EXTERNAL_OES: Self = Self(0x2053454f);
+    pub const EXTERNAL_OES: Self = Self((0x2053454f as ::core::ffi::c_int));
     /// Motion JPEG
-    pub const MJPG: Self = Self(0x47504a4d);
+    pub const MJPG: Self = Self((0x47504a4d as ::core::ffi::c_int));
     #[cfg(target_endian = "big")]
     #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
     pub const RGBA32: Self = SDL_PIXELFORMAT_RGBA8888;
@@ -919,6 +1033,12 @@ pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PixelFormat::BGRX32;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelFormat {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_PixelFormat;
+}
+
 /// A macro for defining custom non-FourCC pixel formats.
 ///
 /// For example, defining [`SDL_PIXELFORMAT_RGBA8888`] looks like this:
@@ -927,7 +1047,7 @@ pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 /// SDL_DEFINE_PIXELFORMAT(SDL_PIXELTYPE_PACKED32, SDL_PACKEDORDER_RGBA, SDL_PACKEDLAYOUT_8888, 32, 4)
 /// ```
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `type`: the type of the new format, probably a [`SDL_PixelType`] value.
 /// - `order`: the order of the new format, probably a [`SDL_BitmapOrder`],
 ///   [`SDL_PackedOrder`], or [`SDL_ArrayOrder`] value.
@@ -936,13 +1056,13 @@ pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 /// - `bits`: the number of bits per pixel of the new format.
 /// - `bytes`: the number of bytes per pixel of the new format.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a format value in the style of [`SDL_PixelFormat`].
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_DEFINE_PIXELFORMAT(
@@ -953,9 +1073,9 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
     bytes: ::core::primitive::u8,
 ) -> SDL_PixelFormat {
     SDL_PixelFormat(
-        (((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16))
+        ((((((268435456_i32 | (r#type.0 << 24)) | (order << 20)) | (layout.0 << 16))
             | ((bits as ::core::ffi::c_int) << 8))
-            | ((bytes as ::core::ffi::c_int) << 0)),
+            | ((bytes as ::core::ffi::c_int) << 0)) as ::core::ffi::c_int),
     )
 }
 
@@ -964,16 +1084,16 @@ pub const fn SDL_DEFINE_PIXELFORMAT(
 /// This macro is generally not needed directly by an app, which should use
 /// specific tests, like [`SDL_ISPIXELFORMAT_FOURCC`], instead.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the flags of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELFLAG(format: SDL_PixelFormat) -> ::core::ffi::c_int {
@@ -984,16 +1104,16 @@ pub const fn SDL_PIXELFLAG(format: SDL_PixelFormat) -> ::core::ffi::c_int {
 ///
 /// This is usually a value from the [`SDL_PixelType`] enumeration.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the type of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELTYPE(format: SDL_PixelFormat) -> SDL_PixelType {
@@ -1005,16 +1125,16 @@ pub const fn SDL_PIXELTYPE(format: SDL_PixelFormat) -> SDL_PixelType {
 /// This is usually a value from the [`SDL_BitmapOrder`], [`SDL_PackedOrder`], or
 /// [`SDL_ArrayOrder`] enumerations, depending on the format type.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the order of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELORDER(format: SDL_PixelFormat) -> ::core::ffi::c_int {
@@ -1026,16 +1146,16 @@ pub const fn SDL_PIXELORDER(format: SDL_PixelFormat) -> ::core::ffi::c_int {
 /// This is usually a value from the [`SDL_PackedLayout`] enumeration, or zero if a
 /// layout doesn't make sense for the format type.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the layout of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormat) -> SDL_PackedLayout {
@@ -1049,16 +1169,16 @@ pub const fn SDL_PIXELLAYOUT(format: SDL_PixelFormat) -> SDL_PackedLayout {
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format has alpha, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1073,27 +1193,27 @@ pub const fn SDL_ISPIXELFORMAT_FOURCC(format: SDL_PixelFormat) -> ::core::primit
 /// FourCC formats will report zero here, as it rarely makes sense to measure
 /// them per-pixel.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the bits-per-pixel of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BYTESPERPIXEL`]
 #[inline(always)]
 pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 {
-    ((if SDL_ISPIXELFORMAT_FOURCC(format) {
+    (if SDL_ISPIXELFORMAT_FOURCC(format) {
         0_i32
     } else {
         ((format.0 >> 8) & 255_i32)
-    }) as ::core::primitive::u8)
+    } as ::core::primitive::u8)
 }
 
 /// A macro to determine if an [`SDL_PixelFormat`] is an indexed format.
@@ -1101,16 +1221,16 @@ pub const fn SDL_BITSPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is indexed, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1126,16 +1246,16 @@ pub const fn SDL_ISPIXELFORMAT_INDEXED(format: SDL_PixelFormat) -> ::core::primi
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is packed, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1150,16 +1270,16 @@ pub const fn SDL_ISPIXELFORMAT_PACKED(format: SDL_PixelFormat) -> ::core::primit
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is an array, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1176,16 +1296,16 @@ pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormat) -> ::core::primiti
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is 10-bit, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_FLOAT(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1199,16 +1319,16 @@ pub const fn SDL_ISPIXELFORMAT_FLOAT(format: SDL_PixelFormat) -> ::core::primiti
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format has alpha, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1229,16 +1349,16 @@ pub const fn SDL_ISPIXELFORMAT_ALPHA(format: SDL_PixelFormat) -> ::core::primiti
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if the format is 10-bit, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primitive::bool {
@@ -1255,23 +1375,23 @@ pub const fn SDL_ISPIXELFORMAT_10BIT(format: SDL_PixelFormat) -> ::core::primiti
 /// FourCC formats do their best here, but many of them don't have a meaningful
 /// measurement of bytes per pixel.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the bytes-per-pixel of `format`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_BITSPERPIXEL`]
 #[inline(always)]
 pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8 {
-    ((if SDL_ISPIXELFORMAT_FOURCC(format) {
+    (if SDL_ISPIXELFORMAT_FOURCC(format) {
         if ((((format.0 == SDL_PIXELFORMAT_YUY2.0) || (format.0 == SDL_PIXELFORMAT_UYVY.0))
             || (format.0 == SDL_PIXELFORMAT_YVYU.0))
             || (format.0 == SDL_PIXELFORMAT_P010.0))
@@ -1282,15 +1402,15 @@ pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8
         }
     } else {
         ((format.0 >> 0) & 255_i32)
-    }) as ::core::primitive::u8)
+    } as ::core::primitive::u8)
 }
 
 /// Colorspace color type.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_ColorType::UNKNOWN) | [`SDL_COLOR_TYPE_UNKNOWN`] | |
@@ -1299,6 +1419,20 @@ pub const fn SDL_BYTESPERPIXEL(format: SDL_PixelFormat) -> ::core::primitive::u8
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorType(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorType {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ColorType> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ColorType) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_ColorType> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1322,22 +1456,28 @@ impl ::core::fmt::Debug for SDL_ColorType {
 }
 
 impl SDL_ColorType {
-    pub const UNKNOWN: Self = Self(0);
-    pub const RGB: Self = Self(1);
-    pub const YCBCR: Self = Self(2);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
+    pub const RGB: Self = Self((1 as ::core::ffi::c_uint));
+    pub const YCBCR: Self = Self((2 as ::core::ffi::c_uint));
 }
 
 pub const SDL_COLOR_TYPE_UNKNOWN: SDL_ColorType = SDL_ColorType::UNKNOWN;
 pub const SDL_COLOR_TYPE_RGB: SDL_ColorType = SDL_ColorType::RGB;
 pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorType {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_ColorType;
+}
+
 /// Colorspace color range, as described by
 /// <https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_ColorRange::UNKNOWN) | [`SDL_COLOR_RANGE_UNKNOWN`] | |
@@ -1346,6 +1486,20 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorRange(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorRange {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ColorRange> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ColorRange) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_ColorRange> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1369,11 +1523,11 @@ impl ::core::fmt::Debug for SDL_ColorRange {
 }
 
 impl SDL_ColorRange {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
     /// Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma
-    pub const LIMITED: Self = Self(1);
+    pub const LIMITED: Self = Self((1 as ::core::ffi::c_uint));
     /// Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma
-    pub const FULL: Self = Self(2);
+    pub const FULL: Self = Self((2 as ::core::ffi::c_uint));
 }
 
 pub const SDL_COLOR_RANGE_UNKNOWN: SDL_ColorRange = SDL_ColorRange::UNKNOWN;
@@ -1382,13 +1536,19 @@ pub const SDL_COLOR_RANGE_LIMITED: SDL_ColorRange = SDL_ColorRange::LIMITED;
 /// Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma
 pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorRange {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_ColorRange;
+}
+
 /// Colorspace color primaries, as described by
 /// <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_ColorPrimaries::UNKNOWN) | [`SDL_COLOR_PRIMARIES_UNKNOWN`] | |
@@ -1408,6 +1568,20 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ColorPrimaries(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ColorPrimaries {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ColorPrimaries> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ColorPrimaries) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_ColorPrimaries> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1442,31 +1616,31 @@ impl ::core::fmt::Debug for SDL_ColorPrimaries {
 }
 
 impl SDL_ColorPrimaries {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
     /// ITU-R BT.709-6
-    pub const BT709: Self = Self(1);
-    pub const UNSPECIFIED: Self = Self(2);
+    pub const BT709: Self = Self((1 as ::core::ffi::c_uint));
+    pub const UNSPECIFIED: Self = Self((2 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System M
-    pub const BT470M: Self = Self(4);
+    pub const BT470M: Self = Self((4 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625
-    pub const BT470BG: Self = Self(5);
+    pub const BT470BG: Self = Self((5 as ::core::ffi::c_uint));
     /// ITU-R BT.601-7 525, SMPTE 170M
-    pub const BT601: Self = Self(6);
+    pub const BT601: Self = Self((6 as ::core::ffi::c_uint));
     /// SMPTE 240M, functionally the same as [`SDL_COLOR_PRIMARIES_BT601`]
-    pub const SMPTE240: Self = Self(7);
+    pub const SMPTE240: Self = Self((7 as ::core::ffi::c_uint));
     /// Generic film (color filters using Illuminant C)
-    pub const GENERIC_FILM: Self = Self(8);
+    pub const GENERIC_FILM: Self = Self((8 as ::core::ffi::c_uint));
     /// ITU-R BT.2020-2 / ITU-R BT.2100-0
-    pub const BT2020: Self = Self(9);
+    pub const BT2020: Self = Self((9 as ::core::ffi::c_uint));
     /// SMPTE ST 428-1
-    pub const XYZ: Self = Self(10);
+    pub const XYZ: Self = Self((10 as ::core::ffi::c_uint));
     /// SMPTE RP 431-2
-    pub const SMPTE431: Self = Self(11);
+    pub const SMPTE431: Self = Self((11 as ::core::ffi::c_uint));
     /// SMPTE EG 432-1 / DCI P3
-    pub const SMPTE432: Self = Self(12);
+    pub const SMPTE432: Self = Self((12 as ::core::ffi::c_uint));
     /// EBU Tech. 3213-E
-    pub const EBU3213: Self = Self(22);
-    pub const CUSTOM: Self = Self(31);
+    pub const EBU3213: Self = Self((22 as ::core::ffi::c_uint));
+    pub const CUSTOM: Self = Self((31 as ::core::ffi::c_uint));
 }
 
 pub const SDL_COLOR_PRIMARIES_UNKNOWN: SDL_ColorPrimaries = SDL_ColorPrimaries::UNKNOWN;
@@ -1495,14 +1669,20 @@ pub const SDL_COLOR_PRIMARIES_SMPTE432: SDL_ColorPrimaries = SDL_ColorPrimaries:
 pub const SDL_COLOR_PRIMARIES_EBU3213: SDL_ColorPrimaries = SDL_ColorPrimaries::EBU3213;
 pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::CUSTOM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorPrimaries {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_ColorPrimaries;
+}
+
 /// Colorspace transfer characteristics.
 ///
 /// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_TransferCharacteristics::UNKNOWN) | [`SDL_TRANSFER_CHARACTERISTICS_UNKNOWN`] | |
@@ -1527,6 +1707,20 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_TransferCharacteristics(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_TransferCharacteristics {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_TransferCharacteristics) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_TransferCharacteristics> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1566,38 +1760,38 @@ impl ::core::fmt::Debug for SDL_TransferCharacteristics {
 }
 
 impl SDL_TransferCharacteristics {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as ::core::ffi::c_uint));
     /// Rec. ITU-R BT.709-6 / ITU-R BT1361
-    pub const BT709: Self = Self(1);
-    pub const UNSPECIFIED: Self = Self(2);
+    pub const BT709: Self = Self((1 as ::core::ffi::c_uint));
+    pub const UNSPECIFIED: Self = Self((2 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System M / ITU-R BT1700 625 PAL & SECAM
-    pub const GAMMA22: Self = Self(4);
+    pub const GAMMA22: Self = Self((4 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System B, G
-    pub const GAMMA28: Self = Self(5);
+    pub const GAMMA28: Self = Self((5 as ::core::ffi::c_uint));
     /// SMPTE ST 170M / ITU-R BT.601-7 525 or 625
-    pub const BT601: Self = Self(6);
+    pub const BT601: Self = Self((6 as ::core::ffi::c_uint));
     /// SMPTE ST 240M
-    pub const SMPTE240: Self = Self(7);
-    pub const LINEAR: Self = Self(8);
-    pub const LOG100: Self = Self(9);
-    pub const LOG100_SQRT10: Self = Self(10);
+    pub const SMPTE240: Self = Self((7 as ::core::ffi::c_uint));
+    pub const LINEAR: Self = Self((8 as ::core::ffi::c_uint));
+    pub const LOG100: Self = Self((9 as ::core::ffi::c_uint));
+    pub const LOG100_SQRT10: Self = Self((10 as ::core::ffi::c_uint));
     /// IEC 61966-2-4
-    pub const IEC61966: Self = Self(11);
+    pub const IEC61966: Self = Self((11 as ::core::ffi::c_uint));
     /// ITU-R BT1361 Extended Colour Gamut
-    pub const BT1361: Self = Self(12);
+    pub const BT1361: Self = Self((12 as ::core::ffi::c_uint));
     /// IEC 61966-2-1 (sRGB or sYCC)
-    pub const SRGB: Self = Self(13);
+    pub const SRGB: Self = Self((13 as ::core::ffi::c_uint));
     /// ITU-R BT2020 for 10-bit system
-    pub const BT2020_10BIT: Self = Self(14);
+    pub const BT2020_10BIT: Self = Self((14 as ::core::ffi::c_uint));
     /// ITU-R BT2020 for 12-bit system
-    pub const BT2020_12BIT: Self = Self(15);
+    pub const BT2020_12BIT: Self = Self((15 as ::core::ffi::c_uint));
     /// SMPTE ST 2084 for 10-, 12-, 14- and 16-bit systems
-    pub const PQ: Self = Self(16);
+    pub const PQ: Self = Self((16 as ::core::ffi::c_uint));
     /// SMPTE ST 428-1
-    pub const SMPTE428: Self = Self(17);
+    pub const SMPTE428: Self = Self((17 as ::core::ffi::c_uint));
     /// ARIB STD-B67, known as "hybrid log-gamma" (HLG)
-    pub const HLG: Self = Self(18);
-    pub const CUSTOM: Self = Self(31);
+    pub const HLG: Self = Self((18 as ::core::ffi::c_uint));
+    pub const CUSTOM: Self = Self((31 as ::core::ffi::c_uint));
 }
 
 pub const SDL_TRANSFER_CHARACTERISTICS_UNKNOWN: SDL_TransferCharacteristics =
@@ -1652,14 +1846,20 @@ pub const SDL_TRANSFER_CHARACTERISTICS_HLG: SDL_TransferCharacteristics =
 pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
     SDL_TransferCharacteristics::CUSTOM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_TransferCharacteristics {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_TransferCharacteristics;
+}
+
 /// Colorspace matrix coefficients.
 ///
 /// These are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`IDENTITY`](SDL_MatrixCoefficients::IDENTITY) | [`SDL_MATRIX_COEFFICIENTS_IDENTITY`] | |
@@ -1680,6 +1880,20 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_MatrixCoefficients(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_MatrixCoefficients {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_MatrixCoefficients) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_MatrixCoefficients> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1715,30 +1929,30 @@ impl ::core::fmt::Debug for SDL_MatrixCoefficients {
 }
 
 impl SDL_MatrixCoefficients {
-    pub const IDENTITY: Self = Self(0);
+    pub const IDENTITY: Self = Self((0 as ::core::ffi::c_uint));
     /// ITU-R BT.709-6
-    pub const BT709: Self = Self(1);
-    pub const UNSPECIFIED: Self = Self(2);
+    pub const BT709: Self = Self((1 as ::core::ffi::c_uint));
+    pub const UNSPECIFIED: Self = Self((2 as ::core::ffi::c_uint));
     /// US FCC Title 47
-    pub const FCC: Self = Self(4);
+    pub const FCC: Self = Self((4 as ::core::ffi::c_uint));
     /// ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]
-    pub const BT470BG: Self = Self(5);
+    pub const BT470BG: Self = Self((5 as ::core::ffi::c_uint));
     /// ITU-R BT.601-7 525
-    pub const BT601: Self = Self(6);
+    pub const BT601: Self = Self((6 as ::core::ffi::c_uint));
     /// SMPTE 240M
-    pub const SMPTE240: Self = Self(7);
-    pub const YCGCO: Self = Self(8);
+    pub const SMPTE240: Self = Self((7 as ::core::ffi::c_uint));
+    pub const YCGCO: Self = Self((8 as ::core::ffi::c_uint));
     /// ITU-R BT.2020-2 non-constant luminance
-    pub const BT2020_NCL: Self = Self(9);
+    pub const BT2020_NCL: Self = Self((9 as ::core::ffi::c_uint));
     /// ITU-R BT.2020-2 constant luminance
-    pub const BT2020_CL: Self = Self(10);
+    pub const BT2020_CL: Self = Self((10 as ::core::ffi::c_uint));
     /// SMPTE ST 2085
-    pub const SMPTE2085: Self = Self(11);
-    pub const CHROMA_DERIVED_NCL: Self = Self(12);
-    pub const CHROMA_DERIVED_CL: Self = Self(13);
+    pub const SMPTE2085: Self = Self((11 as ::core::ffi::c_uint));
+    pub const CHROMA_DERIVED_NCL: Self = Self((12 as ::core::ffi::c_uint));
+    pub const CHROMA_DERIVED_CL: Self = Self((13 as ::core::ffi::c_uint));
     /// ITU-R BT.2100-0 ICTCP
-    pub const ICTCP: Self = Self(14);
-    pub const CUSTOM: Self = Self(31);
+    pub const ICTCP: Self = Self((14 as ::core::ffi::c_uint));
+    pub const CUSTOM: Self = Self((31 as ::core::ffi::c_uint));
 }
 
 pub const SDL_MATRIX_COEFFICIENTS_IDENTITY: SDL_MatrixCoefficients =
@@ -1774,12 +1988,18 @@ pub const SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL: SDL_MatrixCoefficients =
 pub const SDL_MATRIX_COEFFICIENTS_ICTCP: SDL_MatrixCoefficients = SDL_MatrixCoefficients::ICTCP;
 pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoefficients::CUSTOM;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_MatrixCoefficients {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_MatrixCoefficients;
+}
+
 /// Colorspace chroma sample location.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`NONE`](SDL_ChromaLocation::NONE) | [`SDL_CHROMA_LOCATION_NONE`] | RGB, no chroma sampling |
@@ -1789,6 +2009,20 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_ChromaLocation(pub ::core::ffi::c_uint);
+
+impl ::core::cmp::PartialEq<::core::ffi::c_uint> for SDL_ChromaLocation {
+    #[inline(always)]
+    fn eq(&self, other: &::core::ffi::c_uint) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_ChromaLocation> for ::core::ffi::c_uint {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_ChromaLocation) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_ChromaLocation> for ::core::ffi::c_uint {
     #[inline(always)]
@@ -1814,13 +2048,13 @@ impl ::core::fmt::Debug for SDL_ChromaLocation {
 
 impl SDL_ChromaLocation {
     /// RGB, no chroma sampling
-    pub const NONE: Self = Self(0);
+    pub const NONE: Self = Self((0 as ::core::ffi::c_uint));
     /// In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically.
-    pub const LEFT: Self = Self(1);
+    pub const LEFT: Self = Self((1 as ::core::ffi::c_uint));
     /// In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel.
-    pub const CENTER: Self = Self(2);
+    pub const CENTER: Self = Self((2 as ::core::ffi::c_uint));
     /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
-    pub const TOPLEFT: Self = Self(3);
+    pub const TOPLEFT: Self = Self((3 as ::core::ffi::c_uint));
 }
 
 /// RGB, no chroma sampling
@@ -1832,23 +2066,29 @@ pub const SDL_CHROMA_LOCATION_CENTER: SDL_ChromaLocation = SDL_ChromaLocation::C
 /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
 pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::TOPLEFT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_ChromaLocation {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_ChromaLocation;
+}
+
 /// Colorspace definitions.
 ///
 /// Since similar colorspaces may vary in their details (matrix, transfer
 /// function, etc.), this is not an exhaustive list, but rather a
 /// representative sample of the kinds of colorspaces supported in SDL.
 ///
-/// ### Availability
+/// ## Availability
 /// This enum is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_ColorPrimaries`]
 /// - [`SDL_ColorRange`]
 /// - [`SDL_ColorType`]
 /// - [`SDL_MatrixCoefficients`]
 /// - [`SDL_TransferCharacteristics`]
 ///
-/// ### Known values (`sdl3-sys`)
+/// ## Known values (`sdl3-sys`)
 /// | Associated constant | Global constant | Description |
 /// | ------------------- | --------------- | ----------- |
 /// | [`UNKNOWN`](SDL_Colorspace::UNKNOWN) | [`SDL_COLORSPACE_UNKNOWN`] | |
@@ -1867,6 +2107,20 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_Colorspace(pub Uint32);
+
+impl ::core::cmp::PartialEq<Uint32> for SDL_Colorspace {
+    #[inline(always)]
+    fn eq(&self, other: &Uint32) -> bool {
+        &self.0 == other
+    }
+}
+
+impl ::core::cmp::PartialEq<SDL_Colorspace> for Uint32 {
+    #[inline(always)]
+    fn eq(&self, other: &SDL_Colorspace) -> bool {
+        self == &other.0
+    }
+}
 
 impl From<SDL_Colorspace> for Uint32 {
     #[inline(always)]
@@ -1900,27 +2154,27 @@ impl ::core::fmt::Debug for SDL_Colorspace {
 }
 
 impl SDL_Colorspace {
-    pub const UNKNOWN: Self = Self(0);
+    pub const UNKNOWN: Self = Self((0 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G22_NONE_P709
-    pub const SRGB: Self = Self(0x120005a0);
+    pub const SRGB: Self = Self((0x120005a0 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G10_NONE_P709
-    pub const SRGB_LINEAR: Self = Self(0x12000500);
+    pub const SRGB_LINEAR: Self = Self((0x12000500 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020
-    pub const HDR10: Self = Self(0x12002600);
+    pub const HDR10: Self = Self((0x12002600 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_NONE_P709_X601
-    pub const JPEG: Self = Self(0x220004c6);
+    pub const JPEG: Self = Self((0x220004c6 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601
-    pub const BT601_LIMITED: Self = Self(0x211018c6);
+    pub const BT601_LIMITED: Self = Self((0x211018c6 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P601
-    pub const BT601_FULL: Self = Self(0x221018c6);
+    pub const BT601_FULL: Self = Self((0x221018c6 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709
-    pub const BT709_LIMITED: Self = Self(0x21100421);
+    pub const BT709_LIMITED: Self = Self((0x21100421 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P709
-    pub const BT709_FULL: Self = Self(0x22100421);
+    pub const BT709_FULL: Self = Self((0x22100421 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_STUDIO_G22_LEFT_P2020
-    pub const BT2020_LIMITED: Self = Self(0x21102609);
+    pub const BT2020_LIMITED: Self = Self((0x21102609 as Uint32));
     /// Equivalent to DXGI_COLOR_SPACE_YCBCR_FULL_G22_LEFT_P2020
-    pub const BT2020_FULL: Self = Self(0x22102609);
+    pub const BT2020_FULL: Self = Self((0x22102609 as Uint32));
     /// The default colorspace for RGB surfaces if no colorspace is specified
     pub const RGB_DEFAULT: Self = SDL_COLORSPACE_SRGB;
     /// The default colorspace for YUV surfaces if no colorspace is specified
@@ -1953,6 +2207,12 @@ pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_Colorspace::RGB_DEFAU
 /// The default colorspace for YUV surfaces if no colorspace is specified
 pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAULT;
 
+#[cfg(feature = "metadata")]
+impl sdl3_sys::metadata::HasGroupMetadata for SDL_Colorspace {
+    const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
+        &crate::metadata::pixels::METADATA_SDL_Colorspace;
+}
+
 /// A macro for defining custom [`SDL_Colorspace`] formats.
 ///
 /// For example, defining [`SDL_COLORSPACE_SRGB`] looks like this:
@@ -1966,7 +2226,7 @@ pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAU
 ///                       SDL_CHROMA_LOCATION_NONE)
 /// ```
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `type`: the type of the new format, probably an [`SDL_ColorType`] value.
 /// - `range`: the range of the new format, probably a [`SDL_ColorRange`] value.
 /// - `primaries`: the primaries of the new format, probably an
@@ -1978,13 +2238,13 @@ pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAU
 /// - `chroma`: the chroma sample location of the new format, probably an
 ///   [`SDL_ChromaLocation`] value.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns a format value in the style of [`SDL_Colorspace`].
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_DEFINE_COLORSPACE(
@@ -2006,124 +2266,124 @@ pub const fn SDL_DEFINE_COLORSPACE(
 
 /// A macro to retrieve the type of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ColorType`] for `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACETYPE(cspace: SDL_Colorspace) -> SDL_ColorType {
-    SDL_ColorType(((cspace.0 >> 28) & 15_u32))
+    SDL_ColorType((((cspace.0 >> 28) & 15_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the range of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ColorRange`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACERANGE(cspace: SDL_Colorspace) -> SDL_ColorRange {
-    SDL_ColorRange(((cspace.0 >> 24) & 15_u32))
+    SDL_ColorRange((((cspace.0 >> 24) & 15_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the chroma sample location of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ChromaLocation`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACECHROMA(cspace: SDL_Colorspace) -> SDL_ChromaLocation {
-    SDL_ChromaLocation(((cspace.0 >> 20) & 15_u32))
+    SDL_ChromaLocation((((cspace.0 >> 20) & 15_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the primaries of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_ColorPrimaries`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACEPRIMARIES(cspace: SDL_Colorspace) -> SDL_ColorPrimaries {
-    SDL_ColorPrimaries(((cspace.0 >> 10) & 31_u32))
+    SDL_ColorPrimaries((((cspace.0 >> 10) & 31_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the transfer characteristics of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_TransferCharacteristics`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACETRANSFER(cspace: SDL_Colorspace) -> SDL_TransferCharacteristics {
-    SDL_TransferCharacteristics(((cspace.0 >> 5) & 31_u32))
+    SDL_TransferCharacteristics((((cspace.0 >> 5) & 31_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to retrieve the matrix coefficients of an [`SDL_Colorspace`].
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns the [`SDL_MatrixCoefficients`] of `cspace`.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_COLORSPACEMATRIX(cspace: SDL_Colorspace) -> SDL_MatrixCoefficients {
-    SDL_MatrixCoefficients((cspace.0 & 31_u32))
+    SDL_MatrixCoefficients(((cspace.0 & 31_u32) as ::core::ffi::c_uint))
 }
 
 /// A macro to determine if an [`SDL_Colorspace`] has a limited range.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if limited range, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2132,16 +2392,16 @@ pub const fn SDL_ISCOLORSPACE_LIMITED_RANGE(cspace: SDL_Colorspace) -> ::core::p
 
 /// A macro to determine if an [`SDL_Colorspace`] has a full range.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if full range, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_FULL_RANGE(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2154,16 +2414,16 @@ pub const fn SDL_ISCOLORSPACE_FULL_RANGE(cspace: SDL_Colorspace) -> ::core::prim
 /// Note that this macro double-evaluates its parameter, so do not use
 /// expressions with side-effects here.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if BT601 or BT470BG, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2173,16 +2433,16 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT601(cspace: SDL_Colorspace) -> ::core::pr
 
 /// A macro to determine if an [`SDL_Colorspace`] uses BT709 matrix coefficients.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if BT709, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2192,16 +2452,16 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT709(cspace: SDL_Colorspace) -> ::core::pr
 /// A macro to determine if an [`SDL_Colorspace`] uses BT2020_NCL matrix
 /// coefficients.
 ///
-/// ### Parameters
+/// ## Parameters
 /// - `cspace`: an [`SDL_Colorspace`] to check.
 ///
-/// ### Return value
+/// ## Return value
 /// Returns true if BT2020_NCL, false otherwise.
 ///
-/// ### Thread safety
+/// ## Thread safety
 /// It is safe to call this macro from any thread.
 ///
-/// ### Availability
+/// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace: SDL_Colorspace) -> ::core::primitive::bool {
@@ -2215,7 +2475,7 @@ pub const fn SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace: SDL_Colorspace) -> ::cor
 /// ([`SDL_PIXELFORMAT_ABGR8888`] on little-endian systems and
 /// [`SDL_PIXELFORMAT_RGBA8888`] on big-endian systems).
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -2230,7 +2490,7 @@ pub struct SDL_Color {
 /// The bits of this structure can be directly reinterpreted as a float-packed
 /// color which uses the [`SDL_PIXELFORMAT_RGBA128_FLOAT`] format
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
@@ -2244,13 +2504,12 @@ pub struct SDL_FColor {
 
 /// A set of indexed colors representing a palette.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 ///
-/// ### See also
+/// ## See also
 /// - [`SDL_SetPaletteColors`]
 #[repr(C)]
-// #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Palette {
     /// number of elements in `colors`.
@@ -2261,11 +2520,13 @@ pub struct SDL_Palette {
     pub version: Uint32,
     /// internal use only, do not touch.
     pub refcount: ::core::ffi::c_int,
+    #[doc(hidden)]
+    __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
 /// Details about the format of a pixel.
 ///
-/// ### Availability
+/// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
@@ -2274,6 +2535,7 @@ pub struct SDL_PixelFormatDetails {
     pub format: SDL_PixelFormat,
     pub bits_per_pixel: Uint8,
     pub bytes_per_pixel: Uint8,
+    #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: [Uint8; 2],
     pub Rmask: Uint32,
     pub Gmask: Uint32,
@@ -2292,17 +2554,17 @@ pub struct SDL_PixelFormatDetails {
 extern "C" {
     /// Get the human readable name of a pixel format.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: the pixel format to query.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the human readable name of the specified pixel format or
     ///   "SDL_PIXELFORMAT_UNKNOWN" if the format isn't recognized.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
 }
@@ -2310,7 +2572,7 @@ extern "C" {
 extern "C" {
     /// Convert one of the enumerated pixel formats to a bpp value and RGBA masks.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: one of the [`SDL_PixelFormat`] values.
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: a pointer filled in with the red mask for the format.
@@ -2318,17 +2580,17 @@ extern "C" {
     /// - `Bmask`: a pointer filled in with the blue mask for the format.
     /// - `Amask`: a pointer filled in with the alpha mask for the format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatForMasks`]
     pub fn SDL_GetMasksForPixelFormat(
         format: SDL_PixelFormat,
@@ -2346,24 +2608,24 @@ extern "C" {
     /// This will return [`SDL_PIXELFORMAT_UNKNOWN`] if the conversion wasn't
     /// possible.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `bpp`: a bits per pixel value; usually 15, 16, or 32.
     /// - `Rmask`: the red mask for the format.
     /// - `Gmask`: the green mask for the format.
     /// - `Bmask`: the blue mask for the format.
     /// - `Amask`: the alpha mask for the format.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns the [`SDL_PixelFormat`] value corresponding to the format masks, or
     ///   [`SDL_PIXELFORMAT_UNKNOWN`] if there isn't a match.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetMasksForPixelFormat`]
     pub fn SDL_GetPixelFormatForMasks(
         bpp: ::core::ffi::c_int,
@@ -2381,17 +2643,17 @@ extern "C" {
     /// allocated), and hence should not be modified, especially the palette. Weird
     /// errors such as `Blit combination not supported` may occur.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: one of the [`SDL_PixelFormat`] values.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pointer to a [`SDL_PixelFormatDetails`] structure or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPixelFormatDetails(format: SDL_PixelFormat) -> *const SDL_PixelFormatDetails;
 }
@@ -2401,21 +2663,21 @@ extern "C" {
     ///
     /// The palette entries are initialized to white.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `ncolors`: represents the number of color entries in the color palette.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a new [`SDL_Palette`] structure on success or NULL on failure (e.g. if
     ///   there wasn't enough memory); call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_DestroyPalette`]
     /// - [`SDL_SetPaletteColors`]
     /// - [`SDL_SetSurfacePalette`]
@@ -2425,21 +2687,21 @@ extern "C" {
 extern "C" {
     /// Set a range of colors in a palette.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `palette`: the [`SDL_Palette`] structure to modify.
     /// - `colors`: an array of [`SDL_Color`] structures to copy into the palette.
     /// - `firstcolor`: the index of the first palette entry to modify.
     /// - `ncolors`: the number of entries to modify.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified or destroyed in another thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetPaletteColors(
         palette: *mut SDL_Palette,
@@ -2452,17 +2714,17 @@ extern "C" {
 extern "C" {
     /// Free a palette created with [`SDL_CreatePalette()`].
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `palette`: the [`SDL_Palette`] structure to be freed.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified or destroyed in another thread.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_CreatePalette`]
     pub fn SDL_DestroyPalette(palette: *mut SDL_Palette);
 }
@@ -2485,7 +2747,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -2493,17 +2755,17 @@ extern "C" {
     /// - `g`: the green component of the pixel in the range 0-255.
     /// - `b`: the blue component of the pixel in the range 0-255.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pixel value.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGB`]
     /// - [`SDL_MapRGBA`]
@@ -2535,7 +2797,7 @@ extern "C" {
     /// format the return value can be assigned to a Uint16, and similarly a Uint8
     /// for an 8-bpp format).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
     /// - `palette`: an optional palette for indexed formats, may be NULL.
@@ -2544,17 +2806,17 @@ extern "C" {
     /// - `b`: the blue component of the pixel in the range 0-255.
     /// - `a`: the alpha component of the pixel in the range 0-255.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns a pixel value.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGBA`]
     /// - [`SDL_MapRGB`]
@@ -2577,7 +2839,7 @@ extern "C" {
     /// (e.g., a completely white pixel in 16-bit RGB565 format would return [0xff,
     /// 0xff, 0xff\] not \[0xf8, 0xfc, 0xf8\]).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
@@ -2586,14 +2848,14 @@ extern "C" {
     /// - `g`: a pointer filled in with the green component, may be NULL.
     /// - `b`: a pointer filled in with the blue component, may be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGBA`]
     /// - [`SDL_MapRGB`]
@@ -2619,7 +2881,7 @@ extern "C" {
     /// If the surface has no alpha component, the alpha will be returned as 0xff
     /// (100% opaque).
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `pixel`: a pixel value.
     /// - `format`: a pointer to [`SDL_PixelFormatDetails`] describing the pixel
     ///   format.
@@ -2629,14 +2891,14 @@ extern "C" {
     /// - `b`: a pointer filled in with the blue component, may be NULL.
     /// - `a`: a pointer filled in with the alpha component, may be NULL.
     ///
-    /// ### Thread safety
+    /// ## Thread safety
     /// It is safe to call this function from any thread, as long as
     ///   the palette is not modified.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
-    /// ### See also
+    /// ## See also
     /// - [`SDL_GetPixelFormatDetails`]
     /// - [`SDL_GetRGB`]
     /// - [`SDL_MapRGB`]

@@ -1,30 +1,37 @@
 [package]
 name = "sdl3-main"
-version = "0.4.1"
+version = "0.6.0"
 edition = "2021"
+rust-version = "1.81"
 authors = ["Maia S. R."]
 license = "Zlib"
 description = "Tools for using SDL's main and callback APIs"
 repository = "https://github.com/maia-s/sdl3-sys-rs"
 documentation = "https://docs.rs/sdl3-main"
-keywords = ["sdl"]
-categories = []
+keywords = ["sdl", "main", "callbacks", "game-loop", "event-loop"]
+categories = ["api-bindings", "no-std", "rust-patterns"]
 
 [features]
 default = ["std"]
 alloc = ["sdl3-main-macros/alloc"]
 std = ["alloc", "sdl3-main-macros/std"]
 
-# for docs
 nightly = []
+
+use-parking-lot-v0-12 = ["dep:parking-lot-v0-12", "std"]
 
 [dependencies.sdl3-sys]
 path = "../sdl3-sys"
-version = "0.4"
+version = "0.6"
 
 [dependencies.sdl3-main-macros]
 path = "../sdl3-main-macros"
-version = "0.1.1"
+version = "0.2"
+
+[dependencies.parking-lot-v0-12]
+package = "parking_lot"
+version = "0.12"
+optional = true
 
 [package.metadata.docs.rs]
 all-features = true

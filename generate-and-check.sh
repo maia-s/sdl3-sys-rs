@@ -7,9 +7,13 @@ die() {
 }
 
 require_clean=false
+gen_profile=--release
 
 for arg in "$@"; do
     case "$arg" in
+        --debug)
+            gen_profile=
+            ;;
         --require-clean) 
             require_clean=true
             ;;
@@ -25,15 +29,26 @@ fi
 
 for crate in *-sys; do
     cp -f build-common.rs $crate
+    rm -rf $crate/src/generated $crate/src/metadata/generated
 done
 
-cargo run -p sdl3-sys-gen --release
+cargo run -p sdl3-sys-gen $gen_profile
+
+for crate in sdl3-main; do
+    grep -v "]: <https://docs.rs/$crate/" $crate/README.md >$crate/README.md.inc
+done
 
 if $require_clean; then
     git diff --quiet || die "sdl3-sys-gen output didn't match committed results"
 fi
 
 for crate in *-sys; do
-    DOCS_RS=1 cargo +1.79.0 check -p $crate
-    DOCS_RS=1 cargo +nightly check -p $crate --all-features
+    cargo +1.81.0 check -p $crate --features 'no-link'
+    cargo +1.81.0 check -p $crate --features 'no-link,debug-impls,metadata'
+    cargo +nightly check -p $crate --all-features
+done
+for crate in sdl3-main; do
+    cargo +1.81.0 check -p $crate
+    cargo +1.81.0 check -p $crate --features 'std'
+    cargo +nightly check -p $crate --all-features
 done

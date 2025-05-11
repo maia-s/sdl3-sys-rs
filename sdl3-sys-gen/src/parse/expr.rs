@@ -211,6 +211,14 @@ impl Expr {
         }
         expr
     }
+
+    pub fn cast(&self, ty:Type) -> Self {
+        Self::Cast(Box::new(Cast {
+            span: Span::none(),
+            ty,
+            expr: self.deparenthesize().clone(),
+        }))
+    }
 }
 
 impl GetSpan for Expr {

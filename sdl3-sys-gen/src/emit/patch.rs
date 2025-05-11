@@ -4,10 +4,10 @@ use super::{
 use crate::parse::{
     Block, CanCmp, CanDefault, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident,
     IdentOrKw, Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, StructOrUnion,
-    Type, TypeDef, TypeEnum,
+    Type, TypeDef, TypeDefKind, TypeEnum,
 };
-use core::{cell::RefCell, fmt::Write};
-use std::{ffi::CString, rc::Rc};
+use core::fmt::Write;
+use std::ffi::CString;
 use str_block::str_block;
 
 const VULKAN_CRATE_VERSIONS: &[(&str, &[&str])] = &[("ash", &["0.38"])];
@@ -118,6 +118,90 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
             ctx.decrease_indent();
             writeln!(ctx, "}}")?;
             writeln!(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_copysign" | "SDL_copysignf"),
+        patch: |ctx, f| {
+            let mut fr = f.clone();
+            let ty = ctx.capture_output(|ctx| fr.return_type.emit(ctx))?;
+            let arg0 = &f.args.args[0];
+            let arg1 = &f.args.args[1];
+            fr.extern_kw = None;
+            fr.static_kw = Some(Kw_static { span: Span::none() });
+            fr.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            str_block! {r#"
+                                #[cfg(feature = "-core-float")]
+                                {{
+                                    return {arg0}.copysign({arg1});
+                                }}
+                                #[cfg(not(feature = "-core-float"))]
+                                {{
+                                    extern "C" {{
+                                        fn {ident}({arg0}: {ty}, {arg1}: {ty}) -> {ty};
+                                    }}
+                                    return unsafe {{ {ident}({arg0}, {arg1}) }};
+                                }}
+                            "#},
+                            ty = ty,
+                            ident = f.ident.as_str(),
+                            arg0 = arg0.ident.as_ref().unwrap().as_str(),
+                            arg1 = arg1.ident.as_ref().unwrap().as_str(),
+                        ),
+                        arg0.ty.clone(),
+                        false,
+                        true,
+                    ),
+                )))]),
+            });
+            fr.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_fabs" | "SDL_fabsf"),
+        patch: |ctx, f| {
+            let mut fr = f.clone();
+            let ty = ctx.capture_output(|ctx| fr.return_type.emit(ctx))?;
+            let arg0 = &f.args.args[0];
+            fr.extern_kw = None;
+            fr.static_kw = Some(Kw_static { span: Span::none() });
+            fr.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            str_block! {r#"
+                                #[cfg(feature = "-core-float")]
+                                {{
+                                    return {arg0}.abs();
+                                }}
+                                #[cfg(not(feature = "-core-float"))]
+                                {{
+                                    extern "C" {{
+                                        fn {ident}({arg0}: {ty}) -> {ty};
+                                    }}
+                                    return unsafe {{ {ident}({arg0}) }};
+                                }}
+                            "#},
+                            ty = ty,
+                            ident = f.ident.as_str(),
+                            arg0 = arg0.ident.as_ref().unwrap().as_str(),
+                        ),
+                        arg0.ty.clone(),
+                        false,
+                        true,
+                    ),
+                )))]),
+            });
+            fr.emit(ctx)?;
             Ok(true)
         },
     },
@@ -427,14 +511,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             ctx.write_str(str_block! {r#"
                 #[inline(always)]
                 pub fn SDL_CPUPauseInstruction() {
-                    #[cfg(all(feature = "nightly", any(target_arch = "aarch64", target_arch = "arm64ec")))]
-                    unsafe { ::core::arch::aarch64::__yield() }
-                    #[cfg(all(feature = "nightly", target_arch = "arm"))]
-                    unsafe { ::core::arch::arm::__yield() }
-                    #[cfg(target_arch = "x86")]
-                    unsafe { ::core::arch::x86::_mm_pause() }
-                    #[cfg(target_arch = "x86_64")]
-                    unsafe { ::core::arch::x86_64::_mm_pause() }
+                    ::core::hint::spin_loop();
                 }
 
             "#})?;
@@ -494,7 +571,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         patch: |ctx, define| {
             define.doc.emit(ctx)?;
             writeln!(ctx, "///")?;
-            writeln!(ctx, "/// ### Safety (`sdl3-sys`)")?;
+            writeln!(ctx, "/// ## Safety (`sdl3-sys`)")?;
             writeln!(
                 ctx,
                 "/// - `iface` must point to memory that is valid for writing the type `T`."
@@ -606,6 +683,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                             span: Span::none(),
                             str: CString::from_vec_with_nul(bytes.clone()).unwrap(),
                         }))),
+                        skip: false,
                     }
                     .emit(ctx)?;
                 }
@@ -948,8 +1026,7 @@ const EMIT_STRUCT_OR_UNION_PATCHES: &[EmitStructOrUnionPatch] = &[EmitStructOrUn
                 is_const: false,
                 ty: TypeEnum::Struct(Box::new(s.clone())),
             },
-            use_for_defines: None,
-            associated_defines: Rc::new(RefCell::new(Vec::new())),
+            kind: TypeDefKind::Alias,
         }
         .emit(ctx)?;
         Ok(true)

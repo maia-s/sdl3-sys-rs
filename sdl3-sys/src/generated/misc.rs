@@ -26,15 +26,15 @@ extern "C" {
     /// All this to say: this function can be useful, but you should definitely
     /// test it on every platform you target.
     ///
-    /// ### Parameters
+    /// ## Parameters
     /// - `url`: a valid URL/URI to open. Use `file:///full/path/to/file` for
     ///   local files, if supported.
     ///
-    /// ### Return value
+    /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
-    /// ### Availability
+    /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_OpenURL(url: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
