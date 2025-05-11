@@ -25,17 +25,17 @@ See the documentation for more information.
 ## Recent changes
 
 - 0.6.0 WIP:
-  - Update sdl3-sys to 0.6.0
-  - Removed `MainThreadToken::init` (no longer necessary)
-  - Pass arguments to main on `std` (`!std` already did)
+    - Update sdl3-sys to 0.6.0
+    - Removed `MainThreadToken::init` (no longer necessary)
+    - Pass arguments to main on `std` (`!std` already did)
 - 0.5.0:
-  - Update sdl3-sys to 0.5.0
-  - Added optional parking_lot integration
-  - Added `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
-  - impl `Copy` for `MainThreadToken`
-  - impl `FromResidual` for `AppResult*` on nightly
-- 0.4.1: Fix potential crash if app_quit takes no arguments and appstate is null
-- 0.4.0: Update sdl3-sys to 0.4.0 (first stable SDL release)
+    - Update sdl3-sys to 0.5.0
+    - Add optional parking_lot integration
+    - Add `run_{sync,async}_on_main_thread` and `MainThreadData::get[_mut]_on_main_thread`
+    - impl `Copy` for `MainThreadToken`
+    - impl `FromResidual` for `AppResult*` on nightly
+
+See ChangeLog.md for older changes
 
 [`main`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.main.html>
 [`app_impl`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.app_impl.html>
