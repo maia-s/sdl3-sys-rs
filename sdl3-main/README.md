@@ -28,6 +28,11 @@ See the documentation for more information.
     - Update sdl3-sys to 0.6.0
     - Removed `MainThreadToken::init` (no longer necessary)
     - Pass arguments to main on `std` (`!std` already did)
+
+- 0.5.1:
+    - Fix unsoundness in `run_async_on_main_thread`
+    - Don't allocate in `run_async_on_main_thread` unless it's necessary
+
 - 0.5.0:
     - Update sdl3-sys to 0.5.0
     - Add optional parking_lot integration
