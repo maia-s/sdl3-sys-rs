@@ -1,6 +1,5 @@
 use core::{
     ffi::CStr,
-    hint::spin_loop,
     sync::atomic::{AtomicBool, AtomicUsize, Ordering},
 };
 use libtest_mimic_collect::{libtest_mimic, test};
