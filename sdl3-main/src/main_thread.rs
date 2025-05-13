@@ -220,19 +220,19 @@ pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bo
             unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) }.call_once();
         }
         let f = CallOnceContainer(Some(callback));
-        let data_ptr = unsafe {
+        let userdata = unsafe {
             SDL_aligned_alloc(
                 align_of::<MainThreadCall<CallOnceContainer<F>>>(),
                 size_of::<MainThreadCall<CallOnceContainer<F>>>(),
             )
         } as *mut MainThreadCall<CallOnceContainer<F>>;
-        if data_ptr.is_null() {
+        if userdata.is_null() {
             return false;
         }
-        let userdata = unsafe { addr_of_mut!((*data_ptr).data) };
+        let payload = unsafe { addr_of_mut!((*userdata).data) };
         unsafe {
-            addr_of_mut!((*data_ptr).header.0).write(userdata as *mut dyn CallOnce);
-            addr_of_mut!((*data_ptr).data).write(f);
+            addr_of_mut!((*userdata).header.0).write(payload as *mut dyn CallOnce);
+            payload.write(f);
         }
         let userdata = userdata as *mut c_void;
         if unsafe { SDL_RunOnMainThread(Some(main_thread_fn), userdata, false) } {
