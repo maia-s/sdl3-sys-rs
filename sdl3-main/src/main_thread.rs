@@ -2,8 +2,8 @@ use core::{
     cell::UnsafeCell,
     ffi::c_void,
     marker::PhantomData,
-    mem::MaybeUninit,
-    ptr::addr_of_mut,
+    mem::{align_of, size_of, ManuallyDrop, MaybeUninit},
+    ptr::{self, addr_of_mut},
     sync::atomic::{AtomicBool, Ordering},
 };
 use sdl3_sys::{
@@ -191,34 +191,57 @@ pub fn run_sync_on_main_thread<F: FnOnce() + Send>(callback: F) -> bool {
 /// See also [`run_sync_on_main_thread()`].
 #[must_use]
 pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bool {
-    unsafe extern "C" fn main_thread_fn(userdata: *mut c_void) {
-        defer!(unsafe { SDL_aligned_free(userdata) });
-        let call_once = unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) };
-        call_once.call_once();
-    }
-    let f = CallOnceContainer(Some(callback));
-    let data_ptr = unsafe {
-        SDL_aligned_alloc(
-            align_of::<MainThreadCall<CallOnceContainer<F>>>(),
-            size_of::<MainThreadCall<CallOnceContainer<F>>>(),
-        )
-    } as *mut MainThreadCall<CallOnceContainer<F>>;
-    if data_ptr.is_null() {
-        return false;
-    }
-    let userdata = unsafe { addr_of_mut!((*data_ptr).data) };
-    unsafe {
-        addr_of_mut!((*data_ptr).header.0).write(userdata as *mut dyn CallOnce);
-        addr_of_mut!((*data_ptr).data).write(f);
-    }
-    let userdata = userdata as *mut c_void;
-    if unsafe { SDL_RunOnMainThread(Some(main_thread_fn), userdata, false) } {
-        true
+    if const {
+        size_of::<F>() <= size_of::<*mut c_void>() && align_of::<F>() <= align_of::<*mut c_void>()
+    } {
+        // callback can be stored entirely in userdata; we don't need to allocate
+        unsafe extern "C" fn main_thread_fn<F: FnOnce() + Send + 'static>(userdata: *mut c_void) {
+            unsafe { (&userdata as *const *mut c_void as *const F).read()() }
+        }
+        let mut userdata: *mut c_void = ptr::null_mut();
+        let callback = ManuallyDrop::new(callback);
+        unsafe {
+            // copy and align to *mut c_void
+            (&mut userdata as *mut *mut c_void as *mut u8).copy_from_nonoverlapping(
+                &callback as *const ManuallyDrop<F> as *const u8,
+                size_of::<F>(),
+            );
+        }
+        if unsafe { SDL_RunOnMainThread(Some(main_thread_fn::<F>), userdata, false) } {
+            true
+        } else {
+            let _ = ManuallyDrop::into_inner(callback);
+            false
+        }
     } else {
-        defer!(unsafe { SDL_aligned_free(userdata) });
-        let call_once = unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) };
-        call_once.discard();
-        false
+        // have to allocate for callback
+        unsafe extern "C" fn main_thread_fn(userdata: *mut c_void) {
+            defer!(unsafe { SDL_aligned_free(userdata) });
+            unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) }.call_once();
+        }
+        let f = CallOnceContainer(Some(callback));
+        let data_ptr = unsafe {
+            SDL_aligned_alloc(
+                align_of::<MainThreadCall<CallOnceContainer<F>>>(),
+                size_of::<MainThreadCall<CallOnceContainer<F>>>(),
+            )
+        } as *mut MainThreadCall<CallOnceContainer<F>>;
+        if data_ptr.is_null() {
+            return false;
+        }
+        let userdata = unsafe { addr_of_mut!((*data_ptr).data) };
+        unsafe {
+            addr_of_mut!((*data_ptr).header.0).write(userdata as *mut dyn CallOnce);
+            addr_of_mut!((*data_ptr).data).write(f);
+        }
+        let userdata = userdata as *mut c_void;
+        if unsafe { SDL_RunOnMainThread(Some(main_thread_fn), userdata, false) } {
+            true
+        } else {
+            defer!(unsafe { SDL_aligned_free(userdata) });
+            unsafe { &mut *((*(userdata as *mut MainThreadCallHeader)).0) }.discard();
+            false
+        }
     }
 }
 
