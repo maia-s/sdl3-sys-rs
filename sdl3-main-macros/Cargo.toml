@@ -2,6 +2,7 @@
 name = "sdl3-main-macros"
 version = "0.2.0"
 edition = "2021"
+rust-version = "1.81"
 authors = ["Maia S. R."]
 license = "Zlib"
 description = "Proc macros for sdl3-main"
