@@ -238,10 +238,8 @@ pub mod __internal {
     use std::{
         any::Any,
         cell::UnsafeCell,
-        env,
         mem::MaybeUninit,
         panic::{catch_unwind, resume_unwind, UnwindSafe},
-        vec::Vec,
     };
 
     #[cfg(feature = "std")]
@@ -319,6 +317,9 @@ pub mod __internal {
         }
         #[cfg(not(windows))]
         {
+            use std::env;
+            use std::vec::Vec;
+
             // copy arguments so we can null-terminate them
             let mut cargs = Vec::new();
 
