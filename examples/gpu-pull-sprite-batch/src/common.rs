@@ -8,9 +8,7 @@ use sdl3_sys::everything::*;
 
 use serde::Deserialize;
 
-const CONTENT_DIR: &str = "../../content";
-const CONTENT_SHADERS_SUBDIR: &str = "shaders/compiled";
-const CONTENT_IMAGES_SUBDIR: &str = "images";
+const MANIFEST_DIR: &str = env!("CARGO_MANIFEST_DIR");
 
 /// Load a precompiled shader based on file name.
 /// Relies on the structure of the content directory, shadercross json metadata, and the file name suffix.
@@ -18,7 +16,8 @@ pub unsafe fn load_shader(
     device: *mut SDL_GPUDevice,
     shader_name: &'static str,
 ) -> *mut SDL_GPUShader {
-    let compiled_shaders_dir = format!("{CONTENT_DIR}/{CONTENT_SHADERS_SUBDIR}");
+    let content_dir = get_content_dir();
+    let compiled_shaders_dir = format!("{content_dir}/shaders/compiled");
 
     let backend_formats = SDL_GetGPUShaderFormats(device);
     let (format, entrypoint) = if backend_formats & SDL_GPU_SHADERFORMAT_SPIRV != 0 {
@@ -148,7 +147,8 @@ pub unsafe fn deinit_gpu_window(device: *mut SDL_GPUDevice, window: *mut SDL_Win
 }
 
 pub unsafe fn load_bmp(file_name: &str) -> *mut SDL_Surface {
-    let image_path = format!("{CONTENT_DIR}/{CONTENT_IMAGES_SUBDIR}/{file_name}");
+    let content_dir = get_content_dir();
+    let image_path = format!("{content_dir}/images/{file_name}");
     let image_path = CString::new(image_path).unwrap();
 
     let mut result = SDL_LoadBMP(image_path.as_ptr());
@@ -222,4 +222,9 @@ impl Matrix4x4 {
             m44: 1.0,
         }
     }
+}
+
+// a workaround for getting the cargo workspace root
+fn get_content_dir() -> String {
+    format!("{MANIFEST_DIR}/../../content")
 }
