@@ -202,7 +202,7 @@ pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bo
         let payload = unsafe { addr_of_mut!((*userdata).data) };
         unsafe {
             addr_of_mut!((*userdata).header.0).write(payload as *mut dyn CallOnce);
-            payload.write(f);
+            (payload as *mut ManuallyDrop<CallOnceContainer<F>>).write(ManuallyDrop::new(f));
         }
         let userdata = userdata as *mut c_void;
         if unsafe { SDL_RunOnMainThread(Some(main_thread_fn), userdata, false) } {

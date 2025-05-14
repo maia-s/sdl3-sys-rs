@@ -5,6 +5,9 @@
     - Removed `MainThreadToken::init` (no longer necessary)
     - Pass arguments to main on `std` (`!std` already did)
 
+- 0.5.2:
+    - Fix more unsoundness in `run_async_on_main_thread`
+
 - 0.5.1:
     - Fix unsoundness in `run_async_on_main_thread`
     - Don't allocate in `run_async_on_main_thread` unless it's necessary
