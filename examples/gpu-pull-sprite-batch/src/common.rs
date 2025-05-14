@@ -3,7 +3,7 @@
 //! Based on the common functions from the SDL GPU examples
 //! https://github.com/TheSpydog/SDL_gpu_examples/blob/main/Examples/Common.c
 
-use std::ffi::{CStr, CString, c_char};
+use std::ffi::{c_char, CStr, CString};
 use std::ptr::{null, null_mut};
 
 use sdl3_sys::everything::*;

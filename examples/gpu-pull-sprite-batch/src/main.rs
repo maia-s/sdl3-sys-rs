@@ -6,7 +6,7 @@
 use std::sync::Mutex;
 use std::{ffi::c_void, ptr::null_mut};
 
-use sdl3_main::{AppResult, app_event, app_init, app_iterate, app_quit};
+use sdl3_main::{app_event, app_init, app_iterate, app_quit, AppResult};
 use sdl3_sys::everything::*;
 
 mod common;

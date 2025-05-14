@@ -1,7 +1,7 @@
 use std::ptr::null_mut;
 use std::sync::Mutex;
 
-use sdl3_main::{AppResult, app_event, app_init, app_iterate, app_quit};
+use sdl3_main::{app_event, app_init, app_iterate, app_quit, AppResult};
 use sdl3_sys::everything::*;
 
 #[path = "../../gpu-pull-sprite-batch/src/common.rs"]
