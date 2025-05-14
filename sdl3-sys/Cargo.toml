@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sys"
-version = "0.6.0+SDL3-3.2.12"
+version = "0.6.0+SDL3-3.2.14"
 edition = "2021"
 rust-version = "1.81"
 authors = ["Maia S. R."]
@@ -129,7 +129,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-src]
-version = "3.2.12"
+version = "3.2.14"
 path = "../sdl3-src"
 optional = true
 

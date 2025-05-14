@@ -5,6 +5,9 @@
     - Add metadata
     - MSRV 1.81
 
+- 0.5.1:
+    - Update SDL to 3.2.14
+
 - 0.5.0:
     - Update SDL to 3.2.12
     - Add `no-link` feature

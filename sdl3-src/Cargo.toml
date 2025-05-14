@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-src"
-version = "3.2.12"
+version = "3.2.14"
 edition = "2021"
 authors = ["SDL developers"]
 license = "Zlib"
