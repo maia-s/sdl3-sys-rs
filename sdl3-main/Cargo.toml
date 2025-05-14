@@ -20,6 +20,14 @@ nightly = []
 
 use-parking-lot-v0-12 = ["dep:parking-lot-v0-12", "std"]
 
+[[test]]
+name = "on_main_thread"
+path = "tests/on_main_thread.rs"
+harness = false
+
+[dev-dependencies]
+libtest-mimic-collect = "0.3"
+
 [dependencies.sdl3-sys]
 path = "../sdl3-sys"
 version = "0.6"

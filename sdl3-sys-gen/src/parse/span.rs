@@ -276,7 +276,7 @@ impl Span {
 
     pub fn trim_wsc_start(&self) -> ParseRes<Span> {
         let mut chars = self.char_indices();
-        'trim: while let Some((i, ch)) = chars.next() {
+        'trim: while let Some((mut i, ch)) = chars.next() {
             if ch.is_whitespace() {
                 continue;
             }
@@ -299,6 +299,14 @@ impl Span {
                     self.slice(i..=i + 1),
                     "unterminated block comment",
                 ));
+            } else if ch == '/' && self.as_bytes().get(i + 1) == Some(&b'/') {
+                // strip // comments
+                for (ii, ch) in chars.by_ref() {
+                    if ch == '\n' {
+                        continue 'trim;
+                    }
+                    i = ii;
+                }
             }
             return Ok(self.slice(i..));
         }
