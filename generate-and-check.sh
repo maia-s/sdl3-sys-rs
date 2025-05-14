@@ -32,14 +32,14 @@ for crate in *-sys; do
     rm -rf $crate/src/generated
 done
 
+cargo run -p sdl3-sys-gen $gen_profile
+
 for crate in sdl3-main; do
     version="$(grep version $crate/Cargo.toml | head -1 | sed -e 's,version = "\([^"]*\)",\1,')"
     cp $crate/README.md $crate/README.md.inc
     sed -e "s,<https://docs.rs/$crate/[^/]*/,<https://docs.rs/$crate/$version/," $crate/README.md.inc >$crate/README.md
     grep -v "]: <https://docs.rs/$crate/" $crate/README.md >$crate/README.md.inc
 done
-
-cargo run -p sdl3-sys-gen $gen_profile
 
 if $require_clean; then
     git diff --quiet || die "sdl3-sys-gen output didn't match committed results"
