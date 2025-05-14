@@ -44,8 +44,13 @@ pub use sdl3_main_macros::main;
 /// All four must be defined in a single impl block, but `app_quit` is optional and will be
 /// defined as an empty function if omitted.
 ///
-/// See the corresponding attribute macros [`app_init`], [`app_iterate`], [`app_event`] and
-/// [`app_quit`] for more information.
+/// This is functionally the same as marking those functions with the respective attribute
+/// macros, but works with methods and uses the type the block is implemented for as the
+/// app state type.
+///
+/// See the documentation for [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`]
+/// for information about supported function signatures. `app_impl` also supports methods,
+/// taking `self` as the app state.
 ///
 /// Example:
 /// ```rust
