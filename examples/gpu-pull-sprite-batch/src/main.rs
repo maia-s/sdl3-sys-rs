@@ -9,12 +9,11 @@ use std::{ffi::c_void, ptr::null_mut};
 use sdl3_main::{AppResult, app_event, app_init, app_iterate, app_quit};
 use sdl3_sys::everything::*;
 
-#[path = "../../common.rs"]
 mod common;
-
 use common::*;
 
 const SPRITE_COUNT: u32 = 8192;
+const GPU_SPRITE_BUFFER_SIZE: u32 = SPRITE_COUNT * std::mem::size_of::<GPUSprite>() as u32;
 
 struct AppState {
     window: *mut SDL_Window,
@@ -25,6 +24,10 @@ struct AppState {
     texture: *mut SDL_GPUTexture,
     sprite_data_transfer_buffer: *mut SDL_GPUTransferBuffer,
     sprite_data_buffer: *mut SDL_GPUBuffer,
+
+    cpu_sprites: [CPUSprite; SPRITE_COUNT as usize],
+    last_tick: u64,
+    accumulated_ticks: u64,
 }
 
 impl Drop for AppState {
@@ -53,16 +56,17 @@ impl Drop for AppState {
 
 unsafe impl Send for AppState {}
 
-struct SpriteInstance {
+/// see SpriteData in PullSpriteBatch.vert.hlsl
+#[allow(dead_code)] // fields directly written to gpu buffer
+#[derive(Clone)]
+struct GPUSprite {
     x: f32,
     y: f32,
     z: f32,
     rotation: f32,
     w: f32,
     h: f32,
-    #[allow(dead_code)]
     padding_a: f32,
-    #[allow(dead_code)]
     padding_b: f32,
     tex_u: f32,
     tex_v: f32,
@@ -74,11 +78,69 @@ struct SpriteInstance {
     a: f32,
 }
 
+impl GPUSprite {
+    fn init() -> Self {
+        Self {
+            x: 0.0,
+            y: 0.0,
+            z: 0.0,
+            rotation: 0.0,
+            w: 32.0,
+            h: 32.0,
+            padding_a: 0.0,
+            padding_b: 0.0,
+            tex_u: 0.0,
+            tex_v: 0.0,
+            tex_w: 0.5,
+            tex_h: 0.5,
+            r: 1.0,
+            g: 1.0,
+            b: 1.0,
+            a: 1.0,
+        }
+    }
+}
+
+/// The 'gameplay data' of a sprite
+#[derive(Default)]
+struct CPUSprite {
+    x: f32,
+    y: f32,
+    rotation: f32,
+    ravioli: usize, // 0-3
+}
+
+impl CPUSprite {
+    // ravioli image offsets
+    const U_COORDS: [f32; 4] = [0.0, 0.5, 0.0, 0.5];
+    const V_COORDS: [f32; 4] = [0.0, 0.0, 0.5, 0.5];
+
+    // write data for the shader into the gpu transfer buffer
+    fn write_to_gpu(&self, gpu_sprite: &mut GPUSprite) {
+        *gpu_sprite = GPUSprite::init();
+
+        gpu_sprite.x = self.x;
+        gpu_sprite.y = self.y;
+        gpu_sprite.rotation = self.rotation;
+        gpu_sprite.tex_u = Self::U_COORDS[self.ravioli];
+        gpu_sprite.tex_v = Self::V_COORDS[self.ravioli];
+    }
+
+    fn randomize(&mut self) {
+        unsafe {
+            self.x = SDL_rand(640) as f32;
+            self.y = SDL_rand(480) as f32;
+            self.rotation = SDL_randf() * SDL_PI_F * 2.0;
+            self.ravioli = SDL_rand(4) as usize;
+        }
+    }
+}
+
 #[app_init]
 fn app_init() -> Option<Box<Mutex<AppState>>> {
     unsafe {
-        let title = c"Pull Sprite Batch".as_ptr();
-        let Some((window, device)) = init_gpu_window(title, Default::default()) else {
+        let title = c"Pull Sprite Batch Example".as_ptr();
+        let Some((window, device)) = init_gpu_window(title, SDL_WindowFlags::default()) else {
             return None;
         };
 
@@ -98,14 +160,12 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
             present_mode,
         );
 
-        // TODO copy content
         let vert_shader = load_shader(device, "PullSpriteBatch.vert");
         if vert_shader.is_null() {
             dbg_sdl_error("failed to load vert shader");
             return None;
         }
 
-        // TODO copy content
         let frag_shader = load_shader(device, "TexturedQuadColor.frag");
         if frag_shader.is_null() {
             dbg_sdl_error("failed to load frag shader");
@@ -196,7 +256,7 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
             device,
             &SDL_GPUTransferBufferCreateInfo {
                 usage: SDL_GPUTransferBufferUsage::UPLOAD,
-                size: SPRITE_COUNT * std::mem::size_of::<SpriteInstance>() as u32,
+                size: GPU_SPRITE_BUFFER_SIZE,
                 ..Default::default()
             },
         );
@@ -205,7 +265,7 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
             device,
             &SDL_GPUBufferCreateInfo {
                 usage: SDL_GPU_BUFFERUSAGE_GRAPHICS_STORAGE_READ,
-                size: SPRITE_COUNT * std::mem::size_of::<SpriteInstance>() as u32,
+                size: GPU_SPRITE_BUFFER_SIZE,
                 ..Default::default()
             },
         );
@@ -236,6 +296,9 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
         SDL_DestroySurface(image_ptr);
         SDL_ReleaseGPUTransferBuffer(device, transfer_buffer);
 
+        let cpu_sprites: [CPUSprite; SPRITE_COUNT as usize] =
+            std::array::from_fn(|_| CPUSprite::default());
+
         let app = AppState {
             window,
             device,
@@ -244,17 +307,47 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
             texture,
             sprite_data_transfer_buffer,
             sprite_data_buffer,
+            cpu_sprites,
+            last_tick: 0,
+            accumulated_ticks: 0,
         };
 
         Some(Box::new(Mutex::new(app)))
     }
 }
 
+// about 60 frames per second
+const MILLIS_PER_FRAME: u64 = 16;
+
 #[app_iterate]
 fn app_iterate(app: &mut AppState) -> AppResult {
-    let camera_matrix =
-        Matrix4x4::create_orthographic_off_center(0.0, 640.0, 480.0, 0.0, 0.0, -1.0);
+    let current_tick = unsafe { SDL_GetTicks() };
+    let new_ticks = current_tick - app.last_tick;
+    app.accumulated_ticks += new_ticks;
+    app.last_tick = current_tick;
 
+    while app.accumulated_ticks >= MILLIS_PER_FRAME {
+        app.accumulated_ticks -= MILLIS_PER_FRAME;
+        let app_result = update_and_draw(app);
+        if app_result != AppResult::Continue {
+            return app_result;
+        }
+    }
+
+    AppResult::Continue
+}
+
+fn update_and_draw(app: &mut AppState) -> AppResult {
+    // randomize sprites
+    for sprite in &mut app.cpu_sprites {
+        sprite.randomize();
+    }
+
+    // draw
+    draw_sprites(app)
+}
+
+fn draw_sprites(app: &mut AppState) -> AppResult {
     unsafe {
         let command_buffer = SDL_AcquireGPUCommandBuffer(app.device);
         if command_buffer.is_null() {
@@ -278,35 +371,20 @@ fn app_iterate(app: &mut AppState) -> AppResult {
             // build sprite instance transfer
             let data_ptr =
                 SDL_MapGPUTransferBuffer(app.device, app.sprite_data_transfer_buffer, true)
-                    as *mut SpriteInstance;
+                    as *mut GPUSprite;
+            if data_ptr.is_null() {
+                dbg_sdl_error("failed to map gpu transfer buffer");
+                return AppResult::Failure;
+            }
 
-            for i in 0..SPRITE_COUNT {
-                let ravioli = SDL_rand(4) as usize;
-                let p = data_ptr.offset(i as isize);
-                let sprite = &mut *p;
-
-                const U_COORDS: [f32; 4] = [0.0, 0.5, 0.0, 0.5];
-                const V_COORDS: [f32; 4] = [0.0, 0.0, 0.5, 0.5];
-
-                sprite.x = SDL_rand(640) as f32;
-                sprite.y = SDL_rand(480) as f32;
-                sprite.z = 0.0;
-                sprite.rotation = SDL_randf() * SDL_PI_F * 2.0;
-                sprite.w = 32.0;
-                sprite.h = 32.0;
-                sprite.tex_u = U_COORDS[ravioli];
-                sprite.tex_v = V_COORDS[ravioli];
-                sprite.tex_w = 0.5;
-                sprite.tex_h = 0.5;
-                sprite.r = 1.0;
-                sprite.g = 1.0;
-                sprite.b = 1.0;
-                sprite.a = 1.0;
+            for (i, cpu_sprite) in app.cpu_sprites.iter().enumerate() {
+                let gpu_sprite = &mut *data_ptr.offset(i as isize);
+                cpu_sprite.write_to_gpu(gpu_sprite);
             }
 
             SDL_UnmapGPUTransferBuffer(app.device, app.sprite_data_transfer_buffer);
 
-            // upload instance data
+            // upload gpu sprite instance data
             let copy_pass = SDL_BeginGPUCopyPass(command_buffer);
             SDL_UploadToGPUBuffer(
                 copy_pass,
@@ -317,7 +395,7 @@ fn app_iterate(app: &mut AppState) -> AppResult {
                 &SDL_GPUBufferRegion {
                     buffer: app.sprite_data_buffer,
                     offset: 0,
-                    size: SPRITE_COUNT * std::mem::size_of::<SpriteInstance>() as u32,
+                    size: GPU_SPRITE_BUFFER_SIZE,
                 },
                 true,
             );
@@ -354,10 +432,12 @@ fn app_iterate(app: &mut AppState) -> AppResult {
                 },
                 1,
             );
+            const CAMERA_MATRIX: Matrix4x4 =
+                Matrix4x4::create_orthographic_off_center(0.0, 640.0, 480.0, 0.0, 0.0, -1.0);
             SDL_PushGPUVertexUniformData(
                 command_buffer,
                 0,
-                &camera_matrix as *const Matrix4x4 as *const c_void,
+                &CAMERA_MATRIX as *const Matrix4x4 as *const c_void,
                 std::mem::size_of::<Matrix4x4>() as u32,
             );
             SDL_DrawGPUPrimitives(render_pass, SPRITE_COUNT * 6, 1, 0, 0);

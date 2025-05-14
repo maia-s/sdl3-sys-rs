@@ -1,4 +1,5 @@
-#![allow(dead_code)]
+//! Based on the common functions from the SDL GPU examples
+//! https://github.com/TheSpydog/SDL_gpu_examples/blob/main/Examples/Common.c
 
 use std::ffi::{CStr, CString, c_char};
 use std::ptr::{null, null_mut};
@@ -7,17 +8,17 @@ use sdl3_sys::everything::*;
 
 use serde::Deserialize;
 
-// Based on the common functions from the SDL GPU examples
-// https://github.com/TheSpydog/SDL_gpu_examples/blob/main/Examples/Common.c
+const CONTENT_DIR: &str = "../../content";
+const CONTENT_SHADERS_SUBDIR: &str = "shaders/compiled";
+const CONTENT_IMAGES_SUBDIR: &str = "images";
 
 /// Load a precompiled shader based on file name.
-/// Relies on the structure of the content directory, json metadata, and the file name suffix.
+/// Relies on the structure of the content directory, shadercross json metadata, and the file name suffix.
 pub unsafe fn load_shader(
     device: *mut SDL_GPUDevice,
     shader_name: &'static str,
 ) -> *mut SDL_GPUShader {
-    // NOTE this dir is expected to contain both compiled .spv and shadercross' json output
-    const COMPILED_SHADERS_DIR: &'static str = "./sdl3-sys/examples/content/shaders/compiled";
+    let compiled_shaders_dir = format!("{CONTENT_DIR}/{CONTENT_SHADERS_SUBDIR}");
 
     let backend_formats = SDL_GetGPUShaderFormats(device);
     let (format, entrypoint) = if backend_formats & SDL_GPU_SHADERFORMAT_SPIRV != 0 {
@@ -31,16 +32,17 @@ pub unsafe fn load_shader(
         return null_mut();
     };
 
-    let full_path = format!("{COMPILED_SHADERS_DIR}/spv/{shader_name}.spv");
+    let full_path = format!("{compiled_shaders_dir}/spv/{shader_name}.spv");
     let full_path = CString::new(full_path).unwrap();
     let mut code_size = 0;
+    // TODO get these bytes in a more normal rust way
     let loaded_code = SDL_LoadFile(full_path.as_ptr(), &mut code_size);
     if loaded_code.is_null() {
         dbg_sdl_error(&format!("failed to load shader: {shader_name}"));
         return null_mut();
     }
 
-    let json_path = format!("{COMPILED_SHADERS_DIR}/json/{shader_name}.json");
+    let json_path = format!("{compiled_shaders_dir}/json/{shader_name}.json");
     let Ok(json) = std::fs::read_to_string(&json_path) else {
         println!("failed to find shader json: {json_path}");
         return null_mut();
@@ -71,7 +73,7 @@ pub unsafe fn load_shader(
         num_storage_buffers: meta.storage_buffers,
         num_uniform_buffers: meta.uniform_buffers,
         num_storage_textures: meta.storage_textures,
-        props: Default::default(),
+        props: SDL_PropertiesID::default(),
     };
     let shader = SDL_CreateGPUShader(device, &shader_info);
     if shader.is_null() {
@@ -86,15 +88,12 @@ pub unsafe fn load_shader(
 }
 
 pub unsafe fn dbg_sdl_error(msg: &str) {
-    #[cfg(debug_assertions)]
-    {
-        println!("{}", msg);
-        let error = CStr::from_ptr(SDL_GetError()).to_string_lossy();
-        println!("{}", &error);
-    }
+    println!("{}", msg);
+    let error = CStr::from_ptr(SDL_GetError()).to_string_lossy();
+    println!("{}", &error);
 }
 
-/// JSON format for resource counts emitted by shadercross
+/// JSON format for resource counts, as emitted by shadercross cli
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct ShaderMeta {
@@ -149,12 +148,10 @@ pub unsafe fn deinit_gpu_window(device: *mut SDL_GPUDevice, window: *mut SDL_Win
 }
 
 pub unsafe fn load_bmp(file_name: &str) -> *mut SDL_Surface {
-    const IMAGES_DIR: &'static str = "./content/images";
+    let image_path = format!("{CONTENT_DIR}/{CONTENT_IMAGES_SUBDIR}/{file_name}");
+    let image_path = CString::new(image_path).unwrap();
 
-    let full_path = format!("{IMAGES_DIR}/{file_name}");
-    let full_path = CString::new(full_path).unwrap();
-
-    let mut result = SDL_LoadBMP(full_path.as_ptr());
+    let mut result = SDL_LoadBMP(image_path.as_ptr());
     if result.is_null() {
         return result;
     }
@@ -170,6 +167,8 @@ pub unsafe fn load_bmp(file_name: &str) -> *mut SDL_Surface {
     result
 }
 
+/// see ViewProjectionMatrix in PullSpriteBatch.vert.hlsl
+#[allow(dead_code)] // passed directly to gpu
 pub struct Matrix4x4 {
     pub m11: f32,
     pub m12: f32,
@@ -193,7 +192,7 @@ pub struct Matrix4x4 {
 }
 
 impl Matrix4x4 {
-    pub fn create_orthographic_off_center(
+    pub const fn create_orthographic_off_center(
         left: f32,
         right: f32,
         bottom: f32,
