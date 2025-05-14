@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 //! Based on the common functions from the SDL GPU examples
 //! https://github.com/TheSpydog/SDL_gpu_examples/blob/main/Examples/Common.c
 
@@ -32,14 +34,10 @@ pub unsafe fn load_shader(
     };
 
     let full_path = format!("{compiled_shaders_dir}/spv/{shader_name}.spv");
-    let full_path = CString::new(full_path).unwrap();
-    let mut code_size = 0;
-    // TODO get these bytes in a more normal rust way
-    let loaded_code = SDL_LoadFile(full_path.as_ptr(), &mut code_size);
-    if loaded_code.is_null() {
-        dbg_sdl_error(&format!("failed to load shader: {shader_name}"));
+    let Ok(shader_code) = std::fs::read(full_path) else {
+        println!("failed to load shader: {shader_name}");
         return null_mut();
-    }
+    };
 
     let json_path = format!("{compiled_shaders_dir}/json/{shader_name}.json");
     let Ok(json) = std::fs::read_to_string(&json_path) else {
@@ -63,11 +61,11 @@ pub unsafe fn load_shader(
     };
 
     let shader_info = SDL_GPUShaderCreateInfo {
-        code: loaded_code as *const u8,
+        code: shader_code.as_ptr() as *const u8,
+        code_size: shader_code.len(),
         stage,
         entrypoint,
         format,
-        code_size,
         num_samplers: meta.samplers,
         num_storage_buffers: meta.storage_buffers,
         num_uniform_buffers: meta.uniform_buffers,
@@ -77,11 +75,8 @@ pub unsafe fn load_shader(
     let shader = SDL_CreateGPUShader(device, &shader_info);
     if shader.is_null() {
         dbg_sdl_error(&format!("failed to create shader: {}", shader_name));
-        SDL_free(loaded_code);
         return null_mut();
     }
-
-    SDL_free(loaded_code);
 
     shader
 }
@@ -168,7 +163,6 @@ pub unsafe fn load_bmp(file_name: &str) -> *mut SDL_Surface {
 }
 
 /// see ViewProjectionMatrix in PullSpriteBatch.vert.hlsl
-#[allow(dead_code)] // passed directly to gpu
 pub struct Matrix4x4 {
     pub m11: f32,
     pub m12: f32,
