@@ -48,26 +48,32 @@ pub use sdl3_main_macros::main;
 /// macros, but works with methods and uses the type the block is implemented for as the
 /// app state type.
 ///
-/// See the documentation for [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`].
+/// See the documentation for [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`]
+/// for information about supported function signatures. `app_impl` also supports methods,
+/// taking `self` as the app state.
 ///
-/// Example (using the `nightly` feature for ?-propagation to `AppResult*`):
-/// ```custom,{.rust}
-/// use sdl3_main::{AppResult, AppResultWithState};
+/// Example:
+/// ```rust
+/// use sdl3_main::{app_impl, AppResult};
+/// use sdl3_sys::events::SDL_Event;
+/// use std::sync::Mutex;
+///
+/// struct MyAppState {
+///     // ...
+/// }
 ///
 /// #[app_impl]
 /// impl MyAppState {
-///     fn app_init() -> AppResultWithState<Self> {
-///         AppResultWithState::Continue(Box::new(Mutex::new(Self::new()?)))
+///     fn app_init() -> Option<Box<Mutex<MyAppState>>> {
+///         todo!()
 ///     }
 ///
 ///     fn app_iterate(&mut self) -> AppResult {
-///         self.iterate()?;
-///         AppResult::Continue
+///         todo!()
 ///     }
 ///
-///     fn app_event(&mut self) -> AppResult {
-///         self.handle_events()?;
-///         AppResult::Continue
+///     fn app_event(&mut self, event: &SDL_Event) -> AppResult {
+///         todo!()
 ///     }
 /// }
 /// ```
