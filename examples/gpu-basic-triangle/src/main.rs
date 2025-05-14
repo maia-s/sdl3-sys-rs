@@ -195,22 +195,22 @@ impl AppState {
         let event_type = unsafe { event.r#type };
 
         match SDL_EventType(event_type) {
-            SDL_EVENT_QUIT => AppResult::Success,
+            SDL_EVENT_QUIT => return AppResult::Success,
 
             SDL_EVENT_KEY_DOWN => {
                 let scancode = unsafe { event.key.scancode };
                 self.game_state.key_pressed(scancode);
-                AppResult::Continue
             }
 
             SDL_EVENT_KEY_UP => {
                 let scancode = unsafe { event.key.scancode };
                 self.game_state.key_released(scancode);
-                AppResult::Continue
             }
 
-            _ => AppResult::Continue,
+            _ => {}
         }
+
+        AppResult::Continue
     }
 }
 
