@@ -15,5 +15,4 @@ proc-macro = true
 
 [features]
 default = []
-alloc = []
-std = ["alloc"]
+std = []

@@ -13,7 +13,7 @@ categories = ["api-bindings", "no-std", "rust-patterns"]
 
 [features]
 default = ["std"]
-alloc = ["sdl3-main-macros/alloc"]
+alloc = []
 std = ["alloc", "sdl3-main-macros/std"]
 
 nightly = []

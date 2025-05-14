@@ -233,8 +233,7 @@ pub mod __internal {
     pub use ::sdl3_sys;
 
     #[cfg(feature = "alloc")]
-    pub use ::alloc::{boxed::Box, sync::Arc};
-
+    use alloc::boxed::Box;
     use core::{
         ffi::{c_char, c_int},
         ptr,
