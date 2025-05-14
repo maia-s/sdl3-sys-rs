@@ -43,6 +43,35 @@ pub use sdl3_main_macros::main;
 /// respective sdl main callbacks, as if the corresponding attribute macros were used.
 /// All four must be defined in a single impl block, but `app_quit` is optional and will be
 /// defined as an empty function if omitted.
+///
+/// See the corresponding attribute macros [`app_init`], [`app_iterate`], [`app_event`] and
+/// [`app_quit`] for more information.
+///
+/// Example:
+/// ```rust
+/// use sdl3_main::{app_impl, AppResult};
+/// use sdl3_sys::events::SDL_Event;
+/// use std::sync::Mutex;
+///
+/// struct MyAppState {
+///     // ...
+/// }
+///
+/// #[app_impl]
+/// impl MyAppState {
+///     fn app_init() -> Option<Box<Mutex<MyAppState>>> {
+///         todo!()
+///     }
+///
+///     fn app_iterate(&mut self) -> AppResult {
+///         todo!()
+///     }
+///
+///     fn app_event(&mut self, event: &SDL_Event) -> AppResult {
+///         todo!()
+///     }
+/// }
+/// ```
 pub use sdl3_main_macros::app_impl;
 
 /// The function tagged with `app_init` is called by SDL at the start of the program on the main thread.
