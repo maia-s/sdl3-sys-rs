@@ -40,9 +40,9 @@ See the documentation for more information.
 
 See ChangeLog.md for older changes
 
-[`main`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.main.html>
-[`app_impl`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_impl.html>
-[`app_init`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_init.html>
-[`app_iterate`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_impl.html>
-[`app_event`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_event.html>
-[`app_quit`]: <https://docs.rs/sdl3-main/0.5.0/sdl3_main/attr.app_quit.html>
+[`main`]: <https://docs.rs/sdl3-main/0.5.2/sdl3_main/attr.main.html>
+[`app_impl`]: <https://docs.rs/sdl3-main/0.5.2/sdl3_main/attr.app_impl.html>
+[`app_init`]: <https://docs.rs/sdl3-main/0.5.2/sdl3_main/attr.app_init.html>
+[`app_iterate`]: <https://docs.rs/sdl3-main/0.5.2/sdl3_main/attr.app_impl.html>
+[`app_event`]: <https://docs.rs/sdl3-main/0.5.2/sdl3_main/attr.app_event.html>
+[`app_quit`]: <https://docs.rs/sdl3-main/0.5.2/sdl3_main/attr.app_quit.html>
