@@ -1,5 +1,8 @@
 # Changes
 
+- 0.5.2:
+    - Update SDL to 3.2.16
+
 - 0.5.1:
     - Update SDL to 3.2.14
     - Add deprecation warning to padding fields. These shouldn't be accessed directly;
