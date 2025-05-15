@@ -18,7 +18,7 @@ with `sdl3-sys`.
 
 ## Usage
 
-`sdl3-ttd-sys` is compatible with SDL_ttf version `3.2.0` or later, but the
+`sdl3-ttf-sys` is compatible with SDL_ttf version `3.2.0` or later, but the
 latest available stable release is recommended.
 Some APIs require later versions. You can check availability in the documentation.
 
