@@ -32,9 +32,9 @@ If you're looking for more idiomatic or higher level bindings, check out the
 
 ## Usage
 
-`sdl3-sys` is compatible with SDL version `3.1.3` or later, but at least version `3.2.0`
-or the latest available stable release is recommended.
-Some APIs require later versions. You can check availability in the documentation.
+`sdl3-sys` is compatible with SDL version `3.1.3` or later.
+Some APIs require later versions; you can check availability in the documentation.
+The latest available stable release is recommended.
 
 By default, `sdl3-sys` will attempt to link to a dynamic/shared library named
 `SDL3` in the default library search path, using the usual platform specific naming

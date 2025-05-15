@@ -18,9 +18,9 @@ with `sdl3-sys`.
 
 ## Usage
 
-`sdl3-image-sys` is compatible with SDL_image version `3.2.0` or later, but the
-latest available stable release is recommended.
-Some APIs may require later versions. You can check availability in the documentation.
+`sdl3-image-sys` is compatible with SDL_image version `3.2.0` or later.
+Some APIs may require later versions; you can check availability in the documentation.
+The latest available stable release is recommended.
 
 By default, `sdl3-image-sys` will attempt to link to a dynamic/shared library named
 `SDL3_image` in the default library search path, using the usual platform specific naming

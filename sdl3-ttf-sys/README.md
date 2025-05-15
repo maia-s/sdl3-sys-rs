@@ -18,9 +18,9 @@ with `sdl3-sys`.
 
 ## Usage
 
-`sdl3-ttf-sys` is compatible with SDL_ttf version `3.2.0` or later, but the
-latest available stable release is recommended.
-Some APIs require later versions. You can check availability in the documentation.
+`sdl3-ttf-sys` is compatible with SDL_ttf version `3.2.0` or later.
+Some APIs require later versions; you can check availability in the documentation.
+The latest available stable release is recommended.
 
 By default, `sdl3-ttf-sys` will attempt to link to a dynamic/shared library named
 `SDL3_ttf` in the default library search path, using the usual platform specific naming
