@@ -81,9 +81,10 @@ pub unsafe fn load_shader(
     shader
 }
 
-pub unsafe fn dbg_sdl_error(msg: &str) {
+pub fn dbg_sdl_error(msg: &str) {
     println!("{}", msg);
-    let error = CStr::from_ptr(SDL_GetError()).to_string_lossy();
+    let error = unsafe { CStr::from_ptr(SDL_GetError()) };
+    let error = error.to_string_lossy();
     println!("{}", &error);
 }
 

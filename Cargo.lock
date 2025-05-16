@@ -173,6 +173,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "gpu-clear-screen"
+version = "0.0.1"
+dependencies = [
+ "sdl3-main",
+ "sdl3-sys",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "gpu-pull-sprite-batch"
 version = "0.1.0"
 dependencies = [
