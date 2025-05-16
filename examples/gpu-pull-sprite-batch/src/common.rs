@@ -222,3 +222,11 @@ impl Matrix4x4 {
 fn get_content_dir() -> String {
     format!("{MANIFEST_DIR}/../../content")
 }
+
+pub fn set_framerate_hint(fps: usize) {
+    let hint_value = CString::new(fps.to_string()).unwrap();
+    let was_set = unsafe { SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, hint_value.as_ptr()) };
+    if !was_set {
+        println!("failed to set framerate hint");
+    }
+}
