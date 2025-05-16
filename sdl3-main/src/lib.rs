@@ -325,9 +325,10 @@ pub mod __internal {
         #[cfg(not(windows))]
         {
             // copy arguments so we can null-terminate them
-            let mut cargs = Vec::new();
+            let args = env::args_os();
 
-            for arg in env::args_os() {
+            let mut cargs = Vec::with_capacity(args.len());
+            for arg in args {
                 let mut carg;
                 #[cfg(unix)]
                 {
@@ -339,20 +340,22 @@ pub mod __internal {
                     // yolo
                     carg = arg.to_string_lossy().into_owned().into_bytes();
                 }
+                carg.reserve_exact(1);
                 carg.push(0);
+                carg.shrink_to_fit();
                 cargs.push(carg);
             }
 
-            let mut ptrargs = cargs
-                .iter_mut()
-                .map(|carg| carg.as_mut_ptr())
-                .collect::<Vec<_>>();
+            let mut ptrargs = Vec::with_capacity(cargs.len() + 1);
+            for carg in cargs.iter_mut() {
+                ptrargs.push(carg.as_mut_ptr() as *mut c_char);
+            }
             ptrargs.push(ptr::null_mut());
 
             unsafe {
                 SDL_RunApp(
                     cargs.len().try_into().expect("too many arguments"),
-                    ptrargs.as_mut_ptr() as *mut *mut c_char,
+                    ptrargs.as_mut_ptr(),
                     Some(main_fn),
                     ptr::null_mut(),
                 )
