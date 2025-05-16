@@ -179,6 +179,19 @@ impl AppState {
                 return None;
             }
 
+            let color_target_descriptions = [SDL_GPUColorTargetDescription {
+                format: SDL_GetGPUSwapchainTextureFormat(device, window),
+                blend_state: SDL_GPUColorTargetBlendState {
+                    enable_blend: true,
+                    color_blend_op: SDL_GPUBlendOp::ADD,
+                    alpha_blend_op: SDL_GPUBlendOp::ADD,
+                    src_color_blendfactor: SDL_GPUBlendFactor::SRC_ALPHA,
+                    dst_color_blendfactor: SDL_GPUBlendFactor::ONE_MINUS_SRC_ALPHA,
+                    src_alpha_blendfactor: SDL_GPUBlendFactor::SRC_ALPHA,
+                    dst_alpha_blendfactor: SDL_GPUBlendFactor::ONE_MINUS_SRC_ALPHA,
+                    ..Default::default()
+                },
+            }];
             let render_pipeline = SDL_CreateGPUGraphicsPipeline(
                 device,
                 &SDL_GPUGraphicsPipelineCreateInfo {
@@ -187,20 +200,7 @@ impl AppState {
                     fragment_shader: frag_shader,
                     target_info: SDL_GPUGraphicsPipelineTargetInfo {
                         num_color_targets: 1,
-                        color_target_descriptions: [SDL_GPUColorTargetDescription {
-                            format: SDL_GetGPUSwapchainTextureFormat(device, window),
-                            blend_state: SDL_GPUColorTargetBlendState {
-                                enable_blend: true,
-                                color_blend_op: SDL_GPUBlendOp::ADD,
-                                alpha_blend_op: SDL_GPUBlendOp::ADD,
-                                src_color_blendfactor: SDL_GPUBlendFactor::SRC_ALPHA,
-                                dst_color_blendfactor: SDL_GPUBlendFactor::ONE_MINUS_SRC_ALPHA,
-                                src_alpha_blendfactor: SDL_GPUBlendFactor::SRC_ALPHA,
-                                dst_alpha_blendfactor: SDL_GPUBlendFactor::ONE_MINUS_SRC_ALPHA,
-                                ..Default::default()
-                            },
-                        }]
-                        .as_ptr(),
+                        color_target_descriptions: color_target_descriptions.as_ptr(),
                         ..Default::default()
                     },
                     ..Default::default()
