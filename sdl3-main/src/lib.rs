@@ -342,8 +342,7 @@ pub mod __internal {
                 }
                 carg.reserve_exact(1);
                 carg.push(0);
-                carg.shrink_to_fit();
-                cargs.push(carg);
+                cargs.push(carg.into_boxed_slice());
             }
 
             let mut ptrargs = Vec::with_capacity(cargs.len() + 1);
