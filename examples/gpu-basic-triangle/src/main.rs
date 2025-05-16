@@ -1,6 +1,7 @@
 //! Based on the official example in C here:
 //! https://github.com/TheSpydog/SDL_gpu_examples/blob/main/Examples/BasicTriangle.c
 
+use std::ffi::CStr;
 use std::ptr::null_mut;
 use std::sync::Mutex;
 
@@ -42,8 +43,10 @@ unsafe impl Send for AppState {}
 impl AppState {
     fn app_init() -> AppResultWithState<Box<Mutex<Self>>> {
         unsafe {
-            let title = c"Basic Triangle".as_ptr();
-            let Some((window, device)) = init_gpu_window(title, SDL_WindowFlags::default()) else {
+            const TITLE: &CStr = c"Basic Triangle Example";
+            let Some((window, device)) =
+                init_gpu_window(TITLE.as_ptr(), SDL_WindowFlags::default())
+            else {
                 return AppResultWithState::Failure(None);
             };
 

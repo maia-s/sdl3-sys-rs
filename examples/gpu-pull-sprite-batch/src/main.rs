@@ -3,7 +3,7 @@
 //! which uses the method described in this blog post:
 //! https://moonside.games/posts/sdl-gpu-sprite-batcher/
 
-use std::ffi::c_void;
+use std::ffi::{c_void, CStr};
 use std::ptr::null_mut;
 use std::sync::Mutex;
 
@@ -141,8 +141,10 @@ impl CPUSprite {
 impl AppState {
     fn app_init() -> Option<Box<Mutex<AppState>>> {
         unsafe {
-            let title = c"Pull Sprite Batch Example".as_ptr();
-            let Some((window, device)) = init_gpu_window(title, SDL_WindowFlags::default()) else {
+            const TITLE: &CStr = c"Pull Sprite Batch Example";
+            let Some((window, device)) =
+                init_gpu_window(TITLE.as_ptr(), SDL_WindowFlags::default())
+            else {
                 return None;
             };
 
