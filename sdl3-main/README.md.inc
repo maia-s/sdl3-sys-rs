@@ -38,7 +38,8 @@ provides some helper types and functions to alleviate this.
 
 - 0.6.0 WIP:
     - Update sdl3-sys to 0.6.0
-    - Removed `MainThreadToken::init` (no longer necessary)
+    - Deprecated `MainThreadToken::init()`. It's no longer necessary and does nothing now.
+      It still exists for compatibility, but it's hidden in the docs.
     - Pass arguments to main on `std` (`!std` already did)
 
 - 0.5.2:
