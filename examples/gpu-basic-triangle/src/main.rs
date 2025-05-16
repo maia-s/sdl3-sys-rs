@@ -59,19 +59,20 @@ impl AppState {
                 return AppResultWithState::Failure(None);
             }
 
+            let texture_format = SDL_GetGPUSwapchainTextureFormat(device, window);
+            let color_target_descriptions = [SDL_GPUColorTargetDescription {
+                format: texture_format,
+                ..Default::default()
+            }];
             let mut pipeline_create_info = SDL_GPUGraphicsPipelineCreateInfo {
-                vertex_shader: vert_shader,
-                fragment_shader: frag_shader,
-                primitive_type: SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
                 target_info: SDL_GPUGraphicsPipelineTargetInfo {
                     num_color_targets: 1,
-                    color_target_descriptions: [SDL_GPUColorTargetDescription {
-                        format: SDL_GetGPUSwapchainTextureFormat(device, window),
-                        ..Default::default()
-                    }]
-                    .as_ptr(),
+                    color_target_descriptions: color_target_descriptions.as_ptr(),
                     ..Default::default()
                 },
+                primitive_type: SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
+                vertex_shader: vert_shader,
+                fragment_shader: frag_shader,
                 ..Default::default()
             };
 
@@ -199,12 +200,14 @@ impl AppState {
 
             SDL_EVENT_KEY_DOWN => {
                 let scancode = unsafe { event.key.scancode };
-                self.game_state.key_pressed(scancode);
+                if !self.game_state.keys_just_pressed.contains(&scancode) {
+                    self.game_state.keys_just_pressed.push(scancode);
+                }
             }
 
             SDL_EVENT_KEY_UP => {
                 let scancode = unsafe { event.key.scancode };
-                self.game_state.key_released(scancode);
+                self.game_state.keys_just_pressed.retain(|k| *k != scancode);
             }
 
             _ => {}
@@ -216,6 +219,7 @@ impl AppState {
 
 const MILLIS_PER_FRAME: u64 = 16;
 
+// TODO simplify / flatten this; avoid timestep?
 struct GameState {
     accumulated_ticks: u64,
     last_step: u64,
@@ -237,16 +241,6 @@ impl GameState {
             use_small_viewport: false,
             use_scissor_rect: false,
         }
-    }
-
-    fn key_pressed(&mut self, scan_code: SDL_Scancode) {
-        if !self.keys_just_pressed.contains(&scan_code) {
-            self.keys_just_pressed.push(scan_code);
-        }
-    }
-
-    fn key_released(&mut self, scan_code: SDL_Scancode) {
-        self.keys_just_pressed.retain(|k| *k != scan_code);
     }
 
     fn step(&mut self, current_tick: u64) {
