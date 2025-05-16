@@ -33,6 +33,14 @@ impl MainThreadToken {
     pub fn assert() -> Self {
         Self::get().expect("This operation can only be performed on the main thread")
     }
+
+    #[doc(hidden)]
+    #[inline(always)]
+    #[deprecated(
+        since = "0.6.0",
+        note = "`MainThreadToken::init()` is no longer necessary. You can remove this call."
+    )]
+    pub unsafe fn init() {}
 }
 
 /// Data that can only be accessed from the main thread. Accessors take a [`MainThreadToken`].
