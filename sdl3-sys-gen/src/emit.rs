@@ -1089,7 +1089,7 @@ impl StructOrUnion {
                 .iter()
                 .any(|field| field.ident.as_str().starts_with("padding"))
             {
-                doc.as_mut().unwrap().add_note("This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.");
+                doc.as_mut().unwrap().add_note("This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.");
             }
         }
 

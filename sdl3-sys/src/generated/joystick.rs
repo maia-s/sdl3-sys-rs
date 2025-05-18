@@ -502,7 +502,7 @@ extern "C" {
 /// - [`SDL_VirtualJoystickDesc`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -546,7 +546,7 @@ pub struct SDL_VirtualJoystickSensorDesc {
 ///
 /// ### Notes for `sdl3-sys`
 /// - This interface struct can be initialized with [`SDL_VirtualJoystickDesc::new()`] or `Default::default()`.
-/// - This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// - This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_VirtualJoystickDesc {

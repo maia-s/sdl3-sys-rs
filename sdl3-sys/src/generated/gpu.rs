@@ -3064,7 +3064,7 @@ pub struct SDL_GPUIndirectDispatchCommand {
 /// - [`SDL_GPUCompareOp`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3223,7 +3223,7 @@ pub struct SDL_GPUStencilOpState {
 /// - [`SDL_GPUColorTargetDescription`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3392,7 +3392,7 @@ pub struct SDL_GPUTransferBufferCreateInfo {
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3429,7 +3429,7 @@ pub struct SDL_GPURasterizerState {
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3458,7 +3458,7 @@ pub struct SDL_GPUMultisampleState {
 /// - [`SDL_GPUGraphicsPipelineCreateInfo`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3517,7 +3517,7 @@ pub struct SDL_GPUColorTargetDescription {
 /// - [`SDL_GPUTextureFormat`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3679,7 +3679,7 @@ impl ::core::default::Default for SDL_GPUComputePipelineCreateInfo {
 /// - [`SDL_BeginGPURenderPass`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3766,7 +3766,7 @@ impl ::core::default::Default for SDL_GPUColorTargetInfo {
 /// - [`SDL_BeginGPURenderPass`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3810,7 +3810,7 @@ impl ::core::default::Default for SDL_GPUDepthStencilTargetInfo {
 /// - [`SDL_BlitGPUTexture`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3907,7 +3907,7 @@ impl ::core::default::Default for SDL_GPUTextureSamplerBinding {
 /// - [`SDL_BeginGPUComputePass`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -3942,7 +3942,7 @@ impl ::core::default::Default for SDL_GPUStorageBufferReadWriteBinding {
 /// - [`SDL_BeginGPUComputePass`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
