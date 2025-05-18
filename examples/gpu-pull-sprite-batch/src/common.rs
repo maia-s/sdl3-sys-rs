@@ -22,18 +22,18 @@ pub unsafe fn load_shader(
     let compiled_shaders_dir = format!("{content_dir}/shaders/compiled");
 
     let backend_formats = SDL_GetGPUShaderFormats(device);
-    let (format, entrypoint) = if backend_formats & SDL_GPU_SHADERFORMAT_SPIRV != 0 {
-        (SDL_GPU_SHADERFORMAT_SPIRV, c"main".as_ptr())
+    let (format, entrypoint, ext) = if backend_formats & SDL_GPU_SHADERFORMAT_SPIRV != 0 {
+        (SDL_GPU_SHADERFORMAT_SPIRV, c"main".as_ptr(), "spv")
     } else if backend_formats & SDL_GPU_SHADERFORMAT_MSL != 0 {
-        (SDL_GPU_SHADERFORMAT_MSL, c"main0".as_ptr())
+        (SDL_GPU_SHADERFORMAT_MSL, c"main0".as_ptr(), "msl")
     } else if backend_formats & SDL_GPU_SHADERFORMAT_DXIL != 0 {
-        (SDL_GPU_SHADERFORMAT_DXIL, c"main".as_ptr())
+        (SDL_GPU_SHADERFORMAT_DXIL, c"main".as_ptr(), "dxil")
     } else {
         println!("unrecognized backend shader format");
         return null_mut();
     };
 
-    let full_path = format!("{compiled_shaders_dir}/spv/{shader_name}.spv");
+    let full_path = format!("{compiled_shaders_dir}/{ext}/{shader_name}.{ext}");
     let Ok(shader_code) = std::fs::read(full_path) else {
         println!("failed to load shader: {shader_name}");
         return null_mut();
