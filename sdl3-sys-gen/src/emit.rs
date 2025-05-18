@@ -1083,6 +1083,13 @@ impl StructOrUnion {
             false
         };
 
+        if !self.can_construct {
+            doc.as_mut().unwrap().notes = Some(
+                "This struct shouldn't be created manually. Use the corresponding SDL functions to create and destroy it."
+                    .into(),
+            );
+        }
+
         let sym = ctx.scope_mut().register_struct_or_union_sym(StructSym {
             kind: self.kind,
             ident: ident.clone(),

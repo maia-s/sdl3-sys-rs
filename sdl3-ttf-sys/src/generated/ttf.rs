@@ -2414,6 +2414,9 @@ pub use super::textengine::TTF_TextEngine;
 /// - [`TTF_CreateText`]
 /// - [`TTF_GetTextProperties`]
 /// - [`TTF_DestroyText`]
+///
+/// ### Notes for `sdl3-sys`
+/// This struct shouldn't be created manually. Use the corresponding SDL functions to create and destroy it.
 #[repr(C)]
 // #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

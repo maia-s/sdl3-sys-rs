@@ -129,6 +129,9 @@ pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 /// - [`SDL_GetCurrentDisplayMode`]
 /// - [`SDL_SetWindowFullscreenMode`]
 /// - [`SDL_GetWindowFullscreenMode`]
+///
+/// ### Notes for `sdl3-sys`
+/// This struct shouldn't be created manually. Use the corresponding SDL functions to create and destroy it.
 #[repr(C)]
 // #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
