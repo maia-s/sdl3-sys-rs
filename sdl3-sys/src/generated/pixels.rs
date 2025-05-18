@@ -2251,7 +2251,7 @@ pub struct SDL_FColor {
 /// - [`SDL_SetPaletteColors`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This struct shouldn't be created manually. Use the corresponding SDL functions to create and destroy it.
+/// This struct shouldn't be created manually. Use the corresponding SDL functions.
 #[repr(C)]
 // #[non_exhaustive] // temporarily disabled bc of https://github.com/rust-lang/rust/issues/132699
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

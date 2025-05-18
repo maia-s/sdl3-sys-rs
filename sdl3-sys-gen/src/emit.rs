@@ -1085,7 +1085,7 @@ impl StructOrUnion {
 
         if !self.can_construct {
             doc.as_mut().unwrap().notes = Some(
-                "This struct shouldn't be created manually. Use the corresponding SDL functions to create and destroy it."
+                "This struct shouldn't be created manually. Use the corresponding SDL functions."
                     .into(),
             );
         }
