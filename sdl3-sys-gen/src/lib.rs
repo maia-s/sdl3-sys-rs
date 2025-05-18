@@ -799,8 +799,9 @@ impl Gen {
             let mut module_out = format!(
                 "//! Metadata for items in the `crate::{module}` module\n\nuse super::*;\n\n"
             );
+            let hint_pfx = format!("{}HINT_", self.sym_prefix);
             for hint in &metadata.hints {
-                let short_name = hint.name.strip_prefix("SDL_HINT_").unwrap();
+                let short_name = hint.name.strip_prefix(&hint_pfx).unwrap();
                 writeln!(metadata_out_hints, "    &{module}::METADATA_{},", hint.name)?;
                 write!(
                     module_out,
@@ -825,9 +826,10 @@ impl Gen {
                     }
                 )?;
             }
+            let prop_pfx = format!("{}PROP_", self.sym_prefix);
             for prop in &metadata.properties {
                 writeln!(metadata_out_props, "    &{module}::METADATA_{},", prop.name)?;
-                let short_name = prop.name.strip_prefix("SDL_PROP_").unwrap();
+                let short_name = prop.name.strip_prefix(&prop_pfx).unwrap();
                 let ty = if short_name.ends_with("_POINTER") {
                     "POINTER"
                 } else if short_name.ends_with("_STRING") {
@@ -840,8 +842,13 @@ impl Gen {
                     "BOOLEAN"
                 } else {
                     match prop.name.as_str() {
-                        "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID" => "NUMBER",
                         "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8" => "NUMBER",
+                        "SDL_PROP_WINDOW_OPENVR_OVERLAY_ID" => "NUMBER",
+                        "TTF_PROP_FONT_CREATE_EXISTING_FONT" => "POINTER",
+                        "TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE" => "NUMBER",
+                        "TTF_PROP_GPU_TEXT_ENGINE_DEVICE" => "POINTER",
+                        "TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE" => "NUMBER",
+                        "TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER" => "POINTER",
                         _ => panic!("unknown property type for property {}", prop.name),
                     }
                 };

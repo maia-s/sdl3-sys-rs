@@ -2,6 +2,150 @@
 
 use super::*;
 
+pub const METADATA_TTF_PROP_FONT_CREATE_FILENAME_STRING: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_FILENAME_STRING",
+    short_name: "FONT_CREATE_FILENAME_STRING",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_FILENAME_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_IOSTREAM_POINTER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_IOSTREAM_POINTER",
+    short_name: "FONT_CREATE_IOSTREAM_POINTER",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_IOSTREAM_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_IOSTREAM_OFFSET_NUMBER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_IOSTREAM_OFFSET_NUMBER",
+    short_name: "FONT_CREATE_IOSTREAM_OFFSET_NUMBER",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_IOSTREAM_OFFSET_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_IOSTREAM_AUTOCLOSE_BOOLEAN: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_IOSTREAM_AUTOCLOSE_BOOLEAN",
+    short_name: "FONT_CREATE_IOSTREAM_AUTOCLOSE_BOOLEAN",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_IOSTREAM_AUTOCLOSE_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_SIZE_FLOAT: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_SIZE_FLOAT",
+    short_name: "FONT_CREATE_SIZE_FLOAT",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_SIZE_FLOAT,
+    ty: PropertyType::FLOAT,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_FACE_NUMBER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_FACE_NUMBER",
+    short_name: "FONT_CREATE_FACE_NUMBER",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_FACE_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_HORIZONTAL_DPI_NUMBER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_HORIZONTAL_DPI_NUMBER",
+    short_name: "FONT_CREATE_HORIZONTAL_DPI_NUMBER",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_HORIZONTAL_DPI_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_VERTICAL_DPI_NUMBER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_VERTICAL_DPI_NUMBER",
+    short_name: "FONT_CREATE_VERTICAL_DPI_NUMBER",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_VERTICAL_DPI_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_CREATE_EXISTING_FONT: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_CREATE_EXISTING_FONT",
+    short_name: "FONT_CREATE_EXISTING_FONT",
+    value: crate::ttf::TTF_PROP_FONT_CREATE_EXISTING_FONT,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_OUTLINE_LINE_CAP_NUMBER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_OUTLINE_LINE_CAP_NUMBER",
+    short_name: "FONT_OUTLINE_LINE_CAP_NUMBER",
+    value: crate::ttf::TTF_PROP_FONT_OUTLINE_LINE_CAP_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_OUTLINE_LINE_JOIN_NUMBER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_OUTLINE_LINE_JOIN_NUMBER",
+    short_name: "FONT_OUTLINE_LINE_JOIN_NUMBER",
+    value: crate::ttf::TTF_PROP_FONT_OUTLINE_LINE_JOIN_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_FONT_OUTLINE_MITER_LIMIT_NUMBER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_FONT_OUTLINE_MITER_LIMIT_NUMBER",
+    short_name: "FONT_OUTLINE_MITER_LIMIT_NUMBER",
+    value: crate::ttf::TTF_PROP_FONT_OUTLINE_MITER_LIMIT_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER",
+    short_name: "RENDERER_TEXT_ENGINE_RENDERER",
+    value: crate::ttf::TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
+    short_name: "RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
+    value: crate::ttf::TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_GPU_TEXT_ENGINE_DEVICE: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_GPU_TEXT_ENGINE_DEVICE",
+    short_name: "GPU_TEXT_ENGINE_DEVICE",
+    value: crate::ttf::TTF_PROP_GPU_TEXT_ENGINE_DEVICE,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE: Property = Property {
+    module: "ttf",
+    name: "TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
+    short_name: "GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
+    value: crate::ttf::TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_TTF_FontStyleFlags: Group = Group {
     module: "ttf",
     kind: GroupKind::Flags,
