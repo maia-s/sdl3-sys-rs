@@ -436,6 +436,10 @@ impl DocComment {
                         writeln!(ctx, "{pfx} {rest}")?;
                         emit_block(ctx, line.len() - rest.len())?;
                     }
+                    "sdl3-sys" => {
+                        section(ctx, "Notes for `sdl3-sys`")?;
+                        writeln!(ctx, "{pfx} {rest}")?;
+                    }
                     _ => writeln!(ctx, "{pfx} {line}")?,
                 }
             } else if let Some(fmt) = line.strip_prefix("```") {
@@ -1045,7 +1049,29 @@ impl StructOrUnion {
         with_ident: bool,
     ) -> EmitResult {
         let ident = &self.generated_ident;
-        let doc = self.doc.clone().or(doc);
+        let mut doc = self.doc.clone().or(doc);
+
+        let is_interface = if doc
+            .as_ref()
+            .map(|doc| doc.span.contains("SDL_INIT_INTERFACE"))
+            .unwrap_or(false)
+        {
+            if let Some(fields) = &self.fields {
+                let first_field = &fields.fields[0];
+                if let TypeEnum::Ident(ty) = &first_field.ty.ty {
+                    doc.as_mut().unwrap().notes = Some(format!(
+                        "This interface can be initialized with `{ident}::new()` or `Default::default()`"
+                    ));
+                    first_field.ident.as_str() == "version" && ty.as_str() == "Uint32"
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        } else {
+            false
+        };
 
         let sym = ctx.scope_mut().register_struct_or_union_sym(StructSym {
             kind: self.kind,
@@ -1071,22 +1097,6 @@ impl StructOrUnion {
                 can_construct: self.can_construct,
                 can_eq: self.can_eq,
             })?;
-
-            let is_interface = if sym
-                .doc
-                .as_ref()
-                .map(|doc| doc.span.contains("SDL_INIT_INTERFACE"))
-                .unwrap_or(false)
-            {
-                let first_field = &fields.fields[0];
-                if let TypeEnum::Ident(ty) = &first_field.ty.ty {
-                    first_field.ident.as_str() == "version" && ty.as_str() == "Uint32"
-                } else {
-                    false
-                }
-            } else {
-                false
-            };
 
             let can_derive_copy = !is_interface
                 && (sym.can_copy == CanCopy::Always

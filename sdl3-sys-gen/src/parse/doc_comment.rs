@@ -10,6 +10,7 @@ pub struct DocComment {
     pub span: Span,
     pub doc: Span,
     pub trailing: bool,
+    pub notes: Option<String>,
 }
 
 impl Display for DocComment {
@@ -47,10 +48,16 @@ impl Display for DocComment {
             (!line.trim().is_empty()).then_some(line)
         }));
 
+        let notes = self
+            .notes
+            .as_ref()
+            .map(|s| format!("\\sdl3-sys {s}"))
+            .unwrap_or_default();
         let mut lines = self
             .doc
             .as_str()
             .lines()
+            .chain(notes.lines())
             .map(|line| {
                 if let Some(line) = line.strip_prefix(prefix) {
                     line.strip_prefix(prefix2).unwrap_or(line)
@@ -157,6 +164,7 @@ impl Parse for DocComment {
                                     span,
                                     doc,
                                     trailing: false,
+                                    notes: None,
                                 }),
                             ));
                         }
@@ -170,6 +178,7 @@ impl Parse for DocComment {
                                 span,
                                 doc,
                                 trailing: false,
+                                notes: None,
                             }),
                         ));
                     }
@@ -181,6 +190,7 @@ impl Parse for DocComment {
                         span,
                         doc,
                         trailing: false,
+                        notes: None,
                     }),
                 ))
             } else {
@@ -260,6 +270,7 @@ impl From<DocCommentPost> for DocComment {
             span: value.span,
             doc: value.doc,
             trailing: true,
+            notes: None,
         }
     }
 }

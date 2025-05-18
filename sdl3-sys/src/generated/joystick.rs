@@ -540,6 +540,9 @@ pub struct SDL_VirtualJoystickSensorDesc {
 /// - [`SDL_INIT_INTERFACE`]
 /// - [`SDL_VirtualJoystickSensorDesc`]
 /// - [`SDL_VirtualJoystickTouchpadDesc`]
+///
+/// ### Notes for `sdl3-sys`
+/// This interface can be initialized with `SDL_VirtualJoystickDesc::new()` or `Default::default()`
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_VirtualJoystickDesc {
