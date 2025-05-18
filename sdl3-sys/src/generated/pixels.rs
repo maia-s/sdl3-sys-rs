@@ -2270,6 +2270,9 @@ pub struct SDL_Palette {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

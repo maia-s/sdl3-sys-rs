@@ -1069,8 +1069,8 @@ impl StructOrUnion {
             if let Some(fields) = &self.fields {
                 let first_field = &fields.fields[0];
                 if let TypeEnum::Ident(ty) = &first_field.ty.ty {
-                    doc.as_mut().unwrap().notes = Some(format!(
-                        "This interface struct can be initialized with {ident}::new() or `Default::default()`"
+                    doc.as_mut().unwrap().add_note(format!(
+                        "This interface struct can be initialized with {ident}::new() or `Default::default()`."
                     ));
                     first_field.ident.as_str() == "version" && ty.as_str() == "Uint32"
                 } else {
@@ -1083,10 +1083,21 @@ impl StructOrUnion {
             false
         };
 
+        if let Some(fields) = &self.fields {
+            if fields
+                .fields
+                .iter()
+                .any(|field| field.ident.as_str().starts_with("padding"))
+            {
+                doc.as_mut().unwrap().add_note("This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.");
+            }
+        }
+
         if !self.can_construct {
-            doc.as_mut().unwrap().notes = Some(
-                "This struct shouldn't be created manually. Use the corresponding SDL functions."
-                    .into(),
+            // replace other notes
+            doc.as_mut().unwrap().notes.clear();
+            doc.as_mut().unwrap().add_note(
+                "This struct shouldn't be created manually. Use the corresponding SDL functions.",
             );
         }
 

@@ -970,6 +970,9 @@ impl ::core::default::Default for SDL_TextEditingEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1089,6 +1092,9 @@ pub struct SDL_MouseMotionEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1153,6 +1159,9 @@ pub struct SDL_MouseWheelEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1182,6 +1191,9 @@ pub struct SDL_JoyAxisEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1211,6 +1223,9 @@ pub struct SDL_JoyBallEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1242,6 +1257,9 @@ pub struct SDL_JoyHatEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1311,6 +1329,9 @@ pub struct SDL_JoyBatteryEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1340,6 +1361,9 @@ pub struct SDL_GamepadAxisEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1442,6 +1466,9 @@ pub struct SDL_GamepadSensorEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -1841,6 +1868,9 @@ impl ::core::default::Default for SDL_UserEvent {
 ///
 /// ### Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ### Notes for `sdl3-sys`
+/// This struct has padding fields which should only be initialized with struct update syntax using `..Default::default()`.
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union SDL_Event {
