@@ -305,6 +305,16 @@ impl DocComment {
                                 && line.as_bytes().get(end + 1).copied() == Some(b')')))
                         && (quoted & 1 == 0 || line.as_bytes()[end] == b'`')
                     {
+                        if line.as_bytes().get(end).copied() == Some(b':')
+                            && line.as_bytes().get(end + 1).copied() == Some(b':')
+                        {
+                            // sdl3-sys associated data
+                            end = end
+                                + 2
+                                + line[end + 2..]
+                                    .find(|c: char| !c.is_ascii_alphanumeric())
+                                    .unwrap_or(line.len() - (end + 2));
+                        }
                         if line.as_bytes().get(end).copied() == Some(b'(')
                             && line.as_bytes().get(end + 1).copied() == Some(b')')
                         {
@@ -1060,7 +1070,7 @@ impl StructOrUnion {
                 let first_field = &fields.fields[0];
                 if let TypeEnum::Ident(ty) = &first_field.ty.ty {
                     doc.as_mut().unwrap().notes = Some(format!(
-                        "This interface can be initialized with `{ident}::new()` or `Default::default()`"
+                        "This interface struct can be initialized with {ident}::new() or `Default::default()`"
                     ));
                     first_field.ident.as_str() == "version" && ty.as_str() == "Uint32"
                 } else {

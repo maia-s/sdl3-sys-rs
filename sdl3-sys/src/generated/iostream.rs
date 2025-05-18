@@ -152,7 +152,7 @@ pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 /// - [`SDL_INIT_INTERFACE`]
 ///
 /// ### Notes for `sdl3-sys`
-/// This interface can be initialized with `SDL_IOStreamInterface::new()` or `Default::default()`
+/// This interface struct can be initialized with [`SDL_IOStreamInterface::new()`] or `Default::default()`
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_IOStreamInterface {
