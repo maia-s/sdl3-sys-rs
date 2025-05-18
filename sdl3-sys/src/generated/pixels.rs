@@ -2509,6 +2509,9 @@ pub struct SDL_FColor {
 ///
 /// ## See also
 /// - [`SDL_SetPaletteColors`]
+///
+/// ## Notes for `sdl3-sys`
+/// This struct can't be created manually. Use the corresponding SDL functions.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_Palette {
@@ -2528,6 +2531,9 @@ pub struct SDL_Palette {
 ///
 /// ## Availability
 /// This struct is available since SDL 3.2.0.
+///
+/// ## Notes for `sdl3-sys`
+/// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.
 #[repr(C)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]

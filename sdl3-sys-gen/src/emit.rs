@@ -345,6 +345,16 @@ impl DocComment {
                                 && line.as_bytes().get(end + 1).copied() == Some(b')')))
                         && (quoted & 1 == 0 || line.as_bytes()[end] == b'`')
                     {
+                        if line.as_bytes().get(end).copied() == Some(b':')
+                            && line.as_bytes().get(end + 1).copied() == Some(b':')
+                        {
+                            // sdl3-sys associated data
+                            end = end
+                                + 2
+                                + line[end + 2..]
+                                    .find(|c: char| !c.is_ascii_alphanumeric())
+                                    .unwrap_or(line.len() - (end + 2));
+                        }
                         if line.as_bytes().get(end).copied() == Some(b'(')
                             && line.as_bytes().get(end + 1).copied() == Some(b')')
                         {
@@ -475,6 +485,10 @@ impl DocComment {
                         section(ctx, "Thread safety")?;
                         writeln!(ctx, "{pfx} {rest}")?;
                         emit_block(ctx, line.len() - rest.len())?;
+                    }
+                    "sdl3-sys" => {
+                        section(ctx, "Notes for `sdl3-sys`")?;
+                        writeln!(ctx, "{pfx} {rest}")?;
                     }
                     _ => writeln!(ctx, "{pfx} {line}")?,
                 }
@@ -1540,7 +1554,47 @@ impl StructOrUnion {
         with_ident: bool,
     ) -> EmitResult {
         let ident = &self.generated_ident;
-        let doc = self.doc.clone().or(doc);
+        let mut doc = self.doc.clone().or(doc);
+
+        let is_interface = if doc
+            .as_ref()
+            .map(|doc| doc.span.contains("SDL_INIT_INTERFACE"))
+            .unwrap_or(false)
+        {
+            if let Some(fields) = &self.fields {
+                let first_field = &fields.fields[0];
+                if let TypeEnum::Ident(ty) = &first_field.ty.ty {
+                    doc.as_mut().unwrap().add_note(format!(
+                        "This interface struct can be initialized with {ident}::new() or `Default::default()`."
+                    ));
+                    first_field.ident.as_str() == "version" && ty.as_str() == "Uint32"
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        } else {
+            false
+        };
+
+        if let Some(fields) = &self.fields {
+            if fields
+                .fields
+                .iter()
+                .any(|field| field.ident.as_str().starts_with("padding"))
+            {
+                doc.as_mut().unwrap().add_note("This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.");
+            }
+        }
+
+        if !self.can_construct {
+            // replace other notes
+            doc.as_mut().unwrap().notes.clear();
+            doc.as_mut().unwrap().add_note(
+                "This struct can't be created manually. Use the corresponding SDL functions.",
+            );
+        }
 
         let sym = ctx.scope_mut().register_struct_or_union_sym(StructSym {
             kind: self.kind,
@@ -1566,22 +1620,6 @@ impl StructOrUnion {
                 can_construct: self.can_construct,
                 can_eq: self.can_eq,
             })?;
-
-            let is_interface = if sym
-                .doc
-                .as_ref()
-                .map(|doc| doc.span.contains("SDL_INIT_INTERFACE"))
-                .unwrap_or(false)
-            {
-                let first_field = &fields.fields[0];
-                if let TypeEnum::Ident(ty) = &first_field.ty.ty {
-                    first_field.ident.as_str() == "version" && ty.as_str() == "Uint32"
-                } else {
-                    false
-                }
-            } else {
-                false
-            };
 
             let can_derive_copy = !is_interface
                 && (sym.can_copy == CanCopy::Always

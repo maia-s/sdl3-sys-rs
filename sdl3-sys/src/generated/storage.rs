@@ -239,6 +239,9 @@ use super::properties::*;
 ///
 /// ## See also
 /// - [`SDL_INIT_INTERFACE`]
+///
+/// ## Notes for `sdl3-sys`
+/// This interface struct can be initialized with [`SDL_StorageInterface::new()`] or `Default::default()`.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_StorageInterface {

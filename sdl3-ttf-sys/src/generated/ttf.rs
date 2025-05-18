@@ -2650,6 +2650,9 @@ pub use super::textengine::TTF_TextEngine;
 /// - [`TTF_CreateText`]
 /// - [`TTF_GetTextProperties`]
 /// - [`TTF_DestroyText`]
+///
+/// ## Notes for `sdl3-sys`
+/// This struct can't be created manually. Use the corresponding SDL functions.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct TTF_Text {

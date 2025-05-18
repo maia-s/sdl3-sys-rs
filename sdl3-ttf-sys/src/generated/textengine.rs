@@ -153,6 +153,9 @@ impl ::core::default::Default for TTF_DrawOperation {
 ///
 /// ## See also
 /// - [`SDL_INIT_INTERFACE`]
+///
+/// ## Notes for `sdl3-sys`
+/// This interface struct can be initialized with [`TTF_TextEngine::new()`] or `Default::default()`.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct TTF_TextEngine {

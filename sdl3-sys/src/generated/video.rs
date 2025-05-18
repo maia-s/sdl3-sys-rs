@@ -209,6 +209,9 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_SystemTheme {
 /// - [`SDL_GetCurrentDisplayMode`]
 /// - [`SDL_SetWindowFullscreenMode`]
 /// - [`SDL_GetWindowFullscreenMode`]
+///
+/// ## Notes for `sdl3-sys`
+/// This struct can't be created manually. Use the corresponding SDL functions.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_DisplayMode {

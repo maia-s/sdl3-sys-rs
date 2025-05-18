@@ -10,6 +10,7 @@ pub struct DocComment {
     pub span: Span,
     pub doc: Span,
     pub trailing: bool,
+    pub notes: Vec<String>,
 }
 
 impl Display for DocComment {
@@ -86,6 +87,18 @@ impl Display for DocComment {
             }
         }
 
+        if !self.notes.is_empty() {
+            writeln!(f)?;
+            write!(f, "\\sdl3-sys ")?;
+            if self.notes.len() == 1 {
+                writeln!(f, "{}", self.notes[0])?;
+            } else {
+                for note in &self.notes {
+                    writeln!(f, "- {note}")?;
+                }
+            }
+        }
+
         Ok(())
     }
 }
@@ -130,6 +143,10 @@ impl DocComment {
             Ok(pre)
         }
     }
+
+    pub fn add_note(&mut self, note: impl Into<String>) {
+        self.notes.push(note.into());
+    }
 }
 
 impl Parse for DocComment {
@@ -157,6 +174,7 @@ impl Parse for DocComment {
                                     span,
                                     doc,
                                     trailing: false,
+                                    notes: Vec::new(),
                                 }),
                             ));
                         }
@@ -170,6 +188,7 @@ impl Parse for DocComment {
                                 span,
                                 doc,
                                 trailing: false,
+                                notes: Vec::new(),
                             }),
                         ));
                     }
@@ -181,6 +200,7 @@ impl Parse for DocComment {
                         span,
                         doc,
                         trailing: false,
+                        notes: Vec::new(),
                     }),
                 ))
             } else {
@@ -260,6 +280,7 @@ impl From<DocCommentPost> for DocComment {
             span: value.span,
             doc: value.doc,
             trailing: true,
+            notes: Vec::new(),
         }
     }
 }
