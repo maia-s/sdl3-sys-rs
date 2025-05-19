@@ -672,31 +672,31 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
         "ttf",
         "TTF_PROP_FONT_CREATE_EXISTING_FONT_POINTER",
         "TTF_PROP_FONT_CREATE_EXISTING_FONT",
-        "0.5.2"
+        "0.2.1"
     ),
     emit_define_alias!(
         "ttf",
         "TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE_NUMBER",
         "TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
-        "0.5.2"
+        "0.2.1"
     ),
     emit_define_alias!(
         "ttf",
         "TTF_PROP_GPU_TEXT_ENGINE_DEVICE_POINTER",
         "TTF_PROP_GPU_TEXT_ENGINE_DEVICE",
-        "0.5.2"
+        "0.2.1"
     ),
     emit_define_alias!(
         "ttf",
         "TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE_NUMBER",
         "TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
-        "0.5.2"
+        "0.2.1"
     ),
     emit_define_alias!(
         "ttf",
         "TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER_POINTER",
         "TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER",
-        "0.5.2"
+        "0.2.1"
     ),
 ];
 
