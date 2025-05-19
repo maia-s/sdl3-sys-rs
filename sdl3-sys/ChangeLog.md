@@ -3,6 +3,7 @@
 - 0.6.0 WIP:
     - Make IDs and flag types newtypes
     - Add metadata
+    - Remove deprecated aliases
     - MSRV 1.81
 
 - 0.5.1:
