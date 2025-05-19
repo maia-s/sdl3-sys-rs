@@ -4501,7 +4501,7 @@ pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER: *const ::core:
     note = "renamed to `SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER`"
 )]
 pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char =
-    SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER;
+    c"SDL.gpu.texture.create.d3d12.clear.stencil".as_ptr();
 
 pub const SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.texture.create.name".as_ptr();

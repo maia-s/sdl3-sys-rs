@@ -158,6 +158,27 @@ pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool,
 
 type EmitDefinePatch = EmitPatch<Define>;
 
+macro_rules! emit_define_alias {
+    ($module:literal, $new:literal, $old:literal, $version:literal) => {
+        EmitDefinePatch {
+            module: Some($module),
+            match_ident: |i| i == $new,
+            patch: |ctx, d| {
+                d.emit(ctx)?;
+                writeln!(
+                    ctx,
+                    r#"#[deprecated(since = "{}", note = "renamed to `{}`")]"#,
+                    $version, $new,
+                )?;
+                let mut d = d.clone();
+                d.ident = Ident::new_inline($old).into();
+                d.emit(ctx)?;
+                Ok(true)
+            },
+        }
+    };
+}
+
 const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
     EmitDefinePatch {
         // skip emitting these
@@ -441,20 +462,12 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             Ok(true)
         },
     },
-    EmitDefinePatch {
-        module: Some("gpu"),
-        match_ident: |i| i == "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER",
-        patch: |ctx, d| {
-            d.emit(ctx)?;
-            writeln!(
-                ctx,
-                r#"#[deprecated(since = "0.4.8", note = "renamed to `SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER`")]"#
-            )?;
-            writeln!(ctx, "pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8: *const ::core::ffi::c_char = SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER;")?;
-            writeln!(ctx)?;
-            Ok(true)
-        },
-    },
+    emit_define_alias!(
+        "gpu",
+        "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER",
+        "SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8",
+        "0.4.8"
+    ),
     EmitDefinePatch {
         module: Some("stdinc"),
         match_ident: |i| matches!(i, "SDL_clamp"),
@@ -655,6 +668,36 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             Ok(true)
         },
     },
+    emit_define_alias!(
+        "ttf",
+        "TTF_PROP_FONT_CREATE_EXISTING_FONT_POINTER",
+        "TTF_PROP_FONT_CREATE_EXISTING_FONT",
+        "0.5.2"
+    ),
+    emit_define_alias!(
+        "ttf",
+        "TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE_NUMBER",
+        "TTF_PROP_GPU_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
+        "0.5.2"
+    ),
+    emit_define_alias!(
+        "ttf",
+        "TTF_PROP_GPU_TEXT_ENGINE_DEVICE_POINTER",
+        "TTF_PROP_GPU_TEXT_ENGINE_DEVICE",
+        "0.5.2"
+    ),
+    emit_define_alias!(
+        "ttf",
+        "TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE_NUMBER",
+        "TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE",
+        "0.5.2"
+    ),
+    emit_define_alias!(
+        "ttf",
+        "TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER_POINTER",
+        "TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER",
+        "0.5.2"
+    ),
 ];
 
 fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
