@@ -1,0 +1,11 @@
+package_name: sdl3-net
+lib_name: SDL3_net
+lib_rev_name: SDL_net
+lib_min_version: 3.2.0
+lib_dir: SDL_net
+include_dir: include/SDL3_net
+version_header: SDL_net.h
+headers_prefix: SDL_
+sym_prefix: NET_
+define_prefix: SDL_NET_
+hint_prop_prefix: NET_
