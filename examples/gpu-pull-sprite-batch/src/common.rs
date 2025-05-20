@@ -131,7 +131,7 @@ pub fn init_gpu_window(
 }
 
 pub unsafe fn deinit_gpu_window(device: *mut SDL_GPUDevice, window: *mut SDL_Window) {
-    if !device.is_null() && !device.is_null() {
+    if !device.is_null() && !window.is_null() {
         SDL_ReleaseWindowFromGPUDevice(device, window);
     }
     if !window.is_null() {
