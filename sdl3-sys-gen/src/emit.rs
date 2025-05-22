@@ -56,9 +56,6 @@ pub fn doc_link_sym(s: &str) -> Option<(&str, &str)> {
         | "IMG_isTYPE"
         | "SDL_GPU"
         | "SDL_HINT_X"
-        // FIXME: work around for rustdoc bug: https://github.com/rust-lang/rust/issues/133150
-        | "SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER"
-        | "SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER"
             => None,
 
         "SDL_Rects" => Some(("SDL_Rect", "s")),

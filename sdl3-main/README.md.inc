@@ -22,7 +22,7 @@ provides some helper types and functions to alleviate this.
 
 - [`MainThreadToken`]\: Zero-sized token that can only exist on the main thread.
 - [`MainThreadData`]\: Wrapper for data that can move between threads but that should
-                      only be accessed on the main thread.
+  only be accessed on the main thread.
 - [`run_sync_on_main_thread()`]\: Run a callback on the main thread, synchronously.
 - [`run_async_on_main_thread()`]\: Run a callback on the main thread, asynchronously.
 
