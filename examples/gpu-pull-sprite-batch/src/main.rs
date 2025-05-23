@@ -169,6 +169,8 @@ impl AppState {
                 present_mode,
             );
 
+            SDL_srand(0);
+
             let vert_shader = common::load_shader(device, "PullSpriteBatch.vert");
             if vert_shader.is_null() {
                 common::dbg_sdl_error("failed to load vert shader");
