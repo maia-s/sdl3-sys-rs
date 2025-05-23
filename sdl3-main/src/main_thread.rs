@@ -2,7 +2,7 @@ use core::{
     cell::UnsafeCell,
     ffi::c_void,
     marker::PhantomData,
-    mem::{align_of, size_of, ManuallyDrop, MaybeUninit},
+    mem::{align_of, size_of, transmute_copy, ManuallyDrop, MaybeUninit},
     ptr::{self, addr_of_mut},
     sync::atomic::{AtomicBool, Ordering},
 };
@@ -191,12 +191,14 @@ pub fn run_sync_on_main_thread<F: FnOnce() + Send>(callback: F) -> bool {
 /// See also [`run_sync_on_main_thread()`].
 #[must_use]
 pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bool {
-    if const {
-        size_of::<F>() <= size_of::<*mut c_void>() && align_of::<F>() <= align_of::<*mut c_void>()
-    } {
+    if const { size_of::<F>() <= size_of::<*mut c_void>() } {
         // callback can be stored entirely in userdata; we don't need to allocate
         unsafe extern "C" fn main_thread_fn<F: FnOnce() + Send + 'static>(userdata: *mut c_void) {
-            unsafe { (&userdata as *const *mut c_void as *const F).read()() }
+            unsafe {
+                // copy and align to F, then call
+                // safety: size_of::<F>() <= size_of::<*mut c_void>()
+                transmute_copy::<*mut c_void, F>(&userdata)()
+            }
         }
         let mut userdata: *mut c_void = ptr::null_mut();
         let callback = ManuallyDrop::new(callback);
