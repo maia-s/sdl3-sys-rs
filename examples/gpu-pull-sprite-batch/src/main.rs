@@ -58,6 +58,7 @@ unsafe impl Send for AppState {}
 
 /// see SpriteData in PullSpriteBatch.vert.hlsl
 #[allow(dead_code)] // fields directly written to gpu buffer
+#[repr(C, packed)]
 #[derive(Clone)]
 struct GPUSprite {
     x: f32,
