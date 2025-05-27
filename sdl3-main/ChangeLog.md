@@ -1,5 +1,10 @@
 # Changes
 
+- 0.5.3:
+    - Only use the alloc-less optimization of `run_async_on_main_thread` if the size of
+      the callback is zero, because that's the only way to guarantee we won't copy
+      uninit bytes, which would be unsound
+
 - 0.5.2:
     - Fix more unsoundness in `run_async_on_main_thread`
 
