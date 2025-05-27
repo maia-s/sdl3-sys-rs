@@ -49,3 +49,8 @@ for crate in *-sys; do
     cargo +1.79.0 check -p $crate --features 'no-link,debug-impls'
     DOCS_RS=1 cargo +nightly check -p $crate --all-features
 done
+for crate in sdl3-main; do
+    cargo +1.79.0 check -p $crate
+    cargo +1.79.0 check -p $crate --features 'std'
+    cargo +nightly check -p $crate --all-features
+done
