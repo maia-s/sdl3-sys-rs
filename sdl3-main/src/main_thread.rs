@@ -3,7 +3,7 @@ use core::{
     ffi::c_void,
     marker::PhantomData,
     mem::{align_of, size_of, ManuallyDrop, MaybeUninit},
-    ptr::{self, addr_of_mut},
+    ptr::{addr_of_mut, NonNull},
     sync::atomic::{AtomicBool, Ordering},
 };
 use sdl3_sys::{
@@ -199,7 +199,7 @@ pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bo
             unsafe { (userdata as *mut F).read()() }
         }
         let callback = ManuallyDrop::new(callback);
-        let userdata: *mut F = ptr::dangling_mut();
+        let userdata: *mut F = NonNull::<F>::dangling().as_ptr();
         if unsafe { SDL_RunOnMainThread(Some(main_thread_fn::<F>), userdata as *mut c_void, false) }
         {
             true

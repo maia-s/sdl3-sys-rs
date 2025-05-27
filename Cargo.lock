@@ -325,7 +325,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-main"
-version = "0.5.3"
+version = "0.5.4"
 dependencies = [
  "libtest-mimic-collect",
  "parking_lot",

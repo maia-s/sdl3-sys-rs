@@ -1,5 +1,8 @@
 # Changes
 
+- 0.5.4:
+    - Fix accidental dependency on Rust 1.84
+
 - 0.5.3:
     - Only use the alloc-less optimization of `run_async_on_main_thread` if the size of
       the callback is zero, because that's the only way to guarantee we won't copy
