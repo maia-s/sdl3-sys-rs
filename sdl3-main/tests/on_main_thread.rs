@@ -28,18 +28,20 @@ impl<F: FnOnce()> Drop for Defer<F> {
 }
 
 #[must_use]
+fn async_zst<F: FnOnce() + Send + 'static>(callback: F) -> bool {
+    assert!(size_of::<F>() == 0);
+    run_async_on_main_thread(callback)
+}
+
+#[must_use]
 fn async_small<F: FnOnce() + Send + 'static>(callback: F) -> bool {
-    assert!(
-        size_of::<F>() <= size_of::<*mut c_void>() && align_of::<F>() <= align_of::<*mut c_void>()
-    );
+    assert!(size_of::<F>() <= size_of::<*mut c_void>());
     run_async_on_main_thread(callback)
 }
 
 #[must_use]
 fn async_large<F: FnOnce() + Send + 'static>(callback: F) -> bool {
-    assert!(
-        size_of::<F>() > size_of::<*mut c_void>() || align_of::<F>() > align_of::<*mut c_void>()
-    );
+    assert!(size_of::<F>() > size_of::<*mut c_void>());
     run_async_on_main_thread(callback)
 }
 
@@ -144,7 +146,7 @@ fn run_sync_on_main_thread_drop_on_thread() {
 }
 
 #[test]
-fn run_async_on_main_thread_simple_small_on_main() {
+fn run_async_on_main_thread_simple_zst_on_main() {
     static COMPLETE: AtomicBool = AtomicBool::new(false);
     static VALUE: AtomicUsize = AtomicUsize::new(0);
     if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
@@ -152,7 +154,7 @@ fn run_async_on_main_thread_simple_small_on_main() {
         panic!();
     }
     defer!(unsafe { SDL_Quit() });
-    assert!(async_small(|| {
+    assert!(async_zst(|| {
         MainThreadToken::assert();
         VALUE.fetch_add(0x1234, Ordering::AcqRel);
         COMPLETE.store(true, Ordering::Release)
@@ -208,6 +210,40 @@ fn run_async_on_main_thread_simple_large_on_thread() {
     while !COMPLETE.load(Ordering::Acquire) {
         unsafe { SDL_PumpEvents() };
     }
+    assert_eq!(VALUE.load(Ordering::Acquire), 0x1234);
+}
+
+#[test]
+fn run_async_on_main_thread_drop_zst_on_thread() {
+    struct Dropper();
+    impl Drop for Dropper {
+        fn drop(&mut self) {
+            DROPPED.store(true, Ordering::Release);
+        }
+    }
+    static DROPPED: AtomicBool = AtomicBool::new(false);
+    static COMPLETE: AtomicBool = AtomicBool::new(false);
+    static VALUE: AtomicUsize = AtomicUsize::new(0);
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
+        dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
+        panic!();
+    }
+    defer!(unsafe { SDL_Quit() });
+    thread::spawn(move || {
+        let dropper = Dropper();
+        assert!(MainThreadToken::get().is_none());
+        assert!(!DROPPED.load(Ordering::Acquire));
+        assert!(async_zst(move || {
+            MainThreadToken::assert();
+            let _d = dropper;
+            VALUE.fetch_add(0x1234, Ordering::AcqRel);
+            COMPLETE.store(true, Ordering::Release)
+        }));
+    });
+    while !COMPLETE.load(Ordering::Acquire) {
+        unsafe { SDL_PumpEvents() };
+    }
+    assert!(DROPPED.load(Ordering::Acquire));
     assert_eq!(VALUE.load(Ordering::Acquire), 0x1234);
 }
 

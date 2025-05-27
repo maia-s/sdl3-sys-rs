@@ -2,7 +2,7 @@ use core::{
     ffi::c_void,
     marker::PhantomData,
     mem::ManuallyDrop,
-    ptr::{self, addr_of_mut},
+    ptr::{addr_of_mut, NonNull},
 };
 use sdl3_sys::{
     init::{SDL_IsMainThread, SDL_RunOnMainThread},
@@ -169,23 +169,17 @@ pub fn run_sync_on_main_thread<F: FnOnce() + Send>(callback: F) -> bool {
 /// See also [`run_sync_on_main_thread()`].
 #[must_use]
 pub fn run_async_on_main_thread<F: FnOnce() + Send + 'static>(callback: F) -> bool {
-    if const {
-        size_of::<F>() <= size_of::<*mut c_void>() && align_of::<F>() <= align_of::<*mut c_void>()
-    } {
-        // callback can be stored entirely in userdata; we don't need to allocate
+    // we can't copy uninit bytes such as padding, because that's unsound,
+    // and we can't know there's no uninit bytes unless the size is zero
+    if const { size_of::<F>() == 0 } {
+        // callback is zero sized; we don't need to allocate
         unsafe extern "C" fn main_thread_fn<F: FnOnce() + Send + 'static>(userdata: *mut c_void) {
-            unsafe { (&userdata as *const *mut c_void as *const F).read()() }
+            unsafe { (userdata as *mut F).read()() }
         }
-        let mut userdata: *mut c_void = ptr::null_mut();
         let callback = ManuallyDrop::new(callback);
-        unsafe {
-            // copy and align to *mut c_void
-            (&mut userdata as *mut *mut c_void as *mut u8).copy_from_nonoverlapping(
-                &callback as *const ManuallyDrop<F> as *const u8,
-                size_of::<F>(),
-            );
-        }
-        if unsafe { SDL_RunOnMainThread(Some(main_thread_fn::<F>), userdata, false) } {
+        let userdata: *mut F = NonNull::<F>::dangling().as_ptr();
+        if unsafe { SDL_RunOnMainThread(Some(main_thread_fn::<F>), userdata as *mut c_void, false) }
+        {
             true
         } else {
             let _ = ManuallyDrop::into_inner(callback);
