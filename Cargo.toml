@@ -10,6 +10,7 @@ members = [
     "sdl3-sys",
     "sdl3-ttf-src",
     "sdl3-ttf-sys",
+    "examples/*",
 ]
 default-members = [
     "sdl3-sys",
