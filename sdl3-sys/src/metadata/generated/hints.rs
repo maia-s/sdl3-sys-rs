@@ -895,7 +895,7 @@ pub const METADATA_SDL_HINT_JOYSTICK_RAWINPUT: Hint = Hint {
     name: "SDL_HINT_JOYSTICK_RAWINPUT",
     short_name: "JOYSTICK_RAWINPUT",
     value: crate::hints::SDL_HINT_JOYSTICK_RAWINPUT,
-    doc: Some("A variable controlling whether the RAWINPUT joystick drivers should be used\nfor better handling XInput-capable devices.\n\nThe variable can be set to the following values:\n\n- \"0\": RAWINPUT drivers are not used.\n- \"1\": RAWINPUT drivers are used. (default)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n"),
+    doc: Some("A variable controlling whether the RAWINPUT joystick drivers should be used\nfor better handling XInput-capable devices.\n\nThe variable can be set to the following values:\n\n- \"0\": RAWINPUT drivers are not used. (default)\n- \"1\": RAWINPUT drivers are used.\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n"),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT: Hint = Hint {

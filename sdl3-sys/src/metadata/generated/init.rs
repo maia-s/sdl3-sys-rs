@@ -88,7 +88,7 @@ pub const METADATA_SDL_InitFlags: Group = Group {
         GroupValue {
             name: "SDL_INIT_JOYSTICK",
             short_name: "JOYSTICK",
-            doc: Some("[`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]\n"),
+            doc: Some("[`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`]\n"),
             available_since: None,
         },
         GroupValue {

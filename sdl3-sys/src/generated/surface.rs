@@ -1985,10 +1985,11 @@ extern "C" {
     /// ## Parameters
     /// - `src`: the [`SDL_Surface`] structure to be copied from.
     /// - `srcrect`: the [`SDL_Rect`] structure representing the rectangle to be
-    ///   copied, may not be NULL.
+    ///   copied, or NULL to copy the entire surface.
     /// - `dst`: the [`SDL_Surface`] structure that is the blit target.
     /// - `dstrect`: the [`SDL_Rect`] structure representing the target rectangle in
-    ///   the destination surface, may not be NULL.
+    ///   the destination surface, or NULL to fill the entire
+    ///   destination surface.
     /// - `scaleMode`: the [`SDL_ScaleMode`] to be used.
     ///
     /// ## Return value

@@ -47,7 +47,7 @@ use super::events::*;
 /// | ------------------- | --------------- | ----------- |
 /// | [`AUDIO`](SDL_InitFlags::AUDIO) | [`SDL_INIT_AUDIO`] | [`SDL_INIT_AUDIO`] implies [`SDL_INIT_EVENTS`] |
 /// | [`VIDEO`](SDL_InitFlags::VIDEO) | [`SDL_INIT_VIDEO`] | [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread |
-/// | [`JOYSTICK`](SDL_InitFlags::JOYSTICK) | [`SDL_INIT_JOYSTICK`] | [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`] |
+/// | [`JOYSTICK`](SDL_InitFlags::JOYSTICK) | [`SDL_INIT_JOYSTICK`] | [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`] |
 /// | [`HAPTIC`](SDL_InitFlags::HAPTIC) | [`SDL_INIT_HAPTIC`] | |
 /// | [`GAMEPAD`](SDL_InitFlags::GAMEPAD) | [`SDL_INIT_GAMEPAD`] | [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`] |
 /// | [`EVENTS`](SDL_InitFlags::EVENTS) | [`SDL_INIT_EVENTS`] | |
@@ -223,7 +223,7 @@ impl SDL_InitFlags {
     pub const AUDIO: Self = Self((0x00000010 as Uint32));
     /// [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread
     pub const VIDEO: Self = Self((0x00000020 as Uint32));
-    /// [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]
+    /// [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`]
     pub const JOYSTICK: Self = Self((0x00000200 as Uint32));
     pub const HAPTIC: Self = Self((0x00001000 as Uint32));
     /// [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`]
@@ -239,7 +239,7 @@ impl SDL_InitFlags {
 pub const SDL_INIT_AUDIO: SDL_InitFlags = SDL_InitFlags::AUDIO;
 /// [`SDL_INIT_VIDEO`] implies [`SDL_INIT_EVENTS`], should be initialized on the main thread
 pub const SDL_INIT_VIDEO: SDL_InitFlags = SDL_InitFlags::VIDEO;
-/// [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`], should be initialized on the same thread as [`SDL_INIT_VIDEO`] on Windows if you don't set [`SDL_HINT_JOYSTICK_THREAD`]
+/// [`SDL_INIT_JOYSTICK`] implies [`SDL_INIT_EVENTS`]
 pub const SDL_INIT_JOYSTICK: SDL_InitFlags = SDL_InitFlags::JOYSTICK;
 pub const SDL_INIT_HAPTIC: SDL_InitFlags = SDL_InitFlags::HAPTIC;
 /// [`SDL_INIT_GAMEPAD`] implies [`SDL_INIT_JOYSTICK`]
