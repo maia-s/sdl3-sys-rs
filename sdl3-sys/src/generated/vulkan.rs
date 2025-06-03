@@ -19,10 +19,10 @@ use super::error::*;
 
 use super::video::*;
 
-apply_cfg!(#[cfg(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64"))] => {
+apply_cfg!(#[cfg(any(all(not(target_pointer_width = "32"), target_arch = "x86_64"), all(target_arch = "riscv64", any(target_arch = "riscv32", target_arch = "riscv64")), any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64"))] => {
 });
 
-apply_cfg!(#[cfg(not(any(any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64", target_arch = "x86_64")))] => {
+apply_cfg!(#[cfg(not(any(all(not(target_pointer_width = "32"), target_arch = "x86_64"), all(target_arch = "riscv64", any(target_arch = "riscv32", target_arch = "riscv64")), any(/* always disabled: _M_IA64 */), target_arch = "x86_64", all(windows, target_pointer_width = "64"), all(not(windows), target_pointer_width = "64"), target_arch = "aarch64", any(/* always disabled: __ia64 */), target_arch = "powerpc64")))] => {
 });
 
 apply_cfg!(#[cfg(feature = "use-ash-v0-38")] => {
