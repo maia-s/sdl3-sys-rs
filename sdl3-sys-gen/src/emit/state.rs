@@ -213,6 +213,8 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             ".sdl3-sys.assert-level-paranoid" = CfgExpr(r#"feature = "assert-level-paranoid""#);
             ".sdl3-sys.big-endian" = CfgExpr(r#"target_endian = "big""#);
             ".sdl3-sys.little-endian" = CfgExpr(r#"target_endian = "little""#);
+            ".sdl3-sys.riscv32" = CfgExpr(r#"target_arch = "riscv32""#);
+            ".sdl3-sys.riscv64" = CfgExpr(r#"target_arch = "riscv64""#);
             "__aarch64__" = CfgExpr(r#"target_arch = "aarch64""#);
             "__APPLE__" = CfgExpr(r#"target_vendor = "apple""#);
             "__arm__" = CfgExpr(r#"target_arch = "arm""#);
@@ -228,11 +230,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__GNUC__" = CfgExpr(always_false!("__GNUC__")); // not needed
             "__i386__" = CfgExpr(r#"target_arch = "x86""#);
             "__ia64" = CfgExpr(always_false!("__ia64")); // not supported by rust?
+            "__ILP32__" = CfgExpr(r#"target_pointer_width = "32""#); // could also be LP32, but SDL doesn't support that
             "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
             "__OPTIMIZE__" = CfgExpr("not(debug_assertions)");
             "__powerpc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
             "__powerpc64__" = CfgExpr(r#"target_arch = "powerpc64""#);
             "__ppc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
+            "__riscv" = CfgExpr(r#"any(target_arch = "riscv32", target_arch = "riscv64")"#);
+            "__riscv_xlen" = CfgExpr(always_true!("riscv_xlen")); // non-boolean value
             "__x86_64__" = CfgExpr(r#"target_arch = "x86_64""#);
             "_DEBUG" = CfgExpr("debug_assertions");
             "_M_IA64" = CfgExpr(always_false!("_M_IA64")); // not supported by rust?
@@ -331,6 +336,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_VENDOR_INFO",
             "SDLMAIN_DECLSPEC",
             "VULKAN_H_",
+            "VULKAN_CORE_H_",
         }
 
         macro_rules! defines {
@@ -412,6 +418,12 @@ impl<'a, 'b> EmitContext<'a, 'b> {
                     return None;
                 };
                 match ident {
+                    "__riscv_xlen" => match u64::try_from(value) {
+                        Ok(32) => target_dependent_value(".sdl3-sys.riscv32"),
+                        Ok(64) => target_dependent_value(".sdl3-sys.riscv64"),
+                        _ => panic!("invalid riscv_xlen"),
+                    },
+
                     "SDL_ASSERT_LEVEL" => match u64::try_from(value) {
                         Ok(0) => target_dependent_value(".sdl3-sys.assert-level-disabled"),
                         Ok(1) => target_dependent_value(".sdl3-sys.assert-level-release"),
