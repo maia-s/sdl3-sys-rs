@@ -234,6 +234,33 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
             Ok(true)
         },
     },
+    EmitFunctionPatch {
+        module: Some("vulkan"),
+        match_ident: |i| matches!(i, "SDL_Vulkan_GetVkGetInstanceProcAddr"),
+        patch: |ctx, f| {
+            let mut f = f.clone();
+            f.doc.as_mut().unwrap().add_note(str_block! {"
+                As of `sdl3-sys` 0.6, the return type is correct for known targets, so you don't have
+                to cast it before use. It's compatible with the `ash` crate if you enable an integration
+                feature for that, but note that the type alias this function returns is an Option.
+            "});
+            f.return_type = Type::ident_str("VkGetInstanceProcAddr");
+            f.emit(ctx)?;
+
+            writeln!(
+                ctx,
+                str_block! {r#"
+                    /// (`sdl3-sys`) The definition of the `VkInstance` argument type can change based on enabled features. See [`VkInstance`].
+                    pub type VkGetInstanceProcAddr = Option<unsafe extern "system" fn(VkInstance, *const ::core::ffi::c_char) -> VkVoidFunction>;
+
+                    /// (`sdl3-sys`) Generic Vulkan void function. Cast to the appropriate type before use.
+                    pub type VkVoidFunction = Option<unsafe extern "system" fn()>;
+                "#}
+            )?;
+
+            Ok(true)
+        },
+    },
 ];
 
 pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {

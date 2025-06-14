@@ -121,6 +121,7 @@ These features are mutually exclusive. Features higher in this list override lat
     - Make IDs and flag types newtypes
     - Add metadata
     - Remove deprecated aliases
+    - Change return type of `SDL_Vulkan_GetVkGetInstanceProcAddr`
     - MSRV 1.81
 
 - 0.5.2:

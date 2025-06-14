@@ -159,8 +159,21 @@ extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> SDL_FunctionPointer;
+    ///
+    /// ## Notes for `sdl3-sys`
+    /// As of `sdl3-sys` 0.6, the return type is correct for known targets, so you don't have
+    /// to cast it before use. It's compatible with the `ash` crate if you enable an integration
+    /// feature for that, but note that the type alias this function returns is an Option.
+    ///
+    pub fn SDL_Vulkan_GetVkGetInstanceProcAddr() -> VkGetInstanceProcAddr;
 }
+
+/// (`sdl3-sys`) The definition of the `VkInstance` argument type can change based on enabled features. See [`VkInstance`].
+pub type VkGetInstanceProcAddr =
+    Option<unsafe extern "system" fn(VkInstance, *const ::core::ffi::c_char) -> VkVoidFunction>;
+
+/// (`sdl3-sys`) Generic Vulkan void function. Cast to the appropriate type before use.
+pub type VkVoidFunction = Option<unsafe extern "system" fn()>;
 
 extern "C" {
     /// Unload the Vulkan library previously loaded by [`SDL_Vulkan_LoadLibrary()`].
