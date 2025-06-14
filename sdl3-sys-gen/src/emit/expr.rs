@@ -1355,6 +1355,14 @@ impl Eval for Expr {
                 macro_rules! compare {
                     ($op:tt) => {{
                         let op = stringify!($op);
+                        if op == "==" && ctx.is_preproc_eval_mode() {
+                            // TODO: do this properly
+                            if let Expr::Ident(id) = &bop.lhs {
+                                if let Some(value) = ctx.try_target_dependent_if_compare(op, id.as_str(), &bop.rhs) {
+                                    return Ok(Some(value));
+                                }
+                            }
+                        }
                         let mut lhs = eval!(bop.lhs);
                         let mut rhs = eval!(bop.rhs);
                         Value::promote(ctx, &mut lhs, &mut rhs)?;
