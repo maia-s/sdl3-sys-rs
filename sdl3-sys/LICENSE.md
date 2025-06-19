@@ -1,6 +1,6 @@
 zlib License
 
-(C) 2024 Maia S. R.
+(C) 2024-2025 Maia S Ravn <maia.noreply@runbox.com>
 
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages

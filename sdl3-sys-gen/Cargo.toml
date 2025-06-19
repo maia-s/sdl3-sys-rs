@@ -2,7 +2,7 @@
 name = "sdl3-sys-gen"
 version = "0.1.0"
 edition = "2021"
-authors = ["Maia S. R."]
+authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"
 
 [features]

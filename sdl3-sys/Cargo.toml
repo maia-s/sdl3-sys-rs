@@ -2,7 +2,7 @@
 name = "sdl3-sys"
 version = "0.5.2+SDL3-3.2.16"
 edition = "2021"
-authors = ["Maia S. R."]
+authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"
 description = "Low level Rust bindings for SDL 3"
 repository = "https://github.com/maia-s/sdl3-sys-rs"
