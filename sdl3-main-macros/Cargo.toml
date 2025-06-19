@@ -2,7 +2,7 @@
 name = "sdl3-main-macros"
 version = "0.1.1"
 edition = "2021"
-authors = ["Maia S. R."]
+authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"
 description = "Proc macros for sdl3-main"
 repository = "https://github.com/maia-s/sdl3-sys-rs"
