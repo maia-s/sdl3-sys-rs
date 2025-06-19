@@ -15,13 +15,19 @@ use super::keyboard::*;
 use super::video::*;
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
-    apply_cfg!(#[cfg(feature = "use-windows-sys-v0-59")] => {
+    apply_cfg!(#[cfg(feature = "use-windows-sys-v0-60")] => {
+        #[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]
+        /// (`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.
+        pub type MSG = ::windows_sys_v0_60::Win32::UI::WindowsAndMessaging::MSG;
+    });
+
+    apply_cfg!(#[cfg(all(not(feature = "use-windows-sys-v0-60"), feature = "use-windows-sys-v0-59"))] => {
         #[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]
         /// (`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.
         pub type MSG = ::windows_sys_v0_59::Win32::UI::WindowsAndMessaging::MSG;
     });
 
-    apply_cfg!(#[cfg(not(feature = "use-windows-sys-v0-59"))] => {
+    apply_cfg!(#[cfg(not(any(feature = "use-windows-sys-v0-59", feature = "use-windows-sys-v0-60")))] => {
         #[cfg_attr(all(feature = "nightly", doc), doc(cfg(windows)))]
         /// (`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.
         pub type MSG = tagMSG;
