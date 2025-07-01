@@ -1,5 +1,6 @@
 #![allow(clippy::too_many_arguments)]
 #![allow(clippy::type_complexity)]
+#![allow(mismatched_lifetime_syntaxes)] // unhelpful noise
 
 #[allow(unused_macros)]
 macro_rules! log_debug {
