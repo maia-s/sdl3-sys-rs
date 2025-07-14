@@ -205,7 +205,7 @@ impl LinkFlags {
     }
 }
 
-#[cfg(all(windows, feature = "build-from-source", not(feature = "link-static")))]
+#[cfg(all(feature = "build-from-source", not(feature = "link-static")))]
 // based on find_cargo_target_dir from sdl2-sys
 fn top_level_cargo_target_dir() -> std::path::PathBuf {
     use std::path::PathBuf;
@@ -226,7 +226,7 @@ fn top_level_cargo_target_dir() -> std::path::PathBuf {
     target
 }
 
-#[cfg(feature = "build-from-source")]
+#[cfg(all(feature = "build-from-source", not(feature = "link-framework")))]
 fn find_and_output_cmake_dir_metadata(out_dir: &std::path::Path) -> Result<(), Box<dyn Error>> {
     use std::path::{Path, PathBuf};
     fn try_dir(dir: &Path) -> bool {
@@ -335,15 +335,53 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                 }
             }
 
+            #[cfg(not(feature = "link-framework"))]
             find_and_output_cmake_dir_metadata(&out_dir)?;
 
-            #[cfg(all(windows, not(feature = "link-static")))]
+            #[cfg(not(feature = "link-static"))]
             {
-                // Windows can't find the built dll when run, so copy it to the target dir
-                std::fs::copy(
-                    out_dir.join("bin").join(format!("{LIB_NAME}.dll")),
-                    top_level_cargo_target_dir().join(format!("{LIB_NAME}.dll")),
-                )?;
+                // copy built library to top level target dir
+                let toplevel = top_level_cargo_target_dir();
+                #[cfg(windows)]
+                {
+                    // windows
+                    let lib = format!("{LIB_NAME}.dll");
+                    std::fs::copy(out_dir.join("bin").join(&lib), toplevel.join(&lib))?;
+                }
+                #[cfg(target_vendor = "apple")]
+                {
+                    // apple targets
+                    if cfg!(feature = "link-framework") {
+                        let lib = format!("{LIB_NAME}.framework");
+                        std::os::unix::fs::symlink(out_dir.join(&lib), toplevel.join(&lib))?;
+                    } else {
+                        let lib_dir = out_dir.join("lib");
+                        let link = format!("lib{LIB_NAME}.dylib");
+                        let lib = std::fs::read_link(lib_dir.join(&link))?;
+                        std::fs::copy(lib_dir.join(&lib), toplevel.join(&lib))?;
+                        std::os::unix::fs::symlink(&lib, toplevel.join(&link))?;
+                    }
+                }
+                #[cfg(all(unix, not(target_vendor = "apple")))]
+                {
+                    // linux/unix
+                    let link_base = format!("lib{LIB_NAME}.so");
+                    let mut lib_dir = std::path::PathBuf::new();
+                    let mut link = None;
+                    for ld in ["lib64", "lib"] {
+                        lib_dir = out_dir.join(ld);
+                        if let Ok(l) = std::fs::read_link(lib_dir.join(&link_base)) {
+                            link = Some(l);
+                            break;
+                        }
+                    }
+                    if let Some(link) = link {
+                        let lib = std::fs::read_link(lib_dir.join(&link))?;
+                        std::fs::copy(lib_dir.join(&lib), toplevel.join(&lib))?;
+                        std::os::unix::fs::symlink(&lib, toplevel.join(&link))?;
+                        std::os::unix::fs::symlink(&link, toplevel.join(&link_base))?;
+                    }
+                }
             }
         }
         #[cfg(not(feature = "build-from-source"))]
