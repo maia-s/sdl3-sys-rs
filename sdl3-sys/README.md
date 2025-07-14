@@ -1,7 +1,7 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
-This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.16`, inclusive.
+This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.18`, inclusive.
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
 However, many of these aren't valid when passed to SDL without further modification.
@@ -123,6 +123,10 @@ These features are mutually exclusive. Features higher in this list override lat
     - Remove deprecated aliases
     - Change return type of `SDL_Vulkan_GetVkGetInstanceProcAddr`
     - MSRV 1.81
+
+- 0.5.3:
+    - Update SDL to 3.2.18
+    - Copy built library to top level target dir on all targets, not just Windows.
 
 - 0.5.2:
     - Update SDL to 3.2.16

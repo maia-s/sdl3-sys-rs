@@ -47,6 +47,15 @@ pub const METADATA_SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: Property = Propert
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN",
+    short_name: "WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN",
+    value: crate::video::SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN",

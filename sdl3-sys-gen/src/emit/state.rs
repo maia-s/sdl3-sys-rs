@@ -476,26 +476,26 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         Rc::into_inner(inner).unwrap().into_inner()
     }
 
-    fn inner(&self) -> Ref<InnerEmitContext> {
+    fn inner(&self) -> Ref<'_, InnerEmitContext> {
         self.inner.borrow()
     }
 
-    fn inner_mut(&self) -> RefMut<InnerEmitContext> {
+    fn inner_mut(&self) -> RefMut<'_, InnerEmitContext> {
         self.inner.borrow_mut()
     }
 
-    fn inner_map<T: ?Sized>(&self, map: impl FnOnce(&InnerEmitContext) -> &T) -> Ref<T> {
+    fn inner_map<T: ?Sized>(&self, map: impl FnOnce(&InnerEmitContext) -> &T) -> Ref<'_, T> {
         Ref::map(self.inner(), map)
     }
 
     fn inner_mut_map<T: ?Sized>(
         &self,
         map: impl FnOnce(&mut InnerEmitContext) -> &mut T,
-    ) -> RefMut<T> {
+    ) -> RefMut<'_, T> {
         RefMut::map(self.inner_mut(), map)
     }
 
-    pub fn module(&self) -> Ref<str> {
+    pub fn module(&self) -> Ref<'_, str> {
         self.inner_map(|ctx| ctx.module.as_str())
     }
 
@@ -552,11 +552,11 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
-    pub fn scope(&self) -> Ref<Scope> {
+    pub fn scope(&self) -> Ref<'_, Scope> {
         self.inner_map(|ctx| &ctx.scope)
     }
 
-    pub fn scope_mut(&self) -> RefMut<Scope> {
+    pub fn scope_mut(&self) -> RefMut<'_, Scope> {
         self.inner_mut_map(|ctx| &mut ctx.scope)
     }
 

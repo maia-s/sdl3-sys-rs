@@ -2758,6 +2758,15 @@ extern "C" {
     /// Popup windows implicitly do not have a border/decorations and do not appear
     /// on the taskbar/dock or in lists of windows such as alt-tab menus.
     ///
+    /// By default, popup window positions will automatically be constrained to keep
+    /// the entire window within display bounds. This can be overridden with the
+    /// [`SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN`] property.
+    ///
+    /// By default, popup menus will automatically grab keyboard focus from the parent
+    /// when shown. This behavior can be overridden by setting the [`SDL_WINDOW_NOT_FOCUSABLE`]
+    /// flag, setting the [`SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN`] property to false, or
+    /// toggling it after creation via the `SDL_SetWindowFocusable()` function.
+    ///
     /// If a parent window is hidden or destroyed, any child popup windows will be
     /// recursively hidden or destroyed as well. Child popup windows not explicitly
     /// hidden will be restored when the parent is shown.
@@ -2811,6 +2820,9 @@ extern "C" {
     ///   be always on top
     /// - [`SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN`]\: true if the window has no
     ///   window decoration
+    /// - [`SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN`]\: true if the "tooltip" and
+    ///   "menu" window types should be automatically constrained to be entirely within
+    ///   display bounds (default), false if no constraints on the position are desired.
     /// - [`SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN`]\: true if the
     ///   window will be used with an externally managed graphics context.
     /// - [`SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN`]\: true if the window should
@@ -2934,6 +2946,9 @@ pub const SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN: *const ::core::ffi::c_ch
 
 pub const SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.window.create.borderless".as_ptr();
+
+pub const SDL_PROP_WINDOW_CREATE_CONSTRAIN_POPUP_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL.window.create.constrain_popup".as_ptr();
 
 pub const SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.window.create.focusable".as_ptr();
