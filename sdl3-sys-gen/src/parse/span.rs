@@ -147,11 +147,11 @@ impl Span {
         self.as_str().as_bytes()
     }
 
-    pub fn chars(&self) -> Chars {
+    pub fn chars(&self) -> Chars<'_> {
         self.as_str().chars()
     }
 
-    pub fn char_indices(&self) -> CharIndices {
+    pub fn char_indices(&self) -> CharIndices<'_> {
         self.as_str().char_indices()
     }
 
