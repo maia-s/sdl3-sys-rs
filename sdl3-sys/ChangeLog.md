@@ -1,5 +1,8 @@
 # Changes
 
+- next
+    - Copy built library to top level target dir on all targets, not just Windows.
+
 - 0.5.2:
     - Update SDL to 3.2.16
 
