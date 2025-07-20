@@ -8,9 +8,6 @@ use std::sync::Mutex;
 use sdl3_main::{app_impl, AppResult, AppResultWithState};
 use sdl3_sys::everything::*;
 
-#[path = "../../gpu-pull-sprite-batch/src/common.rs"]
-mod common;
-
 struct AppState {
     window: *mut SDL_Window,
     device: *mut SDL_GPUDevice,
@@ -31,7 +28,7 @@ impl Drop for AppState {
                 SDL_ReleaseGPUGraphicsPipeline(self.device, self.line_pipeline);
             }
 
-            common::deinit_gpu_window(self.device, self.window);
+            gpu_common::deinit_gpu_window(self.device, self.window);
         }
     }
 }
@@ -42,24 +39,24 @@ unsafe impl Send for AppState {}
 impl AppState {
     fn app_init() -> AppResultWithState<Box<Mutex<Self>>> {
         unsafe {
-            common::set_framerate_hint(60);
+            gpu_common::set_framerate_hint(60);
 
             const TITLE: &CStr = c"Basic Triangle Example";
             let Some((window, device)) =
-                common::init_gpu_window(TITLE.as_ptr(), SDL_WindowFlags::default())
+                gpu_common::init_gpu_window(TITLE, SDL_WindowFlags::default())
             else {
                 return AppResultWithState::Failure(None);
             };
 
-            let vert_shader = common::load_shader(device, "RawTriangle.vert");
+            let vert_shader = gpu_common::load_shader(device, "RawTriangle.vert");
             if vert_shader.is_null() {
-                common::dbg_sdl_error("failed to load vert shader");
+                gpu_common::dbg_sdl_error("failed to load vert shader");
                 return AppResultWithState::Failure(None);
             }
 
-            let frag_shader = common::load_shader(device, "SolidColor.frag");
+            let frag_shader = gpu_common::load_shader(device, "SolidColor.frag");
             if frag_shader.is_null() {
-                common::dbg_sdl_error("failed to load frag shader");
+                gpu_common::dbg_sdl_error("failed to load frag shader");
                 return AppResultWithState::Failure(None);
             }
 
@@ -83,14 +80,14 @@ impl AppState {
             pipeline_create_info.rasterizer_state.fill_mode = SDL_GPU_FILLMODE_FILL;
             let fill_pipeline = SDL_CreateGPUGraphicsPipeline(device, &pipeline_create_info);
             if fill_pipeline.is_null() {
-                common::dbg_sdl_error("failed to create fill pipeline");
+                gpu_common::dbg_sdl_error("failed to create fill pipeline");
                 return AppResultWithState::Failure(None);
             }
 
             pipeline_create_info.rasterizer_state.fill_mode = SDL_GPU_FILLMODE_LINE;
             let line_pipeline = SDL_CreateGPUGraphicsPipeline(device, &pipeline_create_info);
             if line_pipeline.is_null() {
-                common::dbg_sdl_error("failed to create line pipeline");
+                gpu_common::dbg_sdl_error("failed to create line pipeline");
                 return AppResultWithState::Failure(None);
             }
 
@@ -120,7 +117,7 @@ impl AppState {
 
             let command_buffer = SDL_AcquireGPUCommandBuffer(self.device);
             if command_buffer.is_null() {
-                common::dbg_sdl_error("failed to acquire command buffer");
+                gpu_common::dbg_sdl_error("failed to acquire command buffer");
                 return AppResult::Failure;
             }
 
@@ -132,7 +129,7 @@ impl AppState {
                 null_mut(),
                 null_mut(),
             ) {
-                common::dbg_sdl_error("failed to acquire swapchain texture");
+                gpu_common::dbg_sdl_error("failed to acquire swapchain texture");
                 return AppResult::Failure;
             }
 

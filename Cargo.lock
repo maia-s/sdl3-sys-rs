@@ -166,17 +166,24 @@ checksum = "5692dd7b5a1978a5aeb0ce83b7655c58ca8efdcb79d21036ea249da95afec2c6"
 name = "gpu-basic-triangle"
 version = "0.1.0"
 dependencies = [
+ "gpu-common",
  "sdl3-main",
  "sdl3-sys",
- "serde",
- "serde_json",
 ]
 
 [[package]]
 name = "gpu-clear-screen"
 version = "0.0.1"
 dependencies = [
+ "gpu-common",
  "sdl3-main",
+ "sdl3-sys",
+]
+
+[[package]]
+name = "gpu-common"
+version = "0.1.0"
+dependencies = [
  "sdl3-sys",
  "serde",
  "serde_json",
@@ -186,10 +193,9 @@ dependencies = [
 name = "gpu-pull-sprite-batch"
 version = "0.1.0"
 dependencies = [
+ "gpu-common",
  "sdl3-main",
  "sdl3-sys",
- "serde",
- "serde_json",
 ]
 
 [[package]]
@@ -262,9 +268,9 @@ dependencies = [
 
 [[package]]
 name = "memchr"
-version = "2.7.4"
+version = "2.7.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
+checksum = "32a282da65faaf38286cf3be983213fcf1d2e2a58700e808f83f4ea9a4804bc0"
 
 [[package]]
 name = "once_cell"
@@ -453,9 +459,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.140"
+version = "1.0.141"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "20068b6e96dc6c9bd23e01df8827e6c7e1f2fddd43c21810382803c136b99373"
+checksum = "30b9eff21ebe718216c6ec64e1d9ac57087aad11efc64e32002bce4a0d4c03d3"
 dependencies = [
  "itoa",
  "memchr",

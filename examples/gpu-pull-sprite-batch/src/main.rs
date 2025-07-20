@@ -10,8 +10,6 @@ use std::sync::Mutex;
 use sdl3_main::{app_impl, AppResult};
 use sdl3_sys::everything::*;
 
-mod common;
-
 const SPRITE_COUNT: u32 = 8192;
 const GPU_SPRITE_BUFFER_SIZE: u32 = SPRITE_COUNT * std::mem::size_of::<GPUSprite>() as u32;
 
@@ -49,7 +47,7 @@ impl Drop for AppState {
                 SDL_ReleaseGPUBuffer(self.device, self.sprite_data_buffer);
             }
 
-            common::deinit_gpu_window(self.device, self.window);
+            gpu_common::deinit_gpu_window(self.device, self.window);
         }
     }
 }
@@ -141,11 +139,10 @@ impl CPUSprite {
 impl AppState {
     fn app_init() -> Option<Box<Mutex<AppState>>> {
         unsafe {
-            common::set_framerate_hint(60);
+            gpu_common::set_framerate_hint(60);
 
             const TITLE: &CStr = c"Pull Sprite Batch Example";
-            let (window, device) =
-                common::init_gpu_window(TITLE.as_ptr(), SDL_WindowFlags::default())?;
+            let (window, device) = gpu_common::init_gpu_window(TITLE, SDL_WindowFlags::default())?;
 
             let present_mode = if SDL_WindowSupportsGPUPresentMode(
                 device,
@@ -168,15 +165,15 @@ impl AppState {
 
             SDL_srand(0);
 
-            let vert_shader = common::load_shader(device, "PullSpriteBatch.vert");
+            let vert_shader = gpu_common::load_shader(device, "PullSpriteBatch.vert");
             if vert_shader.is_null() {
-                common::dbg_sdl_error("failed to load vert shader");
+                gpu_common::dbg_sdl_error("failed to load vert shader");
                 return None;
             }
 
-            let frag_shader = common::load_shader(device, "TexturedQuadColor.frag");
+            let frag_shader = gpu_common::load_shader(device, "TexturedQuadColor.frag");
             if frag_shader.is_null() {
-                common::dbg_sdl_error("failed to load frag shader");
+                gpu_common::dbg_sdl_error("failed to load frag shader");
                 return None;
             }
 
@@ -211,9 +208,9 @@ impl AppState {
             SDL_ReleaseGPUShader(device, vert_shader);
             SDL_ReleaseGPUShader(device, frag_shader);
 
-            let image_ptr = common::load_bmp("ravioli_atlas.bmp");
+            let image_ptr = gpu_common::load_bmp("ravioli_atlas.bmp");
             if image_ptr.is_null() {
-                common::dbg_sdl_error("failed to load image");
+                gpu_common::dbg_sdl_error("failed to load image");
                 return None;
             }
             let image = &mut *image_ptr;
@@ -365,7 +362,7 @@ fn draw_sprites(app: &mut AppState) -> AppResult {
     unsafe {
         let command_buffer = SDL_AcquireGPUCommandBuffer(app.device);
         if command_buffer.is_null() {
-            common::dbg_sdl_error("AcquireGPUCommandBuffer failed");
+            gpu_common::dbg_sdl_error("AcquireGPUCommandBuffer failed");
             return AppResult::Failure;
         }
 
@@ -377,7 +374,7 @@ fn draw_sprites(app: &mut AppState) -> AppResult {
             null_mut(),
             null_mut(),
         ) {
-            common::dbg_sdl_error("WaitAndAcquireGPUSwapchainTexture failed");
+            gpu_common::dbg_sdl_error("WaitAndAcquireGPUSwapchainTexture failed");
             return AppResult::Failure;
         }
 
@@ -387,7 +384,7 @@ fn draw_sprites(app: &mut AppState) -> AppResult {
                 SDL_MapGPUTransferBuffer(app.device, app.sprite_data_transfer_buffer, true)
                     as *mut GPUSprite;
             if data_ptr.is_null() {
-                common::dbg_sdl_error("failed to map gpu transfer buffer");
+                gpu_common::dbg_sdl_error("failed to map gpu transfer buffer");
                 return AppResult::Failure;
             }
 
@@ -447,7 +444,7 @@ fn draw_sprites(app: &mut AppState) -> AppResult {
                 1,
             );
 
-            use common::Matrix4x4;
+            use gpu_common::Matrix4x4;
             const CAMERA_MATRIX: Matrix4x4 =
                 Matrix4x4::create_orthographic_off_center(0.0, 640.0, 480.0, 0.0, 0.0, -1.0);
 

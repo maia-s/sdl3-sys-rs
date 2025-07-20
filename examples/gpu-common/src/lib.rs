@@ -3,7 +3,7 @@
 //! Based on the common functions from the SDL GPU examples
 //! https://github.com/TheSpydog/SDL_gpu_examples/blob/main/Examples/Common.c
 
-use std::ffi::{c_char, CStr, CString};
+use std::ffi::{CStr, CString};
 use std::ptr::{null, null_mut};
 
 use sdl3_sys::everything::*;
@@ -14,6 +14,9 @@ const MANIFEST_DIR: &str = env!("CARGO_MANIFEST_DIR");
 
 /// Load a precompiled shader based on file name.
 /// Relies on the structure of the content directory, shadercross json metadata, and the file name suffix.
+///
+/// # Safety
+/// `device` must be valid
 pub unsafe fn load_shader(
     device: *mut SDL_GPUDevice,
     shader_name: &'static str,
@@ -21,7 +24,7 @@ pub unsafe fn load_shader(
     let content_dir = get_content_dir();
     let compiled_shaders_dir = format!("{content_dir}/shaders/compiled");
 
-    let backend_formats = SDL_GetGPUShaderFormats(device);
+    let backend_formats = unsafe { SDL_GetGPUShaderFormats(device) };
     let (format, entrypoint, ext) = if backend_formats & SDL_GPU_SHADERFORMAT_SPIRV != 0 {
         (SDL_GPU_SHADERFORMAT_SPIRV, c"main".as_ptr(), "spv")
     } else if backend_formats & SDL_GPU_SHADERFORMAT_MSL != 0 {
@@ -72,7 +75,7 @@ pub unsafe fn load_shader(
         num_storage_textures: meta.storage_textures,
         props: SDL_PropertiesID::default(),
     };
-    let shader = SDL_CreateGPUShader(device, &shader_info);
+    let shader = unsafe { SDL_CreateGPUShader(device, &shader_info) };
     if shader.is_null() {
         dbg_sdl_error(&format!("failed to create shader: {shader_name}"));
         return null_mut();
@@ -98,7 +101,7 @@ struct ShaderMeta {
 }
 
 pub fn init_gpu_window(
-    window_title: *const c_char,
+    window_title: &CStr,
     window_flags: SDL_WindowFlags,
 ) -> Option<(*mut SDL_Window, *mut SDL_GPUDevice)> {
     unsafe {
@@ -107,7 +110,7 @@ pub fn init_gpu_window(
             return None;
         }
 
-        let window = SDL_CreateWindow(window_title, 640, 480, window_flags);
+        let window = SDL_CreateWindow(window_title.as_ptr(), 640, 480, window_flags);
         if window.is_null() {
             dbg_sdl_error("SDL_CreateWindow failed");
             return None;
@@ -129,33 +132,37 @@ pub fn init_gpu_window(
     }
 }
 
+/// # Safety
+/// `device` and `window` must be valid
 pub unsafe fn deinit_gpu_window(device: *mut SDL_GPUDevice, window: *mut SDL_Window) {
-    if !device.is_null() && !window.is_null() {
-        SDL_ReleaseWindowFromGPUDevice(device, window);
-    }
-    if !window.is_null() {
-        SDL_DestroyWindow(window);
-    }
-    if !device.is_null() {
-        SDL_DestroyGPUDevice(device);
+    unsafe {
+        if !device.is_null() && !window.is_null() {
+            SDL_ReleaseWindowFromGPUDevice(device, window);
+        }
+        if !window.is_null() {
+            SDL_DestroyWindow(window);
+        }
+        if !device.is_null() {
+            SDL_DestroyGPUDevice(device);
+        }
     }
 }
 
-pub unsafe fn load_bmp(file_name: &str) -> *mut SDL_Surface {
+pub fn load_bmp(file_name: &str) -> *mut SDL_Surface {
     let content_dir = get_content_dir();
     let image_path = format!("{content_dir}/images/{file_name}");
     let image_path = CString::new(image_path).unwrap();
 
-    let mut result = SDL_LoadBMP(image_path.as_ptr());
+    let mut result = unsafe { SDL_LoadBMP(image_path.as_ptr()) };
     if result.is_null() {
         return result;
     }
 
     // NOTE this is only the '4 channels' path of the original example
     let format = SDL_PixelFormat::ARGB8888;
-    if (*result).format != format {
-        let next = SDL_ConvertSurface(result, format);
-        SDL_DestroySurface(result);
+    if unsafe { (*result).format } != format {
+        let next = unsafe { SDL_ConvertSurface(result, format) };
+        unsafe { SDL_DestroySurface(result) };
         result = next;
     }
 

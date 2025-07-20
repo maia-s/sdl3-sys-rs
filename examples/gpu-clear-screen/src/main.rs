@@ -8,9 +8,6 @@ use std::sync::Mutex;
 use sdl3_main::{app_impl, AppResult, AppResultWithState};
 use sdl3_sys::everything::*;
 
-#[path = "../../gpu-pull-sprite-batch/src/common.rs"]
-mod common;
-
 struct AppState {
     window: *mut SDL_Window,
     device: *mut SDL_GPUDevice,
@@ -19,7 +16,7 @@ struct AppState {
 impl Drop for AppState {
     fn drop(&mut self) {
         unsafe {
-            common::deinit_gpu_window(self.device, self.window);
+            gpu_common::deinit_gpu_window(self.device, self.window);
         }
     }
 }
@@ -30,8 +27,7 @@ unsafe impl Send for AppState {}
 impl AppState {
     fn app_init() -> AppResultWithState<Box<Mutex<Self>>> {
         const TITLE: &CStr = c"Clear Screen Example";
-        let Some((window, device)) =
-            common::init_gpu_window(TITLE.as_ptr(), SDL_WindowFlags::default())
+        let Some((window, device)) = gpu_common::init_gpu_window(TITLE, SDL_WindowFlags::default())
         else {
             return AppResultWithState::Failure(None);
         };
@@ -45,7 +41,7 @@ impl AppState {
         unsafe {
             let command_buffer = SDL_AcquireGPUCommandBuffer(self.device);
             if command_buffer.is_null() {
-                common::dbg_sdl_error("failed to acquire command buffer");
+                gpu_common::dbg_sdl_error("failed to acquire command buffer");
                 return AppResult::Failure;
             }
 
@@ -57,7 +53,7 @@ impl AppState {
                 null_mut(),
                 null_mut(),
             ) {
-                common::dbg_sdl_error("failed to acquire swapchain texture");
+                gpu_common::dbg_sdl_error("failed to acquire swapchain texture");
                 return AppResult::Failure;
             }
 
