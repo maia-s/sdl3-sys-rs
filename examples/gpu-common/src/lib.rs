@@ -133,7 +133,7 @@ pub fn init_gpu_window(
 }
 
 /// # Safety
-/// `device` and `window` must be valid
+/// `device` and `window` must be valid or null
 pub unsafe fn deinit_gpu_window(device: *mut SDL_GPUDevice, window: *mut SDL_Window) {
     unsafe {
         if !device.is_null() && !window.is_null() {
