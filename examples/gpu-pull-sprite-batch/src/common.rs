@@ -90,7 +90,6 @@ pub fn dbg_sdl_error(msg: &str) {
 
 /// JSON format for resource counts, as emitted by shadercross cli
 #[derive(Deserialize)]
-#[serde(rename_all = "camelCase")]
 struct ShaderMeta {
     samplers: u32,
     storage_textures: u32,
