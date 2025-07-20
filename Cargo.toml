@@ -10,7 +10,9 @@ members = [
     "sdl3-sys",
     "sdl3-ttf-src",
     "sdl3-ttf-sys",
-    "examples/*",
+    "examples/gpu-basic-triangle",
+    "examples/gpu-clear-screen",
+    "examples/gpu-pull-sprite-batch",
 ]
 default-members = [
     "sdl3-sys",

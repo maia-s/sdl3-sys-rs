@@ -227,7 +227,7 @@ impl Matrix4x4 {
 
 // a workaround for getting the cargo workspace root
 fn get_content_dir() -> String {
-    format!("{MANIFEST_DIR}/../../content")
+    format!("{MANIFEST_DIR}/../content")
 }
 
 pub fn set_framerate_hint(fps: usize) {
