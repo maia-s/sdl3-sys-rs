@@ -137,17 +137,18 @@ impl AppState {
             }
 
             if !swapchain_texture.is_null() {
-                let mut color_target_info: SDL_GPUColorTargetInfo = Default::default();
-                color_target_info.texture = swapchain_texture;
-                color_target_info.clear_color = SDL_FColor {
-                    r: 0.0,
-                    g: 0.0,
-                    b: 0.0,
-                    a: 1.0,
+                let color_target_info = SDL_GPUColorTargetInfo {
+                    texture: swapchain_texture,
+                    clear_color: SDL_FColor {
+                        r: 0.0,
+                        g: 0.0,
+                        b: 0.0,
+                        a: 1.0,
+                    },
+                    load_op: SDL_GPU_LOADOP_CLEAR,
+                    store_op: SDL_GPU_STOREOP_STORE,
+                    ..Default::default()
                 };
-                color_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
-                color_target_info.store_op = SDL_GPU_STOREOP_STORE;
-
                 let num_color_targets = 1;
                 let depth_stencil_target_info = null_mut();
                 let render_pass = SDL_BeginGPURenderPass(

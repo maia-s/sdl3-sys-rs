@@ -144,11 +144,8 @@ impl AppState {
             common::set_framerate_hint(60);
 
             const TITLE: &CStr = c"Pull Sprite Batch Example";
-            let Some((window, device)) =
-                common::init_gpu_window(TITLE.as_ptr(), SDL_WindowFlags::default())
-            else {
-                return None;
-            };
+            let (window, device) =
+                common::init_gpu_window(TITLE.as_ptr(), SDL_WindowFlags::default())?;
 
             let present_mode = if SDL_WindowSupportsGPUPresentMode(
                 device,
@@ -395,7 +392,7 @@ fn draw_sprites(app: &mut AppState) -> AppResult {
             }
 
             for (i, cpu_sprite) in app.cpu_sprites.iter().enumerate() {
-                let gpu_sprite = &mut *data_ptr.offset(i as isize);
+                let gpu_sprite = &mut *data_ptr.add(i);
                 cpu_sprite.write_to_gpu(gpu_sprite);
             }
 

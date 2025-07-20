@@ -61,7 +61,7 @@ pub unsafe fn load_shader(
     };
 
     let shader_info = SDL_GPUShaderCreateInfo {
-        code: shader_code.as_ptr() as *const u8,
+        code: shader_code.as_ptr(),
         code_size: shader_code.len(),
         stage,
         entrypoint,
@@ -74,7 +74,7 @@ pub unsafe fn load_shader(
     };
     let shader = SDL_CreateGPUShader(device, &shader_info);
     if shader.is_null() {
-        dbg_sdl_error(&format!("failed to create shader: {}", shader_name));
+        dbg_sdl_error(&format!("failed to create shader: {shader_name}"));
         return null_mut();
     }
 
@@ -82,10 +82,10 @@ pub unsafe fn load_shader(
 }
 
 pub fn dbg_sdl_error(msg: &str) {
-    println!("{}", msg);
+    println!("{msg}");
     let error = unsafe { CStr::from_ptr(SDL_GetError()) };
     let error = error.to_string_lossy();
-    println!("{}", &error);
+    println!("{error}");
 }
 
 /// JSON format for resource counts, as emitted by shadercross cli
