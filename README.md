@@ -17,7 +17,7 @@ See the [`sdl3-sys`](sdl3-sys) dir for the SDL 3 Rust bindings.
 - [`sdl3-image-src`](sdl3-image-src): Source code crate for SDL3_image
 - [`sdl3-ttf-sys`](sdl3-ttf-sys): Rust bindings for SDL3_ttf
 - [`sdl3-ttf-src`](sdl3-ttf-src): Source code crate for SDL3_ttf
-
+- [`examples`](examples): Rust ports of SDL GPU examples
 
 ### Why not use bindgen?
 
