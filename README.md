@@ -1,5 +1,10 @@
 # sdl3-sys
 
+The primary home of this repository is at <https://codeberg.org/maia/sdl3-sys-rs>.
+Please submit issues and pull requests there. Thank you.
+
+---
+
 See the [`sdl3-sys`](sdl3-sys) dir for the SDL 3 Rust bindings.
 
 - [`sdl3-sys`](sdl3-sys): Rust bindings for SDL 3
