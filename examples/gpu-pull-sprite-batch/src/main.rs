@@ -23,7 +23,7 @@ struct AppState {
     sprite_data_transfer_buffer: *mut SDL_GPUTransferBuffer,
     sprite_data_buffer: *mut SDL_GPUBuffer,
 
-    cpu_sprites: [CPUSprite; SPRITE_COUNT as usize],
+    cpu_sprites: Vec<CPUSprite>,
     last_tick: u64,
     accumulated_ticks: u64,
 }
@@ -101,7 +101,7 @@ impl GPUSprite {
 }
 
 /// The 'gameplay data' of a sprite
-#[derive(Default)]
+#[derive(Default, Clone)]
 struct CPUSprite {
     x: f32,
     y: f32,
@@ -301,8 +301,8 @@ impl AppState {
             SDL_DestroySurface(image_ptr);
             SDL_ReleaseGPUTransferBuffer(device, transfer_buffer);
 
-            let cpu_sprites: [CPUSprite; SPRITE_COUNT as usize] =
-                std::array::from_fn(|_| CPUSprite::default());
+            let cpu_sprites: Vec<CPUSprite> = 
+                vec![CPUSprite::default(); SPRITE_COUNT as usize];
 
             let app = AppState {
                 window,
