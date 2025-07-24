@@ -132,9 +132,11 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
-- 0.3.0 WIP:
+- 0.6.0 WIP:
     - Update sdl3-sys to 0.6.0
+    - Synchronize version number with sdl3-sys
     - Add metadata
+
 - 0.2.0:
     - Update sdl3-sys to 0.5.0
     - Add `no-link` feature

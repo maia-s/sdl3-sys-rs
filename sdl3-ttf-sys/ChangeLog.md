@@ -1,7 +1,8 @@
 # Changes
 
-- 0.3.0 WIP:
+- 0.6.0 WIP:
     - Update sdl3-sys to 0.6.0
+    - Synchronize version number with sdl3-sys
     - Add metadata
     - Remove deprecated aliases
 
