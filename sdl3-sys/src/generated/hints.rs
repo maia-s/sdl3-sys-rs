@@ -556,7 +556,7 @@ pub const SDL_HINT_CAMERA_DRIVER: *const ::core::ffi::c_char = c"SDL_CAMERA_DRIV
 /// A variable that limits what CPU features are available.
 ///
 /// By default, SDL marks all features the current CPU supports as available.
-/// This hint allows to limit these to a subset.
+/// This hint allows the enabled features to be limited to a subset.
 ///
 /// When the hint is unset, or empty, SDL will enable all detected CPU
 /// features.

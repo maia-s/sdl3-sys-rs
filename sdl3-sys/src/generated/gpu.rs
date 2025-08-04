@@ -198,8 +198,8 @@
 //! - `drawIndirectFirstInstance`
 //!
 //! **D3D12:** Supported on Windows 10 or newer, Xbox One (GDK), and Xbox
-//! Series X|S (GDK). Requires a GPU that supports DirectX 12 Feature Level
-//! 11_1.
+//! Series X|S (GDK). Requires a GPU that supports DirectX 12 Feature Level 11_0 and
+//! Resource Binding Tier 2 or above.
 //!
 //! **Metal:** Supported on macOS 10.14+ and iOS/tvOS 13.0+. Hardware
 //! requirements vary by operating system:
@@ -2012,7 +2012,7 @@ pub const SDL_GPU_FRONTFACE_CLOCKWISE: SDL_GPUFrontFace = SDL_GPUFrontFace::CLOC
 /// | [`LESS_OR_EQUAL`](SDL_GPUCompareOp::LESS_OR_EQUAL) | [`SDL_GPU_COMPAREOP_LESS_OR_EQUAL`] | The comparison evaluates reference <= test. |
 /// | [`GREATER`](SDL_GPUCompareOp::GREATER) | [`SDL_GPU_COMPAREOP_GREATER`] | The comparison evaluates reference > test. |
 /// | [`NOT_EQUAL`](SDL_GPUCompareOp::NOT_EQUAL) | [`SDL_GPU_COMPAREOP_NOT_EQUAL`] | The comparison evaluates reference != test. |
-/// | [`GREATER_OR_EQUAL`](SDL_GPUCompareOp::GREATER_OR_EQUAL) | [`SDL_GPU_COMPAREOP_GREATER_OR_EQUAL`] | The comparison evalutes reference >= test. |
+/// | [`GREATER_OR_EQUAL`](SDL_GPUCompareOp::GREATER_OR_EQUAL) | [`SDL_GPU_COMPAREOP_GREATER_OR_EQUAL`] | The comparison evaluates reference >= test. |
 /// | [`ALWAYS`](SDL_GPUCompareOp::ALWAYS) | [`SDL_GPU_COMPAREOP_ALWAYS`] | The comparison always evaluates true. |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -2059,7 +2059,7 @@ impl SDL_GPUCompareOp {
     pub const GREATER: Self = Self(5);
     /// The comparison evaluates reference != test.
     pub const NOT_EQUAL: Self = Self(6);
-    /// The comparison evalutes reference >= test.
+    /// The comparison evaluates reference >= test.
     pub const GREATER_OR_EQUAL: Self = Self(7);
     /// The comparison always evaluates true.
     pub const ALWAYS: Self = Self(8);
@@ -2078,7 +2078,7 @@ pub const SDL_GPU_COMPAREOP_LESS_OR_EQUAL: SDL_GPUCompareOp = SDL_GPUCompareOp::
 pub const SDL_GPU_COMPAREOP_GREATER: SDL_GPUCompareOp = SDL_GPUCompareOp::GREATER;
 /// The comparison evaluates reference != test.
 pub const SDL_GPU_COMPAREOP_NOT_EQUAL: SDL_GPUCompareOp = SDL_GPUCompareOp::NOT_EQUAL;
-/// The comparison evalutes reference >= test.
+/// The comparison evaluates reference >= test.
 pub const SDL_GPU_COMPAREOP_GREATER_OR_EQUAL: SDL_GPUCompareOp = SDL_GPUCompareOp::GREATER_OR_EQUAL;
 /// The comparison always evaluates true.
 pub const SDL_GPU_COMPAREOP_ALWAYS: SDL_GPUCompareOp = SDL_GPUCompareOp::ALWAYS;
@@ -4676,7 +4676,7 @@ extern "C" {
 }
 
 extern "C" {
-    /// Begins a debug group with an arbitary name.
+    /// Begins a debug group with an arbitrary name.
     ///
     /// Used for denoting groups of calls when viewing the command buffer
     /// callstream in a graphics debugging tool.
