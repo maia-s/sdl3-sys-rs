@@ -121,7 +121,7 @@ use super::stdinc::*;
 /// | [`KP_9`](SDL_Scancode::KP_9) | [`SDL_SCANCODE_KP_9`] | |
 /// | [`KP_0`](SDL_Scancode::KP_0) | [`SDL_SCANCODE_KP_0`] | |
 /// | [`KP_PERIOD`](SDL_Scancode::KP_PERIOD) | [`SDL_SCANCODE_KP_PERIOD`] | |
-/// | [`NONUSBACKSLASH`](SDL_Scancode::NONUSBACKSLASH) | [`SDL_SCANCODE_NONUSBACKSLASH`] | This is the additional key that ISO keyboards have over ANSI ones, located between left shift and Y. Produces GRAVE ACCENT and TILDE in a US or UK Mac layout, REVERSE SOLIDUS (backslash) and VERTICAL LINE in a US or UK Windows layout, and LESS-THAN SIGN and GREATER-THAN SIGN in a Swiss German, German, or French layout. |
+/// | [`NONUSBACKSLASH`](SDL_Scancode::NONUSBACKSLASH) | [`SDL_SCANCODE_NONUSBACKSLASH`] | This is the additional key that ISO keyboards have over ANSI ones, located between left shift and Z. Produces GRAVE ACCENT and TILDE in a US or UK Mac layout, REVERSE SOLIDUS (backslash) and VERTICAL LINE in a US or UK Windows layout, and LESS-THAN SIGN and GREATER-THAN SIGN in a Swiss German, German, or French layout. |
 /// | [`APPLICATION`](SDL_Scancode::APPLICATION) | [`SDL_SCANCODE_APPLICATION`] | windows contextual menu, compose |
 /// | [`POWER`](SDL_Scancode::POWER) | [`SDL_SCANCODE_POWER`] | The USB document says this is a status flag, not a physical key - but some Mac keyboards do have a power key. |
 /// | [`KP_EQUALS`](SDL_Scancode::KP_EQUALS) | [`SDL_SCANCODE_KP_EQUALS`] | |
@@ -701,7 +701,7 @@ impl SDL_Scancode {
     pub const KP_PERIOD: Self = Self((99 as ::core::ffi::c_int));
     /// This is the additional key that ISO
     /// keyboards have over ANSI ones,
-    /// located between left shift and Y.
+    /// located between left shift and Z.
     /// Produces GRAVE ACCENT and TILDE in a
     /// US or UK Mac layout, REVERSE SOLIDUS
     /// (backslash) and VERTICAL LINE in a
@@ -1079,7 +1079,7 @@ pub const SDL_SCANCODE_KP_0: SDL_Scancode = SDL_Scancode::KP_0;
 pub const SDL_SCANCODE_KP_PERIOD: SDL_Scancode = SDL_Scancode::KP_PERIOD;
 /// This is the additional key that ISO
 /// keyboards have over ANSI ones,
-/// located between left shift and Y.
+/// located between left shift and Z.
 /// Produces GRAVE ACCENT and TILDE in a
 /// US or UK Mac layout, REVERSE SOLIDUS
 /// (backslash) and VERTICAL LINE in a

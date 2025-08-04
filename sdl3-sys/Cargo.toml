@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sys"
-version = "0.6.0+SDL3-3.2.18"
+version = "0.6.0+SDL3-3.2.20"
 edition = "2021"
 rust-version = "1.81"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -9,7 +9,13 @@ description = "Low level Rust bindings for SDL 3"
 repository = "https://codeberg.org/maia/sdl3-sys-rs"
 documentation = "https://docs.rs/sdl3-sys"
 keywords = ["sdl", "windowing", "graphics", "multimedia", "gamedev"]
-categories = ["external-ffi-bindings", "rendering", "game-development", "multimedia", "no-std"]
+categories = [
+    "external-ffi-bindings",
+    "rendering",
+    "game-development",
+    "multimedia",
+    "no-std",
+]
 links = "SDL3"
 
 [features]
@@ -136,7 +142,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-src]
-version = "3.2.18"
+version = "3.2.20"
 path = "../sdl3-src"
 optional = true
 

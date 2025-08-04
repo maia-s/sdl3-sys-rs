@@ -595,7 +595,7 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_NONUSBACKSLASH",
             short_name: "NONUSBACKSLASH",
-            doc: Some("This is the additional key that ISO\nkeyboards have over ANSI ones,\nlocated between left shift and Y.\nProduces GRAVE ACCENT and TILDE in a\nUS or UK Mac layout, REVERSE SOLIDUS\n(backslash) and VERTICAL LINE in a\nUS or UK Windows layout, and\nLESS-THAN SIGN and GREATER-THAN SIGN\nin a Swiss German, German, or French\nlayout.\n"),
+            doc: Some("This is the additional key that ISO\nkeyboards have over ANSI ones,\nlocated between left shift and Z.\nProduces GRAVE ACCENT and TILDE in a\nUS or UK Mac layout, REVERSE SOLIDUS\n(backslash) and VERTICAL LINE in a\nUS or UK Windows layout, and\nLESS-THAN SIGN and GREATER-THAN SIGN\nin a Swiss German, German, or French\nlayout.\n"),
             available_since: None,
         },
         GroupValue {

@@ -4271,7 +4271,7 @@ pub struct SDL_GPUSamplerCreateInfo {
 pub struct SDL_GPUVertexBufferDescription {
     /// The binding slot of the vertex buffer.
     pub slot: Uint32,
-    /// The byte pitch between consecutive elements of the vertex buffer.
+    /// The size of a single element + the offset between elements.
     pub pitch: Uint32,
     /// Whether attribute addressing is a function of the vertex index or instance index.
     pub input_rate: SDL_GPUVertexInputRate,

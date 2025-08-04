@@ -77,7 +77,7 @@ extern "C" {
 extern "C" {
     /// Get UTF-8 text from the clipboard.
     ///
-    /// This functions returns an empty string if there was not enough memory left
+    /// This function returns an empty string if there is not enough memory left
     /// for a copy of the clipboard's content.
     ///
     /// ## Return value
@@ -141,7 +141,7 @@ extern "C" {
 extern "C" {
     /// Get UTF-8 text from the primary selection.
     ///
-    /// This functions returns an empty string if there was not enough memory left
+    /// This function returns an empty string if there is not enough memory left
     /// for a copy of the primary selection's content.
     ///
     /// ## Return value
@@ -188,17 +188,17 @@ extern "C" {
 /// cleared in [`SDL_Quit()`].
 ///
 /// ## Parameters
-/// - `userdata`: a pointer to provided user data.
+/// - `userdata`: a pointer to the provided user data.
 /// - `mime_type`: the requested mime-type.
 /// - `size`: a pointer filled in with the length of the returned data.
 ///
 /// ## Return value
 /// Returns a pointer to the data for the provided mime-type. Returning NULL
-///   or setting length to 0 will cause no data to be sent to the
+///   or setting the length to 0 will cause no data to be sent to the
 ///   "receiver". It is up to the receiver to handle this. Essentially
 ///   returning no data is more or less undefined behavior and may cause
 ///   breakage in receiving applications. The returned data will not be
-///   freed so it needs to be retained and dealt with internally.
+///   freed, so it needs to be retained and dealt with internally.
 ///
 /// ## Availability
 /// This function is available since SDL 3.2.0.
@@ -213,11 +213,11 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<
     ) -> *const ::core::ffi::c_void,
 >;
 
-/// Callback function that will be called when the clipboard is cleared, or new
+/// Callback function that will be called when the clipboard is cleared, or when new
 /// data is set.
 ///
 /// ## Parameters
-/// - `userdata`: a pointer to provided user data.
+/// - `userdata`: a pointer to the provided user data.
 ///
 /// ## Availability
 /// This function is available since SDL 3.2.0.
@@ -236,7 +236,7 @@ extern "C" {
     /// respond with the data for the requested mime-type.
     ///
     /// The size of text data does not include any terminator, and the text does
-    /// not need to be null terminated (e.g. you can directly copy a portion of a
+    /// not need to be null-terminated (e.g., you can directly copy a portion of a
     /// document).
     ///
     /// ## Parameters
@@ -245,7 +245,7 @@ extern "C" {
     /// - `cleanup`: a function pointer to the function that cleans up the
     ///   clipboard data.
     /// - `userdata`: an opaque pointer that will be forwarded to the callbacks.
-    /// - `mime_types`: a list of mime-types that are being offered.
+    /// - `mime_types`: a list of mime-types that are being offered. SDL copies the given list.
     /// - `num_mime_types`: the number of mime-types in the mime_types list.
     ///
     /// ## Return value
@@ -290,10 +290,10 @@ extern "C" {
 }
 
 extern "C" {
-    /// Get the data from clipboard for a given mime type.
+    /// Get the data from the clipboard for a given mime type.
     ///
     /// The size of text data does not include the terminator, but the text is
-    /// guaranteed to be null terminated.
+    /// guaranteed to be null-terminated.
     ///
     /// ## Parameters
     /// - `mime_type`: the mime type to read from the clipboard.
@@ -323,10 +323,10 @@ extern "C" {
     /// Query whether there is data in the clipboard for the provided mime type.
     ///
     /// ## Parameters
-    /// - `mime_type`: the mime type to check for data for.
+    /// - `mime_type`: the mime type to check for data.
     ///
     /// ## Return value
-    /// Returns true if there exists data in clipboard for the provided mime type,
+    /// Returns true if data exists in the clipboard for the provided mime type,
     ///   false if it does not.
     ///
     /// ## Thread safety
@@ -349,7 +349,7 @@ extern "C" {
     ///   be NULL.
     ///
     /// ## Return value
-    /// Returns a null terminated array of strings with mime types, or NULL on
+    /// Returns a null-terminated array of strings with mime types, or NULL on
     ///   failure; call [`SDL_GetError()`] for more information. This should be
     ///   freed with [`SDL_free()`] when it is no longer needed.
     ///

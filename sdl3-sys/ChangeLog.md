@@ -6,6 +6,9 @@
     - Remove deprecated aliases
     - MSRV 1.81
 
+- 0.5.4:
+    - Update SDL to 3.2.20
+
 - 0.5.3:
     - Update SDL to 3.2.18
     - Copy built library to top level target dir on all targets, not just Windows.
