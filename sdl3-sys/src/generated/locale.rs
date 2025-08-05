@@ -40,7 +40,7 @@ impl ::core::default::Default for SDL_Locale {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report the user's preferred locale.
     ///
     /// Returned language strings are in the format xx, where 'xx' is an ISO-639

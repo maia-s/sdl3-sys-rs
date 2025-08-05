@@ -52,17 +52,20 @@ pub const METADATA_SDL_KeyboardID: Group = Group {
     kind: GroupKind::Id,
     name: "SDL_KeyboardID",
     short_name: "KeyboardID",
-    doc: Some("This is a unique ID for a keyboard for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the keyboard is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "This is a unique ID for a keyboard for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the keyboard is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
-    values: &[
-    ],
+    values: &[],
 };
 pub const METADATA_SDL_TextInputType: Group = Group {
     module: "keyboard",
     kind: GroupKind::Enum,
     name: "SDL_TextInputType",
     short_name: "TextInputType",
-    doc: Some("Text input type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_TYPE_NUMBER`]. Not every\nvalue is valid on every platform, but where a value isn't supported, a\nreasonable fallback will be used.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_StartTextInputWithProperties`]\n"),
+    doc: Some(
+        "Text input type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_TYPE_NUMBER`]. Not every\nvalue is valid on every platform, but where a value isn't supported, a\nreasonable fallback will be used.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_StartTextInputWithProperties`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -126,7 +129,9 @@ pub const METADATA_SDL_Capitalization: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_Capitalization",
     short_name: "Capitalization",
-    doc: Some("Auto capitalization type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`].\nNot every value is valid on every platform, but where a value isn't\nsupported, a reasonable fallback will be used.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_StartTextInputWithProperties`]\n"),
+    doc: Some(
+        "Auto capitalization type.\n\nThese are the valid values for [`SDL_PROP_TEXTINPUT_CAPITALIZATION_NUMBER`].\nNot every value is valid on every platform, but where a value isn't\nsupported, a reasonable fallback will be used.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_StartTextInputWithProperties`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

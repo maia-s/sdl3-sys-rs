@@ -15,15 +15,15 @@
 use core::{ffi::c_char, mem::transmute, ptr::null_mut};
 use std::sync::Mutex;
 
-use sdl3_main::{app_event, app_init, app_iterate, app_quit, AppResult};
+use sdl3_main::{AppResult, app_event, app_init, app_iterate, app_quit};
 
 // You can `use sdl3_sys::everything::*` if you don't want to specify everything explicitly
 use sdl3_sys::{
-    events::{SDL_Event, SDL_EventType, SDL_EVENT_KEY_DOWN, SDL_EVENT_QUIT},
+    events::{SDL_EVENT_KEY_DOWN, SDL_EVENT_QUIT, SDL_Event, SDL_EventType},
     init::{
-        SDL_Init, SDL_SetAppMetadata, SDL_SetAppMetadataProperty, SDL_INIT_VIDEO,
-        SDL_PROP_APP_METADATA_COPYRIGHT_STRING, SDL_PROP_APP_METADATA_CREATOR_STRING,
-        SDL_PROP_APP_METADATA_TYPE_STRING, SDL_PROP_APP_METADATA_URL_STRING,
+        SDL_INIT_VIDEO, SDL_Init, SDL_PROP_APP_METADATA_COPYRIGHT_STRING,
+        SDL_PROP_APP_METADATA_CREATOR_STRING, SDL_PROP_APP_METADATA_TYPE_STRING,
+        SDL_PROP_APP_METADATA_URL_STRING, SDL_SetAppMetadata, SDL_SetAppMetadataProperty,
     },
     pixels::SDL_ALPHA_OPAQUE,
     rect::SDL_FRect,
@@ -32,8 +32,8 @@ use sdl3_sys::{
         SDL_RenderPresent, SDL_Renderer, SDL_SetRenderDrawColor,
     },
     scancode::{
-        SDL_Scancode, SDL_SCANCODE_DOWN, SDL_SCANCODE_ESCAPE, SDL_SCANCODE_LEFT, SDL_SCANCODE_Q,
-        SDL_SCANCODE_R, SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP,
+        SDL_SCANCODE_DOWN, SDL_SCANCODE_ESCAPE, SDL_SCANCODE_LEFT, SDL_SCANCODE_Q, SDL_SCANCODE_R,
+        SDL_SCANCODE_RIGHT, SDL_SCANCODE_UP, SDL_Scancode,
     },
     stdinc::SDL_rand,
     timer::SDL_GetTicks,

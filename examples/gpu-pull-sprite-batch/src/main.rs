@@ -3,11 +3,11 @@
 //! which uses the method described in this blog post:
 //! https://moonside.games/posts/sdl-gpu-sprite-batcher/
 
-use std::ffi::{c_void, CStr};
+use std::ffi::{CStr, c_void};
 use std::ptr::null_mut;
 use std::sync::Mutex;
 
-use sdl3_main::{app_impl, AppResult};
+use sdl3_main::{AppResult, app_impl};
 use sdl3_sys::everything::*;
 
 const SPRITE_COUNT: u32 = 8192;
@@ -301,8 +301,7 @@ impl AppState {
             SDL_DestroySurface(image_ptr);
             SDL_ReleaseGPUTransferBuffer(device, transfer_buffer);
 
-            let cpu_sprites: Vec<CPUSprite> = 
-                vec![CPUSprite::default(); SPRITE_COUNT as usize];
+            let cpu_sprites: Vec<CPUSprite> = vec![CPUSprite::default(); SPRITE_COUNT as usize];
 
             let app = AppState {
                 window,

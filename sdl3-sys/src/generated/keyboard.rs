@@ -60,7 +60,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_KeyboardID {
         &crate::metadata::keyboard::METADATA_SDL_KeyboardID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether a keyboard is currently connected.
     ///
     /// ## Return value
@@ -77,7 +77,7 @@ extern "C" {
     pub fn SDL_HasKeyboard() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently connected keyboards.
     ///
     /// Note that this will include any device or virtual driver that includes
@@ -106,7 +106,7 @@ extern "C" {
     pub fn SDL_GetKeyboards(count: *mut ::core::ffi::c_int) -> *mut SDL_KeyboardID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of a keyboard.
     ///
     /// This function returns "" if the keyboard doesn't have a name.
@@ -129,7 +129,7 @@ extern "C" {
     pub fn SDL_GetKeyboardNameForID(instance_id: SDL_KeyboardID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the window which currently has keyboard focus.
     ///
     /// ## Return value
@@ -143,7 +143,7 @@ extern "C" {
     pub fn SDL_GetKeyboardFocus() -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a snapshot of the current state of the keyboard.
     ///
     /// The pointer returned is a pointer to an internal SDL array. It will be
@@ -180,10 +180,10 @@ extern "C" {
     /// - [`SDL_PumpEvents`]
     /// - [`SDL_ResetKeyboard`]
     pub fn SDL_GetKeyboardState(numkeys: *mut ::core::ffi::c_int)
-        -> *const ::core::primitive::bool;
+    -> *const ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear the state of the keyboard.
     ///
     /// This function will generate key up events for all pressed keys.
@@ -199,7 +199,7 @@ extern "C" {
     pub fn SDL_ResetKeyboard();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current key modifier state for the keyboard.
     ///
     /// ## Return value
@@ -218,7 +218,7 @@ extern "C" {
     pub fn SDL_GetModState() -> SDL_Keymod;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the current key modifier state for the keyboard.
     ///
     /// The inverse of [`SDL_GetModState()`], [`SDL_SetModState()`] allows you to impose
@@ -243,7 +243,7 @@ extern "C" {
     pub fn SDL_SetModState(modstate: SDL_Keymod);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the key code corresponding to the given scancode according to the
     /// current keyboard layout.
     ///
@@ -277,7 +277,7 @@ extern "C" {
     ) -> SDL_Keycode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the scancode corresponding to the given key code according to the
     /// current keyboard layout.
     ///
@@ -304,7 +304,7 @@ extern "C" {
     pub fn SDL_GetScancodeFromKey(key: SDL_Keycode, modstate: *mut SDL_Keymod) -> SDL_Scancode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a human-readable name for a scancode.
     ///
     /// ## Parameters
@@ -331,7 +331,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a human-readable name for a scancode.
     ///
     /// **Warning**: The returned name is by design not stable across platforms,
@@ -363,7 +363,7 @@ extern "C" {
     pub fn SDL_GetScancodeName(scancode: SDL_Scancode) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a scancode from a human-readable name.
     ///
     /// ## Parameters
@@ -386,7 +386,7 @@ extern "C" {
     pub fn SDL_GetScancodeFromName(name: *const ::core::ffi::c_char) -> SDL_Scancode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a human-readable name for a key.
     ///
     /// If the key doesn't have a name, this function returns an empty string ("").
@@ -412,7 +412,7 @@ extern "C" {
     pub fn SDL_GetKeyName(key: SDL_Keycode) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a key code from a human-readable name.
     ///
     /// ## Parameters
@@ -435,7 +435,7 @@ extern "C" {
     pub fn SDL_GetKeyFromName(name: *const ::core::ffi::c_char) -> SDL_Keycode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start accepting Unicode text input events in a window.
     ///
     /// This function will enable text input ([`SDL_EVENT_TEXT_INPUT`] and
@@ -673,7 +673,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_Capitalization {
         &crate::metadata::keyboard::METADATA_SDL_Capitalization;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start accepting Unicode text input events in a window, with properties
     /// describing the input.
     ///
@@ -749,7 +749,7 @@ pub const SDL_PROP_TEXTINPUT_MULTILINE_BOOLEAN: *const ::core::ffi::c_char =
 pub const SDL_PROP_TEXTINPUT_ANDROID_INPUTTYPE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.textinput.android.inputtype".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Check whether or not Unicode text input events are enabled for a window.
     ///
     /// ## Parameters
@@ -769,7 +769,7 @@ extern "C" {
     pub fn SDL_TextInputActive(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Stop receiving any text input events in a window.
     ///
     /// If [`SDL_StartTextInput()`] showed the screen keyboard, this function will hide
@@ -793,7 +793,7 @@ extern "C" {
     pub fn SDL_StopTextInput(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Dismiss the composition window/IME without disabling the subsystem.
     ///
     /// ## Parameters
@@ -815,7 +815,7 @@ extern "C" {
     pub fn SDL_ClearComposition(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the area used to type Unicode text input.
     ///
     /// Native input methods may place a window with word suggestions near the
@@ -848,7 +848,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the area used to type Unicode text input.
     ///
     /// This returns the values previously set by [`SDL_SetTextInputArea()`].
@@ -879,7 +879,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check whether the platform has screen keyboard support.
     ///
     /// ## Return value
@@ -898,7 +898,7 @@ extern "C" {
     pub fn SDL_HasScreenKeyboardSupport() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check whether the screen keyboard is shown for given window.
     ///
     /// ## Parameters

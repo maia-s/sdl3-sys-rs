@@ -250,7 +250,7 @@ pub unsafe fn SDL_RectsEqual(a: *const SDL_Rect, b: *const SDL_Rect) -> ::core::
     };
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether two rectangles intersect.
     ///
     /// If either pointer is NULL the function will return false.
@@ -276,7 +276,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the intersection of two rectangles.
     ///
     /// If `result` is NULL then this function will return false.
@@ -302,7 +302,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the union of two rectangles.
     ///
     /// ## Parameters
@@ -324,7 +324,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate a minimal rectangle enclosing a set of points.
     ///
     /// If `clip` is not NULL then only points inside of the clipping rectangle are
@@ -352,7 +352,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the intersection of a rectangle and line segment.
     ///
     /// This function is used to clip a line segment to a rectangle. A line segment
@@ -566,7 +566,7 @@ pub unsafe fn SDL_RectsEqualFloat(
     return unsafe { SDL_RectsEqualEpsilon(a, b, SDL_FLT_EPSILON) };
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether two rectangles intersect with float precision.
     ///
     /// If either pointer is NULL the function will return false.
@@ -589,7 +589,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the intersection of two rectangles with float precision.
     ///
     /// If `result` is NULL then this function will return false.
@@ -615,7 +615,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the union of two rectangles with float precision.
     ///
     /// ## Parameters
@@ -637,7 +637,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate a minimal rectangle enclosing a set of points with float
     /// precision.
     ///
@@ -666,7 +666,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the intersection of a rectangle and line segment with float
     /// precision.
     ///

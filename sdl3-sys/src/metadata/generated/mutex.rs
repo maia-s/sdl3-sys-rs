@@ -7,7 +7,9 @@ pub const METADATA_SDL_InitStatus: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_InitStatus",
     short_name: "InitStatus",
-    doc: Some("The current status of an [`SDL_InitState`] structure.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The current status of an [`SDL_InitState`] structure.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

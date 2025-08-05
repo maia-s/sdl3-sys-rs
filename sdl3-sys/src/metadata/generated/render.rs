@@ -767,7 +767,9 @@ pub const METADATA_SDL_TextureAccess: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_TextureAccess",
     short_name: "TextureAccess",
-    doc: Some("The access pattern allowed for a texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The access pattern allowed for a texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -795,7 +797,9 @@ pub const METADATA_SDL_RendererLogicalPresentation: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_RendererLogicalPresentation",
     short_name: "RendererLogicalPresentation",
-    doc: Some("How the logical size is mapped to the output.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "How the logical size is mapped to the output.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -813,19 +817,25 @@ pub const METADATA_SDL_RendererLogicalPresentation: Group = Group {
         GroupValue {
             name: "SDL_LOGICAL_PRESENTATION_LETTERBOX",
             short_name: "LETTERBOX",
-            doc: Some("The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars\n"),
+            doc: Some(
+                "The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_LOGICAL_PRESENTATION_OVERSCAN",
             short_name: "OVERSCAN",
-            doc: Some("The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds\n"),
+            doc: Some(
+                "The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_LOGICAL_PRESENTATION_INTEGER_SCALE",
             short_name: "INTEGER_SCALE",
-            doc: Some("The rendered content is scaled up by integer multiples to fit the output resolution\n"),
+            doc: Some(
+                "The rendered content is scaled up by integer multiples to fit the output resolution\n",
+            ),
             available_since: None,
         },
     ],

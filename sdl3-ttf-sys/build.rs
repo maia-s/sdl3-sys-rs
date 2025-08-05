@@ -16,7 +16,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             if LINK_FRAMEWORK {
                 // !!!FIXME
-                panic!("SDL3_ttf is currently missing a configuration option to build as a framework. You can download the official framework build from <https://github.com/libsdl-org/SDL_ttf/releases>.");
+                panic!(
+                    "SDL3_ttf is currently missing a configuration option to build as a framework. You can download the official framework build from <https://github.com/libsdl-org/SDL_ttf/releases>."
+                );
                 //config.define("SDL_FRAMEWORK", "ON");
             } else if cfg!(feature = "link-static") {
                 config.define("BUILD_SHARED_LIBS", "OFF");

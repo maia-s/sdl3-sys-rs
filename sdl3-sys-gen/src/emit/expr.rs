@@ -1,6 +1,6 @@
 use super::{
-    patch::patch_eval_macro_call, patch_emit_macro_call, DefineState, Emit, EmitContext, EmitErr,
-    EmitResult, Eval, Sym,
+    DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, Sym, patch::patch_eval_macro_call,
+    patch_emit_macro_call,
 };
 use crate::parse::{
     Alternative, Ambiguous, BinaryOp, CanCmp, CanDefault, Cast, DefineValue, Expr, FloatLiteral,
@@ -688,7 +688,7 @@ impl Emit for Value {
             &Value::Bool(b) => write!(ctx, "{b}")?,
             Value::String(s) => return s.emit(ctx),
             Value::TargetDependent(_) => {
-                return Err(ParseErr::new(Span::none(), "can't emit indeterminate value").into())
+                return Err(ParseErr::new(Span::none(), "can't emit indeterminate value").into());
             }
             Value::RustCode(s) => ctx.write_str(&s.value)?,
             Value::Place(_, _) => self.clone().deref_read(ctx)?.emit(ctx)?,
@@ -1086,7 +1086,7 @@ impl Eval for Expr {
                         FloatLiteral::Double(f) => Ok(Some(Value::F64(f.value))),
                     },
                     Literal::String(s) => Ok(Some(Value::String(s.clone()))),
-                }
+                };
             }
 
             Expr::FnCall(call) => return call.try_eval(ctx),
@@ -1200,7 +1200,10 @@ impl Eval for Expr {
                                 let value = ctx.capture_output(|ctx| {
                                     writeln!(ctx, "{{")?;
                                     ctx.increase_indent();
-                                    write!(ctx, "let (ptr, value) = (unsafe {{ ::core::ptr::addr_of_mut!((*")?;
+                                    write!(
+                                        ctx,
+                                        "let (ptr, value) = (unsafe {{ ::core::ptr::addr_of_mut!((*"
+                                    )?;
                                     ptr.emit(ctx)?;
                                     write!(ctx, ").")?;
                                     field.emit(ctx)?;
@@ -1648,7 +1651,7 @@ impl Eval for Expr {
                     _ => {
                         return Err(
                             ParseErr::new(bop.span(), "missing implementation for eval").into()
-                        )
+                        );
                     }
                 };
             }

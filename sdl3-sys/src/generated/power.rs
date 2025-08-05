@@ -105,7 +105,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PowerState {
         &crate::metadata::power::METADATA_SDL_PowerState;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current power supply details.
     ///
     /// You should never take a battery status as absolute truth. Batteries

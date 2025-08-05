@@ -112,7 +112,7 @@ pub const fn SDL_VERSION_ATLEAST(
     (SDL_VERSION >= SDL_VERSIONNUM(X, Y, Z))
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the version of SDL that is linked against your program.
     ///
     /// If you are linking to SDL dynamically, then it is possible that the current
@@ -133,7 +133,7 @@ extern "C" {
     pub fn SDL_GetVersion() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the code revision of SDL that is linked against your program.
     ///
     /// This value is the revision of the code you are linked with and may be

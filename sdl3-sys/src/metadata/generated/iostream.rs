@@ -79,7 +79,9 @@ pub const METADATA_SDL_IOStatus: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_IOStatus",
     short_name: "IOStatus",
-    doc: Some("[`SDL_IOStream`] status, set by a read or write operation.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "[`SDL_IOStream`] status, set by a read or write operation.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -125,7 +127,9 @@ pub const METADATA_SDL_IOWhence: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_IOWhence",
     short_name: "IOWhence",
-    doc: Some("Possible `whence` values for [`SDL_IOStream`] seeking.\n\nThese map to the same \"whence\" concept that `fseek` or `lseek` use in the\nstandard C runtime.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Possible `whence` values for [`SDL_IOStream`] seeking.\n\nThese map to the same \"whence\" concept that `fseek` or `lseek` use in the\nstandard C runtime.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

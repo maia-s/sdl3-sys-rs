@@ -518,7 +518,7 @@ impl ::core::default::Default for SDL_MessageBoxData {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a modal message box.
     ///
     /// If your needs aren't complex, it might be easier to use
@@ -562,7 +562,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Display a simple modal message box.
     ///
     /// If your needs aren't complex, this function is preferred over

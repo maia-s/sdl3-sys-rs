@@ -1914,7 +1914,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextResetNotification {
         &crate::metadata::video::METADATA_SDL_GLContextResetNotification;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of video drivers compiled into SDL.
     ///
     /// ## Return value
@@ -1931,7 +1931,7 @@ extern "C" {
     pub fn SDL_GetNumVideoDrivers() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of a built in video driver.
     ///
     /// The video drivers are presented in the order in which they are normally
@@ -1958,7 +1958,7 @@ extern "C" {
     pub fn SDL_GetVideoDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of the currently initialized video driver.
     ///
     /// The names of drivers are all simple, low-ASCII identifiers, like "cocoa",
@@ -1981,7 +1981,7 @@ extern "C" {
     pub fn SDL_GetCurrentVideoDriver() -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current system theme.
     ///
     /// ## Return value
@@ -1995,7 +1995,7 @@ extern "C" {
     pub fn SDL_GetSystemTheme() -> SDL_SystemTheme;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently connected displays.
     ///
     /// ## Parameters
@@ -2015,7 +2015,7 @@ extern "C" {
     pub fn SDL_GetDisplays(count: *mut ::core::ffi::c_int) -> *mut SDL_DisplayID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return the primary display.
     ///
     /// ## Return value
@@ -2033,7 +2033,7 @@ extern "C" {
     pub fn SDL_GetPrimaryDisplay() -> SDL_DisplayID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a display.
     ///
     /// The following read-only properties are provided by SDL:
@@ -2072,7 +2072,7 @@ pub const SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: *const ::core::ffi::c_char =
 pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: *const ::core::ffi::c_char =
     c"SDL.display.KMSDRM.panel_orientation".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of a display in UTF-8 encoding.
     ///
     /// ## Parameters
@@ -2093,7 +2093,7 @@ extern "C" {
     pub fn SDL_GetDisplayName(displayID: SDL_DisplayID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the desktop area represented by a display.
     ///
     /// The primary display is often located at (0,0), but may be placed at a
@@ -2122,7 +2122,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the usable desktop area represented by a display, in screen
     /// coordinates.
     ///
@@ -2157,7 +2157,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the orientation of a display when it is unrotated.
     ///
     /// ## Parameters
@@ -2178,7 +2178,7 @@ extern "C" {
     pub fn SDL_GetNaturalDisplayOrientation(displayID: SDL_DisplayID) -> SDL_DisplayOrientation;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the orientation of a display.
     ///
     /// ## Parameters
@@ -2199,7 +2199,7 @@ extern "C" {
     pub fn SDL_GetCurrentDisplayOrientation(displayID: SDL_DisplayID) -> SDL_DisplayOrientation;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the content scale of a display.
     ///
     /// The content scale is the expected scale for content based on the DPI
@@ -2232,7 +2232,7 @@ extern "C" {
     pub fn SDL_GetDisplayContentScale(displayID: SDL_DisplayID) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of fullscreen display modes available on a display.
     ///
     /// The display modes are sorted in this priority:
@@ -2269,7 +2269,7 @@ extern "C" {
     ) -> *mut *mut SDL_DisplayMode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the closest match to the requested display mode.
     ///
     /// The available display modes are scanned and `closest` is filled in with the
@@ -2313,7 +2313,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get information about the desktop's display mode.
     ///
     /// There's a difference between this function and [`SDL_GetCurrentDisplayMode()`]
@@ -2340,7 +2340,7 @@ extern "C" {
     pub fn SDL_GetDesktopDisplayMode(displayID: SDL_DisplayID) -> *const SDL_DisplayMode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get information about the current display mode.
     ///
     /// There's a difference between this function and [`SDL_GetDesktopDisplayMode()`]
@@ -2367,7 +2367,7 @@ extern "C" {
     pub fn SDL_GetCurrentDisplayMode(displayID: SDL_DisplayID) -> *const SDL_DisplayMode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the display containing a point.
     ///
     /// ## Parameters
@@ -2389,7 +2389,7 @@ extern "C" {
     pub fn SDL_GetDisplayForPoint(point: *const SDL_Point) -> SDL_DisplayID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the display primarily containing a rect.
     ///
     /// ## Parameters
@@ -2412,7 +2412,7 @@ extern "C" {
     pub fn SDL_GetDisplayForRect(rect: *const SDL_Rect) -> SDL_DisplayID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the display associated with a window.
     ///
     /// ## Parameters
@@ -2435,7 +2435,7 @@ extern "C" {
     pub fn SDL_GetDisplayForWindow(window: *mut SDL_Window) -> SDL_DisplayID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the pixel density of a window.
     ///
     /// This is a ratio of pixel size to window size. For example, if the window is
@@ -2460,7 +2460,7 @@ extern "C" {
     pub fn SDL_GetWindowPixelDensity(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the content display scale relative to a window's pixel size.
     ///
     /// This is a combination of the window pixel density and the display content
@@ -2489,7 +2489,7 @@ extern "C" {
     pub fn SDL_GetWindowDisplayScale(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the display mode to use when a window is visible and fullscreen.
     ///
     /// This only affects the display mode used when the window is fullscreen. To
@@ -2533,7 +2533,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the display mode to use when a window is visible at fullscreen.
     ///
     /// ## Parameters
@@ -2555,7 +2555,7 @@ extern "C" {
     pub fn SDL_GetWindowFullscreenMode(window: *mut SDL_Window) -> *const SDL_DisplayMode;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the raw ICC profile data for the screen the window is currently on.
     ///
     /// ## Parameters
@@ -2578,7 +2578,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the pixel format associated with the window.
     ///
     /// ## Parameters
@@ -2597,7 +2597,7 @@ extern "C" {
     pub fn SDL_GetWindowPixelFormat(window: *mut SDL_Window) -> SDL_PixelFormat;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of valid windows.
     ///
     /// ## Parameters
@@ -2618,7 +2618,7 @@ extern "C" {
     pub fn SDL_GetWindows(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a window with the specified dimensions and flags.
     ///
     /// The window size is a request and may be different than expected based on
@@ -2719,7 +2719,7 @@ extern "C" {
     ) -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a child popup window of the specified parent window.
     ///
     /// The window size is a request and may be different than expected based on
@@ -2807,7 +2807,7 @@ extern "C" {
     ) -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a window with the specified properties.
     ///
     /// The window size is a request and may be different than expected based on
@@ -3046,7 +3046,7 @@ pub const SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER: *const ::core:
 pub const SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
     c"SDL.window.create.x11.window".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the numeric ID of a window.
     ///
     /// The numeric ID is what [`SDL_WindowEvent`] references, and is necessary to map
@@ -3070,7 +3070,7 @@ extern "C" {
     pub fn SDL_GetWindowID(window: *mut SDL_Window) -> SDL_WindowID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a window from a stored ID.
     ///
     /// The numeric ID is what [`SDL_WindowEvent`] references, and is necessary to map
@@ -3094,7 +3094,7 @@ extern "C" {
     pub fn SDL_GetWindowFromID(id: SDL_WindowID) -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get parent of a window.
     ///
     /// ## Parameters
@@ -3115,7 +3115,7 @@ extern "C" {
     pub fn SDL_GetWindowParent(window: *mut SDL_Window) -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a window.
     ///
     /// The following read-only properties are provided by SDL:
@@ -3346,7 +3346,7 @@ pub const SDL_PROP_WINDOW_X11_SCREEN_NUMBER: *const ::core::ffi::c_char =
 pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
     c"SDL.window.x11.window".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the window flags.
     ///
     /// ## Parameters
@@ -3372,7 +3372,7 @@ extern "C" {
     pub fn SDL_GetWindowFlags(window: *mut SDL_Window) -> SDL_WindowFlags;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the title of a window.
     ///
     /// This string is expected to be in UTF-8 encoding.
@@ -3399,7 +3399,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the title of a window.
     ///
     /// ## Parameters
@@ -3420,7 +3420,7 @@ extern "C" {
     pub fn SDL_GetWindowTitle(window: *mut SDL_Window) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the icon for a window.
     ///
     /// If this function is passed a surface with alternate representations, the
@@ -3452,7 +3452,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that the window's position be set.
     ///
     /// If the window is in an exclusive fullscreen or maximized state, this
@@ -3503,7 +3503,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the position of a window.
     ///
     /// This is the current position of the window as last reported by the
@@ -3538,7 +3538,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that the size of a window's client area be set.
     ///
     /// If the window is in a fullscreen or maximized state, this request has no
@@ -3585,7 +3585,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the size of a window's client area.
     ///
     /// The window pixel size may differ from its window coordinate size if the
@@ -3618,7 +3618,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the safe area for this window.
     ///
     /// Some devices have portions of the screen which are partially obscured or
@@ -3648,7 +3648,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that the aspect ratio of a window's client area be set.
     ///
     /// The aspect ratio is the ratio of width divided by height, e.g. 2560x1600
@@ -3699,7 +3699,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the size of a window's client area.
     ///
     /// ## Parameters
@@ -3728,7 +3728,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the size of a window's borders (decorations) around the client area.
     ///
     /// Note: If this function fails (returns false), the size values will be
@@ -3777,7 +3777,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the size of a window's client area, in pixels.
     ///
     /// ## Parameters
@@ -3807,7 +3807,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the minimum size of a window's client area.
     ///
     /// ## Parameters
@@ -3835,7 +3835,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the minimum size of a window's client area.
     ///
     /// ## Parameters
@@ -3865,7 +3865,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the maximum size of a window's client area.
     ///
     /// ## Parameters
@@ -3893,7 +3893,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the maximum size of a window's client area.
     ///
     /// ## Parameters
@@ -3923,7 +3923,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the border state of a window.
     ///
     /// This will add or remove the window's [`SDL_WINDOW_BORDERLESS`] flag and add
@@ -3954,7 +3954,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the user-resizable state of a window.
     ///
     /// This will add or remove the window's [`SDL_WINDOW_RESIZABLE`] flag and
@@ -3985,7 +3985,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the window to always be above the others.
     ///
     /// This will add or remove the window's [`SDL_WINDOW_ALWAYS_ON_TOP`] flag. This
@@ -4013,7 +4013,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Show a window.
     ///
     /// ## Parameters
@@ -4035,7 +4035,7 @@ extern "C" {
     pub fn SDL_ShowWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Hide a window.
     ///
     /// ## Parameters
@@ -4057,7 +4057,7 @@ extern "C" {
     pub fn SDL_HideWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that a window be raised above other windows and gain the input
     /// focus.
     ///
@@ -4082,7 +4082,7 @@ extern "C" {
     pub fn SDL_RaiseWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that the window be made as large as possible.
     ///
     /// Non-resizable windows can't be maximized. The window must have the
@@ -4122,7 +4122,7 @@ extern "C" {
     pub fn SDL_MaximizeWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that the window be minimized to an iconic representation.
     ///
     /// If the window is in a fullscreen state, this request has no direct effect.
@@ -4157,7 +4157,7 @@ extern "C" {
     pub fn SDL_MinimizeWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that the size and position of a minimized or maximized window be
     /// restored.
     ///
@@ -4193,7 +4193,7 @@ extern "C" {
     pub fn SDL_RestoreWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request that the window's fullscreen state be changed.
     ///
     /// By default a window in fullscreen state uses borderless fullscreen desktop
@@ -4234,7 +4234,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Block until any pending window state is finalized.
     ///
     /// On asynchronous windowing systems, this acts as a synchronization barrier
@@ -4271,7 +4271,7 @@ extern "C" {
     pub fn SDL_SyncWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether the window has a surface associated with it.
     ///
     /// ## Parameters
@@ -4292,7 +4292,7 @@ extern "C" {
     pub fn SDL_WindowHasSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the SDL surface associated with the window.
     ///
     /// A new surface will be created with the optimal format for the window, if
@@ -4327,7 +4327,7 @@ extern "C" {
     pub fn SDL_GetWindowSurface(window: *mut SDL_Window) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Toggle VSync for the window surface.
     ///
     /// When a window surface is created, vsync defaults to
@@ -4366,7 +4366,7 @@ pub const SDL_WINDOW_SURFACE_VSYNC_DISABLED: ::core::primitive::i32 = 0;
 
 pub const SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE: ::core::primitive::i32 = -1_i32;
 
-extern "C" {
+unsafe extern "C" {
     /// Get VSync for the window surface.
     ///
     /// ## Parameters
@@ -4392,7 +4392,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy the window surface to the screen.
     ///
     /// This is the function you use to reflect any changes to the surface on the
@@ -4419,7 +4419,7 @@ extern "C" {
     pub fn SDL_UpdateWindowSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy areas of the window surface to the screen.
     ///
     /// This is the function you use to reflect changes to portions of the surface
@@ -4458,7 +4458,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy the surface associated with the window.
     ///
     /// ## Parameters
@@ -4480,7 +4480,7 @@ extern "C" {
     pub fn SDL_DestroyWindowSurface(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a window's keyboard grab mode.
     ///
     /// Keyboard grab enables capture of system keyboard shortcuts like Alt+Tab or
@@ -4522,7 +4522,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a window's mouse grab mode.
     ///
     /// Mouse grab confines the mouse cursor to the window.
@@ -4552,7 +4552,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a window's keyboard grab mode.
     ///
     /// ## Parameters
@@ -4572,7 +4572,7 @@ extern "C" {
     pub fn SDL_GetWindowKeyboardGrab(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a window's mouse grab mode.
     ///
     /// ## Parameters
@@ -4595,7 +4595,7 @@ extern "C" {
     pub fn SDL_GetWindowMouseGrab(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the window that currently has an input grab enabled.
     ///
     /// ## Return value
@@ -4613,7 +4613,7 @@ extern "C" {
     pub fn SDL_GetGrabbedWindow() -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Confines the cursor to the specified area of a window.
     ///
     /// Note that this does NOT grab the cursor, it only defines the area a cursor
@@ -4644,7 +4644,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the mouse confinement rectangle of a window.
     ///
     /// ## Parameters
@@ -4667,7 +4667,7 @@ extern "C" {
     pub fn SDL_GetWindowMouseRect(window: *mut SDL_Window) -> *const SDL_Rect;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the opacity for a window.
     ///
     /// The parameter `opacity` will be clamped internally between 0.0f
@@ -4697,7 +4697,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the opacity of a window.
     ///
     /// If transparency isn't supported on this platform, opacity will be returned
@@ -4721,7 +4721,7 @@ extern "C" {
     pub fn SDL_GetWindowOpacity(window: *mut SDL_Window) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the window as a child of a parent window.
     ///
     /// If the window is already the child of an existing window, it will be
@@ -4764,7 +4764,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Toggle the state of the window as modal.
     ///
     /// To enable modal status on a window, the window must currently be the child
@@ -4793,7 +4793,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set whether the window may have input focus.
     ///
     /// ## Parameters
@@ -4815,7 +4815,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Display the system-level window menu.
     ///
     /// This default window menu is provided by the system and on some platforms
@@ -4989,7 +4989,7 @@ pub type SDL_HitTest = ::core::option::Option<
     ) -> SDL_HitTestResult,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Provide a callback that decides if a window region has special properties.
     ///
     /// Normally windows are dragged and resized by decorations provided by the
@@ -5042,7 +5042,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the shape of a transparent window.
     ///
     /// This sets the alpha channel of a transparent window and any fully
@@ -5078,7 +5078,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Request a window to demand attention from the user.
     ///
     /// ## Parameters
@@ -5100,7 +5100,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a window.
     ///
     /// Any child windows owned by the window will be recursively destroyed as
@@ -5126,7 +5126,7 @@ extern "C" {
     pub fn SDL_DestroyWindow(window: *mut SDL_Window);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check whether the screensaver is currently enabled.
     ///
     /// The screensaver is disabled by default.
@@ -5148,7 +5148,7 @@ extern "C" {
     pub fn SDL_ScreenSaverEnabled() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allow the screen to be blanked by a screen saver.
     ///
     /// ## Return value
@@ -5167,7 +5167,7 @@ extern "C" {
     pub fn SDL_EnableScreenSaver() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Prevent the screen from being blanked by a screen saver.
     ///
     /// If you disable the screensaver, it is automatically re-enabled when SDL
@@ -5192,7 +5192,7 @@ extern "C" {
     pub fn SDL_DisableScreenSaver() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Dynamically load an OpenGL library.
     ///
     /// This should be done after initializing the video driver, but before
@@ -5222,7 +5222,7 @@ extern "C" {
     pub fn SDL_GL_LoadLibrary(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get an OpenGL function by name.
     ///
     /// If the GL library is loaded at runtime with [`SDL_GL_LoadLibrary()`], then all
@@ -5283,7 +5283,7 @@ extern "C" {
     pub fn SDL_GL_GetProcAddress(proc: *const ::core::ffi::c_char) -> SDL_FunctionPointer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get an EGL library function by name.
     ///
     /// If an EGL library is loaded, this function allows applications to get entry
@@ -5308,7 +5308,7 @@ extern "C" {
     pub fn SDL_EGL_GetProcAddress(proc: *const ::core::ffi::c_char) -> SDL_FunctionPointer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unload the OpenGL library previously loaded by [`SDL_GL_LoadLibrary()`].
     ///
     /// ## Thread safety
@@ -5322,7 +5322,7 @@ extern "C" {
     pub fn SDL_GL_UnloadLibrary();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check if an OpenGL extension is supported for the current context.
     ///
     /// This function operates on the current GL context; you must have created a
@@ -5352,7 +5352,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Reset all previously set OpenGL context attributes to their default values.
     ///
     /// ## Thread safety
@@ -5367,7 +5367,7 @@ extern "C" {
     pub fn SDL_GL_ResetAttributes();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an OpenGL window attribute before window creation.
     ///
     /// This function sets the OpenGL attribute `attr` to `value`. The requested
@@ -5399,7 +5399,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the actual value for an attribute from the current context.
     ///
     /// ## Parameters
@@ -5426,7 +5426,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create an OpenGL context for an OpenGL window, and make it current.
     ///
     /// Windows users new to OpenGL should note that, for historical reasons, GL
@@ -5456,7 +5456,7 @@ extern "C" {
     pub fn SDL_GL_CreateContext(window: *mut SDL_Window) -> SDL_GLContext;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set up an OpenGL context for rendering into an OpenGL window.
     ///
     /// The context must have been created with a compatible window.
@@ -5483,7 +5483,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the currently active OpenGL window.
     ///
     /// ## Return value
@@ -5498,7 +5498,7 @@ extern "C" {
     pub fn SDL_GL_GetCurrentWindow() -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the currently active OpenGL context.
     ///
     /// ## Return value
@@ -5516,7 +5516,7 @@ extern "C" {
     pub fn SDL_GL_GetCurrentContext() -> SDL_GLContext;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the currently active EGL display.
     ///
     /// ## Return value
@@ -5531,7 +5531,7 @@ extern "C" {
     pub fn SDL_EGL_GetCurrentDisplay() -> SDL_EGLDisplay;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the currently active EGL config.
     ///
     /// ## Return value
@@ -5546,7 +5546,7 @@ extern "C" {
     pub fn SDL_EGL_GetCurrentConfig() -> SDL_EGLConfig;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the EGL surface associated with the window.
     ///
     /// ## Parameters
@@ -5564,7 +5564,7 @@ extern "C" {
     pub fn SDL_EGL_GetWindowSurface(window: *mut SDL_Window) -> SDL_EGLSurface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets the callbacks for defining custom EGLAttrib arrays for EGL
     /// initialization.
     ///
@@ -5594,7 +5594,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the swap interval for the current OpenGL context.
     ///
     /// Some systems allow specifying -1 for the interval, to enable adaptive
@@ -5631,7 +5631,7 @@ extern "C" {
     pub fn SDL_GL_SetSwapInterval(interval: ::core::ffi::c_int) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the swap interval for the current OpenGL context.
     ///
     /// If the system can't determine the swap interval, or there isn't a valid
@@ -5658,7 +5658,7 @@ extern "C" {
     pub fn SDL_GL_GetSwapInterval(interval: *mut ::core::ffi::c_int) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update a window with OpenGL rendering.
     ///
     /// This is used with double-buffered OpenGL contexts, which are the default.
@@ -5683,7 +5683,7 @@ extern "C" {
     pub fn SDL_GL_SwapWindow(window: *mut SDL_Window) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Delete an OpenGL context.
     ///
     /// ## Parameters

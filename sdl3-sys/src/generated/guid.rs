@@ -28,7 +28,7 @@ pub struct SDL_GUID {
     pub data: [Uint8; 16],
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get an ASCII string representation for a given [`SDL_GUID`].
     ///
     /// ## Parameters
@@ -51,7 +51,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a GUID string into a [`SDL_GUID`] structure.
     ///
     /// Performs no error checking. If this function is given a string containing

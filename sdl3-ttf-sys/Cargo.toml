@@ -1,8 +1,8 @@
 [package]
 name = "sdl3-ttf-sys"
 version = "0.6.0+SDL3-ttf-3.2.2"
-edition = "2021"
-rust-version = "1.81"
+edition = "2024"
+rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"
 description = "Low level Rust bindings for SDL3_ttf"

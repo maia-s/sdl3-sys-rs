@@ -98,7 +98,7 @@ pub type SDL_DialogFileCallback = ::core::option::Option<
     ),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Displays a dialog that lets the user select a file on their filesystem.
     ///
     /// This is an asynchronous function; it will return immediately, and the
@@ -161,7 +161,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Displays a dialog that lets the user choose a new or existing file on their
     /// filesystem.
     ///
@@ -221,7 +221,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Displays a dialog that lets the user select a folder on their filesystem.
     ///
     /// This is an asynchronous function; it will return immediately, and the
@@ -348,7 +348,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_FileDialogType {
         &crate::metadata::dialog::METADATA_SDL_FileDialogType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create and launch a file dialog with the specified properties.
     ///
     /// These are the supported properties:

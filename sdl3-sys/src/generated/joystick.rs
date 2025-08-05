@@ -282,7 +282,7 @@ pub const SDL_JOYSTICK_AXIS_MAX: Sint16 = (32767 as Sint16);
 /// - [`SDL_JOYSTICK_AXIS_MAX`]
 pub const SDL_JOYSTICK_AXIS_MIN: Sint16 = (-32768_i32 as Sint16);
 
-extern "C" {
+unsafe extern "C" {
     /// Locking for atomic access to the joystick API.
     ///
     /// The SDL joystick functions are thread-safe, however you can lock the
@@ -294,7 +294,7 @@ extern "C" {
     pub fn SDL_LockJoysticks();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unlocking for atomic access to the joystick API.
     ///
     /// ## Availability
@@ -302,7 +302,7 @@ extern "C" {
     pub fn SDL_UnlockJoysticks();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether a joystick is currently connected.
     ///
     /// ## Return value
@@ -316,7 +316,7 @@ extern "C" {
     pub fn SDL_HasJoystick() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently connected joysticks.
     ///
     /// ## Parameters
@@ -337,7 +337,7 @@ extern "C" {
     pub fn SDL_GetJoysticks(count: *mut ::core::ffi::c_int) -> *mut SDL_JoystickID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent name of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -358,7 +358,7 @@ extern "C" {
     pub fn SDL_GetJoystickNameForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent path of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -379,7 +379,7 @@ extern "C" {
     pub fn SDL_GetJoystickPathForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the player index of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -399,7 +399,7 @@ extern "C" {
     pub fn SDL_GetJoystickPlayerIndexForID(instance_id: SDL_JoystickID) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation-dependent GUID of a joystick.
     ///
     /// This can be called before any joysticks are opened.
@@ -420,7 +420,7 @@ extern "C" {
     pub fn SDL_GetJoystickGUIDForID(instance_id: SDL_JoystickID) -> SDL_GUID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB vendor ID of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened. If the vendor ID isn't
@@ -442,7 +442,7 @@ extern "C" {
     pub fn SDL_GetJoystickVendorForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB product ID of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened. If the product ID isn't
@@ -464,7 +464,7 @@ extern "C" {
     pub fn SDL_GetJoystickProductForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the product version of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened. If the product version
@@ -486,7 +486,7 @@ extern "C" {
     pub fn SDL_GetJoystickProductVersionForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of a joystick, if available.
     ///
     /// This can be called before any joysticks are opened.
@@ -508,7 +508,7 @@ extern "C" {
     pub fn SDL_GetJoystickTypeForID(instance_id: SDL_JoystickID) -> SDL_JoystickType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a joystick for use.
     ///
     /// The joystick subsystem must be initialized before a joystick can be opened
@@ -529,7 +529,7 @@ extern "C" {
     pub fn SDL_OpenJoystick(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the [`SDL_Joystick`] associated with an instance ID, if it has been opened.
     ///
     /// ## Parameters
@@ -544,7 +544,7 @@ extern "C" {
     pub fn SDL_GetJoystickFromID(instance_id: SDL_JoystickID) -> *mut SDL_Joystick;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the [`SDL_Joystick`] associated with a player index.
     ///
     /// ## Parameters
@@ -736,7 +736,7 @@ const _: () = ::core::assert!(
             && (::core::mem::size_of::<SDL_VirtualJoystickDesc>() == 136_usize)))
 );
 
-extern "C" {
+unsafe extern "C" {
     /// Attach a new virtual joystick.
     ///
     /// ## Parameters
@@ -754,7 +754,7 @@ extern "C" {
     pub fn SDL_AttachVirtualJoystick(desc: *const SDL_VirtualJoystickDesc) -> SDL_JoystickID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detach a virtual joystick.
     ///
     /// ## Parameters
@@ -773,7 +773,7 @@ extern "C" {
     pub fn SDL_DetachVirtualJoystick(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether or not a joystick is virtual.
     ///
     /// ## Parameters
@@ -787,7 +787,7 @@ extern "C" {
     pub fn SDL_IsJoystickVirtual(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the state of an axis on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -818,7 +818,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generate ball motion on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -847,7 +847,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the state of a button on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -874,7 +874,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the state of a hat on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -901,7 +901,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set touchpad finger state on an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -939,7 +939,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Send a sensor update for an opened virtual joystick.
     ///
     /// Please note that values set here will not be applied until the next call to
@@ -971,7 +971,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a joystick.
     ///
     /// The following read-only properties are provided by SDL:
@@ -1014,7 +1014,7 @@ pub const SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
 pub const SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.joystick.cap.trigger_rumble".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent name of a joystick.
     ///
     /// ## Parameters
@@ -1032,7 +1032,7 @@ extern "C" {
     pub fn SDL_GetJoystickName(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent path of a joystick.
     ///
     /// ## Parameters
@@ -1050,7 +1050,7 @@ extern "C" {
     pub fn SDL_GetJoystickPath(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the player index of an opened joystick.
     ///
     /// For XInput controllers this returns the XInput user index. Many joysticks
@@ -1070,7 +1070,7 @@ extern "C" {
     pub fn SDL_GetJoystickPlayerIndex(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the player index of an opened joystick.
     ///
     /// ## Parameters
@@ -1093,7 +1093,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation-dependent GUID for the joystick.
     ///
     /// This function requires an open joystick.
@@ -1115,7 +1115,7 @@ extern "C" {
     pub fn SDL_GetJoystickGUID(joystick: *mut SDL_Joystick) -> SDL_GUID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB vendor ID of an opened joystick, if available.
     ///
     /// If the vendor ID isn't available this function returns 0.
@@ -1134,7 +1134,7 @@ extern "C" {
     pub fn SDL_GetJoystickVendor(joystick: *mut SDL_Joystick) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB product ID of an opened joystick, if available.
     ///
     /// If the product ID isn't available this function returns 0.
@@ -1153,7 +1153,7 @@ extern "C" {
     pub fn SDL_GetJoystickProduct(joystick: *mut SDL_Joystick) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the product version of an opened joystick, if available.
     ///
     /// If the product version isn't available this function returns 0.
@@ -1172,7 +1172,7 @@ extern "C" {
     pub fn SDL_GetJoystickProductVersion(joystick: *mut SDL_Joystick) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the firmware version of an opened joystick, if available.
     ///
     /// If the firmware version isn't available this function returns 0.
@@ -1189,7 +1189,7 @@ extern "C" {
     pub fn SDL_GetJoystickFirmwareVersion(joystick: *mut SDL_Joystick) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the serial number of an opened joystick, if available.
     ///
     /// Returns the serial number of the joystick, or NULL if it is not available.
@@ -1206,7 +1206,7 @@ extern "C" {
     pub fn SDL_GetJoystickSerial(joystick: *mut SDL_Joystick) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of an opened joystick.
     ///
     /// ## Parameters
@@ -1223,7 +1223,7 @@ extern "C" {
     pub fn SDL_GetJoystickType(joystick: *mut SDL_Joystick) -> SDL_JoystickType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the device information encoded in a [`SDL_GUID`] structure.
     ///
     /// ## Parameters
@@ -1251,7 +1251,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the status of a specified joystick.
     ///
     /// ## Parameters
@@ -1266,7 +1266,7 @@ extern "C" {
     pub fn SDL_JoystickConnected(joystick: *mut SDL_Joystick) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the instance ID of an opened joystick.
     ///
     /// ## Parameters
@@ -1281,7 +1281,7 @@ extern "C" {
     pub fn SDL_GetJoystickID(joystick: *mut SDL_Joystick) -> SDL_JoystickID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of general axis controls on a joystick.
     ///
     /// Often, the directional pad on a game controller will either look like 4
@@ -1306,7 +1306,7 @@ extern "C" {
     pub fn SDL_GetNumJoystickAxes(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of trackballs on a joystick.
     ///
     /// Joystick trackballs have only relative motion events associated with them
@@ -1332,7 +1332,7 @@ extern "C" {
     pub fn SDL_GetNumJoystickBalls(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of POV hats on a joystick.
     ///
     /// ## Parameters
@@ -1353,7 +1353,7 @@ extern "C" {
     pub fn SDL_GetNumJoystickHats(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of buttons on a joystick.
     ///
     /// ## Parameters
@@ -1374,7 +1374,7 @@ extern "C" {
     pub fn SDL_GetNumJoystickButtons(joystick: *mut SDL_Joystick) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the state of joystick event processing.
     ///
     /// If joystick events are disabled, you must call [`SDL_UpdateJoysticks()`]
@@ -1393,7 +1393,7 @@ extern "C" {
     pub fn SDL_SetJoystickEventsEnabled(enabled: ::core::primitive::bool);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the state of joystick event processing.
     ///
     /// If joystick events are disabled, you must call [`SDL_UpdateJoysticks()`]
@@ -1411,7 +1411,7 @@ extern "C" {
     pub fn SDL_JoystickEventsEnabled() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update the current state of the open joysticks.
     ///
     /// This is called automatically by the event loop if any joystick events are
@@ -1422,7 +1422,7 @@ extern "C" {
     pub fn SDL_UpdateJoysticks();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of an axis control on a joystick.
     ///
     /// SDL makes no promises about what part of the joystick any given axis refers
@@ -1451,7 +1451,7 @@ extern "C" {
     pub fn SDL_GetJoystickAxis(joystick: *mut SDL_Joystick, axis: ::core::ffi::c_int) -> Sint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the initial state of an axis control on a joystick.
     ///
     /// The state is a value ranging from -32768 to 32767.
@@ -1475,7 +1475,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the ball axis change since the last poll.
     ///
     /// Trackballs can only return relative motion since the last call to
@@ -1506,7 +1506,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of a POV hat on a joystick.
     ///
     /// The returned value will be one of the `SDL_HAT_*` values.
@@ -1544,7 +1544,7 @@ pub const SDL_HAT_LEFTUP: Uint8 = (SDL_HAT_LEFT | SDL_HAT_UP);
 
 pub const SDL_HAT_LEFTDOWN: Uint8 = (SDL_HAT_LEFT | SDL_HAT_DOWN);
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of a button on a joystick.
     ///
     /// ## Parameters
@@ -1566,7 +1566,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start a rumble effect.
     ///
     /// Each call to this function cancels any previous rumble effect, and calling
@@ -1596,7 +1596,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start a rumble effect in the joystick's triggers.
     ///
     /// Each call to this function cancels any previous trigger rumble effect, and
@@ -1635,7 +1635,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update a joystick's LED color.
     ///
     /// An example of a joystick LED is the light on the back of a PlayStation 4's
@@ -1664,7 +1664,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Send a joystick specific effect packet.
     ///
     /// ## Parameters
@@ -1685,7 +1685,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close a joystick previously opened with [`SDL_OpenJoystick()`].
     ///
     /// ## Parameters
@@ -1699,7 +1699,7 @@ extern "C" {
     pub fn SDL_CloseJoystick(joystick: *mut SDL_Joystick);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the connection state of a joystick.
     ///
     /// ## Parameters
@@ -1717,7 +1717,7 @@ extern "C" {
     ) -> SDL_JoystickConnectionState;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the battery state of a joystick.
     ///
     /// You should never take a battery status as absolute truth. Batteries

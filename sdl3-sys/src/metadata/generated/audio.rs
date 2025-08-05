@@ -7,7 +7,9 @@ pub const METADATA_SDL_AudioFormat: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_AudioFormat",
     short_name: "AudioFormat",
-    doc: Some("Audio format.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_AUDIO_BITSIZE`]\n- [`SDL_AUDIO_BYTESIZE`]\n- [`SDL_AUDIO_ISINT`]\n- [`SDL_AUDIO_ISFLOAT`]\n- [`SDL_AUDIO_ISBIGENDIAN`]\n- [`SDL_AUDIO_ISLITTLEENDIAN`]\n- [`SDL_AUDIO_ISSIGNED`]\n- [`SDL_AUDIO_ISUNSIGNED`]\n"),
+    doc: Some(
+        "Audio format.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_AUDIO_BITSIZE`]\n- [`SDL_AUDIO_BYTESIZE`]\n- [`SDL_AUDIO_ISINT`]\n- [`SDL_AUDIO_ISFLOAT`]\n- [`SDL_AUDIO_ISBIGENDIAN`]\n- [`SDL_AUDIO_ISLITTLEENDIAN`]\n- [`SDL_AUDIO_ISSIGNED`]\n- [`SDL_AUDIO_ISUNSIGNED`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -107,19 +109,25 @@ pub const METADATA_SDL_AudioDeviceID: Group = Group {
     kind: GroupKind::Id,
     name: "SDL_AudioDeviceID",
     short_name: "AudioDeviceID",
-    doc: Some("SDL Audio Device instance IDs.\n\nZero is used to signify an invalid/null device.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "SDL Audio Device instance IDs.\n\nZero is used to signify an invalid/null device.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
             name: "SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK",
             short_name: "DEFAULT_PLAYBACK",
-            doc: Some("A value used to request a default playback audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n## Availability\nThis macro is available since SDL 3.2.0.\n"),
+            doc: Some(
+                "A value used to request a default playback audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n## Availability\nThis macro is available since SDL 3.2.0.\n",
+            ),
             available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
         },
         GroupValue {
             name: "SDL_AUDIO_DEVICE_DEFAULT_RECORDING",
             short_name: "DEFAULT_RECORDING",
-            doc: Some("A value used to request a default recording audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n## Availability\nThis macro is available since SDL 3.2.0.\n"),
+            doc: Some(
+                "A value used to request a default recording audio device.\n\nSeveral functions that require an [`SDL_AudioDeviceID`] will accept this value\nto signify the app just wants the system to choose a default device instead\nof the app providing a specific one.\n\n## Availability\nThis macro is available since SDL 3.2.0.\n",
+            ),
             available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
         },
     ],

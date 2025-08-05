@@ -1986,7 +1986,7 @@ const _: () = ::core::assert!(
     (::core::mem::size_of::<SDL_Event>() == crate::size_of_field!(SDL_Event, padding))
 );
 
-extern "C" {
+unsafe extern "C" {
     /// Pump the event loop, gathering events from the input devices.
     ///
     /// This function updates the event queue and internal input device state.
@@ -2083,7 +2083,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventAction {
         &crate::metadata::events::METADATA_SDL_EventAction;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check the event queue for messages and optionally return them.
     ///
     /// `action` may be any of the following:
@@ -2139,7 +2139,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check for the existence of a certain event type in the event queue.
     ///
     /// If you need to check for a range of event types, use [`SDL_HasEvents()`]
@@ -2163,7 +2163,7 @@ extern "C" {
     pub fn SDL_HasEvent(r#type: Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check for the existence of certain event types in the event queue.
     ///
     /// If you need to check for a single event type, use [`SDL_HasEvent()`] instead.
@@ -2189,7 +2189,7 @@ extern "C" {
     pub fn SDL_HasEvents(minType: Uint32, maxType: Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear events of a specific type from the event queue.
     ///
     /// This will unconditionally remove any events from the queue that match
@@ -2221,7 +2221,7 @@ extern "C" {
     pub fn SDL_FlushEvent(r#type: Uint32);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear events of a range of types from the event queue.
     ///
     /// This will unconditionally remove any events from the queue that are in the
@@ -2252,7 +2252,7 @@ extern "C" {
     pub fn SDL_FlushEvents(minType: Uint32, maxType: Uint32);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Poll for currently pending events.
     ///
     /// If `event` is not NULL, the next event is removed from the queue and stored
@@ -2304,7 +2304,7 @@ extern "C" {
     pub fn SDL_PollEvent(event: *mut SDL_Event) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wait indefinitely for the next available event.
     ///
     /// If `event` is not NULL, the next event is removed from the queue and stored
@@ -2334,7 +2334,7 @@ extern "C" {
     pub fn SDL_WaitEvent(event: *mut SDL_Event) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wait until the specified timeout (in milliseconds) for the next available
     /// event.
     ///
@@ -2373,7 +2373,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add an event to the event queue.
     ///
     /// The event queue can actually be used as a two way communication channel.
@@ -2443,7 +2443,7 @@ pub type SDL_EventFilter = ::core::option::Option<
     ) -> ::core::primitive::bool,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Set up a filter to process all events before they are added to the internal
     /// event queue.
     ///
@@ -2488,7 +2488,7 @@ extern "C" {
     pub fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the current event filter.
     ///
     /// This function can be used to "chain" filters, by saving the existing filter
@@ -2516,7 +2516,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add a callback to be triggered when an event is added to the event queue.
     ///
     /// `filter` will be called when an event happens, and its return value is
@@ -2557,7 +2557,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove an event watch callback added with [`SDL_AddEventWatch()`].
     ///
     /// This function takes the same input as [`SDL_AddEventWatch()`] to identify and
@@ -2578,7 +2578,7 @@ extern "C" {
     pub fn SDL_RemoveEventWatch(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Run a specific filter function on the current event queue, removing any
     /// events for which the filter returns false.
     ///
@@ -2602,7 +2602,7 @@ extern "C" {
     pub fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: *mut ::core::ffi::c_void);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the state of processing events by type.
     ///
     /// ## Parameters
@@ -2620,7 +2620,7 @@ extern "C" {
     pub fn SDL_SetEventEnabled(r#type: Uint32, enabled: ::core::primitive::bool);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the state of processing events by type.
     ///
     /// ## Parameters
@@ -2640,7 +2640,7 @@ extern "C" {
     pub fn SDL_EventEnabled(r#type: Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate a set of user-defined events, and return the beginning event
     /// number for that set of events.
     ///
@@ -2662,7 +2662,7 @@ extern "C" {
     pub fn SDL_RegisterEvents(numevents: ::core::ffi::c_int) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get window associated with an event.
     ///
     /// ## Parameters

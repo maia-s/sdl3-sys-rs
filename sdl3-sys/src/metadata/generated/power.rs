@@ -7,7 +7,9 @@ pub const METADATA_SDL_PowerState: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_PowerState",
     short_name: "PowerState",
-    doc: Some("The basic state for the system's power supply.\n\nThese are results returned by [`SDL_GetPowerInfo()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The basic state for the system's power supply.\n\nThese are results returned by [`SDL_GetPowerInfo()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

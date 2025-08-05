@@ -52,7 +52,9 @@ pub const METADATA_SDL_GamepadType: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GamepadType",
     short_name: "GamepadType",
-    doc: Some("Standard gamepad types.\n\nThis type does not necessarily map to first-party controllers from\nMicrosoft/Sony/Nintendo; in many cases, third-party controllers can report\nas these, either because they were designed for a specific console, or they\nsimply most closely match that console's controllers (does it have A/B/X/Y\nbuttons or X/O/Square/Triangle? Does it have a touchpad? etc).\n"),
+    doc: Some(
+        "Standard gamepad types.\n\nThis type does not necessarily map to first-party controllers from\nMicrosoft/Sony/Nintendo; in many cases, third-party controllers can report\nas these, either because they were designed for a specific console, or they\nsimply most closely match that console's controllers (does it have A/B/X/Y\nbuttons or X/O/Square/Triangle? Does it have a touchpad? etc).\n",
+    ),
     available_since: None,
     values: &[
         GroupValue {
@@ -134,7 +136,9 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GamepadButton",
     short_name: "GamepadButton",
-    doc: Some("The list of buttons available on a gamepad\n\nFor controllers that use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons below correspond to the locations in the\ndiamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo\nSwitch controllers, this would be B/A/Y/X, for PlayStation controllers this\nwould be Cross/Circle/Square/Triangle.\n\nFor controllers that don't use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons indicate the buttons labeled A, B, C, D, or\n1, 2, 3, 4, or for controllers that aren't labeled, they are the primary,\nsecondary, etc. buttons.\n\nThe activate action is often the south button and the cancel action is\noften the east button, but in some regions this is reversed, so your game\nshould allow remapping actions based on user preferences.\n\nYou can query the labels for the face buttons using\n[`SDL_GetGamepadButtonLabel()`]\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The list of buttons available on a gamepad\n\nFor controllers that use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons below correspond to the locations in the\ndiamond pattern. For Xbox controllers, this would be A/B/X/Y, for Nintendo\nSwitch controllers, this would be B/A/Y/X, for PlayStation controllers this\nwould be Cross/Circle/Square/Triangle.\n\nFor controllers that don't use a diamond pattern for the face buttons, the\nsouth/east/west/north buttons indicate the buttons labeled A, B, C, D, or\n1, 2, 3, 4, or for controllers that aren't labeled, they are the primary,\nsecondary, etc. buttons.\n\nThe activate action is often the south button and the cancel action is\noften the east button, but in some regions this is reversed, so your game\nshould allow remapping actions based on user preferences.\n\nYou can query the labels for the face buttons using\n[`SDL_GetGamepadButtonLabel()`]\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -236,31 +240,41 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
         GroupValue {
             name: "SDL_GAMEPAD_BUTTON_MISC1",
             short_name: "MISC1",
-            doc: Some("Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)\n"),
+            doc: Some(
+                "Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1",
             short_name: "RIGHT_PADDLE1",
-            doc: Some("Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)\n"),
+            doc: Some(
+                "Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1)\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE1",
             short_name: "LEFT_PADDLE1",
-            doc: Some("Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)\n"),
+            doc: Some(
+                "Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3)\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2",
             short_name: "RIGHT_PADDLE2",
-            doc: Some("Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)\n"),
+            doc: Some(
+                "Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2)\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE2",
             short_name: "LEFT_PADDLE2",
-            doc: Some("Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)\n"),
+            doc: Some(
+                "Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4)\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -312,7 +326,9 @@ pub const METADATA_SDL_GamepadButtonLabel: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GamepadButtonLabel",
     short_name: "GamepadButtonLabel",
-    doc: Some("The set of gamepad button labels\n\nThis isn't a complete set, just the face buttons to make it easy to show\nbutton prompts.\n\nFor a complete set, you should look at the button and gamepad type and have\na set of symbols that work well with your art style.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The set of gamepad button labels\n\nThis isn't a complete set, just the face buttons to make it easy to show\nbutton prompts.\n\nFor a complete set, you should look at the button and gamepad type and have\na set of symbols that work well with your art style.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -376,7 +392,9 @@ pub const METADATA_SDL_GamepadAxis: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GamepadAxis",
     short_name: "GamepadAxis",
-    doc: Some("The list of axes available on a gamepad\n\nThumbstick axis values range from [`SDL_JOYSTICK_AXIS_MIN`] to\n[`SDL_JOYSTICK_AXIS_MAX`], and are centered within ~8000 of zero, though\nadvanced UI will allow users to set or autodetect the dead zone, which\nvaries between gamepads.\n\nTrigger axis values range from 0 (released) to [`SDL_JOYSTICK_AXIS_MAX`] (fully\npressed) when reported by [`SDL_GetGamepadAxis()`]. Note that this is not the\nsame range that will be reported by the lower-level [`SDL_GetJoystickAxis()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The list of axes available on a gamepad\n\nThumbstick axis values range from [`SDL_JOYSTICK_AXIS_MIN`] to\n[`SDL_JOYSTICK_AXIS_MAX`], and are centered within ~8000 of zero, though\nadvanced UI will allow users to set or autodetect the dead zone, which\nvaries between gamepads.\n\nTrigger axis values range from 0 (released) to [`SDL_JOYSTICK_AXIS_MAX`] (fully\npressed) when reported by [`SDL_GetGamepadAxis()`]. Note that this is not the\nsame range that will be reported by the lower-level [`SDL_GetJoystickAxis()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -434,7 +452,9 @@ pub const METADATA_SDL_GamepadBindingType: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GamepadBindingType",
     short_name: "GamepadBindingType",
-    doc: Some("Types of gamepad control bindings.\n\nA gamepad is a collection of bindings that map arbitrary joystick buttons,\naxes and hat switches to specific positions on a generic console-style\ngamepad. This enum is used as part of [`SDL_GamepadBinding`] to specify those\nmappings.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Types of gamepad control bindings.\n\nA gamepad is a collection of bindings that map arbitrary joystick buttons,\naxes and hat switches to specific positions on a generic console-style\ngamepad. This enum is used as part of [`SDL_GamepadBinding`] to specify those\nmappings.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

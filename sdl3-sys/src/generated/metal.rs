@@ -12,7 +12,7 @@ use super::video::*;
 /// This datatype is available since SDL 3.2.0.
 pub type SDL_MetalView = *mut ::core::ffi::c_void;
 
-extern "C" {
+unsafe extern "C" {
     /// Create a CAMetalLayer-backed NSView/UIView and attach it to the specified
     /// window.
     ///
@@ -37,7 +37,7 @@ extern "C" {
     pub fn SDL_Metal_CreateView(window: *mut SDL_Window) -> SDL_MetalView;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy an existing [`SDL_MetalView`] object.
     ///
     /// This should be called before [`SDL_DestroyWindow`], if [`SDL_Metal_CreateView`] was
@@ -54,7 +54,7 @@ extern "C" {
     pub fn SDL_Metal_DestroyView(view: SDL_MetalView);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a pointer to the backing CAMetalLayer for the given view.
     ///
     /// ## Parameters

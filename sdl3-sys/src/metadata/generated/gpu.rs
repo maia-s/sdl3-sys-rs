@@ -214,7 +214,9 @@ pub const METADATA_SDL_GPUPrimitiveType: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUPrimitiveType",
     short_name: "GPUPrimitiveType",
-    doc: Some("Specifies the primitive topology of a graphics pipeline.\n\nIf you are using POINTLIST you must include a point size output in the\nvertex shader.\n\n- For HLSL compiling to SPIRV you must decorate a float output with\n\\[\\[vk::builtin(\"PointSize\")\\]\\].\n- For GLSL you must set the gl_PointSize builtin.\n- For MSL you must include a float output with the \\[\\[point_size\\]\\]\ndecorator.\n\nNote that sized point topology is totally unsupported on D3D12. Any size\nother than 1 will be ignored. In general, you should avoid using point\ntopology for both compatibility and performance reasons. You WILL regret\nusing it.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the primitive topology of a graphics pipeline.\n\nIf you are using POINTLIST you must include a point size output in the\nvertex shader.\n\n- For HLSL compiling to SPIRV you must decorate a float output with\n\\[\\[vk::builtin(\"PointSize\")\\]\\].\n- For GLSL you must set the gl_PointSize builtin.\n- For MSL you must include a float output with the \\[\\[point_size\\]\\]\ndecorator.\n\nNote that sized point topology is totally unsupported on D3D12. Any size\nother than 1 will be ignored. In general, you should avoid using point\ntopology for both compatibility and performance reasons. You WILL regret\nusing it.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -254,7 +256,9 @@ pub const METADATA_SDL_GPULoadOp: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPULoadOp",
     short_name: "GPULoadOp",
-    doc: Some("Specifies how the contents of a texture attached to a render pass are\ntreated at the beginning of the render pass.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPURenderPass`]\n"),
+    doc: Some(
+        "Specifies how the contents of a texture attached to a render pass are\ntreated at the beginning of the render pass.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPURenderPass`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -272,7 +276,9 @@ pub const METADATA_SDL_GPULoadOp: Group = Group {
         GroupValue {
             name: "SDL_GPU_LOADOP_DONT_CARE",
             short_name: "DONT_CARE",
-            doc: Some("The previous contents of the texture need not be preserved. The contents will be undefined.\n"),
+            doc: Some(
+                "The previous contents of the texture need not be preserved. The contents will be undefined.\n",
+            ),
             available_since: None,
         },
     ],
@@ -282,7 +288,9 @@ pub const METADATA_SDL_GPUStoreOp: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUStoreOp",
     short_name: "GPUStoreOp",
-    doc: Some("Specifies how the contents of a texture attached to a render pass are\ntreated at the end of the render pass.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPURenderPass`]\n"),
+    doc: Some(
+        "Specifies how the contents of a texture attached to a render pass are\ntreated at the end of the render pass.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPURenderPass`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -294,19 +302,25 @@ pub const METADATA_SDL_GPUStoreOp: Group = Group {
         GroupValue {
             name: "SDL_GPU_STOREOP_DONT_CARE",
             short_name: "DONT_CARE",
-            doc: Some("The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.\n"),
+            doc: Some(
+                "The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GPU_STOREOP_RESOLVE",
             short_name: "RESOLVE",
-            doc: Some("The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.\n"),
+            doc: Some(
+                "The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GPU_STOREOP_RESOLVE_AND_STORE",
             short_name: "RESOLVE_AND_STORE",
-            doc: Some("The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.\n"),
+            doc: Some(
+                "The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.\n",
+            ),
             available_since: None,
         },
     ],
@@ -316,7 +330,9 @@ pub const METADATA_SDL_GPUIndexElementSize: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUIndexElementSize",
     short_name: "GPUIndexElementSize",
-    doc: Some("Specifies the size of elements in an index buffer.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the size of elements in an index buffer.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -338,7 +354,9 @@ pub const METADATA_SDL_GPUTextureFormat: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUTextureFormat",
     short_name: "GPUTextureFormat",
-    doc: Some("Specifies the pixel format of a texture.\n\nTexture format support varies depending on driver, hardware, and usage\nflags. In general, you should use [`SDL_GPUTextureSupportsFormat`] to query if\na format is supported before using it. However, there are a few guaranteed\nformats.\n\nFIXME: Check universal support for 32-bit component formats FIXME: Check\nuniversal support for SIMULTANEOUS_READ_WRITE\n\nFor SAMPLER usage, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- B8G8R8A8_UNORM\n- R8_UNORM\n- R8_SNORM\n- R8G8_UNORM\n- R8G8_SNORM\n- R8G8B8A8_SNORM\n- R16_FLOAT\n- R16G16_FLOAT\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R11G11B10_UFLOAT\n- R8G8B8A8_UNORM_SRGB\n- B8G8R8A8_UNORM_SRGB\n- D16_UNORM\n\nFor COLOR_TARGET usage, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- B8G8R8A8_UNORM\n- R8_UNORM\n- R16_FLOAT\n- R16G16_FLOAT\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R8_UINT\n- R8G8_UINT\n- R8G8B8A8_UINT\n- R16_UINT\n- R16G16_UINT\n- R16G16B16A16_UINT\n- R8_INT\n- R8G8_INT\n- R8G8B8A8_INT\n- R16_INT\n- R16G16_INT\n- R16G16B16A16_INT\n- R8G8B8A8_UNORM_SRGB\n- B8G8R8A8_UNORM_SRGB\n\nFor STORAGE usages, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- R8G8B8A8_SNORM\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R8G8B8A8_UINT\n- R16G16B16A16_UINT\n- R8G8B8A8_INT\n- R16G16B16A16_INT\n\nFor DEPTH_STENCIL_TARGET usage, the following formats are universally\nsupported:\n\n- D16_UNORM\n- Either (but not necessarily both!) D24_UNORM or D32_FLOAT\n- Either (but not necessarily both!) D24_UNORM_S8_UINT or D32_FLOAT_S8_UINT\n\nUnless D16_UNORM is sufficient for your purposes, always check which of\nD24/D32 is supported before creating a depth-stencil texture!\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTextureSupportsFormat`]\n"),
+    doc: Some(
+        "Specifies the pixel format of a texture.\n\nTexture format support varies depending on driver, hardware, and usage\nflags. In general, you should use [`SDL_GPUTextureSupportsFormat`] to query if\na format is supported before using it. However, there are a few guaranteed\nformats.\n\nFIXME: Check universal support for 32-bit component formats FIXME: Check\nuniversal support for SIMULTANEOUS_READ_WRITE\n\nFor SAMPLER usage, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- B8G8R8A8_UNORM\n- R8_UNORM\n- R8_SNORM\n- R8G8_UNORM\n- R8G8_SNORM\n- R8G8B8A8_SNORM\n- R16_FLOAT\n- R16G16_FLOAT\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R11G11B10_UFLOAT\n- R8G8B8A8_UNORM_SRGB\n- B8G8R8A8_UNORM_SRGB\n- D16_UNORM\n\nFor COLOR_TARGET usage, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- B8G8R8A8_UNORM\n- R8_UNORM\n- R16_FLOAT\n- R16G16_FLOAT\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R8_UINT\n- R8G8_UINT\n- R8G8B8A8_UINT\n- R16_UINT\n- R16G16_UINT\n- R16G16B16A16_UINT\n- R8_INT\n- R8G8_INT\n- R8G8B8A8_INT\n- R16_INT\n- R16G16_INT\n- R16G16B16A16_INT\n- R8G8B8A8_UNORM_SRGB\n- B8G8R8A8_UNORM_SRGB\n\nFor STORAGE usages, the following formats are universally supported:\n\n- R8G8B8A8_UNORM\n- R8G8B8A8_SNORM\n- R16G16B16A16_FLOAT\n- R32_FLOAT\n- R32G32_FLOAT\n- R32G32B32A32_FLOAT\n- R8G8B8A8_UINT\n- R16G16B16A16_UINT\n- R8G8B8A8_INT\n- R16G16B16A16_INT\n\nFor DEPTH_STENCIL_TARGET usage, the following formats are universally\nsupported:\n\n- D16_UNORM\n- Either (but not necessarily both!) D24_UNORM or D32_FLOAT\n- Either (but not necessarily both!) D24_UNORM_S8_UINT or D32_FLOAT_S8_UINT\n\nUnless D16_UNORM is sufficient for your purposes, always check which of\nD24/D32 is supported before creating a depth-stencil texture!\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTextureSupportsFormat`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -978,7 +996,9 @@ pub const METADATA_SDL_GPUTextureUsageFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GPUTextureUsageFlags",
     short_name: "GPUTextureUsageFlags",
-    doc: Some("Specifies how a texture is intended to be used by the client.\n\nA texture must have at least one usage flag. Note that some usage flag\ncombinations are invalid.\n\nWith regards to compute storage usage, READ | WRITE means that you can have\nshader A that only writes into the texture and shader B that only reads\nfrom the texture and bind the same texture to either shader respectively.\nSIMULTANEOUS means that you can do reads and writes within the same shader\nor compute pass. It also implies that atomic ops can be used, since those\nare read-modify-write operations. If you use SIMULTANEOUS, you are\nresponsible for avoiding data races, as there is no data synchronization\nwithin a compute pass. Note that SIMULTANEOUS usage is only supported by a\nlimited number of texture formats.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n"),
+    doc: Some(
+        "Specifies how a texture is intended to be used by the client.\n\nA texture must have at least one usage flag. Note that some usage flag\ncombinations are invalid.\n\nWith regards to compute storage usage, READ | WRITE means that you can have\nshader A that only writes into the texture and shader B that only reads\nfrom the texture and bind the same texture to either shader respectively.\nSIMULTANEOUS means that you can do reads and writes within the same shader\nor compute pass. It also implies that atomic ops can be used, since those\nare read-modify-write operations. If you use SIMULTANEOUS, you are\nresponsible for avoiding data races, as there is no data synchronization\nwithin a compute pass. Note that SIMULTANEOUS usage is only supported by a\nlimited number of texture formats.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1020,7 +1040,9 @@ pub const METADATA_SDL_GPUTextureUsageFlags: Group = Group {
         GroupValue {
             name: "SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE",
             short_name: "COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE",
-            doc: Some("Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.\n"),
+            doc: Some(
+                "Texture supports reads and writes in the same compute shader. This is NOT equivalent to READ | WRITE.\n",
+            ),
             available_since: None,
         },
     ],
@@ -1030,7 +1052,9 @@ pub const METADATA_SDL_GPUTextureType: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUTextureType",
     short_name: "GPUTextureType",
-    doc: Some("Specifies the type of a texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n"),
+    doc: Some(
+        "Specifies the type of a texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1070,7 +1094,9 @@ pub const METADATA_SDL_GPUSampleCount: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUSampleCount",
     short_name: "GPUSampleCount",
-    doc: Some("Specifies the sample count of a texture.\n\nUsed in multisampling. Note that this value only applies when the texture\nis used as a render target.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTextureSupportsSampleCount`]\n"),
+    doc: Some(
+        "Specifies the sample count of a texture.\n\nUsed in multisampling. Note that this value only applies when the texture\nis used as a render target.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTextureSupportsSampleCount`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1104,7 +1130,9 @@ pub const METADATA_SDL_GPUCubeMapFace: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUCubeMapFace",
     short_name: "GPUCubeMapFace",
-    doc: Some("Specifies the face of a cube map.\n\nCan be passed in as the layer field in texture-related structs.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Specifies the face of a cube map.\n\nCan be passed in as the layer field in texture-related structs.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1150,7 +1178,9 @@ pub const METADATA_SDL_GPUBufferUsageFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GPUBufferUsageFlags",
     short_name: "GPUBufferUsageFlags",
-    doc: Some("Specifies how a buffer is intended to be used by the client.\n\nA buffer must have at least one usage flag. Note that some usage flag\ncombinations are invalid.\n\nUnlike textures, READ | WRITE can be used for simultaneous read-write\nusage. The same data synchronization concerns as textures apply.\n\nIf you use a STORAGE flag, the data in the buffer must respect std140\nlayout conventions. In practical terms this means you must ensure that vec3\nand vec4 fields are 16-byte aligned.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUBuffer`]\n"),
+    doc: Some(
+        "Specifies how a buffer is intended to be used by the client.\n\nA buffer must have at least one usage flag. Note that some usage flag\ncombinations are invalid.\n\nUnlike textures, READ | WRITE can be used for simultaneous read-write\nusage. The same data synchronization concerns as textures apply.\n\nIf you use a STORAGE flag, the data in the buffer must respect std140\nlayout conventions. In practical terms this means you must ensure that vec3\nand vec4 fields are 16-byte aligned.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUBuffer`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1196,7 +1226,9 @@ pub const METADATA_SDL_GPUTransferBufferUsage: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUTransferBufferUsage",
     short_name: "GPUTransferBufferUsage",
-    doc: Some("Specifies how a transfer buffer is intended to be used by the client.\n\nNote that mapping and copying FROM an upload transfer buffer or TO a\ndownload transfer buffer is undefined behavior.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTransferBuffer`]\n"),
+    doc: Some(
+        "Specifies how a transfer buffer is intended to be used by the client.\n\nNote that mapping and copying FROM an upload transfer buffer or TO a\ndownload transfer buffer is undefined behavior.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTransferBuffer`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1218,7 +1250,9 @@ pub const METADATA_SDL_GPUShaderStage: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUShaderStage",
     short_name: "GPUShaderStage",
-    doc: Some("Specifies which stage a shader program corresponds to.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUShader`]\n"),
+    doc: Some(
+        "Specifies which stage a shader program corresponds to.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUShader`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1240,7 +1274,9 @@ pub const METADATA_SDL_GPUShaderFormat: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GPUShaderFormat",
     short_name: "GPUShaderFormat",
-    doc: Some("Specifies the format of shader code.\n\nEach format corresponds to a specific backend that accepts it.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUShader`]\n"),
+    doc: Some(
+        "Specifies the format of shader code.\n\nEach format corresponds to a specific backend that accepts it.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUShader`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1292,7 +1328,9 @@ pub const METADATA_SDL_GPUVertexElementFormat: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUVertexElementFormat",
     short_name: "GPUVertexElementFormat",
-    doc: Some("Specifies the format of a vertex attribute.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the format of a vertex attribute.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1488,7 +1526,9 @@ pub const METADATA_SDL_GPUVertexInputRate: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUVertexInputRate",
     short_name: "GPUVertexInputRate",
-    doc: Some("Specifies the rate at which vertex attributes are pulled from buffers.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the rate at which vertex attributes are pulled from buffers.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1510,7 +1550,9 @@ pub const METADATA_SDL_GPUFillMode: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUFillMode",
     short_name: "GPUFillMode",
-    doc: Some("Specifies the fill mode of the graphics pipeline.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the fill mode of the graphics pipeline.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1532,7 +1574,9 @@ pub const METADATA_SDL_GPUCullMode: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUCullMode",
     short_name: "GPUCullMode",
-    doc: Some("Specifies the facing direction in which triangle faces will be culled.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the facing direction in which triangle faces will be culled.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1560,19 +1604,25 @@ pub const METADATA_SDL_GPUFrontFace: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUFrontFace",
     short_name: "GPUFrontFace",
-    doc: Some("Specifies the vertex winding that will cause a triangle to be determined to\nbe front-facing.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the vertex winding that will cause a triangle to be determined to\nbe front-facing.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
             name: "SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE",
             short_name: "COUNTER_CLOCKWISE",
-            doc: Some("A triangle with counter-clockwise vertex winding will be considered front-facing.\n"),
+            doc: Some(
+                "A triangle with counter-clockwise vertex winding will be considered front-facing.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GPU_FRONTFACE_CLOCKWISE",
             short_name: "CLOCKWISE",
-            doc: Some("A triangle with clockwise vertex winding will be considered front-facing.\n"),
+            doc: Some(
+                "A triangle with clockwise vertex winding will be considered front-facing.\n",
+            ),
             available_since: None,
         },
     ],
@@ -1582,7 +1632,9 @@ pub const METADATA_SDL_GPUCompareOp: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUCompareOp",
     short_name: "GPUCompareOp",
-    doc: Some("Specifies a comparison operator for depth, stencil and sampler operations.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies a comparison operator for depth, stencil and sampler operations.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1646,7 +1698,9 @@ pub const METADATA_SDL_GPUStencilOp: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUStencilOp",
     short_name: "GPUStencilOp",
-    doc: Some("Specifies what happens to a stored stencil value if stencil tests fail or\npass.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies what happens to a stored stencil value if stencil tests fail or\npass.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1710,7 +1764,9 @@ pub const METADATA_SDL_GPUBlendOp: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUBlendOp",
     short_name: "GPUBlendOp",
-    doc: Some("Specifies the operator to be used when pixels in a render target are\nblended with existing pixels in the texture.\n\nThe source color is the value written by the fragment shader. The\ndestination color is the value currently existing in the texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies the operator to be used when pixels in a render target are\nblended with existing pixels in the texture.\n\nThe source color is the value written by the fragment shader. The\ndestination color is the value currently existing in the texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1756,7 +1812,9 @@ pub const METADATA_SDL_GPUBlendFactor: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUBlendFactor",
     short_name: "GPUBlendFactor",
-    doc: Some("Specifies a blending factor to be used when pixels in a render target are\nblended with existing pixels in the texture.\n\nThe source color is the value written by the fragment shader. The\ndestination color is the value currently existing in the texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies a blending factor to be used when pixels in a render target are\nblended with existing pixels in the texture.\n\nThe source color is the value written by the fragment shader. The\ndestination color is the value currently existing in the texture.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1850,7 +1908,9 @@ pub const METADATA_SDL_GPUColorComponentFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GPUColorComponentFlags",
     short_name: "GPUColorComponentFlags",
-    doc: Some("Specifies which color components are written in a graphics pipeline.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n"),
+    doc: Some(
+        "Specifies which color components are written in a graphics pipeline.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1884,7 +1944,9 @@ pub const METADATA_SDL_GPUFilter: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUFilter",
     short_name: "GPUFilter",
-    doc: Some("Specifies a filter operation used by a sampler.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUSampler`]\n"),
+    doc: Some(
+        "Specifies a filter operation used by a sampler.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUSampler`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1906,7 +1968,9 @@ pub const METADATA_SDL_GPUSamplerMipmapMode: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUSamplerMipmapMode",
     short_name: "GPUSamplerMipmapMode",
-    doc: Some("Specifies a mipmap mode used by a sampler.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUSampler`]\n"),
+    doc: Some(
+        "Specifies a mipmap mode used by a sampler.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUSampler`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1928,7 +1992,9 @@ pub const METADATA_SDL_GPUSamplerAddressMode: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUSamplerAddressMode",
     short_name: "GPUSamplerAddressMode",
-    doc: Some("Specifies behavior of texture sampling when the coordinates exceed the 0-1\nrange.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUSampler`]\n"),
+    doc: Some(
+        "Specifies behavior of texture sampling when the coordinates exceed the 0-1\nrange.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUSampler`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1956,7 +2022,9 @@ pub const METADATA_SDL_GPUPresentMode: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUPresentMode",
     short_name: "GPUPresentMode",
-    doc: Some("Specifies the timing that will be used to present swapchain textures to the\nOS.\n\nVSYNC mode will always be supported. IMMEDIATE and MAILBOX modes may not be\nsupported on certain systems.\n\nIt is recommended to query [`SDL_WindowSupportsGPUPresentMode`] after claiming\nthe window if you wish to change the present mode to IMMEDIATE or MAILBOX.\n\n- VSYNC: Waits for vblank before presenting. No tearing is possible. If\nthere is a pending image to present, the new image is enqueued for\npresentation. Disallows tearing at the cost of visual latency.\n- IMMEDIATE: Immediately presents. Lowest latency option, but tearing may\noccur.\n- MAILBOX: Waits for vblank before presenting. No tearing is possible. If\nthere is a pending image to present, the pending image is replaced by the\nnew image. Similar to VSYNC, but with reduced visual latency.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_SetGPUSwapchainParameters`]\n- [`SDL_WindowSupportsGPUPresentMode`]\n- [`SDL_WaitAndAcquireGPUSwapchainTexture`]\n"),
+    doc: Some(
+        "Specifies the timing that will be used to present swapchain textures to the\nOS.\n\nVSYNC mode will always be supported. IMMEDIATE and MAILBOX modes may not be\nsupported on certain systems.\n\nIt is recommended to query [`SDL_WindowSupportsGPUPresentMode`] after claiming\nthe window if you wish to change the present mode to IMMEDIATE or MAILBOX.\n\n- VSYNC: Waits for vblank before presenting. No tearing is possible. If\nthere is a pending image to present, the new image is enqueued for\npresentation. Disallows tearing at the cost of visual latency.\n- IMMEDIATE: Immediately presents. Lowest latency option, but tearing may\noccur.\n- MAILBOX: Waits for vblank before presenting. No tearing is possible. If\nthere is a pending image to present, the pending image is replaced by the\nnew image. Similar to VSYNC, but with reduced visual latency.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_SetGPUSwapchainParameters`]\n- [`SDL_WindowSupportsGPUPresentMode`]\n- [`SDL_WaitAndAcquireGPUSwapchainTexture`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1984,7 +2052,9 @@ pub const METADATA_SDL_GPUSwapchainComposition: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GPUSwapchainComposition",
     short_name: "GPUSwapchainComposition",
-    doc: Some("Specifies the texture format and colorspace of the swapchain textures.\n\nSDR will always be supported. Other compositions may not be supported on\ncertain systems.\n\nIt is recommended to query [`SDL_WindowSupportsGPUSwapchainComposition`] after\nclaiming the window if you wish to change the swapchain composition from\nSDR.\n\n- SDR: B8G8R8A8 or R8G8B8A8 swapchain. Pixel values are in sRGB encoding.\n- SDR_LINEAR: B8G8R8A8_SRGB or R8G8B8A8_SRGB swapchain. Pixel values are\nstored in memory in sRGB encoding but accessed in shaders in \"linear\nsRGB\" encoding which is sRGB but with a linear transfer function.\n- HDR_EXTENDED_LINEAR: R16G16B16A16_FLOAT swapchain. Pixel values are in\nextended linear sRGB encoding and permits values outside of the \\[0, 1\\]\nrange.\n- HDR10_ST2084: A2R10G10B10 or A2B10G10R10 swapchain. Pixel values are in\nBT.2020 ST2084 (PQ) encoding.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_SetGPUSwapchainParameters`]\n- [`SDL_WindowSupportsGPUSwapchainComposition`]\n- [`SDL_WaitAndAcquireGPUSwapchainTexture`]\n"),
+    doc: Some(
+        "Specifies the texture format and colorspace of the swapchain textures.\n\nSDR will always be supported. Other compositions may not be supported on\ncertain systems.\n\nIt is recommended to query [`SDL_WindowSupportsGPUSwapchainComposition`] after\nclaiming the window if you wish to change the swapchain composition from\nSDR.\n\n- SDR: B8G8R8A8 or R8G8B8A8 swapchain. Pixel values are in sRGB encoding.\n- SDR_LINEAR: B8G8R8A8_SRGB or R8G8B8A8_SRGB swapchain. Pixel values are\nstored in memory in sRGB encoding but accessed in shaders in \"linear\nsRGB\" encoding which is sRGB but with a linear transfer function.\n- HDR_EXTENDED_LINEAR: R16G16B16A16_FLOAT swapchain. Pixel values are in\nextended linear sRGB encoding and permits values outside of the \\[0, 1\\]\nrange.\n- HDR10_ST2084: A2R10G10B10 or A2B10G10R10 swapchain. Pixel values are in\nBT.2020 ST2084 (PQ) encoding.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_SetGPUSwapchainParameters`]\n- [`SDL_WindowSupportsGPUSwapchainComposition`]\n- [`SDL_WaitAndAcquireGPUSwapchainTexture`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

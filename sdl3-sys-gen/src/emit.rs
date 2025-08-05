@@ -1,5 +1,5 @@
 use crate::{
-    find_common_ident_prefix,
+    GroupMetadata, GroupValueMetadata, HintMetadata, PropertyMetadata, find_common_ident_prefix,
     parse::{
         ArgDecl, CanCmp, CanCopy, CanDefault, Conditional, ConditionalExpr, Define, DocComment,
         DocCommentFile, Enum, EnumKind, Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan,
@@ -7,7 +7,7 @@ use crate::{
         PrimitiveType, StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeDefKind,
         TypeEnum,
     },
-    strip_common_ident_prefix, GroupMetadata, GroupValueMetadata, HintMetadata, PropertyMetadata,
+    strip_common_ident_prefix,
 };
 use core::cell::Cell;
 use std::{
@@ -65,6 +65,9 @@ pub fn doc_link_sym(s: &str) -> Option<(&str, &str)> {
 }
 
 fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: bool) -> EmitResult {
+    if !for_fn_ptr {
+        write!(ctx, "unsafe ")?;
+    }
     if let Some(abi) = &abi {
         match abi.ident.as_str() {
             "__cdecl" => write!(ctx, "extern \"cdecl\" ")?,
@@ -295,7 +298,7 @@ impl DocComment {
         let mut quoted = 0;
         for (i, _) in line.match_indices(|c| match c {
             'h' | 'S' | '[' | ']' => true,
-            _ => c as u32 == ctx.gen.sym_prefix.as_bytes()[0] as u32,
+            _ => c as u32 == ctx.generator.sym_prefix.as_bytes()[0] as u32,
         }) {
             if i < i0 {
                 continue;
@@ -323,7 +326,7 @@ impl DocComment {
                         .unwrap_or(line.len() - i);
                     write!(patched, "<{}>", &line[i..i0])?;
                 } else if (line[i..].starts_with("SDL_")
-                    || line[i..].starts_with(&ctx.gen.sym_prefix))
+                    || line[i..].starts_with(&ctx.generator.sym_prefix))
                     && (i == 0
                         || line.as_bytes()[i - 1].is_ascii_whitespace()
                         || line.as_bytes()[i - 1] == b'('
@@ -821,8 +824,8 @@ impl Emit for Define {
                 writeln!(ctx, ";")?;
                 writeln!(ctx)?;
                 let ident_s = self.ident.as_str();
-                let hint_pfx = format!("{}HINT_", ctx.gen.sym_prefix);
-                let prop_pfx = format!("{}PROP_", ctx.gen.sym_prefix);
+                let hint_pfx = format!("{}HINT_", ctx.generator.sym_prefix);
+                let prop_pfx = format!("{}PROP_", ctx.generator.sym_prefix);
                 if ident_s.starts_with(&hint_pfx) {
                     ctx.register_hint_metadata(HintMetadata {
                         name: ident_s.to_owned(),
@@ -853,7 +856,7 @@ impl Emit for Define {
 impl Emit for Include {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         if self.path.as_str() == "SDL3/SDL.h" {
-            for included in ctx.r#gen.emitted_sdl3.values() {
+            for included in ctx.generator.emitted_sdl3.values() {
                 ctx.preproc_state()
                     .borrow_mut()
                     .include(&included.preproc_state.borrow())?;
@@ -864,13 +867,13 @@ impl Emit for Include {
         } else if let Some(module) = self
             .path
             .as_str()
-            .strip_prefix(&format!("{}/SDL_", ctx.gen.lib_name))
+            .strip_prefix(&format!("{}/SDL_", ctx.generator.lib_name))
         {
             let module = module.strip_suffix(".h").unwrap();
-            if !ctx.r#gen.emitted.borrow().contains_key(module) {
-                ctx.r#gen.emit(module)?;
+            if !ctx.generator.emitted.borrow().contains_key(module) {
+                ctx.generator.emit(module)?;
             }
-            if let Some(included) = &ctx.r#gen.emitted.borrow_mut().get(module) {
+            if let Some(included) = &ctx.generator.emitted.borrow_mut().get(module) {
                 ctx.preproc_state()
                     .borrow_mut()
                     .include(&included.preproc_state.borrow())?;
@@ -1174,9 +1177,9 @@ impl Enum {
 
             if !seen_target_dependent.contains(variant_ident) {
                 write!(
-                ctx_doc,
-                "/// | [`{short_variant_ident}`]({enum_ident_s}::{short_variant_ident}) | [`{variant_ident}`] |",
-            )?;
+                    ctx_doc,
+                    "/// | [`{short_variant_ident}`]({enum_ident_s}::{short_variant_ident}) | [`{variant_ident}`] |",
+                )?;
                 if !variant.cond.is_empty() {
                     seen_target_dependent.insert(variant_ident);
                     write!(ctx_doc, " (target dependent)")?;
@@ -1660,7 +1663,10 @@ impl StructOrUnion {
             for field in fields.fields.iter() {
                 field.doc.emit(ctx_ool)?;
                 if field.ident.as_str().starts_with("padding") {
-                    writeln!(ctx_ool, "#[deprecated(note = \"padding fields are exempt from semver; init with `..Default::default()`\")]")?;
+                    writeln!(
+                        ctx_ool,
+                        "#[deprecated(note = \"padding fields are exempt from semver; init with `..Default::default()`\")]"
+                    )?;
                 }
                 write!(ctx_ool, "pub ")?;
                 field.ident.emit(ctx_ool)?;
@@ -1710,7 +1716,10 @@ impl StructOrUnion {
                     ctx_ool,
                     "const {{ ::core::assert!(::core::mem::size_of::<Self>() <= ::core::primitive::u32::MAX as usize) }};"
                 )?;
-                writeln!(ctx_ool, "let mut this = unsafe {{ ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }};")?;
+                writeln!(
+                    ctx_ool,
+                    "let mut this = unsafe {{ ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }};"
+                )?;
                 writeln!(
                     ctx_ool,
                     "this.version = ::core::mem::size_of::<Self>() as ::core::primitive::u32;"

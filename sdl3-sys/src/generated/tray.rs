@@ -219,7 +219,7 @@ pub type SDL_TrayCallback = ::core::option::Option<
     unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, entry: *mut SDL_TrayEntry),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Create an icon to be placed in the operating system's tray, or equivalent.
     ///
     /// Many platforms advise not using a system tray unless persistence is a
@@ -252,7 +252,7 @@ extern "C" {
     ) -> *mut SDL_Tray;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Updates the system tray icon's icon.
     ///
     /// ## Parameters
@@ -271,7 +271,7 @@ extern "C" {
     pub fn SDL_SetTrayIcon(tray: *mut SDL_Tray, icon: *mut SDL_Surface);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Updates the system tray icon's tooltip.
     ///
     /// ## Parameters
@@ -290,7 +290,7 @@ extern "C" {
     pub fn SDL_SetTrayTooltip(tray: *mut SDL_Tray, tooltip: *const ::core::ffi::c_char);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a menu for a system tray.
     ///
     /// This should be called at most once per tray icon.
@@ -320,7 +320,7 @@ extern "C" {
     pub fn SDL_CreateTrayMenu(tray: *mut SDL_Tray) -> *mut SDL_TrayMenu;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a submenu for a system tray entry.
     ///
     /// This should be called at most once per tray entry.
@@ -350,7 +350,7 @@ extern "C" {
     pub fn SDL_CreateTraySubmenu(entry: *mut SDL_TrayEntry) -> *mut SDL_TrayMenu;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets a previously created tray menu.
     ///
     /// You should have called [`SDL_CreateTrayMenu()`] on the tray object. This
@@ -380,7 +380,7 @@ extern "C" {
     pub fn SDL_GetTrayMenu(tray: *mut SDL_Tray) -> *mut SDL_TrayMenu;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets a previously created tray entry submenu.
     ///
     /// You should have called [`SDL_CreateTraySubmenu()`] on the entry object. This
@@ -410,7 +410,7 @@ extern "C" {
     pub fn SDL_GetTraySubmenu(entry: *mut SDL_TrayEntry) -> *mut SDL_TrayMenu;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Returns a list of entries in the menu, in order.
     ///
     /// ## Parameters
@@ -439,7 +439,7 @@ extern "C" {
     ) -> *mut *const SDL_TrayEntry;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Removes a tray entry.
     ///
     /// ## Parameters
@@ -458,7 +458,7 @@ extern "C" {
     pub fn SDL_RemoveTrayEntry(entry: *mut SDL_TrayEntry);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Insert a tray entry at a given position.
     ///
     /// If label is NULL, the entry will be a separator. Many functions won't work
@@ -497,7 +497,7 @@ extern "C" {
     ) -> *mut SDL_TrayEntry;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets the label of an entry.
     ///
     /// An entry cannot change between a separator and an ordinary entry; that is,
@@ -523,7 +523,7 @@ extern "C" {
     pub fn SDL_SetTrayEntryLabel(entry: *mut SDL_TrayEntry, label: *const ::core::ffi::c_char);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets the label of an entry.
     ///
     /// If the returned value is NULL, the entry is a separator.
@@ -548,7 +548,7 @@ extern "C" {
     pub fn SDL_GetTrayEntryLabel(entry: *mut SDL_TrayEntry) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets whether or not an entry is checked.
     ///
     /// The entry must have been created with the [`SDL_TRAYENTRY_CHECKBOX`] flag.
@@ -571,7 +571,7 @@ extern "C" {
     pub fn SDL_SetTrayEntryChecked(entry: *mut SDL_TrayEntry, checked: ::core::primitive::bool);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets whether or not an entry is checked.
     ///
     /// The entry must have been created with the [`SDL_TRAYENTRY_CHECKBOX`] flag.
@@ -596,7 +596,7 @@ extern "C" {
     pub fn SDL_GetTrayEntryChecked(entry: *mut SDL_TrayEntry) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets whether or not an entry is enabled.
     ///
     /// ## Parameters
@@ -617,7 +617,7 @@ extern "C" {
     pub fn SDL_SetTrayEntryEnabled(entry: *mut SDL_TrayEntry, enabled: ::core::primitive::bool);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets whether or not an entry is enabled.
     ///
     /// ## Parameters
@@ -640,7 +640,7 @@ extern "C" {
     pub fn SDL_GetTrayEntryEnabled(entry: *mut SDL_TrayEntry) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets a callback to be invoked when the entry is selected.
     ///
     /// ## Parameters
@@ -666,7 +666,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Simulate a click on a tray entry.
     ///
     /// ## Parameters
@@ -681,7 +681,7 @@ extern "C" {
     pub fn SDL_ClickTrayEntry(entry: *mut SDL_TrayEntry);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroys a tray object.
     ///
     /// This also destroys all associated menus and entries.
@@ -701,7 +701,7 @@ extern "C" {
     pub fn SDL_DestroyTray(tray: *mut SDL_Tray);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets the menu containing a certain tray entry.
     ///
     /// ## Parameters
@@ -722,7 +722,7 @@ extern "C" {
     pub fn SDL_GetTrayEntryParent(entry: *mut SDL_TrayEntry) -> *mut SDL_TrayMenu;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets the entry for which the menu is a submenu, if the current menu is a
     /// submenu.
     ///
@@ -748,7 +748,7 @@ extern "C" {
     pub fn SDL_GetTrayMenuParentEntry(menu: *mut SDL_TrayMenu) -> *mut SDL_TrayEntry;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets the tray for which this menu is the first-level menu, if the current
     /// menu isn't a submenu.
     ///
@@ -774,7 +774,7 @@ extern "C" {
     pub fn SDL_GetTrayMenuParentTray(menu: *mut SDL_TrayMenu) -> *mut SDL_Tray;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update the trays.
     ///
     /// This is called automatically by the event loop and is only needed if you're

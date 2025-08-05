@@ -1,7 +1,7 @@
 //! SDL provides a means to identify the app's platform, both at compile time
 //! and runtime.
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of the platform.
     ///
     /// Here are the names returned for some (but not all) supported platforms:

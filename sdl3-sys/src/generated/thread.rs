@@ -270,7 +270,7 @@ pub type SDL_ThreadFunction = ::core::option::Option<
 >;
 
 apply_cfg!(#[cfg(doc)] => {
-    extern "C" {
+    unsafe extern "C" {
         /// Create a new thread with a default stack size.
         ///
         /// This is a convenience function, equivalent to calling
@@ -308,7 +308,7 @@ apply_cfg!(#[cfg(doc)] => {
         pub fn SDL_CreateThread(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void) -> *mut SDL_Thread;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Create a new thread with with the specified properties.
         ///
         /// These are the supported properties:
@@ -402,7 +402,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    extern "C" {
+    unsafe extern "C" {
         /// The actual entry point for [`SDL_CreateThread`].
         ///
         /// ## Parameters
@@ -422,7 +422,7 @@ apply_cfg!(#[cfg(not(doc))] => {
         pub fn SDL_CreateThreadRuntime(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// The actual entry point for [`SDL_CreateThreadWithProperties`].
         ///
         /// ## Parameters
@@ -445,7 +445,7 @@ apply_cfg!(#[cfg(not(doc))] => {
     #[cfg(not(windows))]
     pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe { ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) };
     #[cfg(windows)]
-    extern "cdecl" {
+    unsafe extern "cdecl" {
         fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<unsafe extern "stdcall" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;
         fn _endthreadex(retval: ::core::ffi::c_uint);
     }
@@ -476,7 +476,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 
 });
 
-extern "C" {
+unsafe extern "C" {
     /// Get the thread name as it was specified in [`SDL_CreateThread()`].
     ///
     /// ## Parameters
@@ -491,7 +491,7 @@ extern "C" {
     pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the thread identifier for the current thread.
     ///
     /// This thread identifier is as reported by the underlying operating system.
@@ -512,7 +512,7 @@ extern "C" {
     pub fn SDL_GetCurrentThreadID() -> SDL_ThreadID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the thread identifier for the specified thread.
     ///
     /// This thread identifier is as reported by the underlying operating system.
@@ -534,7 +534,7 @@ extern "C" {
     pub fn SDL_GetThreadID(thread: *mut SDL_Thread) -> SDL_ThreadID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the priority for the current thread.
     ///
     /// Note that some platforms will not let you alter the priority (or at least,
@@ -553,7 +553,7 @@ extern "C" {
     pub fn SDL_SetCurrentThreadPriority(priority: SDL_ThreadPriority) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wait for a thread to finish.
     ///
     /// Threads that haven't been detached will remain until this function cleans
@@ -591,7 +591,7 @@ extern "C" {
     pub fn SDL_WaitThread(thread: *mut SDL_Thread, status: *mut ::core::ffi::c_int);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of a thread.
     ///
     /// ## Parameters
@@ -609,7 +609,7 @@ extern "C" {
     pub fn SDL_GetThreadState(thread: *mut SDL_Thread) -> SDL_ThreadState;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Let a thread clean up on exit without intervention.
     ///
     /// A thread may be "detached" to signify that it should not remain until
@@ -648,7 +648,7 @@ extern "C" {
     pub fn SDL_DetachThread(thread: *mut SDL_Thread);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current thread's value associated with a thread local storage ID.
     ///
     /// ## Parameters
@@ -684,7 +684,7 @@ extern "C" {
 pub type SDL_TLSDestructorCallback =
     ::core::option::Option<unsafe extern "C" fn(value: *mut ::core::ffi::c_void)>;
 
-extern "C" {
+unsafe extern "C" {
     /// Set the current thread's value associated with a thread local storage ID.
     ///
     /// If the thread local storage ID is not initialized (the value is 0), a new
@@ -722,7 +722,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Cleanup all TLS data for this thread.
     ///
     /// If you are creating your threads outside of SDL and then calling SDL

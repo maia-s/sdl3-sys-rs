@@ -214,7 +214,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_SensorType {
         &crate::metadata::sensor::METADATA_SDL_SensorType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently connected sensors.
     ///
     /// ## Parameters
@@ -231,7 +231,7 @@ extern "C" {
     pub fn SDL_GetSensors(count: *mut ::core::ffi::c_int) -> *mut SDL_SensorID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent name of a sensor.
     ///
     /// This can be called before any sensors are opened.
@@ -247,7 +247,7 @@ extern "C" {
     pub fn SDL_GetSensorNameForID(instance_id: SDL_SensorID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of a sensor.
     ///
     /// This can be called before any sensors are opened.
@@ -264,7 +264,7 @@ extern "C" {
     pub fn SDL_GetSensorTypeForID(instance_id: SDL_SensorID) -> SDL_SensorType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the platform dependent type of a sensor.
     ///
     /// This can be called before any sensors are opened.
@@ -281,7 +281,7 @@ extern "C" {
     pub fn SDL_GetSensorNonPortableTypeForID(instance_id: SDL_SensorID) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a sensor for use.
     ///
     /// ## Parameters
@@ -296,7 +296,7 @@ extern "C" {
     pub fn SDL_OpenSensor(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return the [`SDL_Sensor`] associated with an instance ID.
     ///
     /// ## Parameters
@@ -311,7 +311,7 @@ extern "C" {
     pub fn SDL_GetSensorFromID(instance_id: SDL_SensorID) -> *mut SDL_Sensor;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a sensor.
     ///
     /// ## Parameters
@@ -326,7 +326,7 @@ extern "C" {
     pub fn SDL_GetSensorProperties(sensor: *mut SDL_Sensor) -> SDL_PropertiesID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent name of a sensor.
     ///
     /// ## Parameters
@@ -341,7 +341,7 @@ extern "C" {
     pub fn SDL_GetSensorName(sensor: *mut SDL_Sensor) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of a sensor.
     ///
     /// ## Parameters
@@ -356,7 +356,7 @@ extern "C" {
     pub fn SDL_GetSensorType(sensor: *mut SDL_Sensor) -> SDL_SensorType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the platform dependent type of a sensor.
     ///
     /// ## Parameters
@@ -370,7 +370,7 @@ extern "C" {
     pub fn SDL_GetSensorNonPortableType(sensor: *mut SDL_Sensor) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the instance ID of a sensor.
     ///
     /// ## Parameters
@@ -385,7 +385,7 @@ extern "C" {
     pub fn SDL_GetSensorID(sensor: *mut SDL_Sensor) -> SDL_SensorID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of an opened sensor.
     ///
     /// The number of values and interpretation of the data is sensor dependent.
@@ -408,7 +408,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close a sensor previously opened with [`SDL_OpenSensor()`].
     ///
     /// ## Parameters
@@ -419,7 +419,7 @@ extern "C" {
     pub fn SDL_CloseSensor(sensor: *mut SDL_Sensor);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update the current state of the open sensors.
     ///
     /// This is called automatically by the event loop if sensor events are

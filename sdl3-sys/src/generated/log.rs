@@ -272,7 +272,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_LogPriority {
         &crate::metadata::log::METADATA_SDL_LogPriority;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the priority of all log categories.
     ///
     /// ## Parameters
@@ -290,7 +290,7 @@ extern "C" {
     pub fn SDL_SetLogPriorities(priority: SDL_LogPriority);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the priority of a particular log category.
     ///
     /// ## Parameters
@@ -310,7 +310,7 @@ extern "C" {
     pub fn SDL_SetLogPriority(category: ::core::ffi::c_int, priority: SDL_LogPriority);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the priority of a particular log category.
     ///
     /// ## Parameters
@@ -330,7 +330,7 @@ extern "C" {
     pub fn SDL_GetLogPriority(category: ::core::ffi::c_int) -> SDL_LogPriority;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Reset all priorities to default.
     ///
     /// This is called by [`SDL_Quit()`].
@@ -347,7 +347,7 @@ extern "C" {
     pub fn SDL_ResetLogPriorities();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the text prepended to log messages of a given priority.
     ///
     /// By default [`SDL_LOG_PRIORITY_INFO`] and below have no prefix, and
@@ -378,7 +378,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_CATEGORY_APPLICATION`] and [`SDL_LOG_PRIORITY_INFO`].
     ///
     /// ## Parameters
@@ -405,7 +405,7 @@ extern "C" {
     pub fn SDL_Log(fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_TRACE`].
     ///
     /// ## Parameters
@@ -434,7 +434,7 @@ extern "C" {
     pub fn SDL_LogTrace(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_VERBOSE`].
     ///
     /// ## Parameters
@@ -461,7 +461,7 @@ extern "C" {
     pub fn SDL_LogVerbose(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_DEBUG`].
     ///
     /// ## Parameters
@@ -489,7 +489,7 @@ extern "C" {
     pub fn SDL_LogDebug(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_INFO`].
     ///
     /// ## Parameters
@@ -517,7 +517,7 @@ extern "C" {
     pub fn SDL_LogInfo(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_WARN`].
     ///
     /// ## Parameters
@@ -545,7 +545,7 @@ extern "C" {
     pub fn SDL_LogWarn(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_ERROR`].
     ///
     /// ## Parameters
@@ -573,7 +573,7 @@ extern "C" {
     pub fn SDL_LogError(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with [`SDL_LOG_PRIORITY_CRITICAL`].
     ///
     /// ## Parameters
@@ -601,7 +601,7 @@ extern "C" {
     pub fn SDL_LogCritical(category: ::core::ffi::c_int, fmt: *const ::core::ffi::c_char, ...);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with the specified category and priority.
     ///
     /// ## Parameters
@@ -635,7 +635,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Log a message with the specified category and priority.
     ///
     /// ## Parameters
@@ -692,7 +692,7 @@ pub type SDL_LogOutputFunction = ::core::option::Option<
     ),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Get the default log output function.
     ///
     /// ## Return value
@@ -710,7 +710,7 @@ extern "C" {
     pub fn SDL_GetDefaultLogOutputFunction() -> SDL_LogOutputFunction;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current log output function.
     ///
     /// ## Parameters
@@ -734,7 +734,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Replace the default log output function with one of your own.
     ///
     /// ## Parameters

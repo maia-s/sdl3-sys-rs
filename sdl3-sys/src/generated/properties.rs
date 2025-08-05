@@ -138,7 +138,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_PropertyType {
         &crate::metadata::properties::METADATA_SDL_PropertyType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the global SDL properties.
     ///
     /// ## Return value
@@ -150,7 +150,7 @@ extern "C" {
     pub fn SDL_GetGlobalProperties() -> SDL_PropertiesID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a group of properties.
     ///
     /// All properties are automatically destroyed when [`SDL_Quit()`] is called.
@@ -170,7 +170,7 @@ extern "C" {
     pub fn SDL_CreateProperties() -> SDL_PropertiesID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a group of properties.
     ///
     /// Copy all the properties from one group of properties to another, with the
@@ -197,7 +197,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Lock a group of properties.
     ///
     /// Obtain a multi-threaded lock for these properties. Other threads will wait
@@ -227,7 +227,7 @@ extern "C" {
     pub fn SDL_LockProperties(props: SDL_PropertiesID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unlock a group of properties.
     ///
     /// ## Parameters
@@ -272,7 +272,7 @@ pub type SDL_CleanupPropertyCallback = ::core::option::Option<
     unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, value: *mut ::core::ffi::c_void),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Set a pointer property in a group of properties with a cleanup function
     /// that is called when the property is deleted.
     ///
@@ -315,7 +315,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a pointer property in a group of properties.
     ///
     /// ## Parameters
@@ -348,7 +348,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a string property in a group of properties.
     ///
     /// This function makes a copy of the string; the caller does not have to
@@ -378,7 +378,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an integer property in a group of properties.
     ///
     /// ## Parameters
@@ -405,7 +405,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a floating point property in a group of properties.
     ///
     /// ## Parameters
@@ -432,7 +432,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a boolean property in a group of properties.
     ///
     /// ## Parameters
@@ -459,7 +459,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether a property exists in a group of properties.
     ///
     /// ## Parameters
@@ -483,7 +483,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of a property in a group of properties.
     ///
     /// ## Parameters
@@ -508,7 +508,7 @@ extern "C" {
     ) -> SDL_PropertyType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a pointer property from a group of properties.
     ///
     /// By convention, the names of properties that SDL exposes on objects will
@@ -551,7 +551,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a string property from a group of properties.
     ///
     /// ## Parameters
@@ -585,7 +585,7 @@ extern "C" {
     ) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a number property from a group of properties.
     ///
     /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
@@ -617,7 +617,7 @@ extern "C" {
     ) -> Sint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a floating point property from a group of properties.
     ///
     /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
@@ -649,7 +649,7 @@ extern "C" {
     ) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a boolean property from a group of properties.
     ///
     /// You can use [`SDL_GetPropertyType()`] to query whether the property exists and
@@ -681,7 +681,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear a property from a group of properties.
     ///
     /// ## Parameters
@@ -730,7 +730,7 @@ pub type SDL_EnumeratePropertiesCallback = ::core::option::Option<
     ),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Enumerate the properties contained in a group of properties.
     ///
     /// The callback function is called for each property in the group of
@@ -757,7 +757,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a group of properties.
     ///
     /// All properties are deleted and their cleanup functions will be called, if

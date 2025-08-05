@@ -52,17 +52,20 @@ pub const METADATA_SDL_JoystickID: Group = Group {
     kind: GroupKind::Id,
     name: "SDL_JoystickID",
     short_name: "JoystickID",
-    doc: Some("This is a unique ID for a joystick for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the joystick is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "This is a unique ID for a joystick for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the joystick is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
-    values: &[
-    ],
+    values: &[],
 };
 pub const METADATA_SDL_JoystickType: Group = Group {
     module: "joystick",
     kind: GroupKind::Enum,
     name: "SDL_JoystickType",
     short_name: "JoystickType",
-    doc: Some("An enum of some common joystick types.\n\nIn some cases, SDL can identify a low-level joystick as being a certain\ntype of device, and will report it through [`SDL_GetJoystickType`] (or\n[`SDL_GetJoystickTypeForID`]).\n\nThis is by no means a complete list of everything that can be plugged into\na computer.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "An enum of some common joystick types.\n\nIn some cases, SDL can identify a low-level joystick as being a certain\ntype of device, and will report it through [`SDL_GetJoystickType`] (or\n[`SDL_GetJoystickTypeForID`]).\n\nThis is by no means a complete list of everything that can be plugged into\na computer.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -138,7 +141,9 @@ pub const METADATA_SDL_JoystickConnectionState: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_JoystickConnectionState",
     short_name: "JoystickConnectionState",
-    doc: Some("Possible connection states for a joystick device.\n\nThis is used by [`SDL_GetJoystickConnectionState`] to report how a device is\nconnected to the system.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Possible connection states for a joystick device.\n\nThis is used by [`SDL_GetJoystickConnectionState`] to report how a device is\nconnected to the system.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

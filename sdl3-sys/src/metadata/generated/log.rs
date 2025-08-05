@@ -7,7 +7,9 @@ pub const METADATA_SDL_LogCategory: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_LogCategory",
     short_name: "LogCategory",
-    doc: Some("The predefined log categories\n\nBy default the application and gpu categories are enabled at the INFO\nlevel, the assert category is enabled at the WARN level, test is enabled at\nthe VERBOSE level and all other categories are enabled at the ERROR level.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The predefined log categories\n\nBy default the application and gpu categories are enabled at the INFO\nlevel, the assert category is enabled at the WARN level, test is enabled at\nthe VERBOSE level and all other categories are enabled at the ERROR level.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -137,7 +139,9 @@ pub const METADATA_SDL_LogPriority: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_LogPriority",
     short_name: "LogPriority",
-    doc: Some("The predefined log priorities\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The predefined log priorities\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

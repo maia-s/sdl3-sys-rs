@@ -57,7 +57,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 
 use super::init::*;
 
-extern "C" {
+unsafe extern "C" {
     /// App-implemented initial entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
     /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
@@ -112,7 +112,7 @@ extern "C" {
     ) -> SDL_AppResult;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// App-implemented iteration entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
     /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
@@ -169,7 +169,7 @@ extern "C" {
     pub fn SDL_AppIterate(appstate: *mut ::core::ffi::c_void) -> SDL_AppResult;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// App-implemented event entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
     /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
@@ -222,10 +222,10 @@ extern "C" {
     /// - [`SDL_AppInit`]
     /// - [`SDL_AppIterate`]
     pub fn SDL_AppEvent(appstate: *mut ::core::ffi::c_void, event: *mut SDL_Event)
-        -> SDL_AppResult;
+    -> SDL_AppResult;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// App-implemented deinit entry point for SDL_MAIN_USE_CALLBACKS apps.
     ///
     /// Apps implement this function when using SDL_MAIN_USE_CALLBACKS. If using a
@@ -287,7 +287,7 @@ pub type SDL_main_func = ::core::option::Option<
     ) -> ::core::ffi::c_int,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// An app-supplied function for program entry.
     ///
     /// Apps do not directly create this function; they should create a standard
@@ -328,7 +328,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Circumvent failure of [`SDL_Init()`] when not using [`SDL_main()`] as an entry
     /// point.
     ///
@@ -345,7 +345,7 @@ extern "C" {
     pub fn SDL_SetMainReady();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Initializes and launches an SDL application, by doing platform-specific
     /// initialization before calling your mainFunction and cleanups after it
     /// returns, if that is needed for a specific platform, otherwise it just calls
@@ -385,7 +385,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// An entry point for SDL's use in SDL_MAIN_USE_CALLBACKS.
     ///
     /// Generally, you should not call this function directly. This only exists to
@@ -425,7 +425,7 @@ extern "C" {
 }
 
 apply_cfg!(#[cfg(any(doc, windows))] => {
-    extern "C" {
+    unsafe extern "C" {
         /// Register a win32 window class for SDL's use.
         ///
         /// This can be called to set the application window class at startup. It is
@@ -455,7 +455,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         pub fn SDL_RegisterApp(name: *const ::core::ffi::c_char, style: Uint32, hInst: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Deregister the win32 window class from an [`SDL_RegisterApp`] call.
         ///
         /// This can be called to undo the effects of [`SDL_RegisterApp`].
@@ -475,7 +475,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-extern "C" {
+unsafe extern "C" {
     /// Callback from the application to let the suspend continue.
     ///
     /// This function is only needed for Xbox GDK support; all other platforms will

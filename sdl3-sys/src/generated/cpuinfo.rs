@@ -22,7 +22,7 @@ use super::stdinc::*;
 /// This macro is available since SDL 3.2.0.
 pub const SDL_CACHELINE_SIZE: ::core::primitive::i32 = 128;
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of logical CPU cores available.
     ///
     /// ## Return value
@@ -38,7 +38,7 @@ extern "C" {
     pub fn SDL_GetNumLogicalCPUCores() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine the L1 cache line size of the CPU.
     ///
     /// This is useful for determining multi-threaded structure padding or SIMD
@@ -55,7 +55,7 @@ extern "C" {
     pub fn SDL_GetCPUCacheLineSize() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has AltiVec features.
     ///
     /// This always returns false on CPUs that aren't using PowerPC instruction
@@ -72,7 +72,7 @@ extern "C" {
     pub fn SDL_HasAltiVec() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has MMX features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -88,7 +88,7 @@ extern "C" {
     pub fn SDL_HasMMX() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has SSE features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -110,7 +110,7 @@ extern "C" {
     pub fn SDL_HasSSE() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has SSE2 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -132,7 +132,7 @@ extern "C" {
     pub fn SDL_HasSSE2() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has SSE3 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -154,7 +154,7 @@ extern "C" {
     pub fn SDL_HasSSE3() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has SSE4.1 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -176,7 +176,7 @@ extern "C" {
     pub fn SDL_HasSSE41() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has SSE4.2 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -198,7 +198,7 @@ extern "C" {
     pub fn SDL_HasSSE42() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has AVX features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -218,7 +218,7 @@ extern "C" {
     pub fn SDL_HasAVX() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has AVX2 features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -238,7 +238,7 @@ extern "C" {
     pub fn SDL_HasAVX2() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has AVX-512F (foundation) features.
     ///
     /// This always returns false on CPUs that aren't using Intel instruction sets.
@@ -258,7 +258,7 @@ extern "C" {
     pub fn SDL_HasAVX512F() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has ARM SIMD (ARMv6) features.
     ///
     /// This is different from ARM NEON, which is a different instruction set.
@@ -279,7 +279,7 @@ extern "C" {
     pub fn SDL_HasARMSIMD() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has NEON (ARM SIMD) features.
     ///
     /// This always returns false on CPUs that aren't using ARM instruction sets.
@@ -295,7 +295,7 @@ extern "C" {
     pub fn SDL_HasNEON() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has LSX (LOONGARCH SIMD) features.
     ///
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
@@ -312,7 +312,7 @@ extern "C" {
     pub fn SDL_HasLSX() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine whether the CPU has LASX (LOONGARCH SIMD) features.
     ///
     /// This always returns false on CPUs that aren't using LOONGARCH instruction
@@ -329,7 +329,7 @@ extern "C" {
     pub fn SDL_HasLASX() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the amount of RAM configured in the system.
     ///
     /// ## Return value
@@ -343,7 +343,7 @@ extern "C" {
     pub fn SDL_GetSystemRAM() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report the alignment this system needs for SIMD allocations.
     ///
     /// This will return the minimum number of bytes to which a pointer must be

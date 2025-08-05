@@ -444,7 +444,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendFactor {
         &crate::metadata::blendmode::METADATA_SDL_BlendFactor;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compose a custom blend mode for renderers.
     ///
     /// The functions [`SDL_SetRenderDrawBlendMode`] and [`SDL_SetTextureBlendMode`] accept

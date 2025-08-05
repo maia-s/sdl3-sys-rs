@@ -20,7 +20,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern "C" {
+unsafe extern "C" {
     /// Get the directory where the application was run from.
     ///
     /// SDL caches the result of this call internally, but the first call to this
@@ -64,7 +64,7 @@ extern "C" {
     pub fn SDL_GetBasePath() -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the user-and-app-specific path where files can be written.
     ///
     /// Get the "pref dir". This is meant to be where users can write personal
@@ -278,7 +278,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_Folder {
         &crate::metadata::filesystem::METADATA_SDL_Folder;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Finds the most suitable user folder for a specific purpose.
     ///
     /// Many OSes provide certain standard folders for certain purposes, such as
@@ -552,7 +552,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_GlobFlags {
         &crate::metadata::filesystem::METADATA_SDL_GlobFlags;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a directory, and any missing parent directories.
     ///
     /// This reports success if `path` already exists as a directory.
@@ -682,7 +682,7 @@ pub type SDL_EnumerateDirectoryCallback = ::core::option::Option<
     ) -> SDL_EnumerationResult,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Enumerate a directory through a callback function.
     ///
     /// This function provides every directory entry through an app-provided
@@ -713,7 +713,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove a file or an empty directory.
     ///
     /// Directories that are not empty will fail; this function will not recursely
@@ -731,7 +731,7 @@ extern "C" {
     pub fn SDL_RemovePath(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Rename a file or directory.
     ///
     /// If the file at `newpath` already exists, it will replaced.
@@ -761,7 +761,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a file.
     ///
     /// If the file at `newpath` already exists, it will be overwritten with the
@@ -808,7 +808,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get information about a filesystem path.
     ///
     /// ## Parameters
@@ -828,7 +828,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Enumerate a directory tree, filtered by pattern, and return a list.
     ///
     /// Files are filtered out if they don't match the string in `pattern`, which
@@ -871,7 +871,7 @@ extern "C" {
     ) -> *mut *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get what the system believes is the "current working directory."
     ///
     /// For systems without a concept of a current working directory, this will

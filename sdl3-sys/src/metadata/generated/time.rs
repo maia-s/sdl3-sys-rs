@@ -7,7 +7,9 @@ pub const METADATA_SDL_DateFormat: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_DateFormat",
     short_name: "DateFormat",
-    doc: Some("The preferred date format of the current system locale.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetDateTimeLocalePreferences`]\n"),
+    doc: Some(
+        "The preferred date format of the current system locale.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetDateTimeLocalePreferences`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -35,7 +37,9 @@ pub const METADATA_SDL_TimeFormat: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_TimeFormat",
     short_name: "TimeFormat",
-    doc: Some("The preferred time format of the current system locale.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetDateTimeLocalePreferences`]\n"),
+    doc: Some(
+        "The preferred time format of the current system locale.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetDateTimeLocalePreferences`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

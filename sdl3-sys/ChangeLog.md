@@ -4,7 +4,7 @@
     - Make IDs and flag types newtypes
     - Add metadata
     - Remove deprecated aliases
-    - MSRV 1.81
+    - MSRV 1.85
 
 - 0.5.4:
     - Update SDL to 3.2.20

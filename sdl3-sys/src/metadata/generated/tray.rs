@@ -7,7 +7,9 @@ pub const METADATA_SDL_TrayEntryFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_TrayEntryFlags",
     short_name: "TrayEntryFlags",
-    doc: Some("Flags that control the creation of system tray entries.\n\nSome of these flags are required; exactly one of them must be specified at\nthe time a tray entry is created. Other flags are optional; zero or more of\nthose can be OR'ed together with the required flag.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_InsertTrayEntryAt`]\n"),
+    doc: Some(
+        "Flags that control the creation of system tray entries.\n\nSome of these flags are required; exactly one of them must be specified at\nthe time a tray entry is created. Other flags are optional; zero or more of\nthose can be OR'ed together with the required flag.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_InsertTrayEntryAt`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

@@ -252,7 +252,7 @@ impl ::core::default::Default for SDL_AsyncIOOutcome {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to create a new [`SDL_AsyncIO`] object for reading from
     /// and/or writing to a named file.
     ///
@@ -299,7 +299,7 @@ extern "C" {
     ) -> *mut SDL_AsyncIO;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to get the size of the data stream in an [`SDL_AsyncIO`].
     ///
     /// This call is _not_ asynchronous; it assumes that obtaining this info is a
@@ -321,7 +321,7 @@ extern "C" {
     pub fn SDL_GetAsyncIOSize(asyncio: *mut SDL_AsyncIO) -> Sint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start an async read.
     ///
     /// This function reads up to `size` bytes from `offset` position in the data
@@ -372,7 +372,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start an async write.
     ///
     /// This function writes `size` bytes from `offset` position in the data source
@@ -422,7 +422,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close and free any allocated resources for an async I/O object.
     ///
     /// Closing a file is _also_ an asynchronous task! If a write failure were to
@@ -481,7 +481,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a task queue for tracking multiple I/O operations.
     ///
     /// Async I/O operations are assigned to a queue when started. The queue can be
@@ -504,7 +504,7 @@ extern "C" {
     pub fn SDL_CreateAsyncIOQueue() -> *mut SDL_AsyncIOQueue;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a previously-created async I/O task queue.
     ///
     /// If there are still tasks pending for this queue, this call will block until
@@ -537,7 +537,7 @@ extern "C" {
     pub fn SDL_DestroyAsyncIOQueue(queue: *mut SDL_AsyncIOQueue);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query an async I/O task queue for completed tasks.
     ///
     /// If a task assigned to this queue has finished, this will return true and
@@ -572,7 +572,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Block until an async I/O task queue has a completed task.
     ///
     /// This function puts the calling thread to sleep until there a task assigned
@@ -626,7 +626,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wake up any threads that are blocking in [`SDL_WaitAsyncIOResult()`].
     ///
     /// This will unblock any threads that are sleeping in a call to
@@ -654,7 +654,7 @@ extern "C" {
     pub fn SDL_SignalAsyncIOQueue(queue: *mut SDL_AsyncIOQueue);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load all the data from a file path, asynchronously.
     ///
     /// This function returns as quickly as possible; it does not wait for the read

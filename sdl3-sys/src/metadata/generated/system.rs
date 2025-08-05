@@ -7,7 +7,9 @@ pub const METADATA_SDL_Sandbox: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_Sandbox",
     short_name: "Sandbox",
-    doc: Some("Application sandbox environment.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Application sandbox environment.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

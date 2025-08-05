@@ -684,7 +684,7 @@ apply_cfg!(#[cfg(doc)] => {
 apply_cfg!(#[cfg(not(doc))] => {
 });
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate uninitialized memory.
     ///
     /// The allocated memory returned by this function must be freed with
@@ -718,7 +718,7 @@ extern "C" {
     pub fn SDL_malloc(size: ::core::primitive::usize) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate a zero-initialized array.
     ///
     /// The memory returned by this function must be freed with [`SDL_free()`].
@@ -752,7 +752,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Change the size of allocated memory.
     ///
     /// The memory returned by this function must be freed with [`SDL_free()`].
@@ -801,7 +801,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Free allocated memory.
     ///
     /// The pointer is no longer valid after this call and cannot be dereferenced
@@ -931,7 +931,7 @@ pub type SDL_realloc_func = ::core::option::Option<
 pub type SDL_free_func =
     ::core::option::Option<unsafe extern "C" fn(mem: *mut ::core::ffi::c_void)>;
 
-extern "C" {
+unsafe extern "C" {
     /// Get the original set of SDL memory functions.
     ///
     /// This is what [`SDL_malloc`] and friends will use by default, if there has been
@@ -958,7 +958,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current set of SDL memory functions.
     ///
     /// ## Parameters
@@ -986,7 +986,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Replace SDL's memory allocation functions with a custom set.
     ///
     /// It is not safe to call this function once any allocations have been made,
@@ -1025,7 +1025,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate memory aligned to a specific alignment.
     ///
     /// The memory returned by this function must be freed with [`SDL_aligned_free()`],
@@ -1058,7 +1058,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Free memory allocated by [`SDL_aligned_alloc()`].
     ///
     /// The pointer is no longer valid after this call and cannot be dereferenced
@@ -1080,7 +1080,7 @@ extern "C" {
     pub fn SDL_aligned_free(mem: *mut ::core::ffi::c_void);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of outstanding (unfreed) allocations.
     ///
     /// ## Return value
@@ -1095,7 +1095,7 @@ extern "C" {
     pub fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the process environment.
     ///
     /// This is initialized at application start and is not affected by setenv()
@@ -1122,7 +1122,7 @@ extern "C" {
     pub fn SDL_GetEnvironment() -> *mut SDL_Environment;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a set of environment variables
     ///
     /// ## Parameters
@@ -1150,7 +1150,7 @@ extern "C" {
     pub fn SDL_CreateEnvironment(populated: ::core::primitive::bool) -> *mut SDL_Environment;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the value of a variable in the environment.
     ///
     /// ## Parameters
@@ -1179,7 +1179,7 @@ extern "C" {
     ) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get all variables in the environment.
     ///
     /// ## Parameters
@@ -1206,7 +1206,7 @@ extern "C" {
     pub fn SDL_GetEnvironmentVariables(env: *mut SDL_Environment) -> *mut *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the value of a variable in the environment.
     ///
     /// ## Parameters
@@ -1241,7 +1241,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear a variable from the environment.
     ///
     /// ## Parameters
@@ -1271,7 +1271,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a set of environment variables.
     ///
     /// ## Parameters
@@ -1289,7 +1289,7 @@ extern "C" {
     pub fn SDL_DestroyEnvironment(env: *mut SDL_Environment);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the value of a variable in the environment.
     ///
     /// This function uses SDL's cached copy of the environment and is thread-safe.
@@ -1309,7 +1309,7 @@ extern "C" {
     pub fn SDL_getenv(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the value of a variable in the environment.
     ///
     /// This function bypasses SDL's cached copy of the environment and is not
@@ -1334,7 +1334,7 @@ extern "C" {
     pub fn SDL_getenv_unsafe(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the value of a variable in the environment.
     ///
     /// ## Parameters
@@ -1362,7 +1362,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear a variable from the environment.
     ///
     /// ## Parameters
@@ -1407,7 +1407,7 @@ pub type SDL_CompareCallback = ::core::option::Option<
     ) -> ::core::ffi::c_int,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Sort an array.
     ///
     /// For example:
@@ -1462,7 +1462,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a binary search on a previously sorted array.
     ///
     /// For example:
@@ -1550,7 +1550,7 @@ pub type SDL_CompareCallback_r = ::core::option::Option<
     ) -> ::core::ffi::c_int,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Sort an array, passing a userdata pointer to the compare function.
     ///
     /// For example:
@@ -1613,7 +1613,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a binary search on a previously sorted array, passing a userdata
     /// pointer to the compare function.
     ///
@@ -1684,7 +1684,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the absolute value of `x`.
     ///
     /// ## Parameters
@@ -1703,20 +1703,12 @@ extern "C" {
 
 #[inline(always)]
 pub fn SDL_min<T: Copy + PartialOrd>(x: T, y: T) -> T {
-    if x < y {
-        x
-    } else {
-        y
-    }
+    if x < y { x } else { y }
 }
 
 #[inline(always)]
 pub fn SDL_max<T: Copy + PartialOrd>(x: T, y: T) -> T {
-    if x > y {
-        x
-    } else {
-        y
-    }
+    if x > y { x } else { y }
 }
 
 #[inline(always)]
@@ -1730,7 +1722,7 @@ pub fn SDL_clamp<T: Copy + PartialOrd>(x: T, a: T, b: T) -> T {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query if a character is alphabetic (a letter).
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1750,7 +1742,7 @@ extern "C" {
     pub fn SDL_isalpha(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query if a character is alphabetic (a letter) or a number.
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1770,7 +1762,7 @@ extern "C" {
     pub fn SDL_isalnum(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is blank (a space or tab).
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1790,7 +1782,7 @@ extern "C" {
     pub fn SDL_isblank(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is a control character.
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1810,7 +1802,7 @@ extern "C" {
     pub fn SDL_iscntrl(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is a numeric digit.
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1830,7 +1822,7 @@ extern "C" {
     pub fn SDL_isdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is a hexadecimal digit.
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1850,7 +1842,7 @@ extern "C" {
     pub fn SDL_isxdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is a punctuation mark.
     ///
     /// **WARNING**: Regardless of system locale, this is equivalent to
@@ -1874,7 +1866,7 @@ extern "C" {
     pub fn SDL_ispunct(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is whitespace.
     ///
     /// **WARNING**: Regardless of system locale, this will only treat the
@@ -1901,7 +1893,7 @@ extern "C" {
     pub fn SDL_isspace(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is upper case.
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1921,7 +1913,7 @@ extern "C" {
     pub fn SDL_isupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is lower case.
     ///
     /// **WARNING**: Regardless of system locale, this will only treat ASCII values
@@ -1941,7 +1933,7 @@ extern "C" {
     pub fn SDL_islower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is "printable".
     ///
     /// Be advised that "printable" has a definition that goes back to text
@@ -1965,7 +1957,7 @@ extern "C" {
     pub fn SDL_isprint(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Report if a character is any "printable" except space.
     ///
     /// Be advised that "printable" has a definition that goes back to text
@@ -1992,7 +1984,7 @@ extern "C" {
     pub fn SDL_isgraph(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert low-ASCII English letters to uppercase.
     ///
     /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -2015,7 +2007,7 @@ extern "C" {
     pub fn SDL_toupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert low-ASCII English letters to lowercase.
     ///
     /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -2038,7 +2030,7 @@ extern "C" {
     pub fn SDL_tolower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate a CRC-16 value.
     ///
     /// <https://en.wikipedia.org/wiki/Cyclic_redundancy_check>
@@ -2068,7 +2060,7 @@ extern "C" {
     ) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate a CRC-32 value.
     ///
     /// <https://en.wikipedia.org/wiki/Cyclic_redundancy_check>
@@ -2098,7 +2090,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate a 32-bit MurmurHash3 value for a block of data.
     ///
     /// <https://en.wikipedia.org/wiki/MurmurHash>
@@ -2238,7 +2230,7 @@ pub unsafe fn SDL_memmove(
     return dst;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Initialize all bytes of buffer of memory to a specific value.
     ///
     /// This function will set `len` bytes, pointed to by `dst`, to the value
@@ -2267,7 +2259,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Initialize all 32-bit words of buffer of memory to a specific value.
     ///
     /// This function will set a buffer of `dwords` Uint32 values, pointed to by
@@ -2324,7 +2316,7 @@ pub unsafe fn SDL_zerop<T>(x: *mut T) -> *mut T {
     x
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two buffers of memory.
     ///
     /// ## Parameters
@@ -2349,7 +2341,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like wcslen() but doesn't require access to a C runtime.
     ///
     /// Counts the number of wchar_t values in `wstr`, excluding the null
@@ -2382,7 +2374,7 @@ extern "C" {
     pub fn SDL_wcslen(wstr: *const crate::ffi::c_wchar_t) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like wcsnlen() but doesn't require access to a C
     /// runtime.
     ///
@@ -2422,7 +2414,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a wide string.
     ///
     /// This function copies `maxlen` - 1 wide characters from `src` to `dst`, then
@@ -2459,7 +2451,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Concatenate wide strings.
     ///
     /// This function appends up to `maxlen` - SDL_wcslen(dst) - 1 wide characters
@@ -2498,7 +2490,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate a copy of a wide string.
     ///
     /// This allocates enough space for a null-terminated copy of `wstr`, using
@@ -2521,7 +2513,7 @@ extern "C" {
     pub fn SDL_wcsdup(wstr: *const crate::ffi::c_wchar_t) -> *mut crate::ffi::c_wchar_t;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Search a wide string for the first instance of a specific substring.
     ///
     /// The search ends once it finds the requested substring, or a null terminator
@@ -2549,7 +2541,7 @@ extern "C" {
     ) -> *mut crate::ffi::c_wchar_t;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Search a wide string, up to n wide chars, for the first instance of a
     /// specific substring.
     ///
@@ -2583,7 +2575,7 @@ extern "C" {
     ) -> *mut crate::ffi::c_wchar_t;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two null-terminated wide strings.
     ///
     /// This only compares wchar_t values until it hits a null-terminating
@@ -2610,7 +2602,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two wide strings up to a number of wchar_t values.
     ///
     /// This only compares wchar_t values; it does not care if the string is
@@ -2650,7 +2642,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two null-terminated wide strings, case-insensitively.
     ///
     /// This will work with Unicode strings, using a technique called
@@ -2688,7 +2680,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two wide strings, case-insensitively, up to a number of wchar_t.
     ///
     /// This will work with Unicode strings, using a technique called
@@ -2739,7 +2731,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse a `long` from a wide string.
     ///
     /// If `str` starts with whitespace, then those whitespace characters are
@@ -2776,7 +2768,7 @@ extern "C" {
     ) -> ::core::ffi::c_long;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like strlen() but doesn't require access to a C runtime.
     ///
     /// Counts the bytes in `str`, excluding the null terminator.
@@ -2802,7 +2794,7 @@ extern "C" {
     pub fn SDL_strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like strnlen() but doesn't require access to a C
     /// runtime.
     ///
@@ -2835,7 +2827,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a string.
     ///
     /// This function copies up to `maxlen` - 1 characters from `src` to `dst`,
@@ -2874,7 +2866,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy an UTF-8 string.
     ///
     /// This function copies up to `dst_bytes` - 1 bytes from `src` to `dst` while
@@ -2912,7 +2904,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Concatenate strings.
     ///
     /// This function appends up to `maxlen` - SDL_strlen(dst) - 1 characters from
@@ -2950,7 +2942,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate a copy of a string.
     ///
     /// This allocates enough space for a null-terminated copy of `str`, using
@@ -2973,7 +2965,7 @@ extern "C" {
     pub fn SDL_strdup(str: *const ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate a copy of a string, up to n characters.
     ///
     /// This allocates enough space for a null-terminated copy of `str`, up to
@@ -3006,7 +2998,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Reverse a string's contents.
     ///
     /// This reverses a null-terminated string in-place. Only the content of the
@@ -3032,7 +3024,7 @@ extern "C" {
     pub fn SDL_strrev(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a string to uppercase.
     ///
     /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -3059,7 +3051,7 @@ extern "C" {
     pub fn SDL_strupr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a string to lowercase.
     ///
     /// **WARNING**: Regardless of system locale, this will only convert ASCII
@@ -3086,7 +3078,7 @@ extern "C" {
     pub fn SDL_strlwr(str: *mut ::core::ffi::c_char) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Search a string for the first instance of a specific byte.
     ///
     /// The search ends once it finds the requested byte value, or a null
@@ -3114,7 +3106,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Search a string for the last instance of a specific byte.
     ///
     /// The search must go until it finds a null terminator byte to end the string.
@@ -3141,7 +3133,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Search a string for the first instance of a specific substring.
     ///
     /// The search ends once it finds the requested substring, or a null terminator
@@ -3169,7 +3161,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Search a string, up to n bytes, for the first instance of a specific
     /// substring.
     ///
@@ -3201,7 +3193,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Search a UTF-8 string for the first instance of a specific substring,
     /// case-insensitively.
     ///
@@ -3237,7 +3229,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like strtok_r() but doesn't require access to a C
     /// runtime.
     ///
@@ -3275,7 +3267,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Count the number of codepoints in a UTF-8 string.
     ///
     /// Counts the _codepoints_, not _bytes_, in `str`, excluding the null
@@ -3309,7 +3301,7 @@ extern "C" {
     pub fn SDL_utf8strlen(str: *const ::core::ffi::c_char) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Count the number of codepoints in a UTF-8 string, up to n bytes.
     ///
     /// Counts the _codepoints_, not _bytes_, in `str`, excluding the null
@@ -3351,7 +3343,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert an integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
@@ -3389,7 +3381,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert an unsigned integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
@@ -3427,7 +3419,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
@@ -3465,7 +3457,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert an unsigned long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
@@ -3503,7 +3495,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a long long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
@@ -3541,7 +3533,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert an unsigned long long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
@@ -3579,7 +3571,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse an `int` from a string.
     ///
     /// The result of calling `SDL_atoi(str)` is equivalent to
@@ -3608,7 +3600,7 @@ extern "C" {
     pub fn SDL_atoi(str: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse a `double` from a string.
     ///
     /// The result of calling `SDL_atof(str)` is equivalent to `SDL_strtod(str,
@@ -3636,7 +3628,7 @@ extern "C" {
     pub fn SDL_atof(str: *const ::core::ffi::c_char) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse a `long` from a string.
     ///
     /// If `str` starts with whitespace, then those whitespace characters are
@@ -3680,7 +3672,7 @@ extern "C" {
     ) -> ::core::ffi::c_long;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse an `unsigned long` from a string.
     ///
     /// If `str` starts with whitespace, then those whitespace characters are
@@ -3723,7 +3715,7 @@ extern "C" {
     ) -> ::core::ffi::c_ulong;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse a `long long` from a string.
     ///
     /// If `str` starts with whitespace, then those whitespace characters are
@@ -3766,7 +3758,7 @@ extern "C" {
     ) -> ::core::ffi::c_longlong;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse an `unsigned long long` from a string.
     ///
     /// If `str` starts with whitespace, then those whitespace characters are
@@ -3810,7 +3802,7 @@ extern "C" {
     ) -> ::core::ffi::c_ulonglong;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Parse a `double` from a string.
     ///
     /// This function makes fewer guarantees than the C runtime `strtod`:
@@ -3848,7 +3840,7 @@ extern "C" {
     ) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two null-terminated UTF-8 strings.
     ///
     /// Due to the nature of UTF-8 encoding, this will work with Unicode strings,
@@ -3876,7 +3868,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two UTF-8 strings up to a number of bytes.
     ///
     /// Due to the nature of UTF-8 encoding, this will work with Unicode strings,
@@ -3915,7 +3907,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two null-terminated UTF-8 strings, case-insensitively.
     ///
     /// This will work with Unicode strings, using a technique called
@@ -3951,7 +3943,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compare two UTF-8 strings, case-insensitively, up to a number of bytes.
     ///
     /// This will work with Unicode strings, using a technique called
@@ -3999,7 +3991,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Searches a string for the first occurence of any character contained in a
     /// breakset, and returns a pointer from the string to that character.
     ///
@@ -4040,7 +4032,7 @@ extern "C" {
 /// - [`SDL_StepUTF8`]
 pub const SDL_INVALID_UNICODE_CODEPOINT: ::core::primitive::i32 = 65533;
 
-extern "C" {
+unsafe extern "C" {
     /// Decode a UTF-8 string, one Unicode codepoint at a time.
     ///
     /// This will return the first Unicode codepoint in the UTF-8 encoded string in
@@ -4093,7 +4085,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Decode a UTF-8 string in reverse, one Unicode codepoint at a time.
     ///
     /// This will go to the start of the previous Unicode codepoint in the string,
@@ -4132,7 +4124,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a single Unicode codepoint to UTF-8.
     ///
     /// The buffer pointed to by `dst` must be at least 4 bytes long, as this
@@ -4169,7 +4161,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like sscanf() but doesn't require access to a C runtime.
     ///
     /// Scan a string, matching a format string, converting each '%' item and
@@ -4195,7 +4187,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like vsscanf() but doesn't require access to a C
     /// runtime.
     ///
@@ -4223,7 +4215,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like snprintf() but doesn't require access to a C
     /// runtime.
     ///
@@ -4266,7 +4258,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like swprintf() but doesn't require access to a C
     /// runtime.
     ///
@@ -4310,7 +4302,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like vsnprintf() but doesn't require access to a C
     /// runtime.
     ///
@@ -4340,7 +4332,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like vswprintf() but doesn't require access to a C
     /// runtime.
     ///
@@ -4371,7 +4363,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like asprintf() but doesn't require access to a C
     /// runtime.
     ///
@@ -4409,7 +4401,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This works exactly like vasprintf() but doesn't require access to a C
     /// runtime.
     ///
@@ -4437,7 +4429,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Seeds the pseudo-random number generator.
     ///
     /// Reusing the seed number will cause [`SDL_rand()`] to repeat the same stream of
@@ -4461,7 +4453,7 @@ extern "C" {
     pub fn SDL_srand(seed: Uint64);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generate a pseudo-random number less than n for positive n
     ///
     /// The method used is faster and of better quality than `rand() % n`. Odds are
@@ -4501,7 +4493,7 @@ extern "C" {
     pub fn SDL_rand(n: Sint32) -> Sint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generate a uniform pseudo-random floating point number less than 1.0
     ///
     /// If you want reproducible output, be sure to initialize with [`SDL_srand()`]
@@ -4528,7 +4520,7 @@ extern "C" {
     pub fn SDL_randf() -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generate 32 pseudo-random bits.
     ///
     /// You likely want to use [`SDL_rand()`] to get a psuedo-random number instead.
@@ -4555,7 +4547,7 @@ extern "C" {
     pub fn SDL_rand_bits() -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generate a pseudo-random number less than n for positive n
     ///
     /// The method used is faster and of better quality than `rand() % n`. Odds are
@@ -4596,7 +4588,7 @@ extern "C" {
     pub fn SDL_rand_r(state: *mut Uint64, n: Sint32) -> Sint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generate a uniform pseudo-random floating point number less than 1.0
     ///
     /// If you want reproducible output, be sure to initialize with [`SDL_srand()`]
@@ -4629,7 +4621,7 @@ extern "C" {
     pub fn SDL_randf_r(state: *mut Uint64) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generate 32 pseudo-random bits.
     ///
     /// You likely want to use [`SDL_rand_r()`] to get a psuedo-random number instead.
@@ -4678,7 +4670,7 @@ pub const SDL_PI_D: ::core::ffi::c_double = 3.141592653589793_f64;
 /// - [`SDL_PI_D`]
 pub const SDL_PI_F: ::core::ffi::c_float = 3.1415927_f32;
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc cosine of `x`.
     ///
     /// The definition of `y = acos(x)` is `x = cos(y)`.
@@ -4714,7 +4706,7 @@ extern "C" {
     pub fn SDL_acos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc cosine of `x`.
     ///
     /// The definition of `y = acos(x)` is `x = cos(y)`.
@@ -4750,7 +4742,7 @@ extern "C" {
     pub fn SDL_acosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc sine of `x`.
     ///
     /// The definition of `y = asin(x)` is `x = sin(y)`.
@@ -4786,7 +4778,7 @@ extern "C" {
     pub fn SDL_asin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc sine of `x`.
     ///
     /// The definition of `y = asin(x)` is `x = sin(y)`.
@@ -4822,7 +4814,7 @@ extern "C" {
     pub fn SDL_asinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc tangent of `x`.
     ///
     /// The definition of `y = atan(x)` is `x = tan(y)`.
@@ -4860,7 +4852,7 @@ extern "C" {
     pub fn SDL_atan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc tangent of `x`.
     ///
     /// The definition of `y = atan(x)` is `x = tan(y)`.
@@ -4898,7 +4890,7 @@ extern "C" {
     pub fn SDL_atanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc tangent of `y / x`, using the signs of x and y to adjust
     /// the result's quadrant.
     ///
@@ -4940,7 +4932,7 @@ extern "C" {
     pub fn SDL_atan2(y: ::core::ffi::c_double, x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the arc tangent of `y / x`, using the signs of x and y to adjust
     /// the result's quadrant.
     ///
@@ -4982,7 +4974,7 @@ extern "C" {
     pub fn SDL_atan2f(y: ::core::ffi::c_float, x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the ceiling of `x`.
     ///
     /// The ceiling of `x` is the smallest integer `y` such that `y > x`, i.e `x`
@@ -5016,7 +5008,7 @@ extern "C" {
     pub fn SDL_ceil(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the ceiling of `x`.
     ///
     /// The ceiling of `x` is the smallest integer `y` such that `y > x`, i.e `x`
@@ -5083,20 +5075,7 @@ pub unsafe fn SDL_copysign(
     x: ::core::ffi::c_double,
     y: ::core::ffi::c_double,
 ) -> ::core::ffi::c_double {
-    #[cfg(feature = "-core-float")]
-    {
-        return x.copysign(y);
-    }
-    #[cfg(not(feature = "-core-float"))]
-    {
-        extern "C" {
-            fn SDL_copysign(
-                x: ::core::ffi::c_double,
-                y: ::core::ffi::c_double,
-            ) -> ::core::ffi::c_double;
-        }
-        return unsafe { SDL_copysign(x, y) };
-    };
+    return x.copysign(y);
 }
 
 /// Copy the sign of one floating-point value to another.
@@ -5132,23 +5111,10 @@ pub unsafe fn SDL_copysignf(
     x: ::core::ffi::c_float,
     y: ::core::ffi::c_float,
 ) -> ::core::ffi::c_float {
-    #[cfg(feature = "-core-float")]
-    {
-        return x.copysign(y);
-    }
-    #[cfg(not(feature = "-core-float"))]
-    {
-        extern "C" {
-            fn SDL_copysignf(
-                x: ::core::ffi::c_float,
-                y: ::core::ffi::c_float,
-            ) -> ::core::ffi::c_float;
-        }
-        return unsafe { SDL_copysignf(x, y) };
-    };
+    return x.copysign(y);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the cosine of `x`.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -5182,7 +5148,7 @@ extern "C" {
     pub fn SDL_cos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the cosine of `x`.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -5216,7 +5182,7 @@ extern "C" {
     pub fn SDL_cosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the exponential of `x`.
     ///
     /// The definition of `y = exp(x)` is `y = e^x`, where `e` is the base of the
@@ -5254,7 +5220,7 @@ extern "C" {
     pub fn SDL_exp(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the exponential of `x`.
     ///
     /// The definition of `y = exp(x)` is `y = e^x`, where `e` is the base of the
@@ -5317,17 +5283,7 @@ extern "C" {
 /// - [`SDL_fabsf`]
 #[inline(always)]
 pub unsafe fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
-    #[cfg(feature = "-core-float")]
-    {
-        return x.abs();
-    }
-    #[cfg(not(feature = "-core-float"))]
-    {
-        extern "C" {
-            fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
-        }
-        return unsafe { SDL_fabs(x) };
-    };
+    return x.abs();
 }
 
 /// Compute the absolute value of `x`
@@ -5355,20 +5311,10 @@ pub unsafe fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
 /// - [`SDL_fabs`]
 #[inline(always)]
 pub unsafe fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float {
-    #[cfg(feature = "-core-float")]
-    {
-        return x.abs();
-    }
-    #[cfg(not(feature = "-core-float"))]
-    {
-        extern "C" {
-            fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
-        }
-        return unsafe { SDL_fabsf(x) };
-    };
+    return x.abs();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the floor of `x`.
     ///
     /// The floor of `x` is the largest integer `y` such that `y > x`, i.e `x`
@@ -5402,7 +5348,7 @@ extern "C" {
     pub fn SDL_floor(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the floor of `x`.
     ///
     /// The floor of `x` is the largest integer `y` such that `y > x`, i.e `x`
@@ -5436,7 +5382,7 @@ extern "C" {
     pub fn SDL_floorf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Truncate `x` to an integer.
     ///
     /// Rounds `x` to the next closest integer to 0. This is equivalent to removing
@@ -5471,7 +5417,7 @@ extern "C" {
     pub fn SDL_trunc(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Truncate `x` to an integer.
     ///
     /// Rounds `x` to the next closest integer to 0. This is equivalent to removing
@@ -5506,7 +5452,7 @@ extern "C" {
     pub fn SDL_truncf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return the floating-point remainder of `x / y`
     ///
     /// Divides `x` by `y`, and returns the remainder.
@@ -5542,7 +5488,7 @@ extern "C" {
     pub fn SDL_fmod(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return the floating-point remainder of `x / y`
     ///
     /// Divides `x` by `y`, and returns the remainder.
@@ -5578,7 +5524,7 @@ extern "C" {
     pub fn SDL_fmodf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether the value is infinity.
     ///
     /// ## Parameters
@@ -5598,7 +5544,7 @@ extern "C" {
     pub fn SDL_isinf(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether the value is infinity.
     ///
     /// ## Parameters
@@ -5618,7 +5564,7 @@ extern "C" {
     pub fn SDL_isinff(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether the value is NaN.
     ///
     /// ## Parameters
@@ -5638,7 +5584,7 @@ extern "C" {
     pub fn SDL_isnan(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether the value is NaN.
     ///
     /// ## Parameters
@@ -5658,7 +5604,7 @@ extern "C" {
     pub fn SDL_isnanf(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the natural logarithm of `x`.
     ///
     /// Domain: `0 < x <= INF`
@@ -5694,7 +5640,7 @@ extern "C" {
     pub fn SDL_log(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the natural logarithm of `x`.
     ///
     /// Domain: `0 < x <= INF`
@@ -5729,7 +5675,7 @@ extern "C" {
     pub fn SDL_logf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the base-10 logarithm of `x`.
     ///
     /// Domain: `0 < x <= INF`
@@ -5765,7 +5711,7 @@ extern "C" {
     pub fn SDL_log10(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the base-10 logarithm of `x`.
     ///
     /// Domain: `0 < x <= INF`
@@ -5801,7 +5747,7 @@ extern "C" {
     pub fn SDL_log10f(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Split `x` into integer and fractional parts
     ///
     /// This function operates on double-precision floating point values, use
@@ -5830,7 +5776,7 @@ extern "C" {
     ) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Split `x` into integer and fractional parts
     ///
     /// This function operates on single-precision floating point values, use
@@ -5854,10 +5800,10 @@ extern "C" {
     /// - [`SDL_truncf`]
     /// - [`SDL_fmodf`]
     pub fn SDL_modff(x: ::core::ffi::c_float, y: *mut ::core::ffi::c_float)
-        -> ::core::ffi::c_float;
+    -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Raise `x` to the power `y`
     ///
     /// Domain: `-INF <= x <= INF`, `-INF <= y <= INF`
@@ -5895,7 +5841,7 @@ extern "C" {
     pub fn SDL_pow(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Raise `x` to the power `y`
     ///
     /// Domain: `-INF <= x <= INF`, `-INF <= y <= INF`
@@ -5933,7 +5879,7 @@ extern "C" {
     pub fn SDL_powf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Round `x` to the nearest integer.
     ///
     /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -5968,7 +5914,7 @@ extern "C" {
     pub fn SDL_round(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Round `x` to the nearest integer.
     ///
     /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -6003,7 +5949,7 @@ extern "C" {
     pub fn SDL_roundf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Round `x` to the nearest integer representable as a long
     ///
     /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -6038,7 +5984,7 @@ extern "C" {
     pub fn SDL_lround(x: ::core::ffi::c_double) -> ::core::ffi::c_long;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Round `x` to the nearest integer representable as a long
     ///
     /// Rounds `x` to the nearest integer. Values halfway between integers will be
@@ -6073,7 +6019,7 @@ extern "C" {
     pub fn SDL_lroundf(x: ::core::ffi::c_float) -> ::core::ffi::c_long;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Scale `x` by an integer power of two.
     ///
     /// Multiplies `x` by the `n`th power of the floating point radix (always 2).
@@ -6104,7 +6050,7 @@ extern "C" {
     pub fn SDL_scalbn(x: ::core::ffi::c_double, n: ::core::ffi::c_int) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Scale `x` by an integer power of two.
     ///
     /// Multiplies `x` by the `n`th power of the floating point radix (always 2).
@@ -6135,7 +6081,7 @@ extern "C" {
     pub fn SDL_scalbnf(x: ::core::ffi::c_float, n: ::core::ffi::c_int) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the sine of `x`.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -6169,7 +6115,7 @@ extern "C" {
     pub fn SDL_sin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the sine of `x`.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -6203,7 +6149,7 @@ extern "C" {
     pub fn SDL_sinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the square root of `x`.
     ///
     /// Domain: `0 <= x <= INF`
@@ -6235,7 +6181,7 @@ extern "C" {
     pub fn SDL_sqrt(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the square root of `x`.
     ///
     /// Domain: `0 <= x <= INF`
@@ -6267,7 +6213,7 @@ extern "C" {
     pub fn SDL_sqrtf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the tangent of `x`.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -6303,7 +6249,7 @@ extern "C" {
     pub fn SDL_tan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compute the tangent of `x`.
     ///
     /// Domain: `-INF <= x <= INF`
@@ -6348,7 +6294,7 @@ extern "C" {
 /// - [`SDL_iconv_open`]
 pub type SDL_iconv_t = *mut SDL_iconv_data_t;
 
-extern "C" {
+unsafe extern "C" {
     /// This function allocates a context for the specified character set
     /// conversion.
     ///
@@ -6373,7 +6319,7 @@ extern "C" {
     ) -> SDL_iconv_t;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This function frees a context used for character set conversion.
     ///
     /// ## Parameters
@@ -6392,7 +6338,7 @@ extern "C" {
     pub fn SDL_iconv_close(cd: SDL_iconv_t) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This function converts text between encodings, reading from and writing to
     /// a buffer.
     ///
@@ -6453,7 +6399,7 @@ pub const SDL_ICONV_EILSEQ: ::core::primitive::usize = (-3_i32 as ::core::primit
 /// Incomplete input sequence was encountered.
 pub const SDL_ICONV_EINVAL: ::core::primitive::usize = (-4_i32 as ::core::primitive::usize);
 
-extern "C" {
+unsafe extern "C" {
     /// Helper function to convert a string's encoding in one call.
     ///
     /// This function converts a buffer or string between encodings in one pass.

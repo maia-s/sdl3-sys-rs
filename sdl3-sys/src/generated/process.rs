@@ -23,7 +23,7 @@ use super::iostream::*;
 
 use super::properties::*;
 
-extern "C" {
+unsafe extern "C" {
     /// Create a new process.
     ///
     /// The path to the executable is supplied in args\[0\]. args\[1..N\] are
@@ -190,7 +190,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_ProcessIO {
         &crate::metadata::process::METADATA_SDL_ProcessIO;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a new process with the specified properties.
     ///
     /// These are the supported properties:
@@ -288,7 +288,7 @@ pub const SDL_PROP_PROCESS_CREATE_STDERR_TO_STDOUT_BOOLEAN: *const ::core::ffi::
 pub const SDL_PROP_PROCESS_CREATE_BACKGROUND_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.process.create.background".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a process.
     ///
     /// The following read-only properties are provided by SDL:
@@ -339,7 +339,7 @@ pub const SDL_PROP_PROCESS_STDERR_POINTER: *const ::core::ffi::c_char =
 pub const SDL_PROP_PROCESS_BACKGROUND_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.process.background".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Read all the output from a process.
     ///
     /// If a process was created with I/O enabled, you can use this function to
@@ -380,7 +380,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the [`SDL_IOStream`] associated with process standard input.
     ///
     /// The process must have been created with [`SDL_CreateProcess()`] and pipe_stdio
@@ -412,7 +412,7 @@ extern "C" {
     pub fn SDL_GetProcessInput(process: *mut SDL_Process) -> *mut SDL_IOStream;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the [`SDL_IOStream`] associated with process standard output.
     ///
     /// The process must have been created with [`SDL_CreateProcess()`] and pipe_stdio
@@ -442,7 +442,7 @@ extern "C" {
     pub fn SDL_GetProcessOutput(process: *mut SDL_Process) -> *mut SDL_IOStream;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Stop a process.
     ///
     /// ## Parameters
@@ -474,7 +474,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wait for a process to finish.
     ///
     /// This can be called multiple times to get the status of a process.
@@ -517,7 +517,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a previously created process object.
     ///
     /// Note that this does not stop the process, just destroys the SDL object used

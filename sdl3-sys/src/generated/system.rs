@@ -62,7 +62,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
     /// - [`SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP`]
     pub type SDL_WindowsMessageHook = ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, msg: *mut MSG) -> ::core::primitive::bool>;
 
-    extern "C" {
+    unsafe extern "C" {
         /// Set a callback for every Windows message, run before TranslateMessage().
         ///
         /// The callback may modify the message, and should return true if the message
@@ -88,7 +88,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 });
 
 apply_cfg!(#[cfg(any(any(doc, target_os = "windows"), any(doc, all(target_os = "windows", feature = "target-gdk"))))] => {
-    extern "C" {
+    unsafe extern "C" {
         /// Get the D3D9 adapter index that matches the specified display.
         ///
         /// The returned adapter index can be passed to `IDirect3D9::CreateDevice` and
@@ -106,7 +106,7 @@ apply_cfg!(#[cfg(any(any(doc, target_os = "windows"), any(doc, all(target_os = "
         pub fn SDL_GetDirect3D9AdapterIndex(displayID: SDL_DisplayID) -> ::core::ffi::c_int;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Get the DXGI Adapter and Output indices for the specified display.
         ///
         /// The DXGI Adapter and Output indices can be passed to `EnumAdapters` and
@@ -179,7 +179,7 @@ pub type SDL_X11EventHook = ::core::option::Option<
     ) -> ::core::primitive::bool,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Set a callback for every X11 event.
     ///
     /// The callback may modify the event, and should return true if the event
@@ -195,7 +195,7 @@ extern "C" {
 }
 
 apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
-    extern "C" {
+    unsafe extern "C" {
         /// Sets the UNIX nice value for a thread.
         ///
         /// This uses setpriority() if possible, and RealtimeKit if available.
@@ -213,7 +213,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
         pub fn SDL_SetLinuxThreadPriority(threadID: Sint64, priority: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Sets the priority (not nice level) and scheduling policy for a thread.
         ///
         /// This uses setpriority() if possible, and RealtimeKit if available.
@@ -255,7 +255,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
     /// - [`SDL_SetiOSAnimationCallback`]
     pub type SDL_iOSAnimationCallback = ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
-    extern "C" {
+    unsafe extern "C" {
         /// Use this function to set the animation callback on Apple iOS.
         ///
         /// The function prototype for `callback` is:
@@ -299,7 +299,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         pub fn SDL_SetiOSAnimationCallback(window: *mut SDL_Window, interval: ::core::ffi::c_int, callback: SDL_iOSAnimationCallback, callbackParam: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Use this function to enable or disable the SDL event pump on Apple iOS.
         ///
         /// This function is only available on Apple iOS.
@@ -318,7 +318,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
 });
 
 apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
-    extern "C" {
+    unsafe extern "C" {
         /// Get the Android Java Native Interface Environment of the current thread.
         ///
         /// This is the JNIEnv one needs to access the Java virtual machine from native
@@ -344,7 +344,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_GetAndroidJNIEnv() -> *mut ::core::ffi::c_void;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Retrieve the Java instance of the Android activity class.
         ///
         /// The prototype of the function in SDL's code actually declares a void*
@@ -373,7 +373,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_GetAndroidActivity() -> *mut ::core::ffi::c_void;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Query Android API level of the current device.
         ///
         /// - API level 35: Android 15 (VANILLA_ICE_CREAM)
@@ -411,7 +411,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_GetAndroidSDKVersion() -> ::core::ffi::c_int;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Query if the application is running on a Chromebook.
         ///
         /// ## Return value
@@ -422,7 +422,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_IsChromebook() -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Query if the application is running on a Samsung DeX docking station.
         ///
         /// ## Return value
@@ -433,7 +433,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_IsDeXMode() -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Trigger the Android system back button behavior.
         ///
         /// ## Thread safety
@@ -458,7 +458,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
     /// This macro is available since SDL 3.2.0.
     pub const SDL_ANDROID_EXTERNAL_STORAGE_WRITE: Uint32 = (0x02 as Uint32);
 
-    extern "C" {
+    unsafe extern "C" {
         /// Get the path used for internal storage for this Android application.
         ///
         /// This path is unique to your application and cannot be written to by other
@@ -484,7 +484,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_GetAndroidInternalStoragePath() -> *const ::core::ffi::c_char;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Get the current state of external storage for this Android application.
         ///
         /// The current state of external storage, a bitmask of these values:
@@ -504,7 +504,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_GetAndroidExternalStorageState() -> Uint32;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Get the path used for external storage for this Android application.
         ///
         /// This path is unique to your application, but is public and can be written
@@ -531,7 +531,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_GetAndroidExternalStoragePath() -> *const ::core::ffi::c_char;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Get the path used for caching data for this Android application.
         ///
         /// This path is unique to your application, but is public and can be written
@@ -570,7 +570,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
     /// - [`SDL_RequestAndroidPermission`]
     pub type SDL_RequestAndroidPermissionCallback = ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void, permission: *const ::core::ffi::c_char, granted: ::core::primitive::bool)>;
 
-    extern "C" {
+    unsafe extern "C" {
         /// Request permissions at runtime, asynchronously.
         ///
         /// You do not need to call this for built-in functionality of SDL; recording
@@ -611,7 +611,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_RequestAndroidPermission(permission: *const ::core::ffi::c_char, cb: SDL_RequestAndroidPermissionCallback, userdata: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Shows an Android toast notification.
         ///
         /// Toasts are a sort of lightweight notification that are unique to Android.
@@ -644,7 +644,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         pub fn SDL_ShowAndroidToast(message: *const ::core::ffi::c_char, duration: ::core::ffi::c_int, gravity: ::core::ffi::c_int, xoffset: ::core::ffi::c_int, yoffset: ::core::ffi::c_int) -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Send a user command to SDLActivity.
         ///
         /// Override "boolean onUnhandledMessage(Message msg)" to handle the message.
@@ -667,7 +667,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
 
 });
 
-extern "C" {
+unsafe extern "C" {
     /// Query if the current device is a tablet.
     ///
     /// If SDL can't determine this, it will return false.
@@ -680,7 +680,7 @@ extern "C" {
     pub fn SDL_IsTablet() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query if the current device is a TV.
     ///
     /// If SDL can't determine this, it will return false.
@@ -767,7 +767,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_Sandbox {
         &crate::metadata::system::METADATA_SDL_Sandbox;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the application sandbox environment, if any.
     ///
     /// ## Return value
@@ -779,7 +779,7 @@ extern "C" {
     pub fn SDL_GetSandbox() -> SDL_Sandbox;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationWillTerminate.
     ///
@@ -798,7 +798,7 @@ extern "C" {
     pub fn SDL_OnApplicationWillTerminate();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationDidReceiveMemoryWarning.
     ///
@@ -817,7 +817,7 @@ extern "C" {
     pub fn SDL_OnApplicationDidReceiveMemoryWarning();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationWillResignActive.
     ///
@@ -836,7 +836,7 @@ extern "C" {
     pub fn SDL_OnApplicationWillEnterBackground();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationDidEnterBackground.
     ///
@@ -855,7 +855,7 @@ extern "C" {
     pub fn SDL_OnApplicationDidEnterBackground();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationWillEnterForeground.
     ///
@@ -874,7 +874,7 @@ extern "C" {
     pub fn SDL_OnApplicationWillEnterForeground();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Let iOS apps with external event handling report
     /// onApplicationDidBecomeActive.
     ///
@@ -894,7 +894,7 @@ extern "C" {
 }
 
 apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos"))] => {
-    extern "C" {
+    unsafe extern "C" {
         /// Let iOS apps with external event handling report
         /// onApplicationDidChangeStatusBarOrientation.
         ///
@@ -920,7 +920,7 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
 
     pub type XUserHandle = *mut XUser;
 
-    extern "C" {
+    unsafe extern "C" {
         /// Gets a reference to the global async task queue handle for GDK,
         /// initializing if needed.
         ///
@@ -940,7 +940,7 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
         pub fn SDL_GetGDKTaskQueue(outTaskQueue: *mut XTaskQueueHandle) -> ::core::primitive::bool;
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Gets a reference to the default user handle for GDK.
         ///
         /// This is effectively a synchronous version of XUserAddAsync, which always

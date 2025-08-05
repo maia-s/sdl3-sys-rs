@@ -1,6 +1,6 @@
 use std::{
     fs::read_dir,
-    io::{stderr, IsTerminal},
+    io::{IsTerminal, stderr},
     path::PathBuf,
     process,
 };

@@ -32,7 +32,7 @@ pub const fn SDL_TTF_VERSION_ATLEAST(
             || (SDL_TTF_MICRO_VERSION >= Z)))
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This function gets the version of the dynamically linked SDL_ttf library.
     ///
     /// ## Return value
@@ -46,7 +46,7 @@ extern "C" {
     pub fn TTF_Version() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the version of the FreeType library in use.
     ///
     /// [`TTF_Init()`] should be called before calling this function.
@@ -71,7 +71,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the version of the HarfBuzz library in use.
     ///
     /// If HarfBuzz is not available, the version reported is 0.0.0.
@@ -93,7 +93,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Initialize SDL_ttf.
     ///
     /// You must successfully call this function before it is safe to call any
@@ -114,7 +114,7 @@ extern "C" {
     pub fn TTF_Init() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a font from a file, using a specified point size.
     ///
     /// Some .fon fonts will have several sizes embedded in the file, so the point
@@ -145,7 +145,7 @@ extern "C" {
     ) -> *mut TTF_Font;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a font from an [`SDL_IOStream`], using a specified point size.
     ///
     /// Some .fon fonts will have several sizes embedded in the file, so the point
@@ -182,7 +182,7 @@ extern "C" {
     ) -> *mut TTF_Font;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a font with the specified properties.
     ///
     /// These are the supported properties:
@@ -260,7 +260,7 @@ pub const TTF_PROP_FONT_CREATE_VERTICAL_DPI_NUMBER: *const ::core::ffi::c_char =
 pub const TTF_PROP_FONT_CREATE_EXISTING_FONT: *const ::core::ffi::c_char =
     c"SDL_ttf.font.create.existing_font".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Create a copy of an existing font.
     ///
     /// The copy will be distinct from the original, but will share the font file
@@ -287,7 +287,7 @@ extern "C" {
     pub fn TTF_CopyFont(existing_font: *mut TTF_Font) -> *mut TTF_Font;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a font.
     ///
     /// The following read-write properties are provided by SDL:
@@ -325,7 +325,7 @@ pub const TTF_PROP_FONT_OUTLINE_LINE_JOIN_NUMBER: *const ::core::ffi::c_char =
 pub const TTF_PROP_FONT_OUTLINE_MITER_LIMIT_NUMBER: *const ::core::ffi::c_char =
     c"SDL_ttf.font.outline.miter_limit".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the font generation.
     ///
     /// The generation is incremented each time font properties change that require
@@ -347,7 +347,7 @@ extern "C" {
     pub fn TTF_GetFontGeneration(font: *mut TTF_Font) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add a fallback font.
     ///
     /// Add a font that will be used for glyphs that are not in the current font.
@@ -381,7 +381,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove a fallback font.
     ///
     /// This updates any [`TTF_Text`] objects using this font.
@@ -403,7 +403,7 @@ extern "C" {
     pub fn TTF_RemoveFallbackFont(font: *mut TTF_Font, fallback: *mut TTF_Font);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove all fallback fonts.
     ///
     /// This updates any [`TTF_Text`] objects using this font.
@@ -424,7 +424,7 @@ extern "C" {
     pub fn TTF_ClearFallbackFonts(font: *mut TTF_Font);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a font's size dynamically.
     ///
     /// This updates any [`TTF_Text`] objects using this font, and clears
@@ -453,7 +453,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set font size dynamically with target resolutions, in dots per inch.
     ///
     /// This updates any [`TTF_Text`] objects using this font, and clears
@@ -487,7 +487,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the size of a font.
     ///
     /// ## Parameters
@@ -510,7 +510,7 @@ extern "C" {
     pub fn TTF_GetFontSize(font: *mut TTF_Font) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get font target resolutions, in dots per inch.
     ///
     /// ## Parameters
@@ -732,7 +732,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for TTF_FontStyleFlags {
         &crate::metadata::ttf::METADATA_TTF_FontStyleFlags;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a font's current style.
     ///
     /// This updates any [`TTF_Text`] objects using this font, and clears
@@ -762,7 +762,7 @@ extern "C" {
     pub fn TTF_SetFontStyle(font: *mut TTF_Font, style: TTF_FontStyleFlags);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query a font's current style.
     ///
     /// The font styles are a set of bit flags, OR'd together:
@@ -790,7 +790,7 @@ extern "C" {
     pub fn TTF_GetFontStyle(font: *const TTF_Font) -> TTF_FontStyleFlags;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a font's current outline.
     ///
     /// This uses the font properties [`TTF_PROP_FONT_OUTLINE_LINE_CAP_NUMBER`],
@@ -823,7 +823,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query a font's current outline.
     ///
     /// ## Parameters
@@ -939,7 +939,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for TTF_HintingFlags {
         &crate::metadata::ttf::METADATA_TTF_HintingFlags;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a font's current hinter setting.
     ///
     /// This updates any [`TTF_Text`] objects using this font, and clears
@@ -969,7 +969,7 @@ extern "C" {
     pub fn TTF_SetFontHinting(font: *mut TTF_Font, hinting: TTF_HintingFlags);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the number of faces of a font.
     ///
     /// ## Parameters
@@ -986,7 +986,7 @@ extern "C" {
     pub fn TTF_GetNumFontFaces(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query a font's current FreeType hinter setting.
     ///
     /// The hinter setting is a single value:
@@ -1015,7 +1015,7 @@ extern "C" {
     pub fn TTF_GetFontHinting(font: *const TTF_Font) -> TTF_HintingFlags;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Enable Signed Distance Field rendering for a font.
     ///
     /// SDF is a technique that helps fonts look sharp even when scaling and
@@ -1050,7 +1050,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether Signed Distance Field rendering is enabled for a font.
     ///
     /// ## Parameters
@@ -1070,7 +1070,7 @@ extern "C" {
     pub fn TTF_GetFontSDF(font: *const TTF_Font) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query a font's weight, in terms of the lightness/heaviness of the strokes.
     ///
     /// ## Parameters
@@ -1188,7 +1188,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for TTF_HorizontalAlignment {
         &crate::metadata::ttf::METADATA_TTF_HorizontalAlignment;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a font's current wrap alignment option.
     ///
     /// This updates any [`TTF_Text`] objects using this font.
@@ -1209,7 +1209,7 @@ extern "C" {
     pub fn TTF_SetFontWrapAlignment(font: *mut TTF_Font, align: TTF_HorizontalAlignment);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query a font's current wrap alignment option.
     ///
     /// ## Parameters
@@ -1229,7 +1229,7 @@ extern "C" {
     pub fn TTF_GetFontWrapAlignment(font: *const TTF_Font) -> TTF_HorizontalAlignment;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the total height of a font.
     ///
     /// This is usually equal to point size.
@@ -1248,7 +1248,7 @@ extern "C" {
     pub fn TTF_GetFontHeight(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the offset from the baseline to the top of a font.
     ///
     /// This is a positive value, relative to the baseline.
@@ -1267,7 +1267,7 @@ extern "C" {
     pub fn TTF_GetFontAscent(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the offset from the baseline to the bottom of a font.
     ///
     /// This is a negative value, relative to the baseline.
@@ -1286,7 +1286,7 @@ extern "C" {
     pub fn TTF_GetFontDescent(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the spacing between lines of text for a font.
     ///
     /// This updates any [`TTF_Text`] objects using this font.
@@ -1307,7 +1307,7 @@ extern "C" {
     pub fn TTF_SetFontLineSkip(font: *mut TTF_Font, lineskip: ::core::ffi::c_int);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the spacing between lines of text for a font.
     ///
     /// ## Parameters
@@ -1327,7 +1327,7 @@ extern "C" {
     pub fn TTF_GetFontLineSkip(font: *const TTF_Font) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set if kerning is enabled for a font.
     ///
     /// Newly-opened fonts default to allowing kerning. This is generally a good
@@ -1353,7 +1353,7 @@ extern "C" {
     pub fn TTF_SetFontKerning(font: *mut TTF_Font, enabled: ::core::primitive::bool);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether or not kerning is enabled for a font.
     ///
     /// ## Parameters
@@ -1373,7 +1373,7 @@ extern "C" {
     pub fn TTF_GetFontKerning(font: *const TTF_Font) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether a font is fixed-width.
     ///
     /// A "fixed-width" font means all glyphs are the same width across; a
@@ -1396,7 +1396,7 @@ extern "C" {
     pub fn TTF_FontIsFixedWidth(font: *const TTF_Font) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether a font is scalable or not.
     ///
     /// Scalability lets us distinguish between outline and bitmap fonts.
@@ -1418,7 +1418,7 @@ extern "C" {
     pub fn TTF_FontIsScalable(font: *const TTF_Font) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query a font's family name.
     ///
     /// This string is dictated by the contents of the font file.
@@ -1441,7 +1441,7 @@ extern "C" {
     pub fn TTF_GetFontFamilyName(font: *const TTF_Font) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query a font's style name.
     ///
     /// This string is dictated by the contents of the font file.
@@ -1553,7 +1553,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for TTF_Direction {
         &crate::metadata::ttf::METADATA_TTF_Direction;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the direction to be used for text shaping by a font.
     ///
     /// This function only supports left-to-right text shaping if SDL_ttf was not
@@ -1581,7 +1581,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the direction to be used for text shaping by a font.
     ///
     /// This defaults to [`TTF_DIRECTION_INVALID`] if it hasn't been set.
@@ -1601,7 +1601,7 @@ extern "C" {
     pub fn TTF_GetFontDirection(font: *mut TTF_Font) -> TTF_Direction;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert from a 4 character string to a 32-bit tag.
     ///
     /// ## Parameters
@@ -1621,7 +1621,7 @@ extern "C" {
     pub fn TTF_StringToTag(string: *const ::core::ffi::c_char) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert from a 32-bit tag to a 4 character string.
     ///
     /// ## Parameters
@@ -1646,7 +1646,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the script to be used for text shaping by a font.
     ///
     /// This returns false if SDL_ttf isn't built with HarfBuzz support.
@@ -1675,7 +1675,7 @@ extern "C" {
     pub fn TTF_SetFontScript(font: *mut TTF_Font, script: Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the script used for text shaping a font.
     ///
     /// ## Parameters
@@ -1698,7 +1698,7 @@ extern "C" {
     pub fn TTF_GetFontScript(font: *mut TTF_Font) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the script used by a 32-bit codepoint.
     ///
     /// ## Parameters
@@ -1721,7 +1721,7 @@ extern "C" {
     pub fn TTF_GetGlyphScript(ch: Uint32) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set language to be used for text shaping by a font.
     ///
     /// If SDL_ttf was not built with HarfBuzz support, this function returns
@@ -1750,7 +1750,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check whether a glyph is provided by the font for a UNICODE codepoint.
     ///
     /// ## Parameters
@@ -1845,7 +1845,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for TTF_ImageType {
         &crate::metadata::ttf::METADATA_TTF_ImageType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the pixel image for a UNICODE codepoint.
     ///
     /// ## Parameters
@@ -1871,7 +1871,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the pixel image for a character index.
     ///
     /// This is useful for text engine implementations, which can call this with
@@ -1900,7 +1900,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the metrics (dimensions) of a font's glyph for a UNICODE codepoint.
     ///
     /// To understand what these metrics mean, here is a useful link:
@@ -1944,7 +1944,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the kerning size between the glyphs of two UNICODE codepoints.
     ///
     /// ## Parameters
@@ -1972,7 +1972,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the dimensions of a rendered string of UTF-8 text.
     ///
     /// This will report the width and height, in pixels, of the space that the
@@ -2005,7 +2005,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the dimensions of a rendered string of UTF-8 text.
     ///
     /// This will report the width and height, in pixels, of the space that the
@@ -2045,7 +2045,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate how much of a UTF-8 string will fit in a given width.
     ///
     /// This reports the number of characters that can be rendered before reaching
@@ -2085,7 +2085,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render UTF-8 text at fast quality to a new 8-bit surface.
     ///
     /// This function will allocate a new 8-bit, palettized surface. The surface's
@@ -2133,7 +2133,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render word-wrapped UTF-8 text at fast quality to a new 8-bit surface.
     ///
     /// This function will allocate a new 8-bit, palettized surface. The surface's
@@ -2181,7 +2181,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render a single 32-bit glyph at fast quality to a new 8-bit surface.
     ///
     /// This function will allocate a new 8-bit, palettized surface. The surface's
@@ -2220,7 +2220,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render UTF-8 text at high quality to a new 8-bit surface.
     ///
     /// This function will allocate a new 8-bit, palettized surface. The surface's
@@ -2270,7 +2270,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render word-wrapped UTF-8 text at high quality to a new 8-bit surface.
     ///
     /// This function will allocate a new 8-bit, palettized surface. The surface's
@@ -2321,7 +2321,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render a single UNICODE codepoint at high quality to a new 8-bit surface.
     ///
     /// This function will allocate a new 8-bit, palettized surface. The surface's
@@ -2363,7 +2363,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render UTF-8 text at high quality to a new ARGB surface.
     ///
     /// This function will allocate a new 32-bit, ARGB surface, using alpha
@@ -2410,7 +2410,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render word-wrapped UTF-8 text at high quality to a new ARGB surface.
     ///
     /// This function will allocate a new 32-bit, ARGB surface, using alpha
@@ -2458,7 +2458,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render a single UNICODE codepoint at high quality to a new ARGB surface.
     ///
     /// This function will allocate a new 32-bit, ARGB surface, using alpha
@@ -2497,7 +2497,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render UTF-8 text at LCD subpixel quality to a new ARGB surface.
     ///
     /// This function will allocate a new 32-bit, ARGB surface, and render
@@ -2546,7 +2546,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render word-wrapped UTF-8 text at LCD subpixel quality to a new ARGB
     /// surface.
     ///
@@ -2597,7 +2597,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render a single UNICODE codepoint at LCD subpixel quality to a new ARGB
     /// surface.
     ///
@@ -2689,7 +2689,7 @@ pub struct TTF_Text {
     __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a text engine for drawing text on SDL surfaces.
     ///
     /// ## Return value
@@ -2708,7 +2708,7 @@ extern "C" {
     pub fn TTF_CreateSurfaceTextEngine() -> *mut TTF_TextEngine;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw text to an SDL surface.
     ///
     /// `text` must have been created using a [`TTF_TextEngine`] from
@@ -2744,7 +2744,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a text engine created for drawing text on SDL surfaces.
     ///
     /// All text created by this engine should be destroyed before calling this
@@ -2766,7 +2766,7 @@ extern "C" {
     pub fn TTF_DestroySurfaceTextEngine(engine: *mut TTF_TextEngine);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a text engine for drawing text on an SDL renderer.
     ///
     /// ## Parameters
@@ -2790,7 +2790,7 @@ extern "C" {
     pub fn TTF_CreateRendererTextEngine(renderer: *mut SDL_Renderer) -> *mut TTF_TextEngine;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a text engine for drawing text on an SDL renderer, with the
     /// specified properties.
     ///
@@ -2830,7 +2830,7 @@ pub const TTF_PROP_RENDERER_TEXT_ENGINE_RENDERER: *const ::core::ffi::c_char =
 pub const TTF_PROP_RENDERER_TEXT_ENGINE_ATLAS_TEXTURE_SIZE: *const ::core::ffi::c_char =
     c"SDL_ttf.renderer_text_engine.create.atlas_texture_size".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Draw text to an SDL renderer.
     ///
     /// `text` must have been created using a [`TTF_TextEngine`] from
@@ -2865,7 +2865,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a text engine created for drawing text on an SDL renderer.
     ///
     /// All text created by this engine should be destroyed before calling this
@@ -2887,7 +2887,7 @@ extern "C" {
     pub fn TTF_DestroyRendererTextEngine(engine: *mut TTF_TextEngine);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a text engine for drawing text with the SDL GPU API.
     ///
     /// ## Parameters
@@ -2912,7 +2912,7 @@ extern "C" {
     pub fn TTF_CreateGPUTextEngine(device: *mut SDL_GPUDevice) -> *mut TTF_TextEngine;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a text engine for drawing text with the SDL GPU API, with the
     /// specified properties.
     ///
@@ -2986,7 +2986,7 @@ impl ::core::default::Default for TTF_GPUAtlasDrawSequence {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the geometry data needed for drawing the text.
     ///
     /// `text` must have been created using a [`TTF_TextEngine`] from
@@ -3021,7 +3021,7 @@ extern "C" {
     pub fn TTF_GetGPUTextDrawData(text: *mut TTF_Text) -> *mut TTF_GPUAtlasDrawSequence;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a text engine created for drawing text with the SDL GPU API.
     ///
     /// All text created by this engine should be destroyed before calling this
@@ -3112,7 +3112,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for TTF_GPUTextEngineWinding {
         &crate::metadata::ttf::METADATA_TTF_GPUTextEngineWinding;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets the winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]
     /// for a particular GPU text engine.
     ///
@@ -3136,7 +3136,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]
     /// for a particular GPU text engine
     ///
@@ -3160,7 +3160,7 @@ extern "C" {
     pub fn TTF_GetGPUTextEngineWinding(engine: *const TTF_TextEngine) -> TTF_GPUTextEngineWinding;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a text object from UTF-8 text and a text engine.
     ///
     /// ## Parameters
@@ -3192,7 +3192,7 @@ extern "C" {
     ) -> *mut TTF_Text;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a text object.
     ///
     /// ## Parameters
@@ -3211,7 +3211,7 @@ extern "C" {
     pub fn TTF_GetTextProperties(text: *mut TTF_Text) -> SDL_PropertiesID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the text engine used by a text object.
     ///
     /// This function may cause the internal text representation to be rebuilt.
@@ -3239,7 +3239,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the text engine used by a text object.
     ///
     /// ## Parameters
@@ -3261,7 +3261,7 @@ extern "C" {
     pub fn TTF_GetTextEngine(text: *mut TTF_Text) -> *mut TTF_TextEngine;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the font used by a text object.
     ///
     /// When a text object has a font, any changes to the font will automatically
@@ -3290,7 +3290,7 @@ extern "C" {
     pub fn TTF_SetTextFont(text: *mut TTF_Text, font: *mut TTF_Font) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the font used by a text object.
     ///
     /// ## Parameters
@@ -3312,7 +3312,7 @@ extern "C" {
     pub fn TTF_GetTextFont(text: *mut TTF_Text) -> *mut TTF_Font;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the direction to be used for text shaping a text object.
     ///
     /// This function only supports left-to-right text shaping if SDL_ttf was not
@@ -3338,7 +3338,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the direction to be used for text shaping a text object.
     ///
     /// This defaults to the direction of the font used by the text object.
@@ -3358,7 +3358,7 @@ extern "C" {
     pub fn TTF_GetTextDirection(text: *mut TTF_Text) -> TTF_Direction;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the script to be used for text shaping a text object.
     ///
     /// This returns false if SDL_ttf isn't built with HarfBuzz support.
@@ -3385,7 +3385,7 @@ extern "C" {
     pub fn TTF_SetTextScript(text: *mut TTF_Text, script: Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the script used for text shaping a text object.
     ///
     /// This defaults to the script of the font used by the text object.
@@ -3411,7 +3411,7 @@ extern "C" {
     pub fn TTF_GetTextScript(text: *mut TTF_Text) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the color of a text object.
     ///
     /// The default text color is white (255, 255, 255, 255).
@@ -3446,7 +3446,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the color of a text object.
     ///
     /// The default text color is white (1.0f, 1.0f, 1.0f, 1.0f).
@@ -3481,7 +3481,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the color of a text object.
     ///
     /// ## Parameters
@@ -3518,7 +3518,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the color of a text object.
     ///
     /// ## Parameters
@@ -3555,7 +3555,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the position of a text object.
     ///
     /// This can be used to position multiple text objects within a single wrapping
@@ -3584,7 +3584,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the position of a text object.
     ///
     /// ## Parameters
@@ -3610,7 +3610,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set whether wrapping is enabled on a text object.
     ///
     /// This function may cause the internal text representation to be rebuilt.
@@ -3639,7 +3639,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get whether wrapping is enabled on a text object.
     ///
     /// ## Parameters
@@ -3666,7 +3666,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set whether whitespace should be visible when wrapping a text object.
     ///
     /// If the whitespace is visible, it will take up space for purposes of
@@ -3700,7 +3700,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether whitespace is shown when wrapping a text object.
     ///
     /// ## Parameters
@@ -3722,7 +3722,7 @@ extern "C" {
     pub fn TTF_TextWrapWhitespaceVisible(text: *mut TTF_Text) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the UTF-8 text used by a text object.
     ///
     /// This function may cause the internal text representation to be rebuilt.
@@ -3755,7 +3755,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Insert UTF-8 text into a text object.
     ///
     /// This function may cause the internal text representation to be rebuilt.
@@ -3793,7 +3793,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Append UTF-8 text to a text object.
     ///
     /// This function may cause the internal text representation to be rebuilt.
@@ -3826,7 +3826,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Delete UTF-8 text from a text object.
     ///
     /// This function may cause the internal text representation to be rebuilt.
@@ -3862,7 +3862,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the size of a text object.
     ///
     /// The size of the text may change when the font or font style and size
@@ -4111,7 +4111,7 @@ pub struct TTF_SubString {
     pub rect: SDL_Rect,
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the substring of a text object that surrounds a text offset.
     ///
     /// If `offset` is less than 0, this will return a zero length substring at the
@@ -4143,7 +4143,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the substring of a text object that contains the given line.
     ///
     /// If `line` is less than 0, this will return a zero length substring at the
@@ -4175,7 +4175,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the substrings of a text object that contain a range of text.
     ///
     /// ## Parameters
@@ -4206,7 +4206,7 @@ extern "C" {
     ) -> *mut *mut TTF_SubString;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the portion of a text string that is closest to a point.
     ///
     /// This will return the closest substring of text to the given point.
@@ -4238,7 +4238,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the previous substring in a text object
     ///
     /// If called at the start of the text, this will return a zero length
@@ -4265,7 +4265,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the next substring in a text object
     ///
     /// If called at the end of the text, this will return a zero length substring
@@ -4293,7 +4293,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update the layout of a text object.
     ///
     /// This is automatically done when the layout is requested or the text is
@@ -4316,7 +4316,7 @@ extern "C" {
     pub fn TTF_UpdateText(text: *mut TTF_Text) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a text object created by a text engine.
     ///
     /// ## Parameters
@@ -4334,7 +4334,7 @@ extern "C" {
     pub fn TTF_DestroyText(text: *mut TTF_Text);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Dispose of a previously-created font.
     ///
     /// Call this when done with a font. This function will free any resources
@@ -4362,7 +4362,7 @@ extern "C" {
     pub fn TTF_CloseFont(font: *mut TTF_Font);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Deinitialize SDL_ttf.
     ///
     /// You must call this when done with the library, to free internal resources.
@@ -4386,7 +4386,7 @@ extern "C" {
     pub fn TTF_Quit();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check if SDL_ttf is initialized.
     ///
     /// This reports the number of times the library has been initialized by a call

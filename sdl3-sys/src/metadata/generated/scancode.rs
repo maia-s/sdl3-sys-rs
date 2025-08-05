@@ -7,7 +7,9 @@ pub const METADATA_SDL_Scancode: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_Scancode",
     short_name: "Scancode",
-    doc: Some("The SDL keyboard scancode representation.\n\nAn SDL scancode is the physical representation of a key on the keyboard,\nindependent of language and keyboard mapping.\n\nValues of this type are used to represent keyboard keys, among other places\nin the `scancode` field of the [`SDL_KeyboardEvent`] structure.\n\nThe values in this enumeration are based on the USB usage page standard:\n<https://usb.org/sites/default/files/hut1_5.pdf>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The SDL keyboard scancode representation.\n\nAn SDL scancode is the physical representation of a key on the keyboard,\nindependent of language and keyboard mapping.\n\nValues of this type are used to represent keyboard keys, among other places\nin the `scancode` field of the [`SDL_KeyboardEvent`] structure.\n\nThe values in this enumeration are based on the USB usage page standard:\n<https://usb.org/sites/default/files/hut1_5.pdf>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -289,13 +291,17 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_BACKSLASH",
             short_name: "BACKSLASH",
-            doc: Some("Located at the lower left of the return\nkey on ISO keyboards and at the right end\nof the QWERTY row on ANSI keyboards.\nProduces REVERSE SOLIDUS (backslash) and\nVERTICAL LINE in a US layout, REVERSE\nSOLIDUS and VERTICAL LINE in a UK Mac\nlayout, NUMBER SIGN and TILDE in a UK\nWindows layout, DOLLAR SIGN and POUND SIGN\nin a Swiss German layout, NUMBER SIGN and\nAPOSTROPHE in a German layout, GRAVE\nACCENT and POUND SIGN in a French Mac\nlayout, and ASTERISK and MICRO SIGN in a\nFrench Windows layout.\n"),
+            doc: Some(
+                "Located at the lower left of the return\nkey on ISO keyboards and at the right end\nof the QWERTY row on ANSI keyboards.\nProduces REVERSE SOLIDUS (backslash) and\nVERTICAL LINE in a US layout, REVERSE\nSOLIDUS and VERTICAL LINE in a UK Mac\nlayout, NUMBER SIGN and TILDE in a UK\nWindows layout, DOLLAR SIGN and POUND SIGN\nin a Swiss German layout, NUMBER SIGN and\nAPOSTROPHE in a German layout, GRAVE\nACCENT and POUND SIGN in a French Mac\nlayout, and ASTERISK and MICRO SIGN in a\nFrench Windows layout.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_SCANCODE_NONUSHASH",
             short_name: "NONUSHASH",
-            doc: Some("ISO USB keyboards actually use this code\ninstead of 49 for the same key, but all\nOSes I've seen treat the two codes\nidentically. So, as an implementor, unless\nyour keyboard generates both of those\ncodes and your OS treats them differently,\nyou should generate [`SDL_SCANCODE_BACKSLASH`]\ninstead of this code. As a user, you\nshould not rely on this code because SDL\nwill never generate it with most (all?)\nkeyboards.\n"),
+            doc: Some(
+                "ISO USB keyboards actually use this code\ninstead of 49 for the same key, but all\nOSes I've seen treat the two codes\nidentically. So, as an implementor, unless\nyour keyboard generates both of those\ncodes and your OS treats them differently,\nyou should generate [`SDL_SCANCODE_BACKSLASH`]\ninstead of this code. As a user, you\nshould not rely on this code because SDL\nwill never generate it with most (all?)\nkeyboards.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -313,7 +319,9 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_GRAVE",
             short_name: "GRAVE",
-            doc: Some("Located in the top left corner (on both ANSI\nand ISO keyboards). Produces GRAVE ACCENT and\nTILDE in a US Windows layout and in US and UK\nMac layouts on ANSI keyboards, GRAVE ACCENT\nand NOT SIGN in a UK Windows layout, SECTION\nSIGN and PLUS-MINUS SIGN in US and UK Mac\nlayouts on ISO keyboards, SECTION SIGN and\nDEGREE SIGN in a Swiss German layout (Mac:\nonly on ISO keyboards), CIRCUMFLEX ACCENT and\nDEGREE SIGN in a German layout (Mac: only on\nISO keyboards), SUPERSCRIPT TWO and TILDE in a\nFrench Windows layout, COMMERCIAL AT and\nNUMBER SIGN in a French Mac layout on ISO\nkeyboards, and LESS-THAN SIGN and GREATER-THAN\nSIGN in a Swiss German, German, or French Mac\nlayout on ANSI keyboards.\n"),
+            doc: Some(
+                "Located in the top left corner (on both ANSI\nand ISO keyboards). Produces GRAVE ACCENT and\nTILDE in a US Windows layout and in US and UK\nMac layouts on ANSI keyboards, GRAVE ACCENT\nand NOT SIGN in a UK Windows layout, SECTION\nSIGN and PLUS-MINUS SIGN in US and UK Mac\nlayouts on ISO keyboards, SECTION SIGN and\nDEGREE SIGN in a Swiss German layout (Mac:\nonly on ISO keyboards), CIRCUMFLEX ACCENT and\nDEGREE SIGN in a German layout (Mac: only on\nISO keyboards), SUPERSCRIPT TWO and TILDE in a\nFrench Windows layout, COMMERCIAL AT and\nNUMBER SIGN in a French Mac layout on ISO\nkeyboards, and LESS-THAN SIGN and GREATER-THAN\nSIGN in a Swiss German, German, or French Mac\nlayout on ANSI keyboards.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -433,7 +441,9 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_INSERT",
             short_name: "INSERT",
-            doc: Some("insert on PC, help on some Mac keyboards (but\ndoes send code 73, not 117)\n"),
+            doc: Some(
+                "insert on PC, help on some Mac keyboards (but\ndoes send code 73, not 117)\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -595,7 +605,9 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_NONUSBACKSLASH",
             short_name: "NONUSBACKSLASH",
-            doc: Some("This is the additional key that ISO\nkeyboards have over ANSI ones,\nlocated between left shift and Z.\nProduces GRAVE ACCENT and TILDE in a\nUS or UK Mac layout, REVERSE SOLIDUS\n(backslash) and VERTICAL LINE in a\nUS or UK Windows layout, and\nLESS-THAN SIGN and GREATER-THAN SIGN\nin a Swiss German, German, or French\nlayout.\n"),
+            doc: Some(
+                "This is the additional key that ISO\nkeyboards have over ANSI ones,\nlocated between left shift and Z.\nProduces GRAVE ACCENT and TILDE in a\nUS or UK Mac layout, REVERSE SOLIDUS\n(backslash) and VERTICAL LINE in a\nUS or UK Windows layout, and\nLESS-THAN SIGN and GREATER-THAN SIGN\nin a Swiss German, German, or French\nlayout.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -607,7 +619,9 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_POWER",
             short_name: "POWER",
-            doc: Some("The USB document says this is a status flag,\nnot a physical key - but some Mac keyboards\ndo have a power key.\n"),
+            doc: Some(
+                "The USB document says this is a status flag,\nnot a physical key - but some Mac keyboards\ndo have a power key.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -1291,7 +1305,9 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_MODE",
             short_name: "MODE",
-            doc: Some("I'm not sure if this is really not covered\nby any of the above, but since there's a\nspecial [`SDL_KMOD_MODE`] for it I'm adding it here\n"),
+            doc: Some(
+                "I'm not sure if this is really not covered\nby any of the above, but since there's a\nspecial [`SDL_KMOD_MODE`] for it I'm adding it here\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -1471,13 +1487,17 @@ pub const METADATA_SDL_Scancode: Group = Group {
         GroupValue {
             name: "SDL_SCANCODE_SOFTLEFT",
             short_name: "SOFTLEFT",
-            doc: Some("Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom left\nof the display.\n"),
+            doc: Some(
+                "Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom left\nof the display.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_SCANCODE_SOFTRIGHT",
             short_name: "SOFTRIGHT",
-            doc: Some("Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom right\nof the display.\n"),
+            doc: Some(
+                "Usually situated below the display on phones and\nused as a multi-function feature key for selecting\na software defined function shown on the bottom right\nof the display.\n",
+            ),
             available_since: None,
         },
         GroupValue {

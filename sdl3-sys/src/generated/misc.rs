@@ -4,7 +4,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern "C" {
+unsafe extern "C" {
     /// Open a URL/URI in the browser or other appropriate external application.
     ///
     /// Open a URL in a separate, system-provided application. How this works will

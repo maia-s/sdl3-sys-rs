@@ -40,7 +40,7 @@ use std::{
     env::{current_dir, set_current_dir},
     error,
     fmt::{self, Debug, Display},
-    fs::{self, create_dir, read_dir, DirBuilder, File, OpenOptions},
+    fs::{self, DirBuilder, File, OpenOptions, create_dir, read_dir},
     io::{self, BufWriter, Read, Write as _},
     path::{Path, PathBuf},
     process::{Command, Stdio},
@@ -83,7 +83,7 @@ fn format_and_write(input: String, path: &Path) -> Result<(), Error> {
     create_dir_r(path.parent().unwrap())?;
     let mut fmt = Command::new("rustfmt")
         .arg("--edition")
-        .arg("2021")
+        .arg("2024")
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .spawn()?;
@@ -493,7 +493,7 @@ pub fn generate(root: &Path, libs: &[String]) -> Result<(), Error> {
         let headers_path = lib.headers_path();
         let headers_prefix = lib.headers_prefix().to_ascii_lowercase();
 
-        let mut gen = Gen::new(
+        let mut generator = Gen::new(
             lib.lib_name.clone(),
             lib.config("sym_prefix").to_owned(),
             emitted_sdl3,
@@ -529,27 +529,27 @@ pub fn generate(root: &Path, libs: &[String]) -> Result<(), Error> {
                     })?
                     .read_to_string(&mut buf)
                     .map_err(|e| format!("error reading `{}`: {}", entry_path.display(), e))?;
-                let buf = gen.patch_module(module, buf);
+                let buf = generator.patch_module(module, buf);
                 let display_path = entry.path();
                 let display_path = display_path
                     .strip_prefix(root)
                     .unwrap_or(&display_path)
                     .to_string_lossy()
                     .to_string();
-                gen.parse(module, display_path, buf)?;
+                generator.parse(module, display_path, buf)?;
             }
         }
 
-        gen.emit_top_level()?; // create empty mod.rs to be appended by emit
-        for module in gen.parsed.keys() {
-            gen.emit(module)?;
+        generator.emit_top_level()?; // create empty mod.rs to be appended by emit
+        for module in generator.parsed.keys() {
+            generator.emit(module)?;
         }
-        gen.emit_top_level()?; // rewrite final mod.rs in sorted order
+        generator.emit_top_level()?; // rewrite final mod.rs in sorted order
 
         if i == 0 {
-            emitted_sdl3 = gen.emitted.into_inner();
+            emitted_sdl3 = generator.emitted.into_inner();
         } else {
-            emitted_sdl3 = gen.emitted_sdl3;
+            emitted_sdl3 = generator.emitted_sdl3;
         }
     }
 

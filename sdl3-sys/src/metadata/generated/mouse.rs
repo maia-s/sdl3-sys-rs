@@ -7,17 +7,20 @@ pub const METADATA_SDL_MouseID: Group = Group {
     kind: GroupKind::Id,
     name: "SDL_MouseID",
     short_name: "MouseID",
-    doc: Some("This is a unique ID for a mouse for the time it is connected to the system,\nand is never reused for the lifetime of the application.\n\nIf the mouse is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "This is a unique ID for a mouse for the time it is connected to the system,\nand is never reused for the lifetime of the application.\n\nIf the mouse is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
-    values: &[
-    ],
+    values: &[],
 };
 pub const METADATA_SDL_SystemCursor: Group = Group {
     module: "mouse",
     kind: GroupKind::Enum,
     name: "SDL_SystemCursor",
     short_name: "SystemCursor",
-    doc: Some("Cursor types for [`SDL_CreateSystemCursor()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Cursor types for [`SDL_CreateSystemCursor()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -95,7 +98,9 @@ pub const METADATA_SDL_SystemCursor: Group = Group {
         GroupValue {
             name: "SDL_SYSTEM_CURSOR_NW_RESIZE",
             short_name: "NW_RESIZE",
-            doc: Some("Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE.\n"),
+            doc: Some(
+                "Window resize top-left. This may be a single arrow or a double arrow like NWSE_RESIZE.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -153,7 +158,9 @@ pub const METADATA_SDL_MouseWheelDirection: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_MouseWheelDirection",
     short_name: "MouseWheelDirection",
-    doc: Some("Scroll direction types for the Scroll event\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Scroll direction types for the Scroll event\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -175,7 +182,9 @@ pub const METADATA_SDL_MouseButtonFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_MouseButtonFlags",
     short_name: "MouseButtonFlags",
-    doc: Some("A bitmask of pressed mouse buttons, as reported by [`SDL_GetMouseState`], etc.\n\n- Button 1: Left mouse button\n- Button 2: Middle mouse button\n- Button 3: Right mouse button\n- Button 4: Side mouse button 1\n- Button 5: Side mouse button 2\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetMouseState`]\n- [`SDL_GetGlobalMouseState`]\n- [`SDL_GetRelativeMouseState`]\n"),
+    doc: Some(
+        "A bitmask of pressed mouse buttons, as reported by [`SDL_GetMouseState`], etc.\n\n- Button 1: Left mouse button\n- Button 2: Middle mouse button\n- Button 3: Right mouse button\n- Button 4: Side mouse button 1\n- Button 5: Side mouse button 2\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetMouseState`]\n- [`SDL_GetGlobalMouseState`]\n- [`SDL_GetRelativeMouseState`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

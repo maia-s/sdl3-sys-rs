@@ -30,7 +30,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern "C" {
+unsafe extern "C" {
     /// Dynamically load a shared object.
     ///
     /// ## Parameters
@@ -52,7 +52,7 @@ extern "C" {
     pub fn SDL_LoadObject(sofile: *const ::core::ffi::c_char) -> *mut SDL_SharedObject;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Look up the address of the named function in a shared object.
     ///
     /// This function pointer is no longer valid after calling [`SDL_UnloadObject()`].
@@ -89,7 +89,7 @@ extern "C" {
     ) -> SDL_FunctionPointer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unload a shared object from memory.
     ///
     /// Note that any pointers from this object looked up through

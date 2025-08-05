@@ -126,7 +126,6 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
         match_ident: |i| matches!(i, "SDL_copysign" | "SDL_copysignf"),
         patch: |ctx, f| {
             let mut fr = f.clone();
-            let ty = ctx.capture_output(|ctx| fr.return_type.emit(ctx))?;
             let arg0 = &f.args.args[0];
             let arg1 = &f.args.args[1];
             fr.extern_kw = None;
@@ -136,21 +135,7 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
                 items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
                     RustCode::boxed(
                         format!(
-                            str_block! {r#"
-                                #[cfg(feature = "-core-float")]
-                                {{
-                                    return {arg0}.copysign({arg1});
-                                }}
-                                #[cfg(not(feature = "-core-float"))]
-                                {{
-                                    extern "C" {{
-                                        fn {ident}({arg0}: {ty}, {arg1}: {ty}) -> {ty};
-                                    }}
-                                    return unsafe {{ {ident}({arg0}, {arg1}) }};
-                                }}
-                            "#},
-                            ty = ty,
-                            ident = f.ident.as_str(),
+                            "return {arg0}.copysign({arg1});",
                             arg0 = arg0.ident.as_ref().unwrap().as_str(),
                             arg1 = arg1.ident.as_ref().unwrap().as_str(),
                         ),
@@ -169,7 +154,6 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
         match_ident: |i| matches!(i, "SDL_fabs" | "SDL_fabsf"),
         patch: |ctx, f| {
             let mut fr = f.clone();
-            let ty = ctx.capture_output(|ctx| fr.return_type.emit(ctx))?;
             let arg0 = &f.args.args[0];
             fr.extern_kw = None;
             fr.static_kw = Some(Kw_static { span: Span::none() });
@@ -178,21 +162,7 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
                 items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
                     RustCode::boxed(
                         format!(
-                            str_block! {r#"
-                                #[cfg(feature = "-core-float")]
-                                {{
-                                    return {arg0}.abs();
-                                }}
-                                #[cfg(not(feature = "-core-float"))]
-                                {{
-                                    extern "C" {{
-                                        fn {ident}({arg0}: {ty}) -> {ty};
-                                    }}
-                                    return unsafe {{ {ident}({arg0}) }};
-                                }}
-                            "#},
-                            ty = ty,
-                            ident = f.ident.as_str(),
+                            "return {arg0}.abs();",
                             arg0 = arg0.ident.as_ref().unwrap().as_str(),
                         ),
                         arg0.ty.clone(),
@@ -591,7 +561,10 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             define.doc.emit(ctx)?;
             writeln!(ctx, "///")?;
             writeln!(ctx, "/// # Safety")?;
-            writeln!(ctx, "/// It must be valid to write the memory pointed to by `src` to the memory pointed to by `dst`,")?;
+            writeln!(
+                ctx,
+                "/// It must be valid to write the memory pointed to by `src` to the memory pointed to by `dst`,"
+            )?;
             writeln!(
                 ctx,
                 "/// and the memory pointed to by `src` and `dst` must not overlap"
@@ -602,7 +575,10 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 "pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) -> *mut Dst {{"
             )?;
             ctx.increase_indent();
-            writeln!(ctx, "const {{ assert!(::core::mem::size_of::<Dst>() == ::core::mem::size_of::<Src>()) }}")?;
+            writeln!(
+                ctx,
+                "const {{ assert!(::core::mem::size_of::<Dst>() == ::core::mem::size_of::<Src>()) }}"
+            )?;
             writeln!(
                 ctx,
                 "unsafe {{ ::core::ptr::copy_nonoverlapping(src.cast::<Uint8>(), dst.cast::<Uint8>(), ::core::mem::size_of::<Src>()) }};"
@@ -639,7 +615,10 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             writeln!(ctx, "#[inline(always)]")?;
             writeln!(ctx, "pub unsafe fn SDL_INIT_INTERFACE<T>(iface: *mut T) {{")?;
             ctx.increase_indent();
-            writeln!(ctx, "const {{ ::core::assert!(::core::mem::size_of::<T>() <= ::core::primitive::u32::MAX as usize) }};")?;
+            writeln!(
+                ctx,
+                "const {{ ::core::assert!(::core::mem::size_of::<T>() <= ::core::primitive::u32::MAX as usize) }};"
+            )?;
             writeln!(ctx, "unsafe {{")?;
             ctx.increase_indent();
             writeln!(ctx, "iface.write_bytes(0, 1);")?;
@@ -747,7 +726,10 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
             define.doc.emit(ctx)?;
             writeln!(ctx, "///")?;
             writeln!(ctx, "/// # Safety")?;
-            writeln!(ctx, "/// It must be valid to zero all bytes of `T`, and it must be valid to write a `T` to the memory pointed to by `x`")?;
+            writeln!(
+                ctx,
+                "/// It must be valid to zero all bytes of `T`, and it must be valid to write a `T` to the memory pointed to by `x`"
+            )?;
             writeln!(ctx, "#[inline(always)]")?;
             writeln!(ctx, "pub unsafe fn SDL_zerop<T>(x: *mut T) -> *mut T {{")?;
             ctx.increase_indent();
@@ -814,9 +796,12 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
         "pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) }};"
     )?;
     writeln!(ctx, "{cfg_win}")?;
-    writeln!(ctx, "extern \"cdecl\" {{")?;
+    writeln!(ctx, "unsafe extern \"cdecl\" {{")?;
     ctx.increase_indent();
-    writeln!(ctx, "fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<unsafe extern \"stdcall\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;")?;
+    writeln!(
+        ctx,
+        "fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<unsafe extern \"stdcall\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;"
+    )?;
     writeln!(ctx, "fn _endthreadex(retval: ::core::ffi::c_uint);")?;
     ctx.decrease_indent();
     writeln!(ctx, "}}")?;
@@ -864,7 +849,9 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
                 unreachable!()
             };
             let name = arg.as_str().strip_prefix("Vk").unwrap();
-            let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a pointer to an opaque struct.");
+            let doc = format!(
+                "(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a pointer to an opaque struct."
+            );
             integrate(
                 ctx,
                 VULKAN_CRATE_VERSIONS,
@@ -909,7 +896,9 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
                 panic!()
             };
             let name = arg.as_str().strip_prefix("Vk").unwrap();
-            let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a target dependent opaque type.");
+            let doc = format!(
+                "(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}` from the `ash` crate. Otherwise it's a target dependent opaque type."
+            );
             integrate(
                 ctx,
                 VULKAN_CRATE_VERSIONS,
@@ -1097,8 +1086,10 @@ const EMIT_OPAQUE_STRUCT_PATCHES: &[EmitOpaqueStructPatch] = &[EmitOpaqueStructP
     match_ident: |i| i == "VkAllocationCallbacks",
     patch: |ctx, s| {
         let name = s.ident.as_str().strip_prefix("Vk").unwrap();
-        let doc = format!("(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}::<'static>` from the `ash` crate. Otherwise it's an opaque type. {}",
-            "<div class=\"warning\">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>");
+        let doc = format!(
+            "(`sdl3-sys`) Enable a `use-ash-*` feature to alias this to `vk::{name}::<'static>` from the `ash` crate. Otherwise it's an opaque type. {}",
+            "<div class=\"warning\">The `'static` lifetime is too long. `ash` requires a lifetime for this, but as it's a C ffi type there's no way for `sdl3-sys` to set the correct lifetime.</div>"
+        );
         integrate(
             ctx,
             VULKAN_CRATE_VERSIONS,

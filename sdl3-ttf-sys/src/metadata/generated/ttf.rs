@@ -151,7 +151,9 @@ pub const METADATA_TTF_FontStyleFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "TTF_FontStyleFlags",
     short_name: "FontStyleFlags",
-    doc: Some("Font style flags for [`TTF_Font`]\n\nThese are the flags which can be used to set the style of a font in\nSDL_ttf. A combination of these flags can be used with functions that set\nor query font style, such as [`TTF_SetFontStyle`] or [`TTF_GetFontStyle`].\n\n## Availability\nThis datatype is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SetFontStyle`]\n- [`TTF_GetFontStyle`]\n"),
+    doc: Some(
+        "Font style flags for [`TTF_Font`]\n\nThese are the flags which can be used to set the style of a font in\nSDL_ttf. A combination of these flags can be used with functions that set\nor query font style, such as [`TTF_SetFontStyle`] or [`TTF_GetFontStyle`].\n\n## Availability\nThis datatype is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SetFontStyle`]\n- [`TTF_GetFontStyle`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {
@@ -191,7 +193,9 @@ pub const METADATA_TTF_HintingFlags: Group = Group {
     kind: GroupKind::Enum,
     name: "TTF_HintingFlags",
     short_name: "HintingFlags",
-    doc: Some("Hinting flags for TTF (TrueType Fonts)\n\nThis enum specifies the level of hinting to be applied to the font\nrendering. The hinting level determines how much the font's outlines are\nadjusted for better alignment on the pixel grid.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SetFontHinting`]\n- [`TTF_GetFontHinting`]\n"),
+    doc: Some(
+        "Hinting flags for TTF (TrueType Fonts)\n\nThis enum specifies the level of hinting to be applied to the font\nrendering. The hinting level determines how much the font's outlines are\nadjusted for better alignment on the pixel grid.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SetFontHinting`]\n- [`TTF_GetFontHinting`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {
@@ -215,7 +219,9 @@ pub const METADATA_TTF_HintingFlags: Group = Group {
         GroupValue {
             name: "TTF_HINTING_MONO",
             short_name: "MONO",
-            doc: Some("Monochrome hinting adjusts the font for better rendering at lower resolutions.\n"),
+            doc: Some(
+                "Monochrome hinting adjusts the font for better rendering at lower resolutions.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -237,7 +243,9 @@ pub const METADATA_TTF_HorizontalAlignment: Group = Group {
     kind: GroupKind::Enum,
     name: "TTF_HorizontalAlignment",
     short_name: "HorizontalAlignment",
-    doc: Some("The horizontal alignment used when rendering wrapped text.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n"),
+    doc: Some(
+        "The horizontal alignment used when rendering wrapped text.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {
@@ -271,7 +279,9 @@ pub const METADATA_TTF_Direction: Group = Group {
     kind: GroupKind::Enum,
     name: "TTF_Direction",
     short_name: "Direction",
-    doc: Some("Direction flags\n\nThe values here are chosen to match\n[hb_direction_t](https://harfbuzz.github.io/harfbuzz-hb-common.html#hb-direction-t)\n.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SetFontDirection`]\n"),
+    doc: Some(
+        "Direction flags\n\nThe values here are chosen to match\n[hb_direction_t](https://harfbuzz.github.io/harfbuzz-hb-common.html#hb-direction-t)\n.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SetFontDirection`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {
@@ -311,7 +321,9 @@ pub const METADATA_TTF_ImageType: Group = Group {
     kind: GroupKind::Enum,
     name: "TTF_ImageType",
     short_name: "ImageType",
-    doc: Some("The type of data in a glyph image\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n"),
+    doc: Some(
+        "The type of data in a glyph image\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {
@@ -345,7 +357,9 @@ pub const METADATA_TTF_GPUTextEngineWinding: Group = Group {
     kind: GroupKind::Enum,
     name: "TTF_GPUTextEngineWinding",
     short_name: "GPUTextEngineWinding",
-    doc: Some("The winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n"),
+    doc: Some(
+        "The winding order of the vertices returned by [`TTF_GetGPUTextDrawData`]\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {
@@ -373,7 +387,9 @@ pub const METADATA_TTF_SubStringFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "TTF_SubStringFlags",
     short_name: "SubStringFlags",
-    doc: Some("Flags for [`TTF_SubString`]\n\n## Availability\nThis datatype is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SubString`]\n"),
+    doc: Some(
+        "Flags for [`TTF_SubString`]\n\n## Availability\nThis datatype is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_SubString`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {

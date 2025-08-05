@@ -298,7 +298,7 @@ const _: () = ::core::assert!(
             && (::core::mem::size_of::<SDL_IOStreamInterface>() == 56_usize)))
 );
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to create a new [`SDL_IOStream`] structure for reading from
     /// and/or writing to a named file.
     ///
@@ -403,7 +403,7 @@ pub const SDL_PROP_IOSTREAM_FILE_DESCRIPTOR_NUMBER: *const ::core::ffi::c_char =
 pub const SDL_PROP_IOSTREAM_ANDROID_AASSET_POINTER: *const ::core::ffi::c_char =
     c"SDL.iostream.android.aasset".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to prepare a read-write memory buffer for use with
     /// [`SDL_IOStream`].
     ///
@@ -459,7 +459,7 @@ pub const SDL_PROP_IOSTREAM_MEMORY_POINTER: *const ::core::ffi::c_char =
 pub const SDL_PROP_IOSTREAM_MEMORY_SIZE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.iostream.memory.size".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to prepare a read-only memory buffer for use with
     /// [`SDL_IOStream`].
     ///
@@ -509,7 +509,7 @@ extern "C" {
     ) -> *mut SDL_IOStream;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to create an [`SDL_IOStream`] that is backed by dynamically
     /// allocated memory.
     ///
@@ -549,7 +549,7 @@ pub const SDL_PROP_IOSTREAM_DYNAMIC_MEMORY_POINTER: *const ::core::ffi::c_char =
 pub const SDL_PROP_IOSTREAM_DYNAMIC_CHUNKSIZE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.iostream.dynamic.chunksize".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Create a custom [`SDL_IOStream`].
     ///
     /// Applications do not need to use this function unless they are providing
@@ -587,7 +587,7 @@ extern "C" {
     ) -> *mut SDL_IOStream;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close and free an allocated [`SDL_IOStream`] structure.
     ///
     /// [`SDL_CloseIO()`] closes and cleans up the [`SDL_IOStream`] stream. It releases any
@@ -625,7 +625,7 @@ extern "C" {
     pub fn SDL_CloseIO(context: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with an [`SDL_IOStream`].
     ///
     /// ## Parameters
@@ -643,7 +643,7 @@ extern "C" {
     pub fn SDL_GetIOProperties(context: *mut SDL_IOStream) -> SDL_PropertiesID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the stream status of an [`SDL_IOStream`].
     ///
     /// This information can be useful to decide if a short read or write was due
@@ -668,7 +668,7 @@ extern "C" {
     pub fn SDL_GetIOStatus(context: *mut SDL_IOStream) -> SDL_IOStatus;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to get the size of the data stream in an [`SDL_IOStream`].
     ///
     /// ## Parameters
@@ -687,7 +687,7 @@ extern "C" {
     pub fn SDL_GetIOSize(context: *mut SDL_IOStream) -> Sint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Seek within an [`SDL_IOStream`] data stream.
     ///
     /// This function seeks to byte `offset`, relative to `whence`.
@@ -722,7 +722,7 @@ extern "C" {
     pub fn SDL_SeekIO(context: *mut SDL_IOStream, offset: Sint64, whence: SDL_IOWhence) -> Sint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine the current read/write offset in an [`SDL_IOStream`] data stream.
     ///
     /// [`SDL_TellIO`] is actually a wrapper function that calls the SDL_IOStream's
@@ -748,7 +748,7 @@ extern "C" {
     pub fn SDL_TellIO(context: *mut SDL_IOStream) -> Sint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Read from a data source.
     ///
     /// This function reads up `size` bytes from the data source to the area
@@ -784,7 +784,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Write to an [`SDL_IOStream`] data stream.
     ///
     /// This function writes exactly `size` bytes from the area pointed at by `ptr`
@@ -826,7 +826,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Print to an [`SDL_IOStream`] data stream.
     ///
     /// This function does formatted printing to the stream.
@@ -857,7 +857,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Print to an [`SDL_IOStream`] data stream.
     ///
     /// This function does formatted printing to the stream.
@@ -887,7 +887,7 @@ extern "C" {
     ) -> ::core::primitive::usize;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Flush any buffered data in the stream.
     ///
     /// This function makes sure that any buffered data is written to the stream.
@@ -913,7 +913,7 @@ extern "C" {
     pub fn SDL_FlushIO(context: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load all the data from an SDL data stream.
     ///
     /// The data is allocated with a zero byte at the end (null terminated) for
@@ -949,7 +949,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load all the data from a file path.
     ///
     /// The data is allocated with a zero byte at the end (null terminated) for
@@ -981,7 +981,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save all the data into an SDL data stream.
     ///
     /// ## Parameters
@@ -1013,7 +1013,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save all the data into a file path.
     ///
     /// ## Parameters
@@ -1042,7 +1042,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read a byte from an [`SDL_IOStream`].
     ///
     /// This function will return false when the data stream is completely read,
@@ -1066,7 +1066,7 @@ extern "C" {
     pub fn SDL_ReadU8(src: *mut SDL_IOStream, value: *mut Uint8) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read a signed byte from an [`SDL_IOStream`].
     ///
     /// This function will return false when the data stream is completely read,
@@ -1090,7 +1090,7 @@ extern "C" {
     pub fn SDL_ReadS8(src: *mut SDL_IOStream, value: *mut Sint8) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 16 bits of little-endian data from an
     /// [`SDL_IOStream`] and return in native format.
     ///
@@ -1118,7 +1118,7 @@ extern "C" {
     pub fn SDL_ReadU16LE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 16 bits of little-endian data from an
     /// [`SDL_IOStream`] and return in native format.
     ///
@@ -1146,7 +1146,7 @@ extern "C" {
     pub fn SDL_ReadS16LE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 16 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
@@ -1174,7 +1174,7 @@ extern "C" {
     pub fn SDL_ReadU16BE(src: *mut SDL_IOStream, value: *mut Uint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 16 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
@@ -1202,7 +1202,7 @@ extern "C" {
     pub fn SDL_ReadS16BE(src: *mut SDL_IOStream, value: *mut Sint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 32 bits of little-endian data from an
     /// [`SDL_IOStream`] and return in native format.
     ///
@@ -1230,7 +1230,7 @@ extern "C" {
     pub fn SDL_ReadU32LE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 32 bits of little-endian data from an
     /// [`SDL_IOStream`] and return in native format.
     ///
@@ -1258,7 +1258,7 @@ extern "C" {
     pub fn SDL_ReadS32LE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 32 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
@@ -1286,7 +1286,7 @@ extern "C" {
     pub fn SDL_ReadU32BE(src: *mut SDL_IOStream, value: *mut Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 32 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
@@ -1314,7 +1314,7 @@ extern "C" {
     pub fn SDL_ReadS32BE(src: *mut SDL_IOStream, value: *mut Sint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 64 bits of little-endian data from an
     /// [`SDL_IOStream`] and return in native format.
     ///
@@ -1342,7 +1342,7 @@ extern "C" {
     pub fn SDL_ReadU64LE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 64 bits of little-endian data from an
     /// [`SDL_IOStream`] and return in native format.
     ///
@@ -1370,7 +1370,7 @@ extern "C" {
     pub fn SDL_ReadS64LE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 64 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
@@ -1398,7 +1398,7 @@ extern "C" {
     pub fn SDL_ReadU64BE(src: *mut SDL_IOStream, value: *mut Uint64) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to read 64 bits of big-endian data from an [`SDL_IOStream`]
     /// and return in native format.
     ///
@@ -1426,7 +1426,7 @@ extern "C" {
     pub fn SDL_ReadS64BE(src: *mut SDL_IOStream, value: *mut Sint64) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write a byte to an [`SDL_IOStream`].
     ///
     /// ## Parameters
@@ -1445,7 +1445,7 @@ extern "C" {
     pub fn SDL_WriteU8(dst: *mut SDL_IOStream, value: Uint8) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write a signed byte to an [`SDL_IOStream`].
     ///
     /// ## Parameters
@@ -1464,7 +1464,7 @@ extern "C" {
     pub fn SDL_WriteS8(dst: *mut SDL_IOStream, value: Sint8) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
@@ -1488,7 +1488,7 @@ extern "C" {
     pub fn SDL_WriteU16LE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
@@ -1512,7 +1512,7 @@ extern "C" {
     pub fn SDL_WriteS16LE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
@@ -1535,7 +1535,7 @@ extern "C" {
     pub fn SDL_WriteU16BE(dst: *mut SDL_IOStream, value: Uint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 16 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
@@ -1558,7 +1558,7 @@ extern "C" {
     pub fn SDL_WriteS16BE(dst: *mut SDL_IOStream, value: Sint16) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
@@ -1582,7 +1582,7 @@ extern "C" {
     pub fn SDL_WriteU32LE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
@@ -1606,7 +1606,7 @@ extern "C" {
     pub fn SDL_WriteS32LE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
@@ -1629,7 +1629,7 @@ extern "C" {
     pub fn SDL_WriteU32BE(dst: *mut SDL_IOStream, value: Uint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 32 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
@@ -1652,7 +1652,7 @@ extern "C" {
     pub fn SDL_WriteS32BE(dst: *mut SDL_IOStream, value: Sint32) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
@@ -1676,7 +1676,7 @@ extern "C" {
     pub fn SDL_WriteU64LE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// little-endian data.
     ///
@@ -1700,7 +1700,7 @@ extern "C" {
     pub fn SDL_WriteS64LE(dst: *mut SDL_IOStream, value: Sint64) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///
@@ -1723,7 +1723,7 @@ extern "C" {
     pub fn SDL_WriteU64BE(dst: *mut SDL_IOStream, value: Uint64) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to write 64 bits in native format to an [`SDL_IOStream`] as
     /// big-endian data.
     ///

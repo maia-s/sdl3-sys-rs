@@ -180,7 +180,7 @@ pub const fn SDL_NS_TO_US(NS: Uint64) -> Uint64 {
     (NS / (SDL_NS_PER_US as Uint64))
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of milliseconds since SDL library initialization.
     ///
     /// ## Return value
@@ -195,7 +195,7 @@ extern "C" {
     pub fn SDL_GetTicks() -> Uint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of nanoseconds since SDL library initialization.
     ///
     /// ## Return value
@@ -210,7 +210,7 @@ extern "C" {
     pub fn SDL_GetTicksNS() -> Uint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current value of the high resolution counter.
     ///
     /// This function is typically used for profiling.
@@ -233,7 +233,7 @@ extern "C" {
     pub fn SDL_GetPerformanceCounter() -> Uint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the count per second of the high resolution counter.
     ///
     /// ## Return value
@@ -250,7 +250,7 @@ extern "C" {
     pub fn SDL_GetPerformanceFrequency() -> Uint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wait a specified number of milliseconds before returning.
     ///
     /// This function waits a specified number of milliseconds before returning. It
@@ -272,7 +272,7 @@ extern "C" {
     pub fn SDL_Delay(ms: Uint32);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wait a specified number of nanoseconds before returning.
     ///
     /// This function waits a specified number of nanoseconds before returning. It
@@ -294,7 +294,7 @@ extern "C" {
     pub fn SDL_DelayNS(ns: Uint64);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Wait a specified number of nanoseconds before returning.
     ///
     /// This function waits a specified number of nanoseconds before returning. It
@@ -388,7 +388,7 @@ pub type SDL_TimerCallback = ::core::option::Option<
     ) -> Uint32,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Call a callback function at a future time.
     ///
     /// The callback function is passed the current timer interval and the user
@@ -470,7 +470,7 @@ pub type SDL_NSTimerCallback = ::core::option::Option<
     ) -> Uint64,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Call a callback function at a future time.
     ///
     /// The callback function is passed the current timer interval and the user
@@ -516,7 +516,7 @@ extern "C" {
     ) -> SDL_TimerID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove a timer created with [`SDL_AddTimer()`].
     ///
     /// ## Parameters

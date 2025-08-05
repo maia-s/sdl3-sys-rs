@@ -30,16 +30,16 @@ use sdl3_sys::{
     assert::SDL_assert,
     error::SDL_GetError,
     events::{
-        SDL_Event, SDL_EventType, SDL_KeyboardEvent, SDL_PollEvent, SDL_EVENT_KEY_DOWN,
-        SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_EVENT_QUIT,
+        SDL_EVENT_KEY_DOWN, SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_EVENT_QUIT, SDL_Event, SDL_EventType,
+        SDL_KeyboardEvent, SDL_PollEvent,
     },
-    init::{SDL_Init, SDL_Quit, SDL_INIT_VIDEO},
+    init::{SDL_INIT_VIDEO, SDL_Init, SDL_Quit},
     keycode::{
-        SDLK_A, SDLK_B, SDLK_DOWN, SDLK_ESCAPE, SDLK_I, SDLK_LEFT, SDLK_O, SDLK_R, SDLK_RIGHT,
-        SDLK_S, SDLK_U, SDLK_UP, SDL_KMOD_CTRL,
+        SDL_KMOD_CTRL, SDLK_A, SDLK_B, SDLK_DOWN, SDLK_ESCAPE, SDLK_I, SDLK_LEFT, SDLK_O, SDLK_R,
+        SDLK_RIGHT, SDLK_S, SDLK_U, SDLK_UP,
     },
     log::SDL_Log,
-    pixels::{SDL_Color, SDL_ALPHA_OPAQUE},
+    pixels::{SDL_ALPHA_OPAQUE, SDL_Color},
     rect::{SDL_FRect, SDL_Rect},
     render::{
         SDL_ConvertEventToRenderCoordinates, SDL_CreateRenderer, SDL_CreateSoftwareRenderer,
@@ -55,19 +55,19 @@ use sdl3_sys::{
 };
 use sdl3_ttf_sys::ttf::{
     TTF_AddFallbackFont, TTF_CloseFont, TTF_CreateRendererTextEngine, TTF_CreateSurfaceTextEngine,
-    TTF_CreateText, TTF_DestroyRendererTextEngine, TTF_DestroySurfaceTextEngine,
+    TTF_CreateText, TTF_DIRECTION_BTT, TTF_DIRECTION_INVALID, TTF_DIRECTION_LTR, TTF_DIRECTION_RTL,
+    TTF_DIRECTION_TTB, TTF_DestroyRendererTextEngine, TTF_DestroySurfaceTextEngine,
     TTF_DrawRendererText, TTF_DrawSurfaceText, TTF_Font, TTF_GetFontDirection, TTF_GetFontHeight,
     TTF_GetFontOutline, TTF_GetFontSize, TTF_GetFontStyle, TTF_GetFontWrapAlignment,
-    TTF_GetTextPosition, TTF_GetTextSize, TTF_Init, TTF_OpenFont, TTF_Quit, TTF_RenderGlyph_Shaded,
+    TTF_GetTextPosition, TTF_GetTextSize, TTF_HINTING_LIGHT, TTF_HINTING_MONO, TTF_HINTING_NONE,
+    TTF_HINTING_NORMAL, TTF_HORIZONTAL_ALIGN_CENTER, TTF_HORIZONTAL_ALIGN_LEFT,
+    TTF_HORIZONTAL_ALIGN_RIGHT, TTF_Init, TTF_OpenFont, TTF_Quit, TTF_RenderGlyph_Shaded,
     TTF_RenderText_Blended, TTF_RenderText_Blended_Wrapped, TTF_RenderText_Shaded,
     TTF_RenderText_Shaded_Wrapped, TTF_RenderText_Solid, TTF_RenderText_Solid_Wrapped,
-    TTF_SetFontDirection, TTF_SetFontHinting, TTF_SetFontKerning, TTF_SetFontOutline,
-    TTF_SetFontSize, TTF_SetFontStyle, TTF_SetFontWrapAlignment, TTF_SetTextColor,
-    TTF_SetTextPosition, TTF_Text, TTF_DIRECTION_BTT, TTF_DIRECTION_INVALID, TTF_DIRECTION_LTR,
-    TTF_DIRECTION_RTL, TTF_DIRECTION_TTB, TTF_HINTING_LIGHT, TTF_HINTING_MONO, TTF_HINTING_NONE,
-    TTF_HINTING_NORMAL, TTF_HORIZONTAL_ALIGN_CENTER, TTF_HORIZONTAL_ALIGN_LEFT,
-    TTF_HORIZONTAL_ALIGN_RIGHT, TTF_STYLE_BOLD, TTF_STYLE_ITALIC, TTF_STYLE_NORMAL,
-    TTF_STYLE_STRIKETHROUGH, TTF_STYLE_UNDERLINE,
+    TTF_STYLE_BOLD, TTF_STYLE_ITALIC, TTF_STYLE_NORMAL, TTF_STYLE_STRIKETHROUGH,
+    TTF_STYLE_UNDERLINE, TTF_SetFontDirection, TTF_SetFontHinting, TTF_SetFontKerning,
+    TTF_SetFontOutline, TTF_SetFontSize, TTF_SetFontStyle, TTF_SetFontWrapAlignment,
+    TTF_SetTextColor, TTF_SetTextPosition, TTF_Text,
 };
 use std::{env, ffi::CString, process::ExitCode};
 
@@ -77,7 +77,9 @@ const WIDTH: i32 = 640;
 const HEIGHT: i32 = 480;
 
 fn usage(name: &str) {
-    eprintln!("Usage: {name} [--textengine surface|renderer] [--solid] [--shaded] [--blended] [-b] [-i] [-u] [-s] [--outline size] [--hintlight|--hintmono|--hintnone] [--nokerning] [--wrap] [--align left|center|right] [--fgcol r,g,b,a] [--bgcol r,g,b,a] [--disable-editbox] [--fallback <font>.ttf] <font>.ttf [ptsize] [text]");
+    eprintln!(
+        "Usage: {name} [--textengine surface|renderer] [--solid] [--shaded] [--blended] [-b] [-i] [-u] [-s] [--outline size] [--hintlight|--hintmono|--hintnone] [--nokerning] [--wrap] [--align left|center|right] [--fgcol r,g,b,a] [--bgcol r,g,b,a] [--disable-editbox] [--fallback <font>.ttf] <font>.ttf [ptsize] [text]"
+    );
 }
 
 struct Defer<F: FnOnce()>(Option<F>);

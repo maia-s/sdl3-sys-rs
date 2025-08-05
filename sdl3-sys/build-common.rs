@@ -280,35 +280,6 @@ fn find_and_output_cmake_dir_metadata(out_dir: &std::path::Path) -> Result<(), B
     }
 }
 
-fn rust_version() -> Option<(usize, usize)> {
-    let out = std::process::Command::new(env::var("RUSTC").unwrap())
-        .arg("--version")
-        .output()
-        .ok()?;
-    if !out.status.success() {
-        return None;
-    }
-    let out = String::from_utf8_lossy(&out.stdout);
-    let out = out.strip_prefix("rustc ")?;
-    let mut it = out.split('.');
-    let major = it.next()?.parse().ok()?;
-    let mut minor = it.next()?.parse().ok()?;
-    let (micro, _) = it.next()?.split_once(' ')?;
-    if let Some((_, "nightly")) = micro.split_once('-') {
-        minor -= 1;
-    }
-    Some((major, minor))
-}
-
-#[allow(dead_code)]
-fn rust_version_at_least(major: usize, minor: usize) -> bool {
-    if let Some((have_major, have_minor)) = rust_version() {
-        have_major > major || (have_major == major && have_minor >= minor)
-    } else {
-        false
-    }
-}
-
 fn build(
     f: impl FnOnce(&mut BuildConfig) -> Result<(), Box<dyn Error>>,
 ) -> Result<(), Box<dyn Error>> {

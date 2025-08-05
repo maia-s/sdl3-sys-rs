@@ -185,7 +185,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_TimeFormat {
         &crate::metadata::time::METADATA_SDL_TimeFormat;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets the current preferred date and time format for the system locale.
     ///
     /// This might be a "slow" call that has to query the operating system. It's
@@ -211,7 +211,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Gets the current value of the system realtime clock in nanoseconds since
     /// Jan 1, 1970 in Universal Coordinated Time (UTC).
     ///
@@ -227,7 +227,7 @@ extern "C" {
     pub fn SDL_GetCurrentTime(ticks: *mut SDL_Time) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Converts an [`SDL_Time`] in nanoseconds since the epoch to a calendar time in
     /// the [`SDL_DateTime`] format.
     ///
@@ -251,7 +251,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Converts a calendar time to an [`SDL_Time`] in nanoseconds since the epoch.
     ///
     /// This function ignores the day_of_week member of the [`SDL_DateTime`] struct, so
@@ -273,7 +273,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Converts an SDL time into a Windows FILETIME (100-nanosecond intervals
     /// since January 1, 1601).
     ///
@@ -295,7 +295,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Converts a Windows FILETIME (100-nanosecond intervals since January 1,
     /// 1601) to an SDL time.
     ///
@@ -314,7 +314,7 @@ extern "C" {
     pub fn SDL_TimeFromWindows(dwLowDateTime: Uint32, dwHighDateTime: Uint32) -> SDL_Time;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of days in a month for a given year.
     ///
     /// ## Parameters
@@ -333,7 +333,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the day of year for a calendar date.
     ///
     /// ## Parameters
@@ -354,7 +354,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the day of week for a calendar date.
     ///
     /// ## Parameters

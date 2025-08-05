@@ -1,7 +1,8 @@
 [package]
 name = "sdl3-sys-gen"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"
 

@@ -407,7 +407,7 @@ pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bo
         == SDL_SURFACE_LOCK_NEEDED.0)
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate a new surface with a specific pixel format.
     ///
     /// The pixels of the new surface are initialized to zero.
@@ -437,7 +437,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Allocate a new surface with a specific pixel format and existing pixel
     /// data.
     ///
@@ -479,7 +479,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Free a surface.
     ///
     /// It is safe to pass NULL to this function.
@@ -499,7 +499,7 @@ extern "C" {
     pub fn SDL_DestroySurface(surface: *mut SDL_Surface);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a surface.
     ///
     /// The following properties are understood by SDL:
@@ -553,7 +553,7 @@ pub const SDL_PROP_SURFACE_HOTSPOT_X_NUMBER: *const ::core::ffi::c_char =
 pub const SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: *const ::core::ffi::c_char =
     c"SDL.surface.hotspot.y".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Set the colorspace used by a surface.
     ///
     /// Setting the colorspace doesn't change the pixels, only how they are
@@ -582,7 +582,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the colorspace used by a surface.
     ///
     /// The colorspace defaults to [`SDL_COLORSPACE_SRGB_LINEAR`] for floating point
@@ -607,7 +607,7 @@ extern "C" {
     pub fn SDL_GetSurfaceColorspace(surface: *mut SDL_Surface) -> SDL_Colorspace;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a palette and associate it with a surface.
     ///
     /// This function creates a palette compatible with the provided surface. The
@@ -643,7 +643,7 @@ extern "C" {
     pub fn SDL_CreateSurfacePalette(surface: *mut SDL_Surface) -> *mut SDL_Palette;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the palette used by a surface.
     ///
     /// A single palette can be shared with many surfaces.
@@ -671,7 +671,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the palette used by a surface.
     ///
     /// ## Parameters
@@ -692,7 +692,7 @@ extern "C" {
     pub fn SDL_GetSurfacePalette(surface: *mut SDL_Surface) -> *mut SDL_Palette;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add an alternate version of a surface.
     ///
     /// This function adds an alternate version of this surface, usually used for
@@ -728,7 +728,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether a surface has alternate versions available.
     ///
     /// ## Parameters
@@ -750,7 +750,7 @@ extern "C" {
     pub fn SDL_SurfaceHasAlternateImages(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get an array including all versions of a surface.
     ///
     /// This returns all versions of a surface, with the surface being queried as
@@ -786,7 +786,7 @@ extern "C" {
     ) -> *mut *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove all alternate versions of a surface.
     ///
     /// This function removes a reference from all the alternative versions,
@@ -808,7 +808,7 @@ extern "C" {
     pub fn SDL_RemoveSurfaceAlternateImages(surface: *mut SDL_Surface);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set up a surface for directly accessing the pixels.
     ///
     /// Between calls to [`SDL_LockSurface()`] / [`SDL_UnlockSurface()`], you can write to
@@ -841,7 +841,7 @@ extern "C" {
     pub fn SDL_LockSurface(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Release a surface after directly accessing the pixels.
     ///
     /// ## Parameters
@@ -860,7 +860,7 @@ extern "C" {
     pub fn SDL_UnlockSurface(surface: *mut SDL_Surface);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a BMP image from a seekable SDL data stream.
     ///
     /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
@@ -891,7 +891,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a BMP image from a file.
     ///
     /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
@@ -917,7 +917,7 @@ extern "C" {
     pub fn SDL_LoadBMP(file: *const ::core::ffi::c_char) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save a surface to a seekable SDL data stream in BMP format.
     ///
     /// Surfaces with a 24-bit, 32-bit and paletted 8-bit format get saved in the
@@ -952,7 +952,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save a surface to a file.
     ///
     /// Surfaces with a 24-bit, 32-bit and paletted 8-bit format get saved in the
@@ -984,7 +984,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the RLE acceleration hint for a surface.
     ///
     /// If RLE is enabled, color key and alpha blending blits are much faster, but
@@ -1014,7 +1014,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Returns whether the surface is RLE enabled.
     ///
     /// It is safe to pass a NULL `surface` here; it will return false.
@@ -1036,7 +1036,7 @@ extern "C" {
     pub fn SDL_SurfaceHasRLE(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the color key (transparent pixel) in a surface.
     ///
     /// The color key defines a pixel value that will be treated as transparent in
@@ -1072,7 +1072,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Returns whether the surface has a color key.
     ///
     /// It is safe to pass a NULL `surface` here; it will return false.
@@ -1095,7 +1095,7 @@ extern "C" {
     pub fn SDL_SurfaceHasColorKey(surface: *mut SDL_Surface) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the color key (transparent pixel) for a surface.
     ///
     /// The color key is a pixel of the format used by the surface, as generated by
@@ -1126,7 +1126,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an additional color value multiplied into blit operations.
     ///
     /// When this surface is blitted, during the blit operation each source color
@@ -1162,7 +1162,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the additional color value multiplied into blit operations.
     ///
     /// ## Parameters
@@ -1192,7 +1192,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an additional alpha value used in blit operations.
     ///
     /// When this surface is blitted, during the blit operation the source alpha
@@ -1223,7 +1223,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the additional alpha value used in blit operations.
     ///
     /// ## Parameters
@@ -1249,7 +1249,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the blend mode used for blit operations.
     ///
     /// To copy a surface to another surface (or texture) without blending with the
@@ -1278,7 +1278,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the blend mode used for blit operations.
     ///
     /// ## Parameters
@@ -1303,7 +1303,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the clipping rectangle for a surface.
     ///
     /// When `surface` is the destination of a blit, only the area within the clip
@@ -1335,7 +1335,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the clipping rectangle for a surface.
     ///
     /// When `surface` is the destination of a blit, only the area within the clip
@@ -1365,7 +1365,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Flip a surface vertically or horizontally.
     ///
     /// ## Parameters
@@ -1387,7 +1387,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a new surface identical to the existing surface.
     ///
     /// If the original surface has alternate images, the new surface will have a
@@ -1413,7 +1413,7 @@ extern "C" {
     pub fn SDL_DuplicateSurface(surface: *mut SDL_Surface) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a new surface identical to the existing surface, scaled to the
     /// desired size.
     ///
@@ -1445,7 +1445,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy an existing surface to a new surface of the specified format.
     ///
     /// This function is used to optimize images for faster *repeat* blitting. This
@@ -1482,7 +1482,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy an existing surface to a new surface of the specified format and
     /// colorspace.
     ///
@@ -1522,7 +1522,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a block of pixels of one format to another format.
     ///
     /// ## Parameters
@@ -1561,7 +1561,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a block of pixels of one format and colorspace to another format and
     /// colorspace.
     ///
@@ -1613,7 +1613,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Premultiply the alpha on a block of pixels.
     ///
     /// This is safe to use with src == dst, but not for other overlapping areas.
@@ -1654,7 +1654,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Premultiply the alpha in a surface.
     ///
     /// This is safe to use with src == dst, but not for other overlapping areas.
@@ -1679,7 +1679,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear a surface with a specific color, with floating point precision.
     ///
     /// This function handles all surface formats, and ignores any clip rectangle.
@@ -1712,7 +1712,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a fast fill of a rectangle with a specific color.
     ///
     /// `color` should be a pixel of the format used by the surface, and can be
@@ -1749,7 +1749,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a fast fill of a set of rectangles with a specific color.
     ///
     /// `color` should be a pixel of the format used by the surface, and can be
@@ -1787,7 +1787,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Performs a fast blit from the source surface to the destination surface
     /// with clipping.
     ///
@@ -1871,7 +1871,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform low-level surface blitting only.
     ///
     /// This is a semi-private blit function and it performs low-level surface
@@ -1906,7 +1906,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a scaled blit to a destination surface, which may be of a different
     /// format.
     ///
@@ -1942,7 +1942,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform low-level surface scaled blitting only.
     ///
     /// This is a semi-private function and it performs low-level surface blitting,
@@ -1979,7 +1979,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a stretched pixel copy from one surface to another.
     ///
     /// ## Parameters
@@ -2014,7 +2014,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a tiled blit to a destination surface, which may be of a different
     /// format.
     ///
@@ -2050,7 +2050,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a scaled and tiled blit to a destination surface, which may be of a
     /// different format.
     ///
@@ -2092,7 +2092,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a scaled blit using the 9-grid algorithm to a destination surface,
     /// which may be of a different format.
     ///
@@ -2145,7 +2145,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Map an RGB triple to an opaque pixel value for a surface.
     ///
     /// This function maps the RGB color value to the specified pixel format and
@@ -2183,7 +2183,7 @@ extern "C" {
     pub fn SDL_MapSurfaceRGB(surface: *mut SDL_Surface, r: Uint8, g: Uint8, b: Uint8) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Map an RGBA quadruple to a pixel value for a surface.
     ///
     /// This function maps the RGBA color value to the specified pixel format and
@@ -2228,7 +2228,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Retrieves a single pixel from a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit
@@ -2270,7 +2270,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Retrieves a single pixel from a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit
@@ -2309,7 +2309,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Writes a single pixel to a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit
@@ -2347,7 +2347,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Writes a single pixel to a surface.
     ///
     /// This function prioritizes correctness over speed: it is suitable for unit

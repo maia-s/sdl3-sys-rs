@@ -23,16 +23,16 @@ use sdl3_sys::{
     clipboard::{SDL_GetClipboardText, SDL_SetClipboardText},
     error::SDL_GetError,
     events::{
-        SDL_Event, SDL_EventType, SDL_TextEditingCandidatesEvent, SDL_TextEditingEvent,
         SDL_EVENT_KEY_DOWN, SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_EVENT_MOUSE_BUTTON_UP,
         SDL_EVENT_MOUSE_MOTION, SDL_EVENT_TEXT_EDITING, SDL_EVENT_TEXT_EDITING_CANDIDATES,
-        SDL_EVENT_TEXT_INPUT,
+        SDL_EVENT_TEXT_INPUT, SDL_Event, SDL_EventType, SDL_TextEditingCandidatesEvent,
+        SDL_TextEditingEvent,
     },
-    hints::{SDL_SetHint, SDL_HINT_IME_IMPLEMENTED_UI},
+    hints::{SDL_HINT_IME_IMPLEMENTED_UI, SDL_SetHint},
     keyboard::{SDL_ClearComposition, SDL_SetTextInputArea, SDL_StartTextInput, SDL_StopTextInput},
     keycode::{
-        SDLK_A, SDLK_BACKSPACE, SDLK_C, SDLK_DELETE, SDLK_DOWN, SDLK_END, SDLK_ESCAPE, SDLK_HOME,
-        SDLK_LEFT, SDLK_RETURN, SDLK_RIGHT, SDLK_UP, SDLK_V, SDLK_X, SDL_KMOD_CTRL,
+        SDL_KMOD_CTRL, SDLK_A, SDLK_BACKSPACE, SDLK_C, SDLK_DELETE, SDLK_DOWN, SDLK_END,
+        SDLK_ESCAPE, SDLK_HOME, SDLK_LEFT, SDLK_RETURN, SDLK_RIGHT, SDLK_UP, SDLK_V, SDLK_X,
     },
     log::SDL_Log,
     pixels::SDL_FColor,
@@ -40,8 +40,8 @@ use sdl3_sys::{
     rect::{SDL_FPoint, SDL_FRect, SDL_PointInRectFloat, SDL_Rect, SDL_RectToFRect},
     render::{
         SDL_FlushRenderer, SDL_GetRenderSafeArea, SDL_GetRendererProperties,
-        SDL_RenderCoordinatesToWindow, SDL_RenderFillRect, SDL_RenderRect, SDL_Renderer,
-        SDL_SetRenderDrawColor, SDL_PROP_RENDERER_SURFACE_POINTER,
+        SDL_PROP_RENDERER_SURFACE_POINTER, SDL_RenderCoordinatesToWindow, SDL_RenderFillRect,
+        SDL_RenderRect, SDL_Renderer, SDL_SetRenderDrawColor,
     },
     stdinc::{SDL_StepBackUTF8, SDL_StepUTF8, SDL_free, SDL_malloc, SDL_memcpy, SDL_strlen},
     surface::SDL_Surface,
@@ -49,13 +49,13 @@ use sdl3_sys::{
     video::SDL_Window,
 };
 use sdl3_ttf_sys::ttf::{
-    TTF_CreateText, TTF_DeleteTextString, TTF_DestroyText, TTF_DrawRendererText,
+    TTF_CreateText, TTF_DIRECTION_RTL, TTF_DeleteTextString, TTF_DestroyText, TTF_DrawRendererText,
     TTF_DrawSurfaceText, TTF_Font, TTF_GetFontHeight, TTF_GetTextColorFloat, TTF_GetTextEngine,
     TTF_GetTextSize, TTF_GetTextSubString, TTF_GetTextSubStringForLine,
     TTF_GetTextSubStringForPoint, TTF_GetTextSubStringsForRange, TTF_InsertTextString,
+    TTF_SUBSTRING_DIRECTION_MASK, TTF_SUBSTRING_LINE_END, TTF_SUBSTRING_TEXT_END,
     TTF_SetTextColorFloat, TTF_SetTextWrapWhitespaceVisible, TTF_SetTextWrapWidth, TTF_SubString,
-    TTF_Text, TTF_TextEngine, TTF_DIRECTION_RTL, TTF_SUBSTRING_DIRECTION_MASK,
-    TTF_SUBSTRING_LINE_END, TTF_SUBSTRING_TEXT_END,
+    TTF_Text, TTF_TextEngine,
 };
 
 const TEST_SURFACE_ENGINE: bool = true;
@@ -964,13 +964,13 @@ impl EditBox {
         unsafe {
             match SDL_EventType(event.r#type) {
                 SDL_EVENT_MOUSE_BUTTON_DOWN => {
-                    return self.handle_mouse_down(event.button.x, event.button.y)
+                    return self.handle_mouse_down(event.button.x, event.button.y);
                 }
                 SDL_EVENT_MOUSE_MOTION => {
-                    return self.handle_mouse_motion(event.motion.x, event.motion.y)
+                    return self.handle_mouse_motion(event.motion.x, event.motion.y);
                 }
                 SDL_EVENT_MOUSE_BUTTON_UP => {
-                    return self.handle_mouse_up(event.button.x, event.button.y)
+                    return self.handle_mouse_up(event.button.x, event.button.y);
                 }
                 SDL_EVENT_KEY_DOWN => {
                     if self.has_focus {

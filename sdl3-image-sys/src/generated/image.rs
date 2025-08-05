@@ -31,7 +31,7 @@ pub const fn SDL_IMAGE_VERSION_ATLEAST(
             || (SDL_IMAGE_MICRO_VERSION >= Z)))
 }
 
-extern "C" {
+unsafe extern "C" {
     /// This function gets the version of the dynamically linked SDL_image library.
     ///
     /// ## Return value
@@ -42,7 +42,7 @@ extern "C" {
     pub fn IMG_Version() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an image from an SDL data source into a software surface.
     ///
     /// An [`SDL_Surface`] is a buffer of pixels in memory accessible by the CPU. Use
@@ -113,7 +113,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an image from a filesystem path into a software surface.
     ///
     /// An [`SDL_Surface`] is a buffer of pixels in memory accessible by the CPU. Use
@@ -163,7 +163,7 @@ extern "C" {
     pub fn IMG_Load(file: *const ::core::ffi::c_char) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an image from an SDL data source into a software surface.
     ///
     /// An [`SDL_Surface`] is a buffer of pixels in memory accessible by the CPU. Use
@@ -225,7 +225,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an image from a filesystem path into a GPU texture.
     ///
     /// An [`SDL_Texture`] represents an image in GPU memory, usable by SDL's 2D Render
@@ -268,7 +268,7 @@ extern "C" {
     ) -> *mut SDL_Texture;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an image from an SDL data source into a GPU texture.
     ///
     /// An [`SDL_Texture`] represents an image in GPU memory, usable by SDL's 2D Render
@@ -324,7 +324,7 @@ extern "C" {
     ) -> *mut SDL_Texture;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an image from an SDL data source into a GPU texture.
     ///
     /// An [`SDL_Texture`] represents an image in GPU memory, usable by SDL's 2D Render
@@ -389,7 +389,7 @@ extern "C" {
     ) -> *mut SDL_Texture;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect AVIF image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -438,7 +438,7 @@ extern "C" {
     pub fn IMG_isAVIF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect ICO image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -486,7 +486,7 @@ extern "C" {
     pub fn IMG_isICO(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect CUR image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -534,7 +534,7 @@ extern "C" {
     pub fn IMG_isCUR(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect BMP image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -582,7 +582,7 @@ extern "C" {
     pub fn IMG_isBMP(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect GIF image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -630,7 +630,7 @@ extern "C" {
     pub fn IMG_isGIF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect JPG image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -678,7 +678,7 @@ extern "C" {
     pub fn IMG_isJPG(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect JXL image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -726,7 +726,7 @@ extern "C" {
     pub fn IMG_isJXL(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect LBM image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -774,7 +774,7 @@ extern "C" {
     pub fn IMG_isLBM(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect PCX image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -822,7 +822,7 @@ extern "C" {
     pub fn IMG_isPCX(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect PNG image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -870,7 +870,7 @@ extern "C" {
     pub fn IMG_isPNG(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect PNM image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -918,7 +918,7 @@ extern "C" {
     pub fn IMG_isPNM(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect SVG image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -966,7 +966,7 @@ extern "C" {
     pub fn IMG_isSVG(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect QOI image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -1014,7 +1014,7 @@ extern "C" {
     pub fn IMG_isQOI(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect TIFF image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -1062,7 +1062,7 @@ extern "C" {
     pub fn IMG_isTIF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect XCF image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -1110,7 +1110,7 @@ extern "C" {
     pub fn IMG_isXCF(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect XPM image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -1158,7 +1158,7 @@ extern "C" {
     pub fn IMG_isXPM(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect XV image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -1206,7 +1206,7 @@ extern "C" {
     pub fn IMG_isXV(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Detect WEBP image data on a readable/seekable [`SDL_IOStream`].
     ///
     /// This function attempts to determine if a file is a given filetype, reading
@@ -1254,7 +1254,7 @@ extern "C" {
     pub fn IMG_isWEBP(src: *mut SDL_IOStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a AVIF image directly.
     ///
     /// If you know you definitely have a AVIF image, you can call this function,
@@ -1293,7 +1293,7 @@ extern "C" {
     pub fn IMG_LoadAVIF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a ICO image directly.
     ///
     /// If you know you definitely have a ICO image, you can call this function,
@@ -1332,7 +1332,7 @@ extern "C" {
     pub fn IMG_LoadICO_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a CUR image directly.
     ///
     /// If you know you definitely have a CUR image, you can call this function,
@@ -1371,7 +1371,7 @@ extern "C" {
     pub fn IMG_LoadCUR_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a BMP image directly.
     ///
     /// If you know you definitely have a BMP image, you can call this function,
@@ -1410,7 +1410,7 @@ extern "C" {
     pub fn IMG_LoadBMP_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a GIF image directly.
     ///
     /// If you know you definitely have a GIF image, you can call this function,
@@ -1449,7 +1449,7 @@ extern "C" {
     pub fn IMG_LoadGIF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a JPG image directly.
     ///
     /// If you know you definitely have a JPG image, you can call this function,
@@ -1488,7 +1488,7 @@ extern "C" {
     pub fn IMG_LoadJPG_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a JXL image directly.
     ///
     /// If you know you definitely have a JXL image, you can call this function,
@@ -1527,7 +1527,7 @@ extern "C" {
     pub fn IMG_LoadJXL_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a LBM image directly.
     ///
     /// If you know you definitely have a LBM image, you can call this function,
@@ -1566,7 +1566,7 @@ extern "C" {
     pub fn IMG_LoadLBM_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a PCX image directly.
     ///
     /// If you know you definitely have a PCX image, you can call this function,
@@ -1605,7 +1605,7 @@ extern "C" {
     pub fn IMG_LoadPCX_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a PNG image directly.
     ///
     /// If you know you definitely have a PNG image, you can call this function,
@@ -1644,7 +1644,7 @@ extern "C" {
     pub fn IMG_LoadPNG_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a PNM image directly.
     ///
     /// If you know you definitely have a PNM image, you can call this function,
@@ -1683,7 +1683,7 @@ extern "C" {
     pub fn IMG_LoadPNM_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a SVG image directly.
     ///
     /// If you know you definitely have a SVG image, you can call this function,
@@ -1722,7 +1722,7 @@ extern "C" {
     pub fn IMG_LoadSVG_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a QOI image directly.
     ///
     /// If you know you definitely have a QOI image, you can call this function,
@@ -1761,7 +1761,7 @@ extern "C" {
     pub fn IMG_LoadQOI_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a TGA image directly.
     ///
     /// If you know you definitely have a TGA image, you can call this function,
@@ -1800,7 +1800,7 @@ extern "C" {
     pub fn IMG_LoadTGA_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a TIFF image directly.
     ///
     /// If you know you definitely have a TIFF image, you can call this function,
@@ -1839,7 +1839,7 @@ extern "C" {
     pub fn IMG_LoadTIF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a XCF image directly.
     ///
     /// If you know you definitely have a XCF image, you can call this function,
@@ -1878,7 +1878,7 @@ extern "C" {
     pub fn IMG_LoadXCF_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a XPM image directly.
     ///
     /// If you know you definitely have a XPM image, you can call this function,
@@ -1917,7 +1917,7 @@ extern "C" {
     pub fn IMG_LoadXPM_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a XV image directly.
     ///
     /// If you know you definitely have a XV image, you can call this function,
@@ -1956,7 +1956,7 @@ extern "C" {
     pub fn IMG_LoadXV_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a WEBP image directly.
     ///
     /// If you know you definitely have a WEBP image, you can call this function,
@@ -1995,7 +1995,7 @@ extern "C" {
     pub fn IMG_LoadWEBP_IO(src: *mut SDL_IOStream) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an SVG image, scaled to a specific size.
     ///
     /// Since SVG files are resolution-independent, you specify the size you would
@@ -2024,7 +2024,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an XPM image from a memory array.
     ///
     /// The returned surface will be an 8bpp indexed surface, if possible,
@@ -2048,7 +2048,7 @@ extern "C" {
     pub fn IMG_ReadXPMFromArray(xpm: *mut *mut ::core::ffi::c_char) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an XPM image from a memory array.
     ///
     /// The returned surface will always be a 32-bit RGB surface. If you want 8-bit
@@ -2072,7 +2072,7 @@ extern "C" {
     pub fn IMG_ReadXPMFromArrayToRGB888(xpm: *mut *mut ::core::ffi::c_char) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save an [`SDL_Surface`] into a AVIF image file.
     ///
     /// If the file already exists, it will be overwritten.
@@ -2099,7 +2099,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save an [`SDL_Surface`] into AVIF image data, via an [`SDL_IOStream`].
     ///
     /// If you just want to save to a filename, you can use [`IMG_SaveAVIF()`] instead.
@@ -2132,7 +2132,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save an [`SDL_Surface`] into a PNG image file.
     ///
     /// If the file already exists, it will be overwritten.
@@ -2156,7 +2156,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save an [`SDL_Surface`] into PNG image data, via an [`SDL_IOStream`].
     ///
     /// If you just want to save to a filename, you can use [`IMG_SavePNG()`] instead.
@@ -2186,7 +2186,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save an [`SDL_Surface`] into a JPEG image file.
     ///
     /// If the file already exists, it will be overwritten.
@@ -2213,7 +2213,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Save an [`SDL_Surface`] into JPEG image data, via an [`SDL_IOStream`].
     ///
     /// If you just want to save to a filename, you can use [`IMG_SaveJPG()`] instead.
@@ -2267,7 +2267,7 @@ impl ::core::default::Default for IMG_Animation {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an animation from a file.
     ///
     /// When done with the returned animation, the app should dispose of it with a
@@ -2287,7 +2287,7 @@ extern "C" {
     pub fn IMG_LoadAnimation(file: *const ::core::ffi::c_char) -> *mut IMG_Animation;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an animation from an [`SDL_IOStream`].
     ///
     /// If `closeio` is true, `src` will be closed before returning, whether this
@@ -2316,7 +2316,7 @@ extern "C" {
     ) -> *mut IMG_Animation;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load an animation from an SDL datasource
     ///
     /// Even though this function accepts a file type, SDL_image may still try
@@ -2355,7 +2355,7 @@ extern "C" {
     ) -> *mut IMG_Animation;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Dispose of an [`IMG_Animation`] and free its resources.
     ///
     /// The provided `anim` pointer is not valid once this call returns.
@@ -2373,7 +2373,7 @@ extern "C" {
     pub fn IMG_FreeAnimation(anim: *mut IMG_Animation);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a GIF animation directly.
     ///
     /// If you know you definitely have a GIF image, you can call this function,
@@ -2398,7 +2398,7 @@ extern "C" {
     pub fn IMG_LoadGIFAnimation_IO(src: *mut SDL_IOStream) -> *mut IMG_Animation;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a WEBP animation directly.
     ///
     /// If you know you definitely have a WEBP image, you can call this function,

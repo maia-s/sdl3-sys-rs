@@ -2557,7 +2557,7 @@ pub struct SDL_PixelFormatDetails {
     pub Ashift: Uint8,
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the human readable name of a pixel format.
     ///
     /// ## Parameters
@@ -2575,7 +2575,7 @@ extern "C" {
     pub fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert one of the enumerated pixel formats to a bpp value and RGBA masks.
     ///
     /// ## Parameters
@@ -2608,7 +2608,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a bpp value and RGBA masks to an enumerated pixel format.
     ///
     /// This will return [`SDL_PIXELFORMAT_UNKNOWN`] if the conversion wasn't
@@ -2642,7 +2642,7 @@ extern "C" {
     ) -> SDL_PixelFormat;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create an [`SDL_PixelFormatDetails`] structure corresponding to a pixel format.
     ///
     /// Returned structure may come from a shared global cache (i.e. not newly
@@ -2664,7 +2664,7 @@ extern "C" {
     pub fn SDL_GetPixelFormatDetails(format: SDL_PixelFormat) -> *const SDL_PixelFormatDetails;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a palette structure with the specified number of color entries.
     ///
     /// The palette entries are initialized to white.
@@ -2690,7 +2690,7 @@ extern "C" {
     pub fn SDL_CreatePalette(ncolors: ::core::ffi::c_int) -> *mut SDL_Palette;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a range of colors in a palette.
     ///
     /// ## Parameters
@@ -2717,7 +2717,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Free a palette created with [`SDL_CreatePalette()`].
     ///
     /// ## Parameters
@@ -2735,7 +2735,7 @@ extern "C" {
     pub fn SDL_DestroyPalette(palette: *mut SDL_Palette);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Map an RGB triple to an opaque pixel value for a given pixel format.
     ///
     /// This function maps the RGB color value to the specified pixel format and
@@ -2785,7 +2785,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Map an RGBA quadruple to a pixel value for a given pixel format.
     ///
     /// This function maps the RGBA color value to the specified pixel format and
@@ -2837,7 +2837,7 @@ extern "C" {
     ) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get RGB values from a pixel in the specified format.
     ///
     /// This function uses the entire 8-bit \[0..255\] range when converting color
@@ -2876,7 +2876,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get RGBA values from a pixel in the specified format.
     ///
     /// This function uses the entire 8-bit \[0..255\] range when converting color

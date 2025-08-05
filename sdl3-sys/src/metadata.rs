@@ -1,6 +1,6 @@
 //! Metadata for SDL types and constants
 
-use core::ffi::{c_char, c_int, CStr};
+use core::ffi::{CStr, c_char, c_int};
 
 pub use crate::properties::SDL_PropertyType as PropertyType;
 

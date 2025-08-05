@@ -1,7 +1,7 @@
 use core::ffi::CStr;
 use sdl3_sys::{
     error::SDL_GetError,
-    init::{SDL_Init, SDL_Quit, SDL_INIT_VIDEO},
+    init::{SDL_INIT_VIDEO, SDL_Init, SDL_Quit},
 };
 
 fn main() -> Result<(), &'static CStr> {

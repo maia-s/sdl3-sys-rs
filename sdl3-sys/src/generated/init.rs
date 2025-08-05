@@ -428,7 +428,7 @@ pub type SDL_AppQuit_func = ::core::option::Option<
     unsafe extern "C" fn(appstate: *mut ::core::ffi::c_void, result: SDL_AppResult),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Initialize the SDL library.
     ///
     /// [`SDL_Init()`] simply forwards to calling [`SDL_InitSubSystem()`]. Therefore, the
@@ -490,7 +490,7 @@ extern "C" {
     pub fn SDL_Init(flags: SDL_InitFlags) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Compatibility function to initialize the SDL library.
     ///
     /// This function and [`SDL_Init()`] are interchangeable.
@@ -512,7 +512,7 @@ extern "C" {
     pub fn SDL_InitSubSystem(flags: SDL_InitFlags) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Shut down specific SDL subsystems.
     ///
     /// You still need to call [`SDL_Quit()`] even if you close all open subsystems
@@ -530,7 +530,7 @@ extern "C" {
     pub fn SDL_QuitSubSystem(flags: SDL_InitFlags);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a mask of the specified subsystems which are currently initialized.
     ///
     /// ## Parameters
@@ -549,7 +549,7 @@ extern "C" {
     pub fn SDL_WasInit(flags: SDL_InitFlags) -> SDL_InitFlags;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clean up all initialized subsystems.
     ///
     /// You should call this function even if you have already shutdown each
@@ -569,7 +569,7 @@ extern "C" {
     pub fn SDL_Quit();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether this is the main thread.
     ///
     /// On Apple platforms, the main thread is the thread that runs your program's
@@ -606,7 +606,7 @@ extern "C" {
 pub type SDL_MainThreadCallback =
     ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
-extern "C" {
+unsafe extern "C" {
     /// Call a function on the main thread during event processing.
     ///
     /// If this is called on the main thread, the callback is executed immediately.
@@ -642,7 +642,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Specify basic metadata about your app.
     ///
     /// You can optionally provide metadata about your app to SDL. This is not
@@ -690,7 +690,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Specify metadata about your app through a set of properties.
     ///
     /// You can optionally provide metadata about your app to SDL. This is not
@@ -783,7 +783,7 @@ pub const SDL_PROP_APP_METADATA_URL_STRING: *const ::core::ffi::c_char =
 pub const SDL_PROP_APP_METADATA_TYPE_STRING: *const ::core::ffi::c_char =
     c"SDL.app.metadata.type".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get metadata about your app.
     ///
     /// This returns metadata previously set using [`SDL_SetAppMetadata()`] or

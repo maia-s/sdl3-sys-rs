@@ -7,7 +7,9 @@ pub const METADATA_SDL_AsyncIOTaskType: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_AsyncIOTaskType",
     short_name: "AsyncIOTaskType",
-    doc: Some("Types of asynchronous I/O tasks.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Types of asynchronous I/O tasks.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -35,7 +37,9 @@ pub const METADATA_SDL_AsyncIOResult: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_AsyncIOResult",
     short_name: "AsyncIOResult",
-    doc: Some("Possible outcomes of an asynchronous I/O task.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Possible outcomes of an asynchronous I/O task.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

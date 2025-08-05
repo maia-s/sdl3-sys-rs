@@ -772,7 +772,7 @@ pub struct SDL_GamepadBinding__AnonUnion2__AnonStruct1 {
     pub axis_max: ::core::ffi::c_int,
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add support for gamepads that SDL is unaware of or change the binding of an
     /// existing gamepad.
     ///
@@ -821,7 +821,7 @@ extern "C" {
     pub fn SDL_AddGamepadMapping(mapping: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a set of gamepad mappings from an [`SDL_IOStream`].
     ///
     /// You can call this function several times, if needed, to load different
@@ -870,7 +870,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load a set of gamepad mappings from a file.
     ///
     /// You can call this function several times, if needed, to load different
@@ -910,7 +910,7 @@ extern "C" {
     pub fn SDL_AddGamepadMappingsFromFile(file: *const ::core::ffi::c_char) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Reinitialize the SDL mapping database to its initial state.
     ///
     /// This will generate gamepad events as needed if device mappings change.
@@ -924,7 +924,7 @@ extern "C" {
     pub fn SDL_ReloadGamepadMappings() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current gamepad mappings.
     ///
     /// ## Parameters
@@ -942,7 +942,7 @@ extern "C" {
     pub fn SDL_GetGamepadMappings(count: *mut ::core::ffi::c_int) -> *mut *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the gamepad mapping string for a given GUID.
     ///
     /// ## Parameters
@@ -962,7 +962,7 @@ extern "C" {
     pub fn SDL_GetGamepadMappingForGUID(guid: SDL_GUID) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current mapping of a gamepad.
     ///
     /// Details about mappings are discussed with [`SDL_AddGamepadMapping()`].
@@ -986,7 +986,7 @@ extern "C" {
     pub fn SDL_GetGamepadMapping(gamepad: *mut SDL_Gamepad) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the current mapping of a joystick or gamepad.
     ///
     /// Details about mappings are discussed with [`SDL_AddGamepadMapping()`].
@@ -1012,7 +1012,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether a gamepad is currently connected.
     ///
     /// ## Return value
@@ -1026,7 +1026,7 @@ extern "C" {
     pub fn SDL_HasGamepad() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently connected gamepads.
     ///
     /// ## Parameters
@@ -1047,7 +1047,7 @@ extern "C" {
     pub fn SDL_GetGamepads(count: *mut ::core::ffi::c_int) -> *mut SDL_JoystickID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check if the given joystick is supported by the gamepad interface.
     ///
     /// ## Parameters
@@ -1066,7 +1066,7 @@ extern "C" {
     pub fn SDL_IsGamepad(instance_id: SDL_JoystickID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent name of a gamepad.
     ///
     /// This can be called before any gamepads are opened.
@@ -1087,7 +1087,7 @@ extern "C" {
     pub fn SDL_GetGamepadNameForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent path of a gamepad.
     ///
     /// This can be called before any gamepads are opened.
@@ -1108,7 +1108,7 @@ extern "C" {
     pub fn SDL_GetGamepadPathForID(instance_id: SDL_JoystickID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the player index of a gamepad.
     ///
     /// This can be called before any gamepads are opened.
@@ -1128,7 +1128,7 @@ extern "C" {
     pub fn SDL_GetGamepadPlayerIndexForID(instance_id: SDL_JoystickID) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation-dependent GUID of a gamepad.
     ///
     /// This can be called before any gamepads are opened.
@@ -1149,7 +1149,7 @@ extern "C" {
     pub fn SDL_GetGamepadGUIDForID(instance_id: SDL_JoystickID) -> SDL_GUID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB vendor ID of a gamepad, if available.
     ///
     /// This can be called before any gamepads are opened. If the vendor ID isn't
@@ -1171,7 +1171,7 @@ extern "C" {
     pub fn SDL_GetGamepadVendorForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB product ID of a gamepad, if available.
     ///
     /// This can be called before any gamepads are opened. If the product ID isn't
@@ -1193,7 +1193,7 @@ extern "C" {
     pub fn SDL_GetGamepadProductForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the product version of a gamepad, if available.
     ///
     /// This can be called before any gamepads are opened. If the product version
@@ -1215,7 +1215,7 @@ extern "C" {
     pub fn SDL_GetGamepadProductVersionForID(instance_id: SDL_JoystickID) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of a gamepad.
     ///
     /// This can be called before any gamepads are opened.
@@ -1236,7 +1236,7 @@ extern "C" {
     pub fn SDL_GetGamepadTypeForID(instance_id: SDL_JoystickID) -> SDL_GamepadType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of a gamepad, ignoring any mapping override.
     ///
     /// This can be called before any gamepads are opened.
@@ -1257,7 +1257,7 @@ extern "C" {
     pub fn SDL_GetRealGamepadTypeForID(instance_id: SDL_JoystickID) -> SDL_GamepadType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the mapping of a gamepad.
     ///
     /// This can be called before any gamepads are opened.
@@ -1278,7 +1278,7 @@ extern "C" {
     pub fn SDL_GetGamepadMappingForID(instance_id: SDL_JoystickID) -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a gamepad for use.
     ///
     /// ## Parameters
@@ -1297,7 +1297,7 @@ extern "C" {
     pub fn SDL_OpenGamepad(instance_id: SDL_JoystickID) -> *mut SDL_Gamepad;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the [`SDL_Gamepad`] associated with a joystick instance ID, if it has been
     /// opened.
     ///
@@ -1313,7 +1313,7 @@ extern "C" {
     pub fn SDL_GetGamepadFromID(instance_id: SDL_JoystickID) -> *mut SDL_Gamepad;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the [`SDL_Gamepad`] associated with a player index.
     ///
     /// ## Parameters
@@ -1331,7 +1331,7 @@ extern "C" {
     pub fn SDL_GetGamepadFromPlayerIndex(player_index: ::core::ffi::c_int) -> *mut SDL_Gamepad;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with an opened gamepad.
     ///
     /// These properties are shared with the underlying joystick object.
@@ -1377,7 +1377,7 @@ pub const SDL_PROP_GAMEPAD_CAP_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
 pub const SDL_PROP_GAMEPAD_CAP_TRIGGER_RUMBLE_BOOLEAN: *const ::core::ffi::c_char =
     SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN;
 
-extern "C" {
+unsafe extern "C" {
     /// Get the instance ID of an opened gamepad.
     ///
     /// ## Parameters
@@ -1393,7 +1393,7 @@ extern "C" {
     pub fn SDL_GetGamepadID(gamepad: *mut SDL_Gamepad) -> SDL_JoystickID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation-dependent name for an opened gamepad.
     ///
     /// ## Parameters
@@ -1412,7 +1412,7 @@ extern "C" {
     pub fn SDL_GetGamepadName(gamepad: *mut SDL_Gamepad) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation-dependent path for an opened gamepad.
     ///
     /// ## Parameters
@@ -1431,7 +1431,7 @@ extern "C" {
     pub fn SDL_GetGamepadPath(gamepad: *mut SDL_Gamepad) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of an opened gamepad.
     ///
     /// ## Parameters
@@ -1449,7 +1449,7 @@ extern "C" {
     pub fn SDL_GetGamepadType(gamepad: *mut SDL_Gamepad) -> SDL_GamepadType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the type of an opened gamepad, ignoring any mapping override.
     ///
     /// ## Parameters
@@ -1467,7 +1467,7 @@ extern "C" {
     pub fn SDL_GetRealGamepadType(gamepad: *mut SDL_Gamepad) -> SDL_GamepadType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the player index of an opened gamepad.
     ///
     /// For XInput gamepads this returns the XInput user index.
@@ -1486,7 +1486,7 @@ extern "C" {
     pub fn SDL_GetGamepadPlayerIndex(gamepad: *mut SDL_Gamepad) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the player index of an opened gamepad.
     ///
     /// ## Parameters
@@ -1509,7 +1509,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB vendor ID of an opened gamepad, if available.
     ///
     /// If the vendor ID isn't available this function returns 0.
@@ -1528,7 +1528,7 @@ extern "C" {
     pub fn SDL_GetGamepadVendor(gamepad: *mut SDL_Gamepad) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the USB product ID of an opened gamepad, if available.
     ///
     /// If the product ID isn't available this function returns 0.
@@ -1547,7 +1547,7 @@ extern "C" {
     pub fn SDL_GetGamepadProduct(gamepad: *mut SDL_Gamepad) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the product version of an opened gamepad, if available.
     ///
     /// If the product version isn't available this function returns 0.
@@ -1566,7 +1566,7 @@ extern "C" {
     pub fn SDL_GetGamepadProductVersion(gamepad: *mut SDL_Gamepad) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the firmware version of an opened gamepad, if available.
     ///
     /// If the firmware version isn't available this function returns 0.
@@ -1582,7 +1582,7 @@ extern "C" {
     pub fn SDL_GetGamepadFirmwareVersion(gamepad: *mut SDL_Gamepad) -> Uint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the serial number of an opened gamepad, if available.
     ///
     /// Returns the serial number of the gamepad, or NULL if it is not available.
@@ -1598,7 +1598,7 @@ extern "C" {
     pub fn SDL_GetGamepadSerial(gamepad: *mut SDL_Gamepad) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the Steam Input handle of an opened gamepad, if available.
     ///
     /// Returns an InputHandle_t for the gamepad that can be used with Steam Input
@@ -1615,7 +1615,7 @@ extern "C" {
     pub fn SDL_GetGamepadSteamHandle(gamepad: *mut SDL_Gamepad) -> Uint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the connection state of a gamepad.
     ///
     /// ## Parameters
@@ -1631,7 +1631,7 @@ extern "C" {
     pub fn SDL_GetGamepadConnectionState(gamepad: *mut SDL_Gamepad) -> SDL_JoystickConnectionState;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the battery state of a gamepad.
     ///
     /// You should never take a battery status as absolute truth. Batteries
@@ -1658,7 +1658,7 @@ extern "C" {
     ) -> SDL_PowerState;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check if a gamepad has been opened and is currently connected.
     ///
     /// ## Parameters
@@ -1674,7 +1674,7 @@ extern "C" {
     pub fn SDL_GamepadConnected(gamepad: *mut SDL_Gamepad) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the underlying joystick from a gamepad.
     ///
     /// This function will give you a [`SDL_Joystick`] object, which allows you to use
@@ -1698,7 +1698,7 @@ extern "C" {
     pub fn SDL_GetGamepadJoystick(gamepad: *mut SDL_Gamepad) -> *mut SDL_Joystick;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the state of gamepad event processing.
     ///
     /// If gamepad events are disabled, you must call [`SDL_UpdateGamepads()`] yourself
@@ -1716,7 +1716,7 @@ extern "C" {
     pub fn SDL_SetGamepadEventsEnabled(enabled: ::core::primitive::bool);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the state of gamepad event processing.
     ///
     /// If gamepad events are disabled, you must call [`SDL_UpdateGamepads()`] yourself
@@ -1733,7 +1733,7 @@ extern "C" {
     pub fn SDL_GamepadEventsEnabled() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the SDL joystick layer bindings for a gamepad.
     ///
     /// ## Parameters
@@ -1754,7 +1754,7 @@ extern "C" {
     ) -> *mut *mut SDL_GamepadBinding;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Manually pump gamepad updates if not using the loop.
     ///
     /// This function is called automatically by the event loop if events are
@@ -1766,7 +1766,7 @@ extern "C" {
     pub fn SDL_UpdateGamepads();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a string into [`SDL_GamepadType`] enum.
     ///
     /// This function is called internally to translate [`SDL_Gamepad`] mapping strings
@@ -1789,7 +1789,7 @@ extern "C" {
     pub fn SDL_GetGamepadTypeFromString(str: *const ::core::ffi::c_char) -> SDL_GamepadType;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert from an [`SDL_GamepadType`] enum to a string.
     ///
     /// ## Parameters
@@ -1808,7 +1808,7 @@ extern "C" {
     pub fn SDL_GetGamepadStringForType(r#type: SDL_GamepadType) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a string into [`SDL_GamepadAxis`] enum.
     ///
     /// This function is called internally to translate [`SDL_Gamepad`] mapping strings
@@ -1835,7 +1835,7 @@ extern "C" {
     pub fn SDL_GetGamepadAxisFromString(str: *const ::core::ffi::c_char) -> SDL_GamepadAxis;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert from an [`SDL_GamepadAxis`] enum to a string.
     ///
     /// ## Parameters
@@ -1854,7 +1854,7 @@ extern "C" {
     pub fn SDL_GetGamepadStringForAxis(axis: SDL_GamepadAxis) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether a gamepad has a given axis.
     ///
     /// This merely reports whether the gamepad's mapping defined this axis, as
@@ -1879,7 +1879,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of an axis control on a gamepad.
     ///
     /// The axis indices start at index 0.
@@ -1908,7 +1908,7 @@ extern "C" {
     pub fn SDL_GetGamepadAxis(gamepad: *mut SDL_Gamepad, axis: SDL_GamepadAxis) -> Sint16;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert a string into an [`SDL_GamepadButton`] enum.
     ///
     /// This function is called internally to translate [`SDL_Gamepad`] mapping strings
@@ -1931,7 +1931,7 @@ extern "C" {
     pub fn SDL_GetGamepadButtonFromString(str: *const ::core::ffi::c_char) -> SDL_GamepadButton;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert from an [`SDL_GamepadButton`] enum to a string.
     ///
     /// ## Parameters
@@ -1950,7 +1950,7 @@ extern "C" {
     pub fn SDL_GetGamepadStringForButton(button: SDL_GamepadButton) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether a gamepad has a given button.
     ///
     /// This merely reports whether the gamepad's mapping defined this button, as
@@ -1974,7 +1974,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of a button on a gamepad.
     ///
     /// ## Parameters
@@ -1996,7 +1996,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the label of a button on a gamepad.
     ///
     /// ## Parameters
@@ -2017,7 +2017,7 @@ extern "C" {
     ) -> SDL_GamepadButtonLabel;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the label of a button on a gamepad.
     ///
     /// ## Parameters
@@ -2038,7 +2038,7 @@ extern "C" {
     ) -> SDL_GamepadButtonLabel;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of touchpads on a gamepad.
     ///
     /// ## Parameters
@@ -2055,7 +2055,7 @@ extern "C" {
     pub fn SDL_GetNumGamepadTouchpads(gamepad: *mut SDL_Gamepad) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of supported simultaneous fingers on a touchpad on a game
     /// gamepad.
     ///
@@ -2078,7 +2078,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of a finger on a touchpad on a gamepad.
     ///
     /// ## Parameters
@@ -2113,7 +2113,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether a gamepad has a particular sensor.
     ///
     /// ## Parameters
@@ -2136,7 +2136,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set whether data reporting for a gamepad sensor is enabled.
     ///
     /// ## Parameters
@@ -2161,7 +2161,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether sensor data reporting is enabled for a gamepad.
     ///
     /// ## Parameters
@@ -2182,7 +2182,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the data rate (number of events per second) of a gamepad sensor.
     ///
     /// ## Parameters
@@ -2200,7 +2200,7 @@ extern "C" {
     ) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current state of a gamepad sensor.
     ///
     /// The number of values and interpretation of the data is sensor dependent.
@@ -2226,7 +2226,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start a rumble effect on a gamepad.
     ///
     /// Each call to this function cancels any previous rumble effect, and calling
@@ -2257,7 +2257,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start a rumble effect in the gamepad's triggers.
     ///
     /// Each call to this function cancels any previous trigger rumble effect, and
@@ -2295,7 +2295,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update a gamepad's LED color.
     ///
     /// An example of a joystick LED is the light on the back of a PlayStation 4's
@@ -2324,7 +2324,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Send a gamepad specific effect packet.
     ///
     /// ## Parameters
@@ -2345,7 +2345,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close a gamepad previously opened with [`SDL_OpenGamepad()`].
     ///
     /// ## Parameters
@@ -2360,7 +2360,7 @@ extern "C" {
     pub fn SDL_CloseGamepad(gamepad: *mut SDL_Gamepad);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return the sfSymbolsName for a given button on a gamepad on Apple
     /// platforms.
     ///
@@ -2382,7 +2382,7 @@ extern "C" {
     ) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return the sfSymbolsName for a given axis on a gamepad on Apple platforms.
     ///
     /// ## Parameters

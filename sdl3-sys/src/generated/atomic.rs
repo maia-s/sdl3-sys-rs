@@ -52,7 +52,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_SpinLock {
         &crate::metadata::atomic::METADATA_SDL_SpinLock;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Try to lock a spin lock by setting it to a non-zero value.
     ///
     /// ***Please note that spinlocks are dangerous if you don't know what you're
@@ -76,7 +76,7 @@ extern "C" {
     pub fn SDL_TryLockSpinlock(lock: *mut SDL_SpinLock) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Lock a spin lock by setting it to a non-zero value.
     ///
     /// ***Please note that spinlocks are dangerous if you don't know what you're
@@ -97,7 +97,7 @@ extern "C" {
     pub fn SDL_LockSpinlock(lock: *mut SDL_SpinLock);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unlock a spin lock by setting it to 0.
     ///
     /// Always returns immediately.
@@ -176,7 +176,7 @@ pub fn SDL_MemoryBarrierRelease() {
     ::core::sync::atomic::fence(::core::sync::atomic::Ordering::Release)
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Insert a memory release barrier (function version).
     ///
     /// Please refer to [`SDL_MemoryBarrierRelease`] for details. This is a function
@@ -204,7 +204,7 @@ pub fn SDL_MemoryBarrierAcquire() {
     ::core::sync::atomic::fence(::core::sync::atomic::Ordering::Acquire)
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Insert a memory acquire barrier (function version).
     ///
     /// Please refer to [`SDL_MemoryBarrierRelease`] for details. This is a function
@@ -313,7 +313,7 @@ pub struct SDL_AtomicInt {
     pub value: ::core::ffi::c_int,
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an atomic variable to a new value if it is currently an old value.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -343,7 +343,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an atomic variable to a value.
     ///
     /// This function also acts as a full memory barrier.
@@ -369,7 +369,7 @@ extern "C" {
     pub fn SDL_SetAtomicInt(a: *mut SDL_AtomicInt, v: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the value of an atomic variable.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -392,7 +392,7 @@ extern "C" {
     pub fn SDL_GetAtomicInt(a: *mut SDL_AtomicInt) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add to an atomic variable.
     ///
     /// This function also acts as a full memory barrier.
@@ -499,7 +499,7 @@ pub struct SDL_AtomicU32 {
     pub value: Uint32,
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an atomic variable to a new value if it is currently an old value.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -529,7 +529,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an atomic variable to a value.
     ///
     /// This function also acts as a full memory barrier.
@@ -555,7 +555,7 @@ extern "C" {
     pub fn SDL_SetAtomicU32(a: *mut SDL_AtomicU32, v: Uint32) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the value of an atomic variable.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -578,7 +578,7 @@ extern "C" {
     pub fn SDL_GetAtomicU32(a: *mut SDL_AtomicU32) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a pointer to a new value if it is currently an old value.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -609,7 +609,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a pointer to a value atomically.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use
@@ -637,7 +637,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the value of a pointer atomically.
     ///
     /// ***Note: If you don't know what this function is for, you shouldn't use

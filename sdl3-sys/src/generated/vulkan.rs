@@ -81,7 +81,7 @@ apply_cfg!(#[cfg(not(feature = "use-ash-v0-38"))] => {
     pub type VkSurfaceKHR = ::core::primitive::u64;
 });
 
-extern "C" {
+unsafe extern "C" {
     /// Dynamically load the Vulkan loader library.
     ///
     /// This should be called after initializing the video driver, but before
@@ -139,7 +139,7 @@ extern "C" {
     pub fn SDL_Vulkan_LoadLibrary(path: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the address of the `vkGetInstanceProcAddr` function.
     ///
     /// This should be called after either calling [`SDL_Vulkan_LoadLibrary()`] or
@@ -175,7 +175,7 @@ pub type VkGetInstanceProcAddr =
 /// (`sdl3-sys`) Generic Vulkan void function. Cast to the appropriate type before use.
 pub type VkVoidFunction = Option<unsafe extern "system" fn()>;
 
-extern "C" {
+unsafe extern "C" {
     /// Unload the Vulkan library previously loaded by [`SDL_Vulkan_LoadLibrary()`].
     ///
     /// SDL keeps a counter of how many times this function has been called, so it
@@ -200,7 +200,7 @@ extern "C" {
     pub fn SDL_Vulkan_UnloadLibrary();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the Vulkan instance extensions needed for vkCreateInstance.
     ///
     /// This should be called after either calling [`SDL_Vulkan_LoadLibrary()`] or
@@ -231,7 +231,7 @@ extern "C" {
     ) -> *const *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a Vulkan rendering surface for a window.
     ///
     /// The `window` must have been created with the [`SDL_WINDOW_VULKAN`] flag and
@@ -267,7 +267,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy the Vulkan rendering surface of a window.
     ///
     /// This should be called before [`SDL_DestroyWindow`], if [`SDL_Vulkan_CreateSurface`]
@@ -299,7 +299,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query support for presentation via a given physical device and queue
     /// family.
     ///

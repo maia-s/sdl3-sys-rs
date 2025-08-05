@@ -1,8 +1,8 @@
 [package]
 name = "sdl3-image-sys"
 version = "0.6.0+SDL3-image-3.2.4"
-edition = "2021"
-rust-version = "1.81"
+edition = "2024"
+rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"
 description = "Low level Rust bindings for SDL3_image"
@@ -52,10 +52,7 @@ only-metadata = ["metadata", "no-link"]
 # Enable nightly features
 nightly = []
 
-no-default = [
-    "no-default-backends",
-    "no-default-formats",
-]
+no-default = ["no-default-backends", "no-default-formats"]
 
 no-default-backends = [
     "no-sdlimage-backend-imageio",
@@ -90,7 +87,12 @@ sdlimage-deps-shared = []
 no-sdlimage-deps-shared = []
 
 # disable libraries that aren't included in the crate for now
-sdlimage-vendored = ["no-sdlimage-avif", "no-sdlimage-jxl", "no-sdlimage-tif", "no-sdlimage-webp"]
+sdlimage-vendored = [
+    "no-sdlimage-avif",
+    "no-sdlimage-jxl",
+    "no-sdlimage-tif",
+    "no-sdlimage-webp",
+]
 no-sdlimage-vendored = []
 
 sdlimage-backend-imageio = []

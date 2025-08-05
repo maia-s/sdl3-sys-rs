@@ -1,5 +1,5 @@
 [workspace]
-resolver = "2"
+resolver = "3"
 members = [
     "sdl3-image-src",
     "sdl3-image-sys",
@@ -14,9 +14,4 @@ members = [
     "examples/gpu-clear-screen",
     "examples/gpu-pull-sprite-batch",
 ]
-default-members = [
-    "sdl3-sys",
-    "sdl3-image-sys",
-    "sdl3-ttf-sys",
-    "sdl3-main",
-]
+default-members = ["sdl3-sys", "sdl3-image-sys", "sdl3-ttf-sys", "sdl3-main"]

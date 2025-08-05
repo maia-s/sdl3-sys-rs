@@ -931,7 +931,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_HapticID {
         &crate::metadata::haptic::METADATA_SDL_HapticID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently connected haptic devices.
     ///
     /// ## Parameters
@@ -951,7 +951,7 @@ extern "C" {
     pub fn SDL_GetHaptics(count: *mut ::core::ffi::c_int) -> *mut SDL_HapticID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent name of a haptic device.
     ///
     /// This can be called before any haptic devices are opened.
@@ -973,7 +973,7 @@ extern "C" {
     pub fn SDL_GetHapticNameForID(instance_id: SDL_HapticID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a haptic device for use.
     ///
     /// The index passed as an argument refers to the N'th haptic device on this
@@ -1003,7 +1003,7 @@ extern "C" {
     pub fn SDL_OpenHaptic(instance_id: SDL_HapticID) -> *mut SDL_Haptic;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the [`SDL_Haptic`] associated with an instance ID, if it has been opened.
     ///
     /// ## Parameters
@@ -1018,7 +1018,7 @@ extern "C" {
     pub fn SDL_GetHapticFromID(instance_id: SDL_HapticID) -> *mut SDL_Haptic;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the instance ID of an opened haptic device.
     ///
     /// ## Parameters
@@ -1033,7 +1033,7 @@ extern "C" {
     pub fn SDL_GetHapticID(haptic: *mut SDL_Haptic) -> SDL_HapticID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the implementation dependent name of a haptic device.
     ///
     /// ## Parameters
@@ -1052,7 +1052,7 @@ extern "C" {
     pub fn SDL_GetHapticName(haptic: *mut SDL_Haptic) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether or not the current mouse has haptic capabilities.
     ///
     /// ## Return value
@@ -1066,7 +1066,7 @@ extern "C" {
     pub fn SDL_IsMouseHaptic() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Try to open a haptic device from the current mouse.
     ///
     /// ## Return value
@@ -1082,7 +1082,7 @@ extern "C" {
     pub fn SDL_OpenHapticFromMouse() -> *mut SDL_Haptic;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query if a joystick has haptic features.
     ///
     /// ## Parameters
@@ -1099,7 +1099,7 @@ extern "C" {
     pub fn SDL_IsJoystickHaptic(joystick: *mut SDL_Joystick) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a haptic device for use from a joystick device.
     ///
     /// You must still close the haptic device separately. It will not be closed
@@ -1126,7 +1126,7 @@ extern "C" {
     pub fn SDL_OpenHapticFromJoystick(joystick: *mut SDL_Joystick) -> *mut SDL_Haptic;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close a haptic device previously opened with [`SDL_OpenHaptic()`].
     ///
     /// ## Parameters
@@ -1140,7 +1140,7 @@ extern "C" {
     pub fn SDL_CloseHaptic(haptic: *mut SDL_Haptic);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of effects a haptic device can store.
     ///
     /// On some platforms this isn't fully supported, and therefore is an
@@ -1163,7 +1163,7 @@ extern "C" {
     pub fn SDL_GetMaxHapticEffects(haptic: *mut SDL_Haptic) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of effects a haptic device can play at the same time.
     ///
     /// This is not supported on all platforms, but will always return a value.
@@ -1184,7 +1184,7 @@ extern "C" {
     pub fn SDL_GetMaxHapticEffectsPlaying(haptic: *mut SDL_Haptic) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the haptic device's supported features in bitwise manner.
     ///
     /// ## Parameters
@@ -1203,7 +1203,7 @@ extern "C" {
     pub fn SDL_GetHapticFeatures(haptic: *mut SDL_Haptic) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of haptic axes the device has.
     ///
     /// The number of haptic axes might be useful if working with the
@@ -1221,7 +1221,7 @@ extern "C" {
     pub fn SDL_GetNumHapticAxes(haptic: *mut SDL_Haptic) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check to see if an effect is supported by a haptic device.
     ///
     /// ## Parameters
@@ -1243,7 +1243,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a new haptic effect on a specified device.
     ///
     /// ## Parameters
@@ -1268,7 +1268,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update the properties of an effect.
     ///
     /// Can be used dynamically, although behavior when dynamically changing
@@ -1299,7 +1299,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Run the haptic effect on its associated haptic device.
     ///
     /// To repeat the effect over and over indefinitely, set `iterations` to
@@ -1332,7 +1332,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Stop the haptic effect on its associated haptic device.
     ///
     /// ## Parameters
@@ -1355,7 +1355,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy a haptic effect on the device.
     ///
     /// This will stop the effect if it's running. Effects are automatically
@@ -1373,7 +1373,7 @@ extern "C" {
     pub fn SDL_DestroyHapticEffect(haptic: *mut SDL_Haptic, effect: ::core::ffi::c_int);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the status of the current effect on the specified haptic device.
     ///
     /// Device must support the [`SDL_HAPTIC_STATUS`] feature.
@@ -1397,7 +1397,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the global gain of the specified haptic device.
     ///
     /// Device must support the [`SDL_HAPTIC_GAIN`] feature.
@@ -1427,7 +1427,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the global autocenter of the device.
     ///
     /// Autocenter should be between 0 and 100. Setting it to 0 will disable
@@ -1454,7 +1454,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Pause a haptic device.
     ///
     /// Device must support the [`SDL_HAPTIC_PAUSE`] feature. Call [`SDL_ResumeHaptic()`]
@@ -1478,7 +1478,7 @@ extern "C" {
     pub fn SDL_PauseHaptic(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Resume a haptic device.
     ///
     /// Call to unpause after [`SDL_PauseHaptic()`].
@@ -1498,7 +1498,7 @@ extern "C" {
     pub fn SDL_ResumeHaptic(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Stop all the currently playing effects on a haptic device.
     ///
     /// ## Parameters
@@ -1517,7 +1517,7 @@ extern "C" {
     pub fn SDL_StopHapticEffects(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check whether rumble is supported on a haptic device.
     ///
     /// ## Parameters
@@ -1534,7 +1534,7 @@ extern "C" {
     pub fn SDL_HapticRumbleSupported(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Initialize a haptic device for simple rumble playback.
     ///
     /// ## Parameters
@@ -1554,7 +1554,7 @@ extern "C" {
     pub fn SDL_InitHapticRumble(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Run a simple rumble effect on a haptic device.
     ///
     /// ## Parameters
@@ -1579,7 +1579,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Stop the simple rumble on a haptic device.
     ///
     /// ## Parameters

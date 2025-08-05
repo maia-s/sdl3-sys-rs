@@ -339,7 +339,7 @@ const _: () = ::core::assert!(
             && (::core::mem::size_of::<SDL_StorageInterface>() == 96_usize)))
 );
 
-extern "C" {
+unsafe extern "C" {
     /// Opens up a read-only container for the application's filesystem.
     ///
     /// ## Parameters
@@ -364,7 +364,7 @@ extern "C" {
     ) -> *mut SDL_Storage;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Opens up a container for a user's unique read/write filesystem.
     ///
     /// While title storage can generally be kept open throughout runtime, user
@@ -399,7 +399,7 @@ extern "C" {
     ) -> *mut SDL_Storage;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Opens up a container for local filesystem storage.
     ///
     /// This is provided for development and tools. Portable applications should
@@ -428,7 +428,7 @@ extern "C" {
     pub fn SDL_OpenFileStorage(path: *const ::core::ffi::c_char) -> *mut SDL_Storage;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Opens up a container using a client-provided storage interface.
     ///
     /// Applications do not need to use this function unless they are providing
@@ -465,7 +465,7 @@ extern "C" {
     ) -> *mut SDL_Storage;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Closes and frees a storage container.
     ///
     /// ## Parameters
@@ -488,7 +488,7 @@ extern "C" {
     pub fn SDL_CloseStorage(storage: *mut SDL_Storage) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Checks if the storage container is ready to use.
     ///
     /// This function should be called in regular intervals until it returns true -
@@ -507,7 +507,7 @@ extern "C" {
     pub fn SDL_StorageReady(storage: *mut SDL_Storage) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the size of a file within a storage container.
     ///
     /// ## Parameters
@@ -532,7 +532,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Synchronously read a file from a storage container into a client-provided
     /// buffer.
     ///
@@ -565,7 +565,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Synchronously write a file from client memory into a storage container.
     ///
     /// ## Parameters
@@ -593,7 +593,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a directory in a writable storage container.
     ///
     /// ## Parameters
@@ -615,7 +615,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Enumerate a directory in a storage container through a callback function.
     ///
     /// This function provides every directory entry through an app-provided
@@ -654,7 +654,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove a file or an empty directory in a writable storage container.
     ///
     /// ## Parameters
@@ -676,7 +676,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Rename a file or directory in a writable storage container.
     ///
     /// ## Parameters
@@ -700,7 +700,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a file in a writable storage container.
     ///
     /// ## Parameters
@@ -724,7 +724,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get information about a filesystem path in a storage container.
     ///
     /// ## Parameters
@@ -749,7 +749,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Queries the remaining space in a storage container.
     ///
     /// ## Parameters
@@ -767,7 +767,7 @@ extern "C" {
     pub fn SDL_GetStorageSpaceRemaining(storage: *mut SDL_Storage) -> Uint64;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Enumerate a directory tree, filtered by pattern, and return a list.
     ///
     /// Files are filtered out if they don't match the string in `pattern`, which

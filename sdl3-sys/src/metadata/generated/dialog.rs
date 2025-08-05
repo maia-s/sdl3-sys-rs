@@ -79,7 +79,9 @@ pub const METADATA_SDL_FileDialogType: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_FileDialogType",
     short_name: "FileDialogType",
-    doc: Some("Various types of file dialogs.\n\nThis is used by [`SDL_ShowFileDialogWithProperties()`] to decide what kind of\ndialog to present to the user.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_ShowFileDialogWithProperties`]\n"),
+    doc: Some(
+        "Various types of file dialogs.\n\nThis is used by [`SDL_ShowFileDialogWithProperties()`] to decide what kind of\ndialog to present to the user.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_ShowFileDialogWithProperties`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

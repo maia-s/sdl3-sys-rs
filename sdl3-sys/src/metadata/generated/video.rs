@@ -8,7 +8,9 @@ pub const METADATA_SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: Property = 
     short_name: "GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER",
     value: crate::video::SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER,
     ty: PropertyType::POINTER,
-    doc: Some("The pointer to the global `wl_display` object used by the Wayland video\nbackend.\n\nCan be set before the video subsystem is initialized to import an external\n`wl_display` object from an application or toolkit for use in SDL, or read\nafter initialization to export the `wl_display` used by the Wayland video\nbackend. Setting this property after the video subsystem has been\ninitialized has no effect, and reading it when the video subsystem is\nuninitialized will either return the user provided value, if one was set\nprior to initialization, or NULL. See docs/README-wayland.md for more\ninformation.\n"),
+    doc: Some(
+        "The pointer to the global `wl_display` object used by the Wayland video\nbackend.\n\nCan be set before the video subsystem is initialized to import an external\n`wl_display` object from an application or toolkit for use in SDL, or read\nafter initialization to export the `wl_display` used by the Wayland video\nbackend. Setting this property after the video subsystem has been\ninitialized has no effect, and reading it when the video subsystem is\nuninitialized will either return the user provided value, if one was set\nprior to initialization, or NULL. See docs/README-wayland.md for more\ninformation.\n",
+    ),
     available_since: None,
 };
 pub const METADATA_SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: Property = Property {
@@ -665,20 +667,22 @@ pub const METADATA_SDL_DisplayID: Group = Group {
     kind: GroupKind::Id,
     name: "SDL_DisplayID",
     short_name: "DisplayID",
-    doc: Some("This is a unique ID for a display for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the display is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "This is a unique ID for a display for the time it is connected to the\nsystem, and is never reused for the lifetime of the application.\n\nIf the display is disconnected and reconnected, it will get a new ID.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
-    values: &[
-    ],
+    values: &[],
 };
 pub const METADATA_SDL_WindowID: Group = Group {
     module: "video",
     kind: GroupKind::Id,
     name: "SDL_WindowID",
     short_name: "WindowID",
-    doc: Some("This is a unique ID for a window.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "This is a unique ID for a window.\n\nThe value 0 is an invalid ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
-    values: &[
-    ],
+    values: &[],
 };
 pub const METADATA_SDL_SystemTheme: Group = Group {
     module: "video",
@@ -713,7 +717,9 @@ pub const METADATA_SDL_DisplayOrientation: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_DisplayOrientation",
     short_name: "DisplayOrientation",
-    doc: Some("Display orientation values; the way a display is rotated.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Display orientation values; the way a display is rotated.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -725,13 +731,17 @@ pub const METADATA_SDL_DisplayOrientation: Group = Group {
         GroupValue {
             name: "SDL_ORIENTATION_LANDSCAPE",
             short_name: "LANDSCAPE",
-            doc: Some("The display is in landscape mode, with the right side up, relative to portrait mode\n"),
+            doc: Some(
+                "The display is in landscape mode, with the right side up, relative to portrait mode\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_ORIENTATION_LANDSCAPE_FLIPPED",
             short_name: "LANDSCAPE_FLIPPED",
-            doc: Some("The display is in landscape mode, with the left side up, relative to portrait mode\n"),
+            doc: Some(
+                "The display is in landscape mode, with the left side up, relative to portrait mode\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -753,7 +763,9 @@ pub const METADATA_SDL_WindowFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_WindowFlags",
     short_name: "WindowFlags",
-    doc: Some("The flags on a window.\n\nThese cover a lot of true/false, or on/off, window state. Some of it is\nimmutable after being set through [`SDL_CreateWindow()`], some of it can be\nchanged on existing windows by the app, and some of it might be altered by\nthe user or system outside of the app's control.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetWindowFlags`]\n"),
+    doc: Some(
+        "The flags on a window.\n\nThese cover a lot of true/false, or on/off, window state. Some of it is\nimmutable after being set through [`SDL_CreateWindow()`], some of it can be\nchanged on existing windows by the app, and some of it might be altered by\nthe user or system outside of the app's control.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetWindowFlags`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -777,7 +789,9 @@ pub const METADATA_SDL_WindowFlags: Group = Group {
         GroupValue {
             name: "SDL_WINDOW_HIDDEN",
             short_name: "HIDDEN",
-            doc: Some("window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible\n"),
+            doc: Some(
+                "window is neither mapped onto the desktop nor shown in the taskbar/dock/window list; [`SDL_ShowWindow()`] is required for it to become visible\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -861,13 +875,17 @@ pub const METADATA_SDL_WindowFlags: Group = Group {
         GroupValue {
             name: "SDL_WINDOW_UTILITY",
             short_name: "UTILITY",
-            doc: Some("window should be treated as a utility window, not showing in the task bar and window list\n"),
+            doc: Some(
+                "window should be treated as a utility window, not showing in the task bar and window list\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_WINDOW_TOOLTIP",
             short_name: "TOOLTIP",
-            doc: Some("window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window\n"),
+            doc: Some(
+                "window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -943,31 +961,41 @@ pub const METADATA_SDL_GLAttr: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_GLAttr",
     short_name: "GLAttr",
-    doc: Some("An enumeration of OpenGL configuration attributes.\n\nWhile you can set most OpenGL attributes normally, the attributes listed\nabove must be known before SDL creates the window that will be used with\nthe OpenGL context. These attributes are set and read with\n[`SDL_GL_SetAttribute()`] and [`SDL_GL_GetAttribute()`].\n\nIn some cases, these attributes are minimum requests; the GL does not\npromise to give you exactly what you asked for. It's possible to ask for a\n16-bit depth buffer and get a 24-bit one instead, for example, or to ask\nfor no stencil buffer and still have one available. Context creation should\nfail if the GL can't provide your requested attributes at a minimum, but\nyou should check to see exactly what you got.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "An enumeration of OpenGL configuration attributes.\n\nWhile you can set most OpenGL attributes normally, the attributes listed\nabove must be known before SDL creates the window that will be used with\nthe OpenGL context. These attributes are set and read with\n[`SDL_GL_SetAttribute()`] and [`SDL_GL_GetAttribute()`].\n\nIn some cases, these attributes are minimum requests; the GL does not\npromise to give you exactly what you asked for. It's possible to ask for a\n16-bit depth buffer and get a 24-bit one instead, for example, or to ask\nfor no stencil buffer and still have one available. Context creation should\nfail if the GL can't provide your requested attributes at a minimum, but\nyou should check to see exactly what you got.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
             name: "SDL_GL_RED_SIZE",
             short_name: "RED_SIZE",
-            doc: Some("the minimum number of bits for the red channel of the color buffer; defaults to 8.\n"),
+            doc: Some(
+                "the minimum number of bits for the red channel of the color buffer; defaults to 8.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_GREEN_SIZE",
             short_name: "GREEN_SIZE",
-            doc: Some("the minimum number of bits for the green channel of the color buffer; defaults to 8.\n"),
+            doc: Some(
+                "the minimum number of bits for the green channel of the color buffer; defaults to 8.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_BLUE_SIZE",
             short_name: "BLUE_SIZE",
-            doc: Some("the minimum number of bits for the blue channel of the color buffer; defaults to 8.\n"),
+            doc: Some(
+                "the minimum number of bits for the blue channel of the color buffer; defaults to 8.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_ALPHA_SIZE",
             short_name: "ALPHA_SIZE",
-            doc: Some("the minimum number of bits for the alpha channel of the color buffer; defaults to 8.\n"),
+            doc: Some(
+                "the minimum number of bits for the alpha channel of the color buffer; defaults to 8.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -979,7 +1007,9 @@ pub const METADATA_SDL_GLAttr: Group = Group {
         GroupValue {
             name: "SDL_GL_DOUBLEBUFFER",
             short_name: "DOUBLEBUFFER",
-            doc: Some("whether the output is single or double buffered; defaults to double buffering on.\n"),
+            doc: Some(
+                "whether the output is single or double buffered; defaults to double buffering on.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -997,25 +1027,33 @@ pub const METADATA_SDL_GLAttr: Group = Group {
         GroupValue {
             name: "SDL_GL_ACCUM_RED_SIZE",
             short_name: "ACCUM_RED_SIZE",
-            doc: Some("the minimum number of bits for the red channel of the accumulation buffer; defaults to 0.\n"),
+            doc: Some(
+                "the minimum number of bits for the red channel of the accumulation buffer; defaults to 0.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_ACCUM_GREEN_SIZE",
             short_name: "ACCUM_GREEN_SIZE",
-            doc: Some("the minimum number of bits for the green channel of the accumulation buffer; defaults to 0.\n"),
+            doc: Some(
+                "the minimum number of bits for the green channel of the accumulation buffer; defaults to 0.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_ACCUM_BLUE_SIZE",
             short_name: "ACCUM_BLUE_SIZE",
-            doc: Some("the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0.\n"),
+            doc: Some(
+                "the minimum number of bits for the blue channel of the accumulation buffer; defaults to 0.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_ACCUM_ALPHA_SIZE",
             short_name: "ACCUM_ALPHA_SIZE",
-            doc: Some("the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0.\n"),
+            doc: Some(
+                "the minimum number of bits for the alpha channel of the accumulation buffer; defaults to 0.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -1033,13 +1071,17 @@ pub const METADATA_SDL_GLAttr: Group = Group {
         GroupValue {
             name: "SDL_GL_MULTISAMPLESAMPLES",
             short_name: "MULTISAMPLESAMPLES",
-            doc: Some("the number of samples used around the current pixel used for multisample anti-aliasing.\n"),
+            doc: Some(
+                "the number of samples used around the current pixel used for multisample anti-aliasing.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_ACCELERATED_VISUAL",
             short_name: "ACCELERATED_VISUAL",
-            doc: Some("set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either.\n"),
+            doc: Some(
+                "set to 1 to require hardware acceleration, set to 0 to force software rendering; defaults to allow either.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -1063,13 +1105,17 @@ pub const METADATA_SDL_GLAttr: Group = Group {
         GroupValue {
             name: "SDL_GL_CONTEXT_FLAGS",
             short_name: "CONTEXT_FLAGS",
-            doc: Some("some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.\n"),
+            doc: Some(
+                "some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_CONTEXT_PROFILE_MASK",
             short_name: "CONTEXT_PROFILE_MASK",
-            doc: Some("type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.\n"),
+            doc: Some(
+                "type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -1087,13 +1133,17 @@ pub const METADATA_SDL_GLAttr: Group = Group {
         GroupValue {
             name: "SDL_GL_CONTEXT_RELEASE_BEHAVIOR",
             short_name: "CONTEXT_RELEASE_BEHAVIOR",
-            doc: Some("sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.\n"),
+            doc: Some(
+                "sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_GL_CONTEXT_RESET_NOTIFICATION",
             short_name: "CONTEXT_RESET_NOTIFICATION",
-            doc: Some("set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.\n"),
+            doc: Some(
+                "set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -1121,7 +1171,9 @@ pub const METADATA_SDL_GLProfile: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GLProfile",
     short_name: "GLProfile",
-    doc: Some("Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Possible values to be set for the [`SDL_GL_CONTEXT_PROFILE_MASK`] attribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1149,7 +1201,9 @@ pub const METADATA_SDL_GLContextFlag: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GLContextFlag",
     short_name: "GLContextFlag",
-    doc: Some("Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Possible flags to be set for the [`SDL_GL_CONTEXT_FLAGS`] attribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1183,7 +1237,9 @@ pub const METADATA_SDL_GLContextReleaseFlag: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GLContextReleaseFlag",
     short_name: "GLContextReleaseFlag",
-    doc: Some("Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]\nattribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Possible values to be set for the [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`]\nattribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1205,7 +1261,9 @@ pub const METADATA_SDL_GLContextResetNotification: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_GLContextResetNotification",
     short_name: "GLContextResetNotification",
-    doc: Some("Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Possible values to be set [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] attribute.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1227,7 +1285,9 @@ pub const METADATA_SDL_HitTestResult: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_HitTestResult",
     short_name: "HitTestResult",
-    doc: Some("Possible return values from the [`SDL_HitTest`] callback.\n\n## Thread safety\nThis function should only be called on the main thread.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_HitTest`]\n"),
+    doc: Some(
+        "Possible return values from the [`SDL_HitTest`] callback.\n\n## Thread safety\nThis function should only be called on the main thread.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_HitTest`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

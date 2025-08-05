@@ -184,7 +184,7 @@ impl ::core::default::Default for SDL_hid_device_info {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Initialize the HIDAPI library.
     ///
     /// This function initializes the HIDAPI library. Calling it is not strictly
@@ -207,7 +207,7 @@ extern "C" {
     pub fn SDL_hid_init() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Finalize the HIDAPI library.
     ///
     /// This function frees all of the static data associated with HIDAPI. It
@@ -225,7 +225,7 @@ extern "C" {
     pub fn SDL_hid_exit() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Check to see if devices may have been added or removed.
     ///
     /// Enumerating the HID devices is an expensive operation, so you can call this
@@ -249,7 +249,7 @@ extern "C" {
     pub fn SDL_hid_device_change_count() -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Enumerate the HID Devices.
     ///
     /// This function returns a linked list of all the HID devices attached to the
@@ -285,7 +285,7 @@ extern "C" {
     ) -> *mut SDL_hid_device_info;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Free an enumeration linked list.
     ///
     /// This function frees a linked list created by [`SDL_hid_enumerate()`].
@@ -299,7 +299,7 @@ extern "C" {
     pub fn SDL_hid_free_enumeration(devs: *mut SDL_hid_device_info);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a HID device using a Vendor ID (VID), Product ID (PID) and optionally
     /// a serial number.
     ///
@@ -325,7 +325,7 @@ extern "C" {
     ) -> *mut SDL_hid_device;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a HID device by its path name.
     ///
     /// The path name be determined by calling [`SDL_hid_enumerate()`], or a
@@ -343,7 +343,7 @@ extern "C" {
     pub fn SDL_hid_open_path(path: *const ::core::ffi::c_char) -> *mut SDL_hid_device;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Write an Output report to a HID device.
     ///
     /// The first byte of `data` must contain the Report ID. For devices which only
@@ -378,7 +378,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Read an Input report from a HID device with timeout.
     ///
     /// Input reports are returned to the host through the INTERRUPT IN endpoint.
@@ -408,7 +408,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Read an Input report from a HID device.
     ///
     /// Input reports are returned to the host through the INTERRUPT IN endpoint.
@@ -437,7 +437,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the device handle to be non-blocking.
     ///
     /// In non-blocking mode calls to [`SDL_hid_read()`] will return immediately with a
@@ -463,7 +463,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Send a Feature report to the device.
     ///
     /// Feature reports are sent over the Control endpoint as a Set_Report
@@ -496,7 +496,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a feature report from a HID device.
     ///
     /// Set the first byte of `data` to the Report ID of the report to be read.
@@ -527,7 +527,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get an input report from a HID device.
     ///
     /// Set the first byte of `data` to the Report ID of the report to be read.
@@ -558,7 +558,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close a HID device.
     ///
     /// ## Parameters
@@ -573,7 +573,7 @@ extern "C" {
     pub fn SDL_hid_close(dev: *mut SDL_hid_device) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get The Manufacturer String from a HID device.
     ///
     /// ## Parameters
@@ -594,7 +594,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get The Product String from a HID device.
     ///
     /// ## Parameters
@@ -615,7 +615,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get The Serial Number String from a HID device.
     ///
     /// ## Parameters
@@ -636,7 +636,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a string from a HID device, based on its string index.
     ///
     /// ## Parameters
@@ -659,7 +659,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the device info from a HID device.
     ///
     /// ## Parameters
@@ -675,7 +675,7 @@ extern "C" {
     pub fn SDL_hid_get_device_info(dev: *mut SDL_hid_device) -> *mut SDL_hid_device_info;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a report descriptor from a HID device.
     ///
     /// User has to provide a preallocated buffer where descriptor will be copied
@@ -699,7 +699,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Start or stop a BLE scan on iOS and tvOS to pair Steam Controllers.
     ///
     /// ## Parameters

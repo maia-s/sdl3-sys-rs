@@ -5,7 +5,7 @@ use std::ffi::CStr;
 use std::ptr::null_mut;
 use std::sync::Mutex;
 
-use sdl3_main::{app_impl, AppResult, AppResultWithState};
+use sdl3_main::{AppResult, AppResultWithState, app_impl};
 use sdl3_sys::everything::*;
 
 struct AppState {

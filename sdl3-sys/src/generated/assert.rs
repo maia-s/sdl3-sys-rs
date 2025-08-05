@@ -309,7 +309,7 @@ impl ::core::default::Default for SDL_AssertData {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Never call this directly.
     ///
     /// Use the [`SDL_assert`] macros instead.
@@ -716,7 +716,7 @@ pub type SDL_AssertionHandler = ::core::option::Option<
     ) -> SDL_AssertState,
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Set an application-defined assertion handler.
     ///
     /// This function allows an application to show its own assertion UI and/or
@@ -748,7 +748,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the default assertion handler.
     ///
     /// This returns the function pointer that is called by default when an
@@ -771,7 +771,7 @@ extern "C" {
     pub fn SDL_GetDefaultAssertionHandler() -> SDL_AssertionHandler;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current assertion handler.
     ///
     /// This returns the function pointer that is called when an assertion is
@@ -804,7 +804,7 @@ extern "C" {
     ) -> SDL_AssertionHandler;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of all assertion failures.
     ///
     /// This function gets all assertions triggered since the last call to
@@ -842,7 +842,7 @@ extern "C" {
     pub fn SDL_GetAssertionReport() -> *const SDL_AssertData;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear the list of all assertion failures.
     ///
     /// This function will clear the list of all assertions triggered up to that

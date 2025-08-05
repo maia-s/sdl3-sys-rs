@@ -22,7 +22,7 @@
 
 use super::stdinc::*;
 
-extern "C" {
+unsafe extern "C" {
     /// Set the SDL error message for the current thread.
     ///
     /// Calling this function will replace any previous error message that was set.
@@ -57,7 +57,7 @@ extern "C" {
     pub fn SDL_SetError(fmt: *const ::core::ffi::c_char, ...) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the SDL error message for the current thread.
     ///
     /// Calling this function will replace any previous error message that was set.
@@ -85,7 +85,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an error indicating that memory allocation failed.
     ///
     /// This function does not do any memory allocation.
@@ -101,7 +101,7 @@ extern "C" {
     pub fn SDL_OutOfMemory() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Retrieve a message about the last error that occurred on the current
     /// thread.
     ///
@@ -142,7 +142,7 @@ extern "C" {
     pub fn SDL_GetError() -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear any previous error message for this thread.
     ///
     /// ## Return value

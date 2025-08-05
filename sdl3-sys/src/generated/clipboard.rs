@@ -52,7 +52,7 @@ use super::stdinc::*;
 
 use super::error::*;
 
-extern "C" {
+unsafe extern "C" {
     /// Put UTF-8 text into the clipboard.
     ///
     /// ## Parameters
@@ -74,7 +74,7 @@ extern "C" {
     pub fn SDL_SetClipboardText(text: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get UTF-8 text from the clipboard.
     ///
     /// This function returns an empty string if there is not enough memory left
@@ -97,7 +97,7 @@ extern "C" {
     pub fn SDL_GetClipboardText() -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether the clipboard exists and contains a non-empty text string.
     ///
     /// ## Return value
@@ -115,7 +115,7 @@ extern "C" {
     pub fn SDL_HasClipboardText() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Put UTF-8 text into the primary selection.
     ///
     /// ## Parameters
@@ -135,10 +135,10 @@ extern "C" {
     /// - [`SDL_GetPrimarySelectionText`]
     /// - [`SDL_HasPrimarySelectionText`]
     pub fn SDL_SetPrimarySelectionText(text: *const ::core::ffi::c_char)
-        -> ::core::primitive::bool;
+    -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get UTF-8 text from the primary selection.
     ///
     /// This function returns an empty string if there is not enough memory left
@@ -161,7 +161,7 @@ extern "C" {
     pub fn SDL_GetPrimarySelectionText() -> *mut ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether the primary selection exists and contains a non-empty text
     /// string.
     ///
@@ -227,7 +227,7 @@ pub type SDL_ClipboardDataCallback = ::core::option::Option<
 pub type SDL_ClipboardCleanupCallback =
     ::core::option::Option<unsafe extern "C" fn(userdata: *mut ::core::ffi::c_void)>;
 
-extern "C" {
+unsafe extern "C" {
     /// Offer clipboard data to the OS.
     ///
     /// Tell the operating system that the application is offering clipboard data
@@ -271,7 +271,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear the clipboard data.
     ///
     /// ## Return value
@@ -289,7 +289,7 @@ extern "C" {
     pub fn SDL_ClearClipboardData() -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the data from the clipboard for a given mime type.
     ///
     /// The size of text data does not include the terminator, but the text is
@@ -319,7 +319,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query whether there is data in the clipboard for the provided mime type.
     ///
     /// ## Parameters
@@ -341,7 +341,7 @@ extern "C" {
     pub fn SDL_HasClipboardData(mime_type: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Retrieve the list of mime types available in the clipboard.
     ///
     /// ## Parameters

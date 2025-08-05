@@ -4271,7 +4271,7 @@ impl sdl3_sys::metadata::HasGroupMetadata for SDL_HintPriority {
         &crate::metadata::hints::METADATA_SDL_HintPriority;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a hint with a specific priority.
     ///
     /// The priority controls the behavior when setting a hint that already has a
@@ -4304,7 +4304,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a hint with normal priority.
     ///
     /// Hints will not be set if there is an existing override hint or environment
@@ -4335,7 +4335,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Reset a hint to the default value.
     ///
     /// This will reset a hint to the value of the environment variable, or NULL if
@@ -4361,7 +4361,7 @@ extern "C" {
     pub fn SDL_ResetHint(name: *const ::core::ffi::c_char) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Reset all hints to the default values.
     ///
     /// This will reset all hints to the value of the associated environment
@@ -4379,7 +4379,7 @@ extern "C" {
     pub fn SDL_ResetHints();
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the value of a hint.
     ///
     /// ## Parameters
@@ -4405,7 +4405,7 @@ extern "C" {
     pub fn SDL_GetHint(name: *const ::core::ffi::c_char) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the boolean value of a hint variable.
     ///
     /// ## Parameters
@@ -4461,7 +4461,7 @@ pub type SDL_HintCallback = ::core::option::Option<
     ),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Add a function to watch a particular hint.
     ///
     /// The callback function is called _during_ this function, to provide it an
@@ -4492,7 +4492,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Remove a function watching a particular hint.
     ///
     /// ## Parameters

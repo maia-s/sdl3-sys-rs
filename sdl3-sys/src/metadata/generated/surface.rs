@@ -52,7 +52,9 @@ pub const METADATA_SDL_SurfaceFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_SurfaceFlags",
     short_name: "SurfaceFlags",
-    doc: Some("The flags on an [`SDL_Surface`].\n\nThese are generally considered read-only.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The flags on an [`SDL_Surface`].\n\nThese are generally considered read-only.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

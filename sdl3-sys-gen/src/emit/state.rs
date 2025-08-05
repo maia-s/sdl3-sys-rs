@@ -1,11 +1,11 @@
-use super::{patch::patch_emit_opaque_struct, Emit, EmitErr, EmitResult, Eval, Value};
+use super::{Emit, EmitErr, EmitResult, Eval, Value, patch::patch_emit_opaque_struct};
 use crate::{
+    Defer, Gen, GroupMetadata, HintMetadata, Metadata, PropertyMetadata,
     parse::{
         CanCmp, CanCopy, CanDefault, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident,
         IdentOrKw, ParseErr, PrimitiveType, RustCode, Span, StructFields, StructKind, Type,
         TypeEnum,
     },
-    Defer, Gen, GroupMetadata, HintMetadata, Metadata, PropertyMetadata,
 };
 use core::{fmt::Display, mem};
 use std::{
@@ -162,7 +162,7 @@ pub struct EmitContext<'a, 'b> {
     newline_count: usize,
     do_indent: bool,
     ool_output: String,
-    pub gen: &'b Gen,
+    pub generator: &'b Gen,
     top: bool,
 }
 
@@ -185,7 +185,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     pub fn new(
         module: impl Into<String>,
         output: &'a mut dyn Write,
-        gen: &'b Gen,
+        generator: &'b Gen,
     ) -> Result<Self, EmitErr> {
         let module = module.into();
         let mut preproc_state = PreProcState::default();
@@ -398,7 +398,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             newline_count: 0,
             do_indent: false,
             ool_output: String::new(),
-            gen,
+            generator,
             top: true,
         })
     }
@@ -514,7 +514,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     #[must_use]
     pub fn with_target_dependent_preproc_state_guard(
         &mut self,
-    ) -> (Rc<RefCell<PreProcState>>, impl Drop) {
+    ) -> (Rc<RefCell<PreProcState>>, impl Drop + use<>) {
         let parent = Rc::clone(&self.inner().preproc_state);
         let pps = Rc::new(RefCell::new(PreProcState::with_parent(Rc::clone(&parent))));
         self.inner_mut().preproc_state = Rc::clone(&pps);
@@ -561,7 +561,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     #[must_use]
-    pub fn subscope_guard(&self) -> impl Drop {
+    pub fn subscope_guard(&self) -> impl Drop + use<> {
         self.scope_mut().push();
         let inner = Rc::clone(&self.inner);
         Defer::new(move || inner.borrow_mut().scope.pop())
@@ -591,7 +591,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             newline_count: self.newline_count,
             do_indent: self.do_indent,
             ool_output: String::new(),
-            gen: self.gen,
+            generator: self.generator,
             top: true,
         }
     }
@@ -613,7 +613,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             newline_count: 0,
             do_indent: false,
             ool_output: String::new(),
-            gen: self.gen,
+            generator: self.generator,
             top: false,
         }
     }
@@ -626,7 +626,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             newline_count: 0,
             do_indent: false,
             ool_output: String::new(),
-            gen: self.gen,
+            generator: self.generator,
             top: false,
         }
     }
@@ -652,7 +652,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     #[must_use]
-    pub fn preproc_eval_mode_guard(&mut self) -> impl Drop {
+    pub fn preproc_eval_mode_guard(&mut self) -> impl Drop + use<> {
         self.inner_mut().preproc_eval_mode += 1;
         let inner = Rc::clone(&self.inner);
         Defer::new(move || inner.borrow_mut().preproc_eval_mode -= 1)
@@ -819,14 +819,14 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     #[must_use]
-    pub fn disable_patch_guard(&mut self) -> impl Drop {
+    pub fn disable_patch_guard(&mut self) -> impl Drop + use<> {
         let patch_enabled = mem::replace(&mut self.inner_mut().patch_enabled, false);
         let inner = Rc::clone(&self.inner);
         Defer::new(move || inner.borrow_mut().patch_enabled = patch_enabled)
     }
 
     #[must_use]
-    pub fn expect_unresolved_sym_dependency_guard(&mut self) -> impl Drop {
+    pub fn expect_unresolved_sym_dependency_guard(&mut self) -> impl Drop + use<> {
         if self.inner().sym_dependencies.is_some() {
             panic!("type dependencies already expected by something else")
         }

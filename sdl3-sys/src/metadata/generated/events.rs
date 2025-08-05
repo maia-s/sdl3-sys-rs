@@ -7,7 +7,9 @@ pub const METADATA_SDL_EventType: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_EventType",
     short_name: "EventType",
-    doc: Some("The types of events that can be delivered.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The types of events that can be delivered.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -25,37 +27,49 @@ pub const METADATA_SDL_EventType: Group = Group {
         GroupValue {
             name: "SDL_EVENT_TERMINATING",
             short_name: "TERMINATING",
-            doc: Some("The application is being terminated by the OS. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillTerminate()\nCalled on Android in onDestroy()\n"),
+            doc: Some(
+                "The application is being terminated by the OS. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillTerminate()\nCalled on Android in onDestroy()\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_EVENT_LOW_MEMORY",
             short_name: "LOW_MEMORY",
-            doc: Some("The application is low on memory, free memory if possible. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidReceiveMemoryWarning()\nCalled on Android in onTrimMemory()\n"),
+            doc: Some(
+                "The application is low on memory, free memory if possible. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidReceiveMemoryWarning()\nCalled on Android in onTrimMemory()\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_EVENT_WILL_ENTER_BACKGROUND",
             short_name: "WILL_ENTER_BACKGROUND",
-            doc: Some("The application is about to enter the background. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillResignActive()\nCalled on Android in onPause()\n"),
+            doc: Some(
+                "The application is about to enter the background. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillResignActive()\nCalled on Android in onPause()\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_EVENT_DID_ENTER_BACKGROUND",
             short_name: "DID_ENTER_BACKGROUND",
-            doc: Some("The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidEnterBackground()\nCalled on Android in onPause()\n"),
+            doc: Some(
+                "The application did enter the background and may not get CPU for some time. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidEnterBackground()\nCalled on Android in onPause()\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_EVENT_WILL_ENTER_FOREGROUND",
             short_name: "WILL_ENTER_FOREGROUND",
-            doc: Some("The application is about to enter the foreground. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillEnterForeground()\nCalled on Android in onResume()\n"),
+            doc: Some(
+                "The application is about to enter the foreground. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationWillEnterForeground()\nCalled on Android in onResume()\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_EVENT_DID_ENTER_FOREGROUND",
             short_name: "DID_ENTER_FOREGROUND",
-            doc: Some("The application is now interactive. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidBecomeActive()\nCalled on Android in onResume()\n"),
+            doc: Some(
+                "The application is now interactive. This event must be handled in a callback set with [`SDL_AddEventWatch()`].\nCalled on iOS in applicationDidBecomeActive()\nCalled on Android in onResume()\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -139,7 +153,9 @@ pub const METADATA_SDL_EventType: Group = Group {
         GroupValue {
             name: "SDL_EVENT_WINDOW_EXPOSED",
             short_name: "WINDOW_EXPOSED",
-            doc: Some("Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event\n"),
+            doc: Some(
+                "Window has been exposed and should be redrawn, and can be redrawn directly from event watchers for this event\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -265,7 +281,9 @@ pub const METADATA_SDL_EventType: Group = Group {
         GroupValue {
             name: "SDL_EVENT_WINDOW_DESTROYED",
             short_name: "WINDOW_DESTROYED",
-            doc: Some("The window with the associated ID is being or has been destroyed. If this message is being handled\nin an event watcher, the window handle is still valid and can still be used to retrieve any properties\nassociated with the window. Otherwise, the handle has already been destroyed and all resources\nassociated with it are invalid\n"),
+            doc: Some(
+                "The window with the associated ID is being or has been destroyed. If this message is being handled\nin an event watcher, the window handle is still valid and can still be used to retrieve any properties\nassociated with the window. Otherwise, the handle has already been destroyed and all resources\nassociated with it are invalid\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -313,7 +331,9 @@ pub const METADATA_SDL_EventType: Group = Group {
         GroupValue {
             name: "SDL_EVENT_KEYMAP_CHANGED",
             short_name: "KEYMAP_CHANGED",
-            doc: Some("Keymap changed due to a system event such as an\ninput language or keyboard layout change.\n"),
+            doc: Some(
+                "Keymap changed due to a system event such as an\ninput language or keyboard layout change.\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -703,7 +723,9 @@ pub const METADATA_SDL_EventType: Group = Group {
         GroupValue {
             name: "SDL_EVENT_USER",
             short_name: "USER",
-            doc: Some("Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,\nand should be allocated with [`SDL_RegisterEvents()`]\n"),
+            doc: Some(
+                "Events [`SDL_EVENT_USER`] through [`SDL_EVENT_LAST`] are for your use,\nand should be allocated with [`SDL_RegisterEvents()`]\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -725,7 +747,9 @@ pub const METADATA_SDL_EventAction: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_EventAction",
     short_name: "EventAction",
-    doc: Some("The type of action to request from [`SDL_PeepEvents()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The type of action to request from [`SDL_PeepEvents()`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

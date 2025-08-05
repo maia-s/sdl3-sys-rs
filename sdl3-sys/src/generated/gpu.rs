@@ -5115,7 +5115,7 @@ impl ::core::default::Default for SDL_GPUStorageTextureReadWriteBinding {
     }
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Checks for GPU runtime support.
     ///
     /// ## Parameters
@@ -5138,7 +5138,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Checks for GPU runtime support.
     ///
     /// ## Parameters
@@ -5155,7 +5155,7 @@ extern "C" {
     pub fn SDL_GPUSupportsProperties(props: SDL_PropertiesID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a GPU context.
     ///
     /// ## Parameters
@@ -5184,7 +5184,7 @@ extern "C" {
     ) -> *mut SDL_GPUDevice;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a GPU context.
     ///
     /// These are the supported properties:
@@ -5264,7 +5264,7 @@ pub const SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN: *const ::core::ff
 pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.d3d12.semantic".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Destroys a GPU context previously returned by [`SDL_CreateGPUDevice`].
     ///
     /// ## Parameters
@@ -5278,7 +5278,7 @@ extern "C" {
     pub fn SDL_DestroyGPUDevice(device: *mut SDL_GPUDevice);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of GPU drivers compiled into SDL.
     ///
     /// ## Return value
@@ -5292,7 +5292,7 @@ extern "C" {
     pub fn SDL_GetNumGPUDrivers() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of a built in GPU driver.
     ///
     /// The GPU drivers are presented in the order in which they are normally
@@ -5316,7 +5316,7 @@ extern "C" {
     pub fn SDL_GetGPUDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Returns the name of the backend used to create this GPU context.
     ///
     /// ## Parameters
@@ -5330,7 +5330,7 @@ extern "C" {
     pub fn SDL_GetGPUDeviceDriver(device: *mut SDL_GPUDevice) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Returns the supported shader formats for this GPU context.
     ///
     /// ## Parameters
@@ -5345,7 +5345,7 @@ extern "C" {
     pub fn SDL_GetGPUShaderFormats(device: *mut SDL_GPUDevice) -> SDL_GPUShaderFormat;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a pipeline object to be used in a compute workflow.
     ///
     /// Shader resource bindings must be authored to follow a particular order
@@ -5403,7 +5403,7 @@ extern "C" {
 pub const SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.computepipeline.create.name".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a pipeline object to be used in a graphics workflow.
     ///
     /// There are optional properties that can be provided through `props`. These
@@ -5437,7 +5437,7 @@ extern "C" {
 pub const SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.graphicspipeline.create.name".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a sampler object to be used when binding textures in a graphics
     /// workflow.
     ///
@@ -5471,7 +5471,7 @@ extern "C" {
 pub const SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.sampler.create.name".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a shader to be used when creating a graphics pipeline.
     ///
     /// Shader resource bindings must be authored to follow a particular order
@@ -5557,7 +5557,7 @@ extern "C" {
 pub const SDL_PROP_GPU_SHADER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.shader.create.name".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a texture object to be used in graphics or compute workflows.
     ///
     /// The contents of this texture are undefined until data is written to the
@@ -5643,7 +5643,7 @@ pub const SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_NUMBER: *const ::core:
 pub const SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.texture.create.name".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a buffer object to be used in graphics or compute workflows.
     ///
     /// The contents of this buffer are undefined until data is written to the
@@ -5700,7 +5700,7 @@ extern "C" {
 pub const SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.buffer.create.name".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Creates a transfer buffer to be used when uploading to or downloading from
     /// graphics resources.
     ///
@@ -5740,7 +5740,7 @@ extern "C" {
 pub const SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.transferbuffer.create.name".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Sets an arbitrary string constant to label a buffer.
     ///
     /// You should use [`SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING`] with
@@ -5767,7 +5767,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets an arbitrary string constant to label a texture.
     ///
     /// You should use [`SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING`] with
@@ -5795,7 +5795,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Inserts an arbitrary string label into the command buffer callstream.
     ///
     /// Useful for debugging.
@@ -5812,7 +5812,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Begins a debug group with an arbitary name.
     ///
     /// Used for denoting groups of calls when viewing the command buffer
@@ -5841,7 +5841,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Ends the most-recently pushed debug group.
     ///
     /// ## Parameters
@@ -5855,7 +5855,7 @@ extern "C" {
     pub fn SDL_PopGPUDebugGroup(command_buffer: *mut SDL_GPUCommandBuffer);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Frees the given texture as soon as it is safe to do so.
     ///
     /// You must not reference the texture after calling this function.
@@ -5869,7 +5869,7 @@ extern "C" {
     pub fn SDL_ReleaseGPUTexture(device: *mut SDL_GPUDevice, texture: *mut SDL_GPUTexture);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Frees the given sampler as soon as it is safe to do so.
     ///
     /// You must not reference the sampler after calling this function.
@@ -5883,7 +5883,7 @@ extern "C" {
     pub fn SDL_ReleaseGPUSampler(device: *mut SDL_GPUDevice, sampler: *mut SDL_GPUSampler);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Frees the given buffer as soon as it is safe to do so.
     ///
     /// You must not reference the buffer after calling this function.
@@ -5897,7 +5897,7 @@ extern "C" {
     pub fn SDL_ReleaseGPUBuffer(device: *mut SDL_GPUDevice, buffer: *mut SDL_GPUBuffer);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Frees the given transfer buffer as soon as it is safe to do so.
     ///
     /// You must not reference the transfer buffer after calling this function.
@@ -5914,7 +5914,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Frees the given compute pipeline as soon as it is safe to do so.
     ///
     /// You must not reference the compute pipeline after calling this function.
@@ -5931,7 +5931,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Frees the given shader as soon as it is safe to do so.
     ///
     /// You must not reference the shader after calling this function.
@@ -5945,7 +5945,7 @@ extern "C" {
     pub fn SDL_ReleaseGPUShader(device: *mut SDL_GPUDevice, shader: *mut SDL_GPUShader);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Frees the given graphics pipeline as soon as it is safe to do so.
     ///
     /// You must not reference the graphics pipeline after calling this function.
@@ -5962,7 +5962,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Acquire a command buffer.
     ///
     /// This command buffer is managed by the implementation and should not be
@@ -5993,7 +5993,7 @@ extern "C" {
     pub fn SDL_AcquireGPUCommandBuffer(device: *mut SDL_GPUDevice) -> *mut SDL_GPUCommandBuffer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Pushes data to a vertex uniform slot on the command buffer.
     ///
     /// Subsequent draw calls will use this uniform data.
@@ -6018,7 +6018,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Pushes data to a fragment uniform slot on the command buffer.
     ///
     /// Subsequent draw calls will use this uniform data.
@@ -6043,7 +6043,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Pushes data to a uniform slot on the command buffer.
     ///
     /// Subsequent draw calls will use this uniform data.
@@ -6068,7 +6068,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Begins a render pass on a command buffer.
     ///
     /// A render pass consists of a set of texture subresources (or depth slices in
@@ -6105,7 +6105,7 @@ extern "C" {
     ) -> *mut SDL_GPURenderPass;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds a graphics pipeline on a render pass to be used in rendering.
     ///
     /// A graphics pipeline must be bound before making any draw calls.
@@ -6122,7 +6122,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets the current viewport state on a command buffer.
     ///
     /// ## Parameters
@@ -6137,7 +6137,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets the current scissor state on a command buffer.
     ///
     /// ## Parameters
@@ -6149,7 +6149,7 @@ extern "C" {
     pub fn SDL_SetGPUScissor(render_pass: *mut SDL_GPURenderPass, scissor: *const SDL_Rect);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets the current blend constants on a command buffer.
     ///
     /// ## Parameters
@@ -6168,7 +6168,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Sets the current stencil reference value on a command buffer.
     ///
     /// ## Parameters
@@ -6180,7 +6180,7 @@ extern "C" {
     pub fn SDL_SetGPUStencilReference(render_pass: *mut SDL_GPURenderPass, reference: Uint8);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds vertex buffers on a command buffer for use with subsequent draw
     /// calls.
     ///
@@ -6201,7 +6201,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds an index buffer on a command buffer for use with subsequent draw
     /// calls.
     ///
@@ -6220,7 +6220,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds texture-sampler pairs for use on the vertex shader.
     ///
     /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
@@ -6249,7 +6249,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds storage textures for use on the vertex shader.
     ///
     /// These textures must have been created with
@@ -6277,7 +6277,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds storage buffers for use on the vertex shader.
     ///
     /// These buffers must have been created with
@@ -6305,7 +6305,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds texture-sampler pairs for use on the fragment shader.
     ///
     /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
@@ -6334,7 +6334,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds storage textures for use on the fragment shader.
     ///
     /// These textures must have been created with
@@ -6362,7 +6362,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds storage buffers for use on the fragment shader.
     ///
     /// These buffers must have been created with
@@ -6390,7 +6390,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draws data using bound graphics state with an index buffer and instancing
     /// enabled.
     ///
@@ -6424,7 +6424,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draws data using bound graphics state.
     ///
     /// You must not call this function before binding a graphics pipeline.
@@ -6454,7 +6454,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draws data using bound graphics state and with draw parameters set from a
     /// buffer.
     ///
@@ -6479,7 +6479,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draws data using bound graphics state with an index buffer enabled and with
     /// draw parameters set from a buffer.
     ///
@@ -6504,7 +6504,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Ends the given render pass.
     ///
     /// All bound graphics state on the render pass command buffer is unset. The
@@ -6518,7 +6518,7 @@ extern "C" {
     pub fn SDL_EndGPURenderPass(render_pass: *mut SDL_GPURenderPass);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Begins a compute pass on a command buffer.
     ///
     /// A compute pass is defined by a set of texture subresources and buffers that
@@ -6568,7 +6568,7 @@ extern "C" {
     ) -> *mut SDL_GPUComputePass;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds a compute pipeline on a command buffer for use in compute dispatch.
     ///
     /// ## Parameters
@@ -6583,7 +6583,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds texture-sampler pairs for use on the compute shader.
     ///
     /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
@@ -6612,7 +6612,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds storage textures as readonly for use on the compute pipeline.
     ///
     /// These textures must have been created with
@@ -6640,7 +6640,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Binds storage buffers as readonly for use on the compute pipeline.
     ///
     /// These buffers must have been created with
@@ -6668,7 +6668,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Dispatches compute work.
     ///
     /// You must not call this function before binding a compute pipeline.
@@ -6697,7 +6697,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Dispatches compute work with parameters set from a buffer.
     ///
     /// The buffer layout should match the layout of
@@ -6723,7 +6723,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Ends the current compute pass.
     ///
     /// All bound compute state on the command buffer is unset. The compute pass
@@ -6737,7 +6737,7 @@ extern "C" {
     pub fn SDL_EndGPUComputePass(compute_pass: *mut SDL_GPUComputePass);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Maps a transfer buffer into application address space.
     ///
     /// You must unmap the transfer buffer before encoding upload commands. The
@@ -6762,7 +6762,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unmaps a previously mapped transfer buffer.
     ///
     /// ## Parameters
@@ -6777,7 +6777,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Begins a copy pass on a command buffer.
     ///
     /// All operations related to copying to or from buffers or textures take place
@@ -6795,7 +6795,7 @@ extern "C" {
     pub fn SDL_BeginGPUCopyPass(command_buffer: *mut SDL_GPUCommandBuffer) -> *mut SDL_GPUCopyPass;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Uploads data from a transfer buffer to a texture.
     ///
     /// The upload occurs on the GPU timeline. You may assume that the upload has
@@ -6821,7 +6821,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Uploads data from a transfer buffer to a buffer.
     ///
     /// The upload occurs on the GPU timeline. You may assume that the upload has
@@ -6844,7 +6844,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Performs a texture-to-texture copy.
     ///
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
@@ -6873,7 +6873,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Performs a buffer-to-buffer copy.
     ///
     /// This copy occurs on the GPU timeline. You may assume the copy has finished
@@ -6898,7 +6898,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copies data from a texture to a transfer buffer on the GPU timeline.
     ///
     /// This data is not guaranteed to be copied until the command buffer fence is
@@ -6919,7 +6919,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copies data from a buffer to a transfer buffer on the GPU timeline.
     ///
     /// This data is not guaranteed to be copied until the command buffer fence is
@@ -6939,7 +6939,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Ends the current copy pass.
     ///
     /// ## Parameters
@@ -6950,7 +6950,7 @@ extern "C" {
     pub fn SDL_EndGPUCopyPass(copy_pass: *mut SDL_GPUCopyPass);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Generates mipmaps for the given texture.
     ///
     /// This function must not be called inside of any pass.
@@ -6967,7 +6967,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Blits from a source texture region to a destination texture region.
     ///
     /// This function must not be called inside of any pass.
@@ -6984,7 +6984,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determines whether a swapchain composition is supported by the window.
     ///
     /// The window must be claimed before calling this function.
@@ -7009,7 +7009,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determines whether a presentation mode is supported by the window.
     ///
     /// The window must be claimed before calling this function.
@@ -7034,7 +7034,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Claims a window, creating a swapchain structure for it.
     ///
     /// This must be called before [`SDL_AcquireGPUSwapchainTexture`] is called using
@@ -7072,7 +7072,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unclaims a window, destroying its swapchain structure.
     ///
     /// ## Parameters
@@ -7087,7 +7087,7 @@ extern "C" {
     pub fn SDL_ReleaseWindowFromGPUDevice(device: *mut SDL_GPUDevice, window: *mut SDL_Window);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Changes the swapchain parameters for the given claimed window.
     ///
     /// This function will fail if the requested present mode or swapchain
@@ -7122,7 +7122,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Configures the maximum allowed number of frames in flight.
     ///
     /// The default value when the device is created is 2. This means that after
@@ -7156,7 +7156,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Obtains the texture format of the swapchain for the given window.
     ///
     /// Note that this format can change if the swapchain parameters change.
@@ -7176,7 +7176,7 @@ extern "C" {
     ) -> SDL_GPUTextureFormat;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Acquire a texture to use in presentation.
     ///
     /// When a swapchain texture is acquired on a command buffer, it will
@@ -7236,7 +7236,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Blocks the thread until a swapchain texture is available to be acquired.
     ///
     /// ## Parameters
@@ -7264,7 +7264,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Blocks the thread until a swapchain texture is available to be acquired,
     /// and then acquires it.
     ///
@@ -7320,7 +7320,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Submits a command buffer so its commands can be processed on the GPU.
     ///
     /// It is invalid to use the command buffer after this is called.
@@ -7350,7 +7350,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Submits a command buffer so its commands can be processed on the GPU, and
     /// acquires a fence associated with the command buffer.
     ///
@@ -7383,7 +7383,7 @@ extern "C" {
     ) -> *mut SDL_GPUFence;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Cancels a command buffer.
     ///
     /// None of the enqueued commands are executed.
@@ -7414,7 +7414,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Blocks the thread until the GPU is completely idle.
     ///
     /// ## Parameters
@@ -7432,7 +7432,7 @@ extern "C" {
     pub fn SDL_WaitForGPUIdle(device: *mut SDL_GPUDevice) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Blocks the thread until the given fences are signaled.
     ///
     /// ## Parameters
@@ -7460,7 +7460,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Checks the status of a fence.
     ///
     /// ## Parameters
@@ -7481,7 +7481,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Releases a fence obtained from [`SDL_SubmitGPUCommandBufferAndAcquireFence`].
     ///
     /// You must not reference the fence after calling this function.
@@ -7498,7 +7498,7 @@ extern "C" {
     pub fn SDL_ReleaseGPUFence(device: *mut SDL_GPUDevice, fence: *mut SDL_GPUFence);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Obtains the texel block size for a texture format.
     ///
     /// ## Parameters
@@ -7515,7 +7515,7 @@ extern "C" {
     pub fn SDL_GPUTextureFormatTexelBlockSize(format: SDL_GPUTextureFormat) -> Uint32;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determines whether a texture format is supported for a given type and
     /// usage.
     ///
@@ -7538,7 +7538,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determines if a sample count for a texture format is supported.
     ///
     /// ## Parameters
@@ -7558,7 +7558,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Calculate the size in bytes of a texture format with dimensions.
     ///
     /// ## Parameters
@@ -7581,7 +7581,7 @@ extern "C" {
 }
 
 apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
-    extern "C" {
+    unsafe extern "C" {
         /// Call this to suspend GPU operation on Xbox when you receive the
         /// [`SDL_EVENT_DID_ENTER_BACKGROUND`] event.
         ///
@@ -7599,7 +7599,7 @@ apply_cfg!(#[cfg(any(doc, all(windows, feature = "target-gdk")))] => {
         pub fn SDL_GDKSuspendGPU(device: *mut SDL_GPUDevice);
     }
 
-    extern "C" {
+    unsafe extern "C" {
         /// Call this to resume GPU operation on Xbox when you receive the
         /// [`SDL_EVENT_WILL_ENTER_FOREGROUND`] event.
         ///

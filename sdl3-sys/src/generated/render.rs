@@ -248,7 +248,7 @@ pub struct SDL_Texture {
     __non_exhaustive: ::sdl3_sys::NonExhaustive,
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of 2D rendering drivers available for the current display.
     ///
     /// A render driver is a set of code that handles rendering and texture
@@ -272,7 +272,7 @@ extern "C" {
     pub fn SDL_GetNumRenderDrivers() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to get the name of a built in 2D rendering driver.
     ///
     /// The list of rendering drivers is given in the order that they are normally
@@ -302,7 +302,7 @@ extern "C" {
     pub fn SDL_GetRenderDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a window and default renderer.
     ///
     /// ## Parameters
@@ -337,7 +337,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a 2D rendering context for a window.
     ///
     /// If you want a specific renderer, you can specify its name here. A list of
@@ -381,7 +381,7 @@ extern "C" {
     ) -> *mut SDL_Renderer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a 2D rendering context for a window, with the specified properties.
     ///
     /// These are the supported properties:
@@ -473,7 +473,7 @@ pub const SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER:
 pub const SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER:
     *const ::core::ffi::c_char = c"SDL.renderer.create.vulkan.present_queue_family_index".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Create a 2D software rendering context for a surface.
     ///
     /// Two other API which can be used to create [`SDL_Renderer`]\:
@@ -500,7 +500,7 @@ extern "C" {
     pub fn SDL_CreateSoftwareRenderer(surface: *mut SDL_Surface) -> *mut SDL_Renderer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the renderer associated with a window.
     ///
     /// ## Parameters
@@ -518,7 +518,7 @@ extern "C" {
     pub fn SDL_GetRenderer(window: *mut SDL_Window) -> *mut SDL_Renderer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the window associated with a renderer.
     ///
     /// ## Parameters
@@ -536,7 +536,7 @@ extern "C" {
     pub fn SDL_GetRenderWindow(renderer: *mut SDL_Renderer) -> *mut SDL_Window;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of a renderer.
     ///
     /// ## Parameters
@@ -558,7 +558,7 @@ extern "C" {
     pub fn SDL_GetRendererName(renderer: *mut SDL_Renderer) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a renderer.
     ///
     /// The following read-only properties are provided by SDL:
@@ -720,7 +720,7 @@ pub const SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER: *const ::core::
 pub const SDL_PROP_RENDERER_GPU_DEVICE_POINTER: *const ::core::ffi::c_char =
     c"SDL.renderer.gpu.device".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the output size in pixels of a rendering context.
     ///
     /// This returns the true output size in pixels, ignoring any render targets or
@@ -753,7 +753,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current output size in pixels of a rendering context.
     ///
     /// If a rendering target is active, this will return the size of the rendering
@@ -786,7 +786,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a texture for a rendering context.
     ///
     /// The contents of a texture when first created are not defined.
@@ -823,7 +823,7 @@ extern "C" {
     ) -> *mut SDL_Texture;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a texture from an existing surface.
     ///
     /// The surface is not modified or freed by this function.
@@ -860,7 +860,7 @@ extern "C" {
     ) -> *mut SDL_Texture;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a texture for a rendering context with the specified properties.
     ///
     /// These are the supported properties:
@@ -1050,7 +1050,7 @@ pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: *const ::core::ffi
 pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.texture.create.vulkan.texture".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with a texture.
     ///
     /// The following read-only properties are provided by SDL:
@@ -1220,7 +1220,7 @@ pub const SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER: *const ::core::ffi::
 pub const SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.texture.vulkan.texture".as_ptr();
 
-extern "C" {
+unsafe extern "C" {
     /// Get the renderer that created an [`SDL_Texture`].
     ///
     /// ## Parameters
@@ -1238,7 +1238,7 @@ extern "C" {
     pub fn SDL_GetRendererFromTexture(texture: *mut SDL_Texture) -> *mut SDL_Renderer;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the size of a texture, as floating point values.
     ///
     /// ## Parameters
@@ -1264,7 +1264,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an additional color value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation each source color
@@ -1304,7 +1304,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an additional color value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation each source color
@@ -1344,7 +1344,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
     /// ## Parameters
@@ -1375,7 +1375,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the additional color value multiplied into render copy operations.
     ///
     /// ## Parameters
@@ -1406,7 +1406,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an additional alpha value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation the source alpha
@@ -1441,7 +1441,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set an additional alpha value multiplied into render copy operations.
     ///
     /// When this texture is rendered, during the copy operation the source alpha
@@ -1476,7 +1476,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
     /// ## Parameters
@@ -1503,7 +1503,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the additional alpha value multiplied into render copy operations.
     ///
     /// ## Parameters
@@ -1530,7 +1530,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the blend mode for a texture, used by [`SDL_RenderTexture()`].
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen
@@ -1558,7 +1558,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the blend mode used for texture copy operations.
     ///
     /// ## Parameters
@@ -1583,7 +1583,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the scale mode used for texture scale operations.
     ///
     /// The default texture scale mode is [`SDL_SCALEMODE_LINEAR`].
@@ -1612,7 +1612,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the scale mode used for texture scale operations.
     ///
     /// ## Parameters
@@ -1637,7 +1637,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update the given texture rectangle with new pixel data.
     ///
     /// The pixel data must be in the pixel format of the texture, which can be
@@ -1682,7 +1682,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update a rectangle within a planar YV12 or IYUV texture with new pixel
     /// data.
     ///
@@ -1729,7 +1729,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update a rectangle within a planar NV12 or NV21 texture with new pixels.
     ///
     /// You can use [`SDL_UpdateTexture()`] as long as your pixel data is a contiguous
@@ -1770,7 +1770,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Lock a portion of the texture for **write-only** pixel access.
     ///
     /// As an optimization, the pixels made available for editing don't necessarily
@@ -1813,7 +1813,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Lock a portion of the texture for **write-only** pixel access, and expose
     /// it as a SDL surface.
     ///
@@ -1859,7 +1859,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unlock a texture, uploading the changes to video memory, if needed.
     ///
     /// **Warning**: Please note that [`SDL_LockTexture()`] is intended to be
@@ -1884,7 +1884,7 @@ extern "C" {
     pub fn SDL_UnlockTexture(texture: *mut SDL_Texture);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a texture as the current rendering target.
     ///
     /// The default render target is the window for which the renderer was created.
@@ -1920,7 +1920,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current render target.
     ///
     /// The default render target is the window for which the renderer was created,
@@ -1943,7 +1943,7 @@ extern "C" {
     pub fn SDL_GetRenderTarget(renderer: *mut SDL_Renderer) -> *mut SDL_Texture;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a device-independent resolution and presentation mode for rendering.
     ///
     /// This function sets the width and height of the logical rendering output.
@@ -2009,7 +2009,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get device independent resolution and presentation mode for rendering.
     ///
     /// This function gets the width and height of the logical rendering output, or
@@ -2044,7 +2044,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the final presentation rectangle for rendering.
     ///
     /// This function returns the calculated rectangle used for logical
@@ -2078,7 +2078,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a point in render coordinates when given a point in window coordinates.
     ///
     /// This takes into account several states:
@@ -2117,7 +2117,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a point in window coordinates when given a point in render coordinates.
     ///
     /// This takes into account several states:
@@ -2159,7 +2159,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert the coordinates in an event to render coordinates.
     ///
     /// This takes into account several states:
@@ -2204,7 +2204,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the drawing area for rendering on the current target.
     ///
     /// Drawing will clip to this area (separately from any clipping done with
@@ -2240,7 +2240,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the drawing area for the current target.
     ///
     /// Each render target has its own viewport. This function gets the viewport
@@ -2269,7 +2269,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Return whether an explicit rectangle was set as the viewport.
     ///
     /// This is useful if you're saving and restoring the viewport and want to know
@@ -2297,7 +2297,7 @@ extern "C" {
     pub fn SDL_RenderViewportSet(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the safe area for rendering within the current viewport.
     ///
     /// Some devices have portions of the screen which are partially obscured or
@@ -2327,7 +2327,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the clip rectangle for rendering on the specified target.
     ///
     /// Each render target has its own clip rectangle. This function sets the
@@ -2357,7 +2357,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the clip rectangle for the current target.
     ///
     /// Each render target has its own clip rectangle. This function gets the
@@ -2387,7 +2387,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get whether clipping is enabled on the given render target.
     ///
     /// Each render target has its own clip rectangle. This function checks the
@@ -2412,7 +2412,7 @@ extern "C" {
     pub fn SDL_RenderClipEnabled(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the drawing scale for rendering on the current target.
     ///
     /// The drawing coordinates are scaled by the x/y scaling factors before they
@@ -2450,7 +2450,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the drawing scale for the current target.
     ///
     /// Each render target has its own scale. This function gets the scale for the
@@ -2480,7 +2480,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the color used for drawing operations.
     ///
     /// Set the color for drawing or filling rectangles, lines, and points, and for
@@ -2517,7 +2517,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the color used for drawing operations (Rect, Line and Clear).
     ///
     /// Set the color for drawing or filling rectangles, lines, and points, and for
@@ -2554,7 +2554,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
     /// ## Parameters
@@ -2590,7 +2590,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the color used for drawing operations (Rect, Line and Clear).
     ///
     /// ## Parameters
@@ -2626,7 +2626,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the color scale used for render operations.
     ///
     /// The color scale is an additional scale multiplied into the pixel color
@@ -2659,7 +2659,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the color scale used for render operations.
     ///
     /// ## Parameters
@@ -2684,7 +2684,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the blend mode used for drawing operations (Fill and Line).
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen.
@@ -2711,7 +2711,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the blend mode used for drawing operations.
     ///
     /// ## Parameters
@@ -2736,7 +2736,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear the current rendering target with the drawing color.
     ///
     /// This function clears the entire rendering target, ignoring the viewport and
@@ -2762,7 +2762,7 @@ extern "C" {
     pub fn SDL_RenderClear(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw a point on the current rendering target at subpixel precision.
     ///
     /// ## Parameters
@@ -2789,7 +2789,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw multiple points on the current rendering target at subpixel precision.
     ///
     /// ## Parameters
@@ -2816,7 +2816,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw a line on the current rendering target at subpixel precision.
     ///
     /// ## Parameters
@@ -2847,7 +2847,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw a series of connected lines on the current rendering target at
     /// subpixel precision.
     ///
@@ -2875,7 +2875,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw a rectangle on the current rendering target at subpixel precision.
     ///
     /// ## Parameters
@@ -2901,7 +2901,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw some number of rectangles on the current rendering target at subpixel
     /// precision.
     ///
@@ -2929,7 +2929,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Fill a rectangle on the current rendering target with the drawing color at
     /// subpixel precision.
     ///
@@ -2956,7 +2956,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Fill some number of rectangles on the current rendering target with the
     /// drawing color at subpixel precision.
     ///
@@ -2984,7 +2984,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a portion of the texture to the current rendering target at subpixel
     /// precision.
     ///
@@ -3017,7 +3017,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a portion of the source texture to the current rendering target, with
     /// rotation and flipping, at subpixel precision.
     ///
@@ -3059,7 +3059,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Copy a portion of the source texture to the current rendering target, with
     /// affine transform, at subpixel precision.
     ///
@@ -3100,7 +3100,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Tile a portion of the texture to the current rendering target at subpixel
     /// precision.
     ///
@@ -3139,7 +3139,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Perform a scaled copy using the 9-grid algorithm to the current rendering
     /// target at subpixel precision.
     ///
@@ -3189,7 +3189,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render a list of triangles, optionally using a texture and indices into the
     /// vertex array Color and alpha modulation is done per vertex
     /// ([`SDL_SetTextureColorMod`] and [`SDL_SetTextureAlphaMod`] are ignored).
@@ -3226,7 +3226,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Render a list of triangles, optionally using a texture and indices into the
     /// vertex arrays Color and alpha modulation is done per vertex
     /// ([`SDL_SetTextureColorMod`] and [`SDL_SetTextureAlphaMod`] are ignored).
@@ -3274,7 +3274,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Read pixels from the current rendering target.
     ///
     /// The returned surface contains pixels inside the desired area clipped to the
@@ -3309,7 +3309,7 @@ extern "C" {
     ) -> *mut SDL_Surface;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Update the screen with any rendering performed since the previous call.
     ///
     /// SDL's rendering functions operate on a backbuffer; that is, calling a
@@ -3365,7 +3365,7 @@ extern "C" {
     pub fn SDL_RenderPresent(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy the specified texture.
     ///
     /// Passing NULL or an otherwise invalid texture will set the SDL error message
@@ -3386,7 +3386,7 @@ extern "C" {
     pub fn SDL_DestroyTexture(texture: *mut SDL_Texture);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Destroy the rendering context for a window and free all associated
     /// textures.
     ///
@@ -3406,7 +3406,7 @@ extern "C" {
     pub fn SDL_DestroyRenderer(renderer: *mut SDL_Renderer);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Force the rendering context to flush any pending commands and state.
     ///
     /// You do not need to (and in fact, shouldn't) call this function unless you
@@ -3444,7 +3444,7 @@ extern "C" {
     pub fn SDL_FlushRenderer(renderer: *mut SDL_Renderer) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the CAMetalLayer associated with the given Metal renderer.
     ///
     /// This function returns `void *`, so SDL doesn't have to include Metal's
@@ -3468,7 +3468,7 @@ extern "C" {
     pub fn SDL_GetRenderMetalLayer(renderer: *mut SDL_Renderer) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the Metal command encoder for the current frame.
     ///
     /// This function returns `void *`, so SDL doesn't have to include Metal's
@@ -3499,7 +3499,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add a set of synchronization semaphores for the current frame.
     ///
     /// The Vulkan renderer will wait for `wait_semaphore` before submitting
@@ -3539,7 +3539,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Toggle VSync of the given renderer.
     ///
     /// When a renderer is created, vsync defaults to [`SDL_RENDERER_VSYNC_DISABLED`].
@@ -3577,7 +3577,7 @@ pub const SDL_RENDERER_VSYNC_DISABLED: ::core::ffi::c_int = (0 as ::core::ffi::c
 
 pub const SDL_RENDERER_VSYNC_ADAPTIVE: ::core::ffi::c_int = (-1_i32 as ::core::ffi::c_int);
 
-extern "C" {
+unsafe extern "C" {
     /// Get VSync of the given renderer.
     ///
     /// ## Parameters
@@ -3614,7 +3614,7 @@ extern "C" {
 /// - [`SDL_RenderDebugText`]
 pub const SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE: ::core::primitive::i32 = 8;
 
-extern "C" {
+unsafe extern "C" {
     /// Draw debug text to an [`SDL_Renderer`].
     ///
     /// This function will render a string of text to an [`SDL_Renderer`]. Note that
@@ -3666,7 +3666,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Draw debug text to an [`SDL_Renderer`].
     ///
     /// This function will render a printf()-style format string to a renderer.

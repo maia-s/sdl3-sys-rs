@@ -7,7 +7,9 @@ pub const METADATA_TTF_DrawCommand: Group = Group {
     kind: GroupKind::Enum,
     name: "TTF_DrawCommand",
     short_name: "DrawCommand",
-    doc: Some("A font atlas draw command.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n"),
+    doc: Some(
+        "A font atlas draw command.\n\n## Availability\nThis enum is available since SDL_ttf 3.0.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
     values: &[
         GroupValue {

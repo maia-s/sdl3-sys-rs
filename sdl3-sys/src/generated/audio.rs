@@ -645,7 +645,7 @@ pub const fn SDL_AUDIO_FRAMESIZE(x: SDL_AudioSpec) -> ::core::ffi::c_uint {
     (SDL_AUDIO_BYTESIZE(x.format) * (x.channels as ::core::ffi::c_uint))
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to get the number of built-in audio drivers.
     ///
     /// This function returns a hardcoded number. This never returns a negative
@@ -672,7 +672,7 @@ extern "C" {
     pub fn SDL_GetNumAudioDrivers() -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to get the name of a built in audio driver.
     ///
     /// The list of audio drivers is given in the order that they are normally
@@ -702,7 +702,7 @@ extern "C" {
     pub fn SDL_GetAudioDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the name of the current audio driver.
     ///
     /// The names of drivers are all simple, low-ASCII identifiers, like "alsa",
@@ -721,7 +721,7 @@ extern "C" {
     pub fn SDL_GetCurrentAudioDriver() -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently-connected audio playback devices.
     ///
     /// This returns of list of available devices that play sound, perhaps to
@@ -756,7 +756,7 @@ extern "C" {
     pub fn SDL_GetAudioPlaybackDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_AudioDeviceID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get a list of currently-connected audio recording devices.
     ///
     /// This returns of list of available devices that record audio, like a
@@ -791,7 +791,7 @@ extern "C" {
     pub fn SDL_GetAudioRecordingDevices(count: *mut ::core::ffi::c_int) -> *mut SDL_AudioDeviceID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the human-readable name of a specific audio device.
     ///
     /// ## Parameters
@@ -813,7 +813,7 @@ extern "C" {
     pub fn SDL_GetAudioDeviceName(devid: SDL_AudioDeviceID) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current audio format of a specific audio device.
     ///
     /// For an opened device, this will report the format the device is currently
@@ -857,7 +857,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current channel map of an audio device.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -889,7 +889,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Open a specific audio device.
     ///
     /// You can open both playback and recording devices through this function.
@@ -974,7 +974,7 @@ extern "C" {
     ) -> SDL_AudioDeviceID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine if an audio device is physical (instead of logical).
     ///
     /// An [`SDL_AudioDeviceID`] that represents physical hardware is a physical
@@ -1004,7 +1004,7 @@ extern "C" {
     pub fn SDL_IsAudioDevicePhysical(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Determine if an audio device is a playback device (instead of recording).
     ///
     /// This function may return either true or false for invalid device IDs.
@@ -1023,7 +1023,7 @@ extern "C" {
     pub fn SDL_IsAudioDevicePlayback(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to pause audio playback on a specified device.
     ///
     /// This function pauses audio processing for a given device. Any bound audio
@@ -1060,7 +1060,7 @@ extern "C" {
     pub fn SDL_PauseAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to unpause audio playback on a specified device.
     ///
     /// This function unpauses audio processing for a given device that has
@@ -1094,7 +1094,7 @@ extern "C" {
     pub fn SDL_ResumeAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to query if an audio device is paused.
     ///
     /// Unlike in SDL2, audio devices start in an _unpaused_ state, since an app
@@ -1122,7 +1122,7 @@ extern "C" {
     pub fn SDL_AudioDevicePaused(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the gain of an audio device.
     ///
     /// The gain of a device is its volume; a larger gain means a louder output,
@@ -1151,7 +1151,7 @@ extern "C" {
     pub fn SDL_GetAudioDeviceGain(devid: SDL_AudioDeviceID) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Change the gain of an audio device.
     ///
     /// The gain of a device is its volume; a larger gain means a louder output,
@@ -1195,7 +1195,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Close a previously-opened audio device.
     ///
     /// The application should close open audio devices once they are no longer
@@ -1220,7 +1220,7 @@ extern "C" {
     pub fn SDL_CloseAudioDevice(devid: SDL_AudioDeviceID);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Bind a list of audio streams to an audio device.
     ///
     /// Audio data will flow through any bound streams. For a playback device, data
@@ -1270,7 +1270,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Bind a single audio stream to an audio device.
     ///
     /// This is a convenience function, equivalent to calling
@@ -1300,7 +1300,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unbind a list of audio streams from their audio devices.
     ///
     /// The streams being unbound do not all have to be on the same device. All
@@ -1328,7 +1328,7 @@ extern "C" {
     );
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unbind a single audio stream from its audio device.
     ///
     /// This is a convenience function, equivalent to calling
@@ -1348,7 +1348,7 @@ extern "C" {
     pub fn SDL_UnbindAudioStream(stream: *mut SDL_AudioStream);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query an audio stream for its currently-bound device.
     ///
     /// This reports the logical audio device that an audio stream is currently bound to.
@@ -1374,7 +1374,7 @@ extern "C" {
     pub fn SDL_GetAudioStreamDevice(stream: *mut SDL_AudioStream) -> SDL_AudioDeviceID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Create a new audio stream.
     ///
     /// ## Parameters
@@ -1405,7 +1405,7 @@ extern "C" {
     ) -> *mut SDL_AudioStream;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the properties associated with an audio stream.
     ///
     /// ## Parameters
@@ -1423,7 +1423,7 @@ extern "C" {
     pub fn SDL_GetAudioStreamProperties(stream: *mut SDL_AudioStream) -> SDL_PropertiesID;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Query the current format of an audio stream.
     ///
     /// ## Parameters
@@ -1451,7 +1451,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Change the input and output formats of an audio stream.
     ///
     /// Future calls to and [`SDL_GetAudioStreamAvailable`] and [`SDL_GetAudioStreamData`]
@@ -1498,7 +1498,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the frequency ratio of an audio stream.
     ///
     /// ## Parameters
@@ -1520,7 +1520,7 @@ extern "C" {
     pub fn SDL_GetAudioStreamFrequencyRatio(stream: *mut SDL_AudioStream) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Change the frequency ratio of an audio stream.
     ///
     /// The frequency ratio is used to adjust the rate at which input data is
@@ -1557,7 +1557,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the gain of an audio stream.
     ///
     /// The gain of a stream is its volume; a larger gain means a louder output,
@@ -1584,7 +1584,7 @@ extern "C" {
     pub fn SDL_GetAudioStreamGain(stream: *mut SDL_AudioStream) -> ::core::ffi::c_float;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Change the gain of an audio stream.
     ///
     /// The gain of a stream is its volume; a larger gain means a louder output,
@@ -1618,7 +1618,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current input channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -1651,7 +1651,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the current output channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -1684,7 +1684,7 @@ extern "C" {
     ) -> *mut ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the current input channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -1754,7 +1754,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set the current output channel map of an audio stream.
     ///
     /// Channel maps are optional; most things do not need them, instead passing
@@ -1822,7 +1822,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Add data to the stream.
     ///
     /// This data must match the format/channels/samplerate specified in the latest
@@ -1862,7 +1862,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get converted/resampled data from the stream.
     ///
     /// The input/output data format/channels/samplerate is specified when creating
@@ -1902,7 +1902,7 @@ extern "C" {
     ) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of converted/resampled bytes available.
     ///
     /// The stream may be buffering data behind the scenes until it has enough to
@@ -1934,7 +1934,7 @@ extern "C" {
     pub fn SDL_GetAudioStreamAvailable(stream: *mut SDL_AudioStream) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the number of bytes currently queued.
     ///
     /// This is the number of bytes put into a stream as input, not the number that
@@ -1978,7 +1978,7 @@ extern "C" {
     pub fn SDL_GetAudioStreamQueued(stream: *mut SDL_AudioStream) -> ::core::ffi::c_int;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Tell the stream that you're done sending data, and anything being buffered
     /// should be converted/resampled and made available immediately.
     ///
@@ -2004,7 +2004,7 @@ extern "C" {
     pub fn SDL_FlushAudioStream(stream: *mut SDL_AudioStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Clear any pending data in the stream.
     ///
     /// This drops any queued data, so there will be nothing to read from the
@@ -2031,7 +2031,7 @@ extern "C" {
     pub fn SDL_ClearAudioStream(stream: *mut SDL_AudioStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to pause audio playback on the audio device associated
     /// with an audio stream.
     ///
@@ -2061,7 +2061,7 @@ extern "C" {
     pub fn SDL_PauseAudioStreamDevice(stream: *mut SDL_AudioStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to unpause audio playback on the audio device associated
     /// with an audio stream.
     ///
@@ -2090,7 +2090,7 @@ extern "C" {
     pub fn SDL_ResumeAudioStreamDevice(stream: *mut SDL_AudioStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Use this function to query if an audio device associated with a stream is
     /// paused.
     ///
@@ -2115,7 +2115,7 @@ extern "C" {
     pub fn SDL_AudioStreamDevicePaused(stream: *mut SDL_AudioStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Lock an audio stream for serialized access.
     ///
     /// Each [`SDL_AudioStream`] has an internal mutex it uses to protect its data
@@ -2149,7 +2149,7 @@ extern "C" {
     pub fn SDL_LockAudioStream(stream: *mut SDL_AudioStream) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Unlock an audio stream for serialized access.
     ///
     /// This unlocks an audio stream after a call to [`SDL_LockAudioStream`].
@@ -2224,7 +2224,7 @@ pub type SDL_AudioStreamCallback = ::core::option::Option<
     ),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Set a callback that runs when data is requested from an audio stream.
     ///
     /// This callback is called _before_ data is obtained from the stream, giving
@@ -2280,7 +2280,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Set a callback that runs when data is added to an audio stream.
     ///
     /// This callback is called _after_ the data is added to the stream, giving the
@@ -2339,7 +2339,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Free an audio stream.
     ///
     /// This will release all allocated data, including any audio that is still
@@ -2364,7 +2364,7 @@ extern "C" {
     pub fn SDL_DestroyAudioStream(stream: *mut SDL_AudioStream);
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convenience function for straightforward audio init for the common case.
     ///
     /// If all your app intends to do is provide a single source of PCM audio, this
@@ -2483,7 +2483,7 @@ pub type SDL_AudioPostmixCallback = ::core::option::Option<
     ),
 >;
 
-extern "C" {
+unsafe extern "C" {
     /// Set a callback that fires when data is about to be fed to an audio device.
     ///
     /// This is useful for accessing the final mix, perhaps for writing a
@@ -2546,7 +2546,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Load the audio data of a WAVE file into memory.
     ///
     /// Loading a WAVE file requires `src`, `spec`, `audio_buf` and `audio_len` to
@@ -2639,7 +2639,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Loads a WAV from a file path.
     ///
     /// This is a convenience function that is effectively the same as:
@@ -2687,7 +2687,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Mix audio data in a specified format.
     ///
     /// This takes an audio buffer `src` of `len` bytes of `format` data and mixes
@@ -2734,7 +2734,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Convert some audio data of one format to another format.
     ///
     /// Please note that this function is for convenience, but should not be used
@@ -2776,7 +2776,7 @@ extern "C" {
     ) -> ::core::primitive::bool;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the human readable name of an audio format.
     ///
     /// ## Parameters
@@ -2794,7 +2794,7 @@ extern "C" {
     pub fn SDL_GetAudioFormatName(format: SDL_AudioFormat) -> *const ::core::ffi::c_char;
 }
 
-extern "C" {
+unsafe extern "C" {
     /// Get the appropriate memset value for silencing an audio format.
     ///
     /// The value returned by this function can be used as the second argument to

@@ -7,7 +7,9 @@ pub const METADATA_SDL_BlendMode: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_BlendMode",
     short_name: "BlendMode",
-    doc: Some("A set of blend modes used in drawing operations.\n\nThese predefined blend modes are supported everywhere.\n\nAdditional values may be obtained from [`SDL_ComposeCustomBlendMode`].\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_ComposeCustomBlendMode`]\n"),
+    doc: Some(
+        "A set of blend modes used in drawing operations.\n\nThese predefined blend modes are supported everywhere.\n\nAdditional values may be obtained from [`SDL_ComposeCustomBlendMode`].\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_ComposeCustomBlendMode`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -19,7 +21,9 @@ pub const METADATA_SDL_BlendMode: Group = Group {
         GroupValue {
             name: "SDL_BLENDMODE_BLEND",
             short_name: "BLEND",
-            doc: Some("alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA))\n"),
+            doc: Some(
+                "alpha blending: dstRGB = (srcRGB * srcA) + (dstRGB * (1-srcA)), dstA = srcA + (dstA * (1-srcA))\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -49,7 +53,9 @@ pub const METADATA_SDL_BlendMode: Group = Group {
         GroupValue {
             name: "SDL_BLENDMODE_MUL",
             short_name: "MUL",
-            doc: Some("color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA\n"),
+            doc: Some(
+                "color multiply: dstRGB = (srcRGB * dstRGB) + (dstRGB * (1-srcA)), dstA = dstA\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -65,7 +71,9 @@ pub const METADATA_SDL_BlendOperation: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_BlendOperation",
     short_name: "BlendOperation",
-    doc: Some("The blend operation used when combining source and destination pixel\ncomponents.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The blend operation used when combining source and destination pixel\ncomponents.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -105,7 +113,9 @@ pub const METADATA_SDL_BlendFactor: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_BlendFactor",
     short_name: "BlendFactor",
-    doc: Some("The normalized factor used to multiply pixel components.\n\nThe blend factors are multiplied with the pixels from a drawing operation\n(src) and the pixels from the render target (dst) before the blend\noperation. The comma-separated factors listed above are always applied in\nthe component order red, green, blue, and alpha.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "The normalized factor used to multiply pixel components.\n\nThe blend factors are multiplied with the pixels from a drawing operation\n(src) and the pixels from the render target (dst) before the blend\noperation. The comma-separated factors listed above are always applied in\nthe component order red, green, blue, and alpha.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

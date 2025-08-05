@@ -95,7 +95,9 @@ pub const METADATA_SDL_BitmapOrder: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_BitmapOrder",
     short_name: "BitmapOrder",
-    doc: Some("Bitmap pixel order, high bit -> low bit.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Bitmap pixel order, high bit -> low bit.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -123,7 +125,9 @@ pub const METADATA_SDL_PackedOrder: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_PackedOrder",
     short_name: "PackedOrder",
-    doc: Some("Packed component order, high bit -> low bit.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Packed component order, high bit -> low bit.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -187,7 +191,9 @@ pub const METADATA_SDL_ArrayOrder: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_ArrayOrder",
     short_name: "ArrayOrder",
-    doc: Some("Array component order, low byte -> high byte.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Array component order, low byte -> high byte.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -305,7 +311,9 @@ pub const METADATA_SDL_PixelFormat: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_PixelFormat",
     short_name: "PixelFormat",
-    doc: Some("Pixel format.\n\nSDL's pixel formats have the following naming convention:\n\n- Names with a list of components and a single bit count, such as RGB24 and\nABGR32, define a platform-independent encoding into bytes in the order\nspecified. For example, in RGB24 data, each pixel is encoded in 3 bytes\n(red, green, blue) in that order, and in ABGR32 data, each pixel is\nencoded in 4 bytes (alpha, blue, green, red) in that order. Use these\nnames if the property of a format that is important to you is the order\nof the bytes in memory or on disk.\n- Names with a bit count per component, such as ARGB8888 and XRGB1555, are\n\"packed\" into an appropriately-sized integer in the platform's native\nendianness. For example, ARGB8888 is a sequence of 32-bit integers; in\neach integer, the most significant bits are alpha, and the least\nsignificant bits are blue. On a little-endian CPU such as x86, the least\nsignificant bits of each integer are arranged first in memory, but on a\nbig-endian CPU such as s390x, the most significant bits are arranged\nfirst. Use these names if the property of a format that is important to\nyou is the meaning of each bit position within a native-endianness\ninteger.\n- In indexed formats such as INDEX4LSB, each pixel is represented by\nencoding an index into the palette into the indicated number of bits,\nwith multiple pixels packed into each byte if appropriate. In LSB\nformats, the first (leftmost) pixel is stored in the least-significant\nbits of the byte; in MSB formats, it's stored in the most-significant\nbits. INDEX8 does not need LSB/MSB variants, because each pixel exactly\nfills one byte.\n\nThe 32-bit byte-array encodings such as RGBA32 are aliases for the\nappropriate 8888 encoding for the current platform. For example, RGBA32 is\nan alias for ABGR8888 on little-endian CPUs like x86, or an alias for\nRGBA8888 on big-endian CPUs.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Pixel format.\n\nSDL's pixel formats have the following naming convention:\n\n- Names with a list of components and a single bit count, such as RGB24 and\nABGR32, define a platform-independent encoding into bytes in the order\nspecified. For example, in RGB24 data, each pixel is encoded in 3 bytes\n(red, green, blue) in that order, and in ABGR32 data, each pixel is\nencoded in 4 bytes (alpha, blue, green, red) in that order. Use these\nnames if the property of a format that is important to you is the order\nof the bytes in memory or on disk.\n- Names with a bit count per component, such as ARGB8888 and XRGB1555, are\n\"packed\" into an appropriately-sized integer in the platform's native\nendianness. For example, ARGB8888 is a sequence of 32-bit integers; in\neach integer, the most significant bits are alpha, and the least\nsignificant bits are blue. On a little-endian CPU such as x86, the least\nsignificant bits of each integer are arranged first in memory, but on a\nbig-endian CPU such as s390x, the most significant bits are arranged\nfirst. Use these names if the property of a format that is important to\nyou is the meaning of each bit position within a native-endianness\ninteger.\n- In indexed formats such as INDEX4LSB, each pixel is represented by\nencoding an index into the palette into the indicated number of bits,\nwith multiple pixels packed into each byte if appropriate. In LSB\nformats, the first (leftmost) pixel is stored in the least-significant\nbits of the byte; in MSB formats, it's stored in the most-significant\nbits. INDEX8 does not need LSB/MSB variants, because each pixel exactly\nfills one byte.\n\nThe 32-bit byte-array encodings such as RGBA32 are aliases for the\nappropriate 8888 encoding for the current platform. For example, RGBA32 is\nan alias for ABGR8888 on little-endian CPUs like x86, or an alias for\nRGBA8888 on big-endian CPUs.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -831,7 +839,9 @@ pub const METADATA_SDL_ColorRange: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_ColorRange",
     short_name: "ColorRange",
-    doc: Some("Colorspace color range, as described by\n<https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Colorspace color range, as described by\n<https://www.itu.int/rec/R-REC-BT.2100-2-201807-I/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -843,13 +853,17 @@ pub const METADATA_SDL_ColorRange: Group = Group {
         GroupValue {
             name: "SDL_COLOR_RANGE_LIMITED",
             short_name: "LIMITED",
-            doc: Some("Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma\n"),
+            doc: Some(
+                "Narrow range, e.g. 16-235 for 8-bit RGB and luma, and 16-240 for 8-bit chroma\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_COLOR_RANGE_FULL",
             short_name: "FULL",
-            doc: Some("Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma\n"),
+            doc: Some(
+                "Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma\n",
+            ),
             available_since: None,
         },
     ],
@@ -859,7 +873,9 @@ pub const METADATA_SDL_ColorPrimaries: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_ColorPrimaries",
     short_name: "ColorPrimaries",
-    doc: Some("Colorspace color primaries, as described by\n<https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Colorspace color primaries, as described by\n<https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -953,7 +969,9 @@ pub const METADATA_SDL_TransferCharacteristics: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_TransferCharacteristics",
     short_name: "TransferCharacteristics",
-    doc: Some("Colorspace transfer characteristics.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Colorspace transfer characteristics.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1077,7 +1095,9 @@ pub const METADATA_SDL_MatrixCoefficients: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_MatrixCoefficients",
     short_name: "MatrixCoefficients",
-    doc: Some("Colorspace matrix coefficients.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Colorspace matrix coefficients.\n\nThese are as described by <https://www.itu.int/rec/T-REC-H.273-201612-S/en>\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1107,7 +1127,9 @@ pub const METADATA_SDL_MatrixCoefficients: Group = Group {
         GroupValue {
             name: "SDL_MATRIX_COEFFICIENTS_BT470BG",
             short_name: "BT470BG",
-            doc: Some("ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]\n"),
+            doc: Some(
+                "ITU-R BT.470-6 System B, G / ITU-R BT.601-7 625, functionally the same as [`SDL_MATRIX_COEFFICIENTS_BT601`]\n",
+            ),
             available_since: None,
         },
         GroupValue {
@@ -1177,7 +1199,9 @@ pub const METADATA_SDL_ChromaLocation: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_ChromaLocation",
     short_name: "ChromaLocation",
-    doc: Some("Colorspace chroma sample location.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Colorspace chroma sample location.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -1189,19 +1213,25 @@ pub const METADATA_SDL_ChromaLocation: Group = Group {
         GroupValue {
             name: "SDL_CHROMA_LOCATION_LEFT",
             short_name: "LEFT",
-            doc: Some("In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically.\n"),
+            doc: Some(
+                "In MPEG-2, MPEG-4, and AVC, Cb and Cr are taken on midpoint of the left-edge of the 2x2 square. In other words, they have the same horizontal location as the top-left pixel, but is shifted one-half pixel down vertically.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_CHROMA_LOCATION_CENTER",
             short_name: "CENTER",
-            doc: Some("In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel.\n"),
+            doc: Some(
+                "In JPEG/JFIF, H.261, and MPEG-1, Cb and Cr are taken at the center of the 2x2 square. In other words, they are offset one-half pixel to the right and one-half pixel down compared to the top-left pixel.\n",
+            ),
             available_since: None,
         },
         GroupValue {
             name: "SDL_CHROMA_LOCATION_TOPLEFT",
             short_name: "TOPLEFT",
-            doc: Some("In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel (\"co-sited\", \"co-located\").\n"),
+            doc: Some(
+                "In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel (\"co-sited\", \"co-located\").\n",
+            ),
             available_since: None,
         },
     ],
@@ -1211,7 +1241,9 @@ pub const METADATA_SDL_Colorspace: Group = Group {
     kind: GroupKind::Enum,
     name: "SDL_Colorspace",
     short_name: "Colorspace",
-    doc: Some("Colorspace definitions.\n\nSince similar colorspaces may vary in their details (matrix, transfer\nfunction, etc.), this is not an exhaustive list, but rather a\nrepresentative sample of the kinds of colorspaces supported in SDL.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_ColorPrimaries`]\n- [`SDL_ColorRange`]\n- [`SDL_ColorType`]\n- [`SDL_MatrixCoefficients`]\n- [`SDL_TransferCharacteristics`]\n"),
+    doc: Some(
+        "Colorspace definitions.\n\nSince similar colorspaces may vary in their details (matrix, transfer\nfunction, etc.), this is not an exhaustive list, but rather a\nrepresentative sample of the kinds of colorspaces supported in SDL.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_ColorPrimaries`]\n- [`SDL_ColorRange`]\n- [`SDL_ColorType`]\n- [`SDL_MatrixCoefficients`]\n- [`SDL_TransferCharacteristics`]\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {

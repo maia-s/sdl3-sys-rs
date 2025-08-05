@@ -7,7 +7,9 @@ pub const METADATA_SDL_MessageBoxFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_MessageBoxFlags",
     short_name: "MessageBoxFlags",
-    doc: Some("Message box flags.\n\nIf supported will display warning icon, etc.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "Message box flags.\n\nIf supported will display warning icon, etc.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
@@ -47,7 +49,9 @@ pub const METADATA_SDL_MessageBoxButtonFlags: Group = Group {
     kind: GroupKind::Flags,
     name: "SDL_MessageBoxButtonFlags",
     short_name: "MessageBoxButtonFlags",
-    doc: Some("[`SDL_MessageBoxButtonData`] flags.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n"),
+    doc: Some(
+        "[`SDL_MessageBoxButtonData`] flags.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+    ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[
         GroupValue {
