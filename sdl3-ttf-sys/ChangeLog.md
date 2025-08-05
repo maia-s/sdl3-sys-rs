@@ -1,5 +1,8 @@
 # Changes
 
+- next:
+    - Expose `TTF_TextData`
+
 - 0.2.0:
     - Update sdl3-sys to 0.5.0
     - Add `no-link` feature
