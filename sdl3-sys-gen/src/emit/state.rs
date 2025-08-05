@@ -1348,7 +1348,14 @@ impl InnerScope {
         let span = sym.ident.span();
         if let Some(s) = self.lookup(&sym.ident) {
             if sym.module != s.module {
-                return Err(ParseErr::new(span, "symbol already defined in this scope").into());
+                return Err(ParseErr::new(
+                    span,
+                    format!(
+                        "symbol already defined in this scope (imported from `{}`)",
+                        s.module
+                    ),
+                )
+                .into());
             }
         }
         self.syms.insert(sym.ident.clone(), sym.clone());

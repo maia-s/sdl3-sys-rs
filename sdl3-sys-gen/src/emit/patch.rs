@@ -1064,7 +1064,7 @@ type EmitStructOrUnionPatch = EmitPatch<StructOrUnion>;
 
 const EMIT_STRUCT_OR_UNION_PATCHES: &[EmitStructOrUnionPatch] = &[EmitStructOrUnionPatch {
     module: Some("textengine"),
-    match_ident: |i| i == "TTF_TextEngine",
+    match_ident: |i| matches!(i, "TTF_TextData" | "TTF_TextEngine"),
     patch: |ctx, s| {
         TypeDef {
             span: Span::none(),
@@ -1235,9 +1235,10 @@ const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
     },
     EmitTypeDefPatch {
         module: Some("ttf"),
-        match_ident: |i| i == "TTF_TextEngine",
-        patch: |ctx, _| {
-            writeln!(ctx, "pub use super::textengine::TTF_TextEngine;")?;
+        match_ident: |i| matches!(i, "TTF_TextData" | "TTF_TextEngine"),
+        patch: |ctx, td| {
+            td.doc.emit(ctx)?;
+            writeln!(ctx, "pub use super::textengine::{};", td.ident)?;
             writeln!(ctx)?;
             Ok(true)
         },

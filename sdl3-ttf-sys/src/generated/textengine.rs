@@ -144,6 +144,51 @@ impl ::core::default::Default for TTF_DrawOperation {
     }
 }
 
+#[repr(C)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct TTF_TextData {
+    /// The font used by this text, read-only.
+    pub font: *mut TTF_Font,
+    /// The color of the text, read-only.
+    pub color: SDL_FColor,
+    /// True if the layout needs to be updated
+    pub needs_layout_update: ::core::primitive::bool,
+    /// Cached layout information, read-only.
+    pub layout: *mut TTF_TextLayout,
+    /// The x offset of the upper left corner of this text, in pixels, read-only.
+    pub x: ::core::ffi::c_int,
+    /// The y offset of the upper left corner of this text, in pixels, read-only.
+    pub y: ::core::ffi::c_int,
+    /// The width of this text, in pixels, read-only.
+    pub w: ::core::ffi::c_int,
+    /// The height of this text, in pixels, read-only.
+    pub h: ::core::ffi::c_int,
+    /// The number of drawing operations to render this text, read-only.
+    pub num_ops: ::core::ffi::c_int,
+    /// The drawing operations used to render this text, read-only.
+    pub ops: *mut TTF_DrawOperation,
+    /// The number of substrings representing clusters of glyphs in the string, read-only
+    pub num_clusters: ::core::ffi::c_int,
+    /// Substrings representing clusters of glyphs in the string, read-only
+    pub clusters: *mut TTF_SubString,
+    /// Custom properties associated with this text, read-only. This field is created as-needed using [`TTF_GetTextProperties()`] and the properties may be then set and read normally
+    pub props: SDL_PropertiesID,
+    /// True if the engine text needs to be updated
+    pub needs_engine_update: ::core::primitive::bool,
+    /// The engine used to render this text, read-only.
+    pub engine: *mut TTF_TextEngine,
+    /// The implementation-specific representation of this text
+    pub engine_text: *mut ::core::ffi::c_void,
+}
+
+impl ::core::default::Default for TTF_TextData {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
+
 /// A text engine interface.
 ///
 /// This structure should be initialized using [`SDL_INIT_INTERFACE()`]
