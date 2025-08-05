@@ -1771,6 +1771,8 @@ impl Eval for FnCall {
                 ..
             }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
             {
+                let mut is_unsafe = f.is_unsafe;
+                let mut is_const = f.is_const;
                 let out = ctx.capture_output(|ctx| {
                     if f.is_unsafe {
                         write!(ctx, "unsafe {{ ")?;
@@ -1784,6 +1786,12 @@ impl Eval for FnCall {
                         }
                         first = false;
                         if let Ok(Some(argval)) = arg.try_eval(ctx) {
+                            if argval.is_unsafe() {
+                                is_unsafe = true;
+                            }
+                            if !argval.is_const() {
+                                is_const = false;
+                            }
                             if let Ok(Some(_)) = arg_ty.is_c_enum(ctx) {
                                 arg.cast(arg_ty.clone()).emit(ctx)?;
                                 continue;
@@ -1803,8 +1811,8 @@ impl Eval for FnCall {
                 return Ok(Some(Value::RustCode(RustCode::boxed(
                     out,
                     f.return_type.clone(),
-                    f.is_const,
-                    f.is_unsafe,
+                    is_const,
+                    is_unsafe,
                 ))));
             } else {
                 ctx.add_unresolved_sym_dependency(ident.clone().try_into().unwrap())?;

@@ -498,30 +498,22 @@ pub unsafe fn SDL_RectsEqualEpsilon(
 ) -> ::core::primitive::bool {
     return if ((!a.is_null() && !b.is_null())
         && ((a == b)
-            || ((((unsafe {
-                SDL_fabsf(
-                    (unsafe { ::core::ptr::addr_of!((*a).x).read() }
-                        - unsafe { ::core::ptr::addr_of!((*b).x).read() }),
-                )
-            } <= epsilon)
-                && (unsafe {
-                    SDL_fabsf(
-                        (unsafe { ::core::ptr::addr_of!((*a).y).read() }
-                            - unsafe { ::core::ptr::addr_of!((*b).y).read() }),
-                    )
-                } <= epsilon))
-                && (unsafe {
-                    SDL_fabsf(
-                        (unsafe { ::core::ptr::addr_of!((*a).w).read() }
-                            - unsafe { ::core::ptr::addr_of!((*b).w).read() }),
-                    )
-                } <= epsilon))
-                && (unsafe {
-                    SDL_fabsf(
-                        (unsafe { ::core::ptr::addr_of!((*a).h).read() }
-                            - unsafe { ::core::ptr::addr_of!((*b).h).read() }),
-                    )
-                } <= epsilon))))
+            || ((((SDL_fabsf(
+                (unsafe { ::core::ptr::addr_of!((*a).x).read() }
+                    - unsafe { ::core::ptr::addr_of!((*b).x).read() }),
+            ) <= epsilon)
+                && (SDL_fabsf(
+                    (unsafe { ::core::ptr::addr_of!((*a).y).read() }
+                        - unsafe { ::core::ptr::addr_of!((*b).y).read() }),
+                ) <= epsilon))
+                && (SDL_fabsf(
+                    (unsafe { ::core::ptr::addr_of!((*a).w).read() }
+                        - unsafe { ::core::ptr::addr_of!((*b).w).read() }),
+                ) <= epsilon))
+                && (SDL_fabsf(
+                    (unsafe { ::core::ptr::addr_of!((*a).h).read() }
+                        - unsafe { ::core::ptr::addr_of!((*b).h).read() }),
+                ) <= epsilon))))
     {
         true
     } else {

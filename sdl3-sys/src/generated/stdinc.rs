@@ -2148,7 +2148,7 @@ unsafe extern "C" {
 /// ## See also
 /// - [`SDL_memmove`]
 #[inline(always)]
-pub unsafe fn SDL_memcpy(
+pub const unsafe fn SDL_memcpy(
     dst: *mut ::core::ffi::c_void,
     src: *const ::core::ffi::c_void,
     len: ::core::primitive::usize,
@@ -2221,7 +2221,7 @@ pub unsafe fn SDL_copyp<Dst: Sized, Src: Sized>(dst: *mut Dst, src: *const Src) 
 /// ## See also
 /// - [`SDL_memcpy`]
 #[inline(always)]
-pub unsafe fn SDL_memmove(
+pub const unsafe fn SDL_memmove(
     dst: *mut ::core::ffi::c_void,
     src: *const ::core::ffi::c_void,
     len: ::core::primitive::usize,
@@ -5071,7 +5071,7 @@ unsafe extern "C" {
 /// - [`SDL_copysignf`]
 /// - [`SDL_fabs`]
 #[inline(always)]
-pub unsafe fn SDL_copysign(
+pub const fn SDL_copysign(
     x: ::core::ffi::c_double,
     y: ::core::ffi::c_double,
 ) -> ::core::ffi::c_double {
@@ -5107,7 +5107,7 @@ pub unsafe fn SDL_copysign(
 /// - [`SDL_copysign`]
 /// - [`SDL_fabsf`]
 #[inline(always)]
-pub unsafe fn SDL_copysignf(
+pub const fn SDL_copysignf(
     x: ::core::ffi::c_float,
     y: ::core::ffi::c_float,
 ) -> ::core::ffi::c_float {
@@ -5282,7 +5282,7 @@ unsafe extern "C" {
 /// ## See also
 /// - [`SDL_fabsf`]
 #[inline(always)]
-pub unsafe fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
+pub const fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
     return x.abs();
 }
 
@@ -5310,7 +5310,7 @@ pub unsafe fn SDL_fabs(x: ::core::ffi::c_double) -> ::core::ffi::c_double {
 /// ## See also
 /// - [`SDL_fabs`]
 #[inline(always)]
-pub unsafe fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float {
+pub const fn SDL_fabsf(x: ::core::ffi::c_float) -> ::core::ffi::c_float {
     return x.abs();
 }
 

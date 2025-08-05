@@ -140,8 +140,8 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
                             arg1 = arg1.ident.as_ref().unwrap().as_str(),
                         ),
                         arg0.ty.clone(),
-                        false,
                         true,
+                        false,
                     ),
                 )))]),
             });
@@ -166,8 +166,8 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
                             arg0 = arg0.ident.as_ref().unwrap().as_str(),
                         ),
                         arg0.ty.clone(),
-                        false,
                         true,
+                        false,
                     ),
                 )))]),
             });
@@ -195,7 +195,7 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
                             }
                         ),
                         Type::pointer(Type::void(), true),
-                        false,
+                        true,
                         true,
                     ),
                 )))]),
