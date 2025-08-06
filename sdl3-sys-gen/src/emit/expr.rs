@@ -1303,7 +1303,12 @@ impl Eval for Expr {
                             (Value::U31(lhs), Value::RustCode(rhs)) => {
                                 // FIXME
                                 assert!(matches!(rhs.ty.ty, TypeEnum::Primitive(PrimitiveType::SizeT)));
-                                Ok(Some(Value::RustCode(RustCode::boxed(format!("({} {} {})", lhs, stringify!($op), rhs.value), rhs.ty, rhs.is_const, rhs.is_unsafe))))
+                                Ok(Some(Value::RustCode(RustCode::boxed(
+                                    format!("({} {} {})", lhs, stringify!($op), rhs.value),
+                                    rhs.ty,
+                                    rhs.is_const,
+                                    rhs.is_unsafe
+                                ))))
                             }
 
                             (mut lhs, mut rhs) => {
@@ -1318,7 +1323,12 @@ impl Eval for Expr {
                                         write!(ctx, ")")?;
                                         Ok(())
                                     })?;
-                                    Ok(Some(Value::RustCode(RustCode::boxed(code, lhs.ty()?, lhs.is_const() && rhs.is_const(),lhs.is_unsafe() || rhs.is_unsafe()))))
+                                    Ok(Some(Value::RustCode(RustCode::boxed(
+                                        code,
+                                        lhs.ty()?,
+                                        lhs.is_const() && rhs.is_const(),
+                                        lhs.is_unsafe() || rhs.is_unsafe()
+                                    ))))
                                 }
                             }
                         }
@@ -1422,7 +1432,8 @@ impl Eval for Expr {
                                     return Ok(Some(Value::RustCode(RustCode::boxed(
                                         code,
                                         Type::bool(),
-                                        rhs.is_const(), rhs.is_unsafe()
+                                        rhs.is_const(),
+                                        rhs.is_unsafe()
                                     ))))
                                 }
                                 let code = ctx.capture_output(|ctx| {
@@ -1431,7 +1442,12 @@ impl Eval for Expr {
                                     write!(ctx, ")")?;
                                     Ok(())
                                 })?;
-                                Ok(Some(Value::RustCode(RustCode::boxed(code, Type::bool(), lhs.is_const && rhs.is_const(), lhs.is_unsafe||rhs.is_unsafe()))))
+                                Ok(Some(Value::RustCode(RustCode::boxed(
+                                    code,
+                                    Type::bool(),
+                                    lhs.is_const && rhs.is_const(),
+                                    lhs.is_unsafe || rhs.is_unsafe()
+                                ))))
                             }
                             _ => Err(ParseErr::new(bop.span(), format!("invalid operands to `{op}`")).into()),
                         }
