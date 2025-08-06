@@ -594,7 +594,7 @@ impl Value {
                 };
                 (
                     ctx.capture_output(|ctx| {
-                        write!(ctx, "unsafe {{ ::core::ptr::addr_of!((*")?;
+                        write!(ctx, "unsafe {{ (&raw const (*")?;
                         ptr.emit(ctx)?;
                         write!(ctx, ").")?;
                         field.emit(ctx)?;
@@ -1200,14 +1200,11 @@ impl Eval for Expr {
                                 let value = ctx.capture_output(|ctx| {
                                     writeln!(ctx, "{{")?;
                                     ctx.increase_indent();
-                                    write!(
-                                        ctx,
-                                        "let (ptr, value) = (unsafe {{ ::core::ptr::addr_of_mut!((*"
-                                    )?;
+                                    write!(ctx, "let (ptr, value) = (unsafe {{ &raw mut (*")?;
                                     ptr.emit(ctx)?;
                                     write!(ctx, ").")?;
                                     field.emit(ctx)?;
-                                    write!(ctx, ") }}, ")?;
+                                    write!(ctx, "}}, ")?;
                                     rhs.emit(ctx)?;
                                     writeln!(ctx, ");")?;
                                     writeln!(ctx, "unsafe {{ ptr.write(value) }};")?;
@@ -1235,7 +1232,10 @@ impl Eval for Expr {
                                 (value, *p)
                             };
                             return Ok(Some(Value::RustCode(RustCode::boxed(
-                                value, value_ty, false, true,
+                                value,
+                                value_ty,
+                                ptr.is_const(),
+                                true,
                             ))));
                         }
                     }};

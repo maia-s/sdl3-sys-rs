@@ -399,7 +399,7 @@ macro_rules! SDL_enabled_assert {
                         function: ::core::ptr::null(),
                         next: ::core::ptr::null(),
                     };
-                ::core::ptr::addr_of_mut!(SDL_ASSERT_DATA)
+                &raw mut SDL_ASSERT_DATA
             };
             const LOCATION: &::core::panic::Location = ::core::panic::Location::caller();
             $crate::__const_c_str!(FILENAME = LOCATION.file());

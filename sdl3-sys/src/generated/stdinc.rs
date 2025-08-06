@@ -6562,7 +6562,7 @@ pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::co
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_size_mul_check_overflow(
+pub const unsafe fn SDL_size_mul_check_overflow(
     a: ::core::primitive::usize,
     b: ::core::primitive::usize,
     ret: *mut ::core::primitive::usize,
@@ -6602,7 +6602,7 @@ apply_cfg!(#[cfg(not(doc))] => {
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_size_add_check_overflow(
+pub const unsafe fn SDL_size_add_check_overflow(
     a: ::core::primitive::usize,
     b: ::core::primitive::usize,
     ret: *mut ::core::primitive::usize,

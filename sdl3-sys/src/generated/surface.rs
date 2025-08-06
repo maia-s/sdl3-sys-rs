@@ -403,7 +403,7 @@ pub struct SDL_Surface {
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const unsafe fn SDL_MUSTLOCK(S: *const SDL_Surface) -> ::core::primitive::bool {
-    ((unsafe { ::core::ptr::addr_of!((*S).flags).read() }.0 & SDL_SURFACE_LOCK_NEEDED.0)
+    ((unsafe { (&raw const (*S).flags).read() }.0 & SDL_SURFACE_LOCK_NEEDED.0)
         == SDL_SURFACE_LOCK_NEEDED.0)
 }
 

@@ -99,35 +99,35 @@ pub struct SDL_FRect {
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
+pub const unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
     {
         let (ptr, value) = (
-            unsafe { ::core::ptr::addr_of_mut!((*frect).x) },
-            (unsafe { ::core::ptr::addr_of!((*rect).x).read() } as ::core::ffi::c_float),
+            unsafe { &raw mut (*frect).x },
+            (unsafe { (&raw const (*rect).x).read() } as ::core::ffi::c_float),
         );
         unsafe { ptr.write(value) };
         value
     };
     {
         let (ptr, value) = (
-            unsafe { ::core::ptr::addr_of_mut!((*frect).y) },
-            (unsafe { ::core::ptr::addr_of!((*rect).y).read() } as ::core::ffi::c_float),
+            unsafe { &raw mut (*frect).y },
+            (unsafe { (&raw const (*rect).y).read() } as ::core::ffi::c_float),
         );
         unsafe { ptr.write(value) };
         value
     };
     {
         let (ptr, value) = (
-            unsafe { ::core::ptr::addr_of_mut!((*frect).w) },
-            (unsafe { ::core::ptr::addr_of!((*rect).w).read() } as ::core::ffi::c_float),
+            unsafe { &raw mut (*frect).w },
+            (unsafe { (&raw const (*rect).w).read() } as ::core::ffi::c_float),
         );
         unsafe { ptr.write(value) };
         value
     };
     {
         let (ptr, value) = (
-            unsafe { ::core::ptr::addr_of_mut!((*frect).h) },
-            (unsafe { ::core::ptr::addr_of!((*rect).h).read() } as ::core::ffi::c_float),
+            unsafe { &raw mut (*frect).h },
+            (unsafe { (&raw const (*rect).h).read() } as ::core::ffi::c_float),
         );
         unsafe { ptr.write(value) };
         value
@@ -161,16 +161,12 @@ pub unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect) {
 #[inline(always)]
 pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core::primitive::bool {
     return if (((((!p.is_null() && !r.is_null())
-        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
-            >= unsafe { ::core::ptr::addr_of!((*r).x).read() }))
-        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
-            < (unsafe { ::core::ptr::addr_of!((*r).x).read() }
-                + unsafe { ::core::ptr::addr_of!((*r).w).read() })))
-        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
-            >= unsafe { ::core::ptr::addr_of!((*r).y).read() }))
-        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
-            < (unsafe { ::core::ptr::addr_of!((*r).y).read() }
-                + unsafe { ::core::ptr::addr_of!((*r).h).read() })))
+        && (unsafe { (&raw const (*p).x).read() } >= unsafe { (&raw const (*r).x).read() }))
+        && (unsafe { (&raw const (*p).x).read() }
+            < (unsafe { (&raw const (*r).x).read() } + unsafe { (&raw const (*r).w).read() })))
+        && (unsafe { (&raw const (*p).y).read() } >= unsafe { (&raw const (*r).y).read() }))
+        && (unsafe { (&raw const (*p).y).read() }
+            < (unsafe { (&raw const (*r).y).read() } + unsafe { (&raw const (*r).h).read() })))
     {
         true
     } else {
@@ -201,8 +197,8 @@ pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
-    return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } <= 0_i32))
-        || (unsafe { ::core::ptr::addr_of!((*r).h).read() } <= 0_i32))
+    return if ((!(!r.is_null()) || (unsafe { (&raw const (*r).w).read() } <= 0_i32))
+        || (unsafe { (&raw const (*r).h).read() } <= 0_i32))
     {
         true
     } else {
@@ -235,14 +231,10 @@ pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
 #[inline(always)]
 pub unsafe fn SDL_RectsEqual(a: *const SDL_Rect, b: *const SDL_Rect) -> ::core::primitive::bool {
     return if (((((!a.is_null() && !b.is_null())
-        && (unsafe { ::core::ptr::addr_of!((*a).x).read() }
-            == unsafe { ::core::ptr::addr_of!((*b).x).read() }))
-        && (unsafe { ::core::ptr::addr_of!((*a).y).read() }
-            == unsafe { ::core::ptr::addr_of!((*b).y).read() }))
-        && (unsafe { ::core::ptr::addr_of!((*a).w).read() }
-            == unsafe { ::core::ptr::addr_of!((*b).w).read() }))
-        && (unsafe { ::core::ptr::addr_of!((*a).h).read() }
-            == unsafe { ::core::ptr::addr_of!((*b).h).read() }))
+        && (unsafe { (&raw const (*a).x).read() } == unsafe { (&raw const (*b).x).read() }))
+        && (unsafe { (&raw const (*a).y).read() } == unsafe { (&raw const (*b).y).read() }))
+        && (unsafe { (&raw const (*a).w).read() } == unsafe { (&raw const (*b).w).read() }))
+        && (unsafe { (&raw const (*a).h).read() } == unsafe { (&raw const (*b).h).read() }))
     {
         true
     } else {
@@ -412,16 +404,12 @@ pub unsafe fn SDL_PointInRectFloat(
     r: *const SDL_FRect,
 ) -> ::core::primitive::bool {
     return if (((((!p.is_null() && !r.is_null())
-        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
-            >= unsafe { ::core::ptr::addr_of!((*r).x).read() }))
-        && (unsafe { ::core::ptr::addr_of!((*p).x).read() }
-            <= (unsafe { ::core::ptr::addr_of!((*r).x).read() }
-                + unsafe { ::core::ptr::addr_of!((*r).w).read() })))
-        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
-            >= unsafe { ::core::ptr::addr_of!((*r).y).read() }))
-        && (unsafe { ::core::ptr::addr_of!((*p).y).read() }
-            <= (unsafe { ::core::ptr::addr_of!((*r).y).read() }
-                + unsafe { ::core::ptr::addr_of!((*r).h).read() })))
+        && (unsafe { (&raw const (*p).x).read() } >= unsafe { (&raw const (*r).x).read() }))
+        && (unsafe { (&raw const (*p).x).read() }
+            <= (unsafe { (&raw const (*r).x).read() } + unsafe { (&raw const (*r).w).read() })))
+        && (unsafe { (&raw const (*p).y).read() } >= unsafe { (&raw const (*r).y).read() }))
+        && (unsafe { (&raw const (*p).y).read() }
+            <= (unsafe { (&raw const (*r).y).read() } + unsafe { (&raw const (*r).h).read() })))
     {
         true
     } else {
@@ -452,8 +440,8 @@ pub unsafe fn SDL_PointInRectFloat(
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
 pub unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool {
-    return if ((!(!r.is_null()) || (unsafe { ::core::ptr::addr_of!((*r).w).read() } < 0.0_f32))
-        || (unsafe { ::core::ptr::addr_of!((*r).h).read() } < 0.0_f32))
+    return if ((!(!r.is_null()) || (unsafe { (&raw const (*r).w).read() } < 0.0_f32))
+        || (unsafe { (&raw const (*r).h).read() } < 0.0_f32))
     {
         true
     } else {
@@ -499,20 +487,16 @@ pub unsafe fn SDL_RectsEqualEpsilon(
     return if ((!a.is_null() && !b.is_null())
         && ((a == b)
             || ((((SDL_fabsf(
-                (unsafe { ::core::ptr::addr_of!((*a).x).read() }
-                    - unsafe { ::core::ptr::addr_of!((*b).x).read() }),
+                (unsafe { (&raw const (*a).x).read() } - unsafe { (&raw const (*b).x).read() }),
             ) <= epsilon)
                 && (SDL_fabsf(
-                    (unsafe { ::core::ptr::addr_of!((*a).y).read() }
-                        - unsafe { ::core::ptr::addr_of!((*b).y).read() }),
+                    (unsafe { (&raw const (*a).y).read() } - unsafe { (&raw const (*b).y).read() }),
                 ) <= epsilon))
                 && (SDL_fabsf(
-                    (unsafe { ::core::ptr::addr_of!((*a).w).read() }
-                        - unsafe { ::core::ptr::addr_of!((*b).w).read() }),
+                    (unsafe { (&raw const (*a).w).read() } - unsafe { (&raw const (*b).w).read() }),
                 ) <= epsilon))
                 && (SDL_fabsf(
-                    (unsafe { ::core::ptr::addr_of!((*a).h).read() }
-                        - unsafe { ::core::ptr::addr_of!((*b).h).read() }),
+                    (unsafe { (&raw const (*a).h).read() } - unsafe { (&raw const (*b).h).read() }),
                 ) <= epsilon))))
     {
         true
