@@ -1,7 +1,7 @@
 use super::{
-    patch_parsed_typedef, DocComment, Enum, EnumKind, EnumVariant, Expr, FnAbi, FnDeclArgs,
-    GetSpan, Ident, Kw_const, Kw_struct, Kw_typedef, Op, Parse, ParseContext, ParseRawRes,
-    PrimitiveType, PrimitiveTypeParse, Span, StructOrUnion, WsAndComments,
+    DocComment, Enum, EnumKind, EnumVariant, Expr, FnAbi, FnDeclArgs, GetSpan, Ident, Kw_const,
+    Kw_struct, Kw_typedef, Op, Parse, ParseContext, ParseRawRes, PrimitiveType, PrimitiveTypeParse,
+    Span, StructOrUnion, WsAndComments, patch_parsed_typedef,
 };
 use crate::emit::EmitContext;
 use core::cell::RefCell;
@@ -167,6 +167,10 @@ impl Type {
 
     pub fn is_array_or_pointer(&self) -> bool {
         matches!(self.ty, TypeEnum::Array(_, _) | TypeEnum::Pointer(_))
+    }
+
+    pub fn is_pointer(&self) -> bool {
+        matches!(self.ty, TypeEnum::Pointer(_))
     }
 
     pub fn is_void(&self) -> bool {

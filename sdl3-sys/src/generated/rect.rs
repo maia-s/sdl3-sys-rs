@@ -159,7 +159,10 @@ pub const unsafe fn SDL_RectToFRect(rect: *const SDL_Rect, frect: *mut SDL_FRect
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core::primitive::bool {
+pub const unsafe fn SDL_PointInRect(
+    p: *const SDL_Point,
+    r: *const SDL_Rect,
+) -> ::core::primitive::bool {
     return if (((((!p.is_null() && !r.is_null())
         && (unsafe { (&raw const (*p).x).read() } >= unsafe { (&raw const (*r).x).read() }))
         && (unsafe { (&raw const (*p).x).read() }
@@ -196,7 +199,7 @@ pub unsafe fn SDL_PointInRect(p: *const SDL_Point, r: *const SDL_Rect) -> ::core
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
+pub const unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
     return if ((!(!r.is_null()) || (unsafe { (&raw const (*r).w).read() } <= 0_i32))
         || (unsafe { (&raw const (*r).h).read() } <= 0_i32))
     {
@@ -229,7 +232,10 @@ pub unsafe fn SDL_RectEmpty(r: *const SDL_Rect) -> ::core::primitive::bool {
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_RectsEqual(a: *const SDL_Rect, b: *const SDL_Rect) -> ::core::primitive::bool {
+pub const unsafe fn SDL_RectsEqual(
+    a: *const SDL_Rect,
+    b: *const SDL_Rect,
+) -> ::core::primitive::bool {
     return if (((((!a.is_null() && !b.is_null())
         && (unsafe { (&raw const (*a).x).read() } == unsafe { (&raw const (*b).x).read() }))
         && (unsafe { (&raw const (*a).y).read() } == unsafe { (&raw const (*b).y).read() }))
@@ -399,7 +405,7 @@ unsafe extern "C" {
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_PointInRectFloat(
+pub const unsafe fn SDL_PointInRectFloat(
     p: *const SDL_FPoint,
     r: *const SDL_FRect,
 ) -> ::core::primitive::bool {
@@ -439,7 +445,7 @@ pub unsafe fn SDL_PointInRectFloat(
 /// ## Availability
 /// This function is available since SDL 3.2.0.
 #[inline(always)]
-pub unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool {
+pub const unsafe fn SDL_RectEmptyFloat(r: *const SDL_FRect) -> ::core::primitive::bool {
     return if ((!(!r.is_null()) || (unsafe { (&raw const (*r).w).read() } < 0.0_f32))
         || (unsafe { (&raw const (*r).h).read() } < 0.0_f32))
     {

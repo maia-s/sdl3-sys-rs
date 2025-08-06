@@ -495,7 +495,7 @@ impl Value {
                         return Ok(Some(Value::RustCode(RustCode::boxed(
                             value,
                             target.clone(),
-                            false, // FIXME: can't compare pointers in const
+                            true,
                             is_unsafe,
                         ))));
                     } else if !matches!(
@@ -1172,6 +1172,20 @@ impl Eval for Expr {
             }
 
             Expr::BinaryOp(bop) => {
+                fn is_pointer(ctx: &EmitContext, expr: &Expr) -> bool {
+                    if let Expr::Ident(i) = &expr {
+                        if let Ok(i) = i.clone().try_into() {
+                            if let Some(sym) = ctx.lookup_sym(&i) {
+                                if let Some(ty) = sym.value_ty {
+                                    if ty.is_pointer() {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    false
+                }
                 macro_rules! assign {
                     ($op:tt) => {{
                         let rhs = eval!(bop.rhs);
@@ -1405,6 +1419,8 @@ impl Eval for Expr {
                                         lhs.is_const(), lhs.is_unsafe()
                                     ))))
                                 }
+                                // FIXME: can't compare pointers in const
+                                let is_const = lhs.is_const() && rhs.is_const && !is_pointer(ctx, &bop.lhs) && !is_pointer(ctx, &bop.rhs);
                                 let code = ctx.capture_output(|ctx| {
                                     write!(ctx, "(")?;
                                     lhs.emit(ctx)?;
@@ -1414,7 +1430,7 @@ impl Eval for Expr {
                                 Ok(Some(Value::RustCode(RustCode::boxed(
                                     code,
                                     Type::bool(),
-                                    lhs.is_const() && rhs.is_const,
+                                    is_const,
                                     lhs.is_unsafe() || rhs.is_unsafe
                                 ))))
                             }
@@ -1436,6 +1452,8 @@ impl Eval for Expr {
                                         rhs.is_unsafe()
                                     ))))
                                 }
+                                // FIXME: can't compare pointers in const
+                                let is_const = lhs.is_const && rhs.is_const() && !is_pointer(ctx, &bop.lhs) && !is_pointer(ctx, &bop.rhs);
                                 let code = ctx.capture_output(|ctx| {
                                     write!(ctx, "({lhs} {op} ")?;
                                     rhs.emit(ctx)?;
@@ -1445,7 +1463,7 @@ impl Eval for Expr {
                                 Ok(Some(Value::RustCode(RustCode::boxed(
                                     code,
                                     Type::bool(),
-                                    lhs.is_const && rhs.is_const(),
+                                    is_const,
                                     lhs.is_unsafe || rhs.is_unsafe()
                                 ))))
                             }
