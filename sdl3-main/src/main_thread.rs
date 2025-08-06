@@ -61,21 +61,51 @@ impl<T> Drop for MainThreadData<T> {
 
 impl<T> MainThreadData<T> {
     /// Create a new `MainThreadData`.
+    ///
+    /// See also [`Self::assert_new()`]
     #[inline(always)]
     pub fn new(_: MainThreadToken, data: T) -> Self {
         Self(data)
     }
 
     /// Get shared access to this data.
+    ///
+    /// See also [`Self::assert_get()`], [`Self::get_on_main_thread()`]
     #[inline(always)]
     pub fn get(&self, _: MainThreadToken) -> &T {
         &self.0
     }
 
     /// Get exclusive access to this data.
+    ///
+    /// See also [`Self::assert_get_mut()`], [`Self::get_mut_on_main_thread()`]
     #[inline(always)]
     pub fn get_mut(&mut self, _: MainThreadToken) -> &mut T {
         &mut self.0
+    }
+
+    /// Create a new `MainThreadData`. Panic if not called on the main thread.
+    ///
+    /// See also [`Self::new()`]
+    #[inline(always)]
+    pub fn assert_new(data: T) -> Self {
+        Self::new(MainThreadToken::assert(), data)
+    }
+
+    /// Get shared access to this data. Panic if not called on the main thread.
+    ///
+    /// See also [`Self::get()`], [`Self::get_on_main_thread()`]
+    #[inline(always)]
+    pub fn assert_get(&self) -> &T {
+        self.get(MainThreadToken::assert())
+    }
+
+    /// Get shared access to this data. Panic if not called on the main thread.
+    ///
+    /// See also [`Self::get_mut()`], [`Self::get_mut_on_main_thread()`]
+    #[inline(always)]
+    pub fn assert_get_mut(&mut self) -> &mut T {
+        self.get_mut(MainThreadToken::assert())
     }
 
     /// Get shared access to this data in a callback that's run on the main thread.
@@ -86,7 +116,7 @@ impl<T> MainThreadData<T> {
     ///
     /// Returns false if the callback failed to run.
     ///
-    /// See also [`run_sync_on_main_thread()`].
+    /// See also [`run_sync_on_main_thread()`], [`Self::get()`], [`Self::assert_get()`]
     #[must_use]
     #[inline(always)]
     pub fn get_on_main_thread(&self, callback: impl FnOnce(&T) + Send) -> bool {
@@ -101,7 +131,7 @@ impl<T> MainThreadData<T> {
     ///
     /// Returns false if the callback failed to run.
     ///
-    /// See also [`run_sync_on_main_thread()`].
+    /// See also [`run_sync_on_main_thread()`], [`Self::get_mut()`], [`Self::assert_get_mut()`]
     #[must_use]
     #[inline(always)]
     pub fn get_mut_on_main_thread(&mut self, callback: impl FnOnce(&mut T) + Send) -> bool {
