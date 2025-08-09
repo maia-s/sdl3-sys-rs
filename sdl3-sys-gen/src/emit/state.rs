@@ -233,6 +233,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__ia64" = CfgExpr(always_false!("__ia64")); // not supported by rust?
             "__ILP32__" = CfgExpr(r#"target_pointer_width = "32""#); // could also be LP32, but SDL doesn't support that
             "__LP64__" = CfgExpr(r#"all(not(windows), target_pointer_width = "64")"#);
+            "__MINGW32__" = CfgExpr(r#"all(windows, target_env = "gnu")"#);
             "__OPTIMIZE__" = CfgExpr("not(debug_assertions)");
             "__powerpc__" = CfgExpr(r#"any(target_arch = "powerpc", target_arch = "powerpc64")"#);
             "__powerpc64__" = CfgExpr(r#"target_arch = "powerpc64""#);
