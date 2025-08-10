@@ -501,7 +501,7 @@ unsafe extern "C" {
     /// - [`SDL_DestroyAsyncIOQueue`]
     /// - [`SDL_GetAsyncIOResult`]
     /// - [`SDL_WaitAsyncIOResult`]
-    pub fn SDL_CreateAsyncIOQueue() -> *mut SDL_AsyncIOQueue;
+    pub safe fn SDL_CreateAsyncIOQueue() -> *mut SDL_AsyncIOQueue;
 }
 
 unsafe extern "C" {

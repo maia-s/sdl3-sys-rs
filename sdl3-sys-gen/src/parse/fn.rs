@@ -1,7 +1,7 @@
 use super::{
     ArgAttribute, Block, DocComment, FnAbi, FnAttributes, GetSpan, Ident, Kw_extern, Kw_static, Op,
     Parse, ParseContext, ParseErr, ParseRawRes, Punctuated, Span, Type, TypeWithIdent,
-    TypeWithOptIdent, WsAndComments,
+    TypeWithOptIdent, WsAndComments, patch_parsed_function,
 };
 use std::borrow::Cow;
 
@@ -70,25 +70,23 @@ impl Parse for Function {
                     };
 
                     let span = span0.join(&rest.start());
-
                     let is_unsafe = true;
+                    let mut f = Self {
+                        span,
+                        doc,
+                        static_kw,
+                        extern_kw,
+                        attr,
+                        abi,
+                        ident,
+                        return_type: ty,
+                        args,
+                        body,
+                        is_unsafe,
+                    };
+                    patch_parsed_function(ctx, &mut f)?;
 
-                    return Ok((
-                        rest,
-                        Some(Self {
-                            span,
-                            doc,
-                            static_kw,
-                            extern_kw,
-                            attr,
-                            abi,
-                            ident,
-                            return_type: ty,
-                            args,
-                            body,
-                            is_unsafe,
-                        }),
-                    ));
+                    return Ok((rest, Some(f)));
                 }
             }
         }

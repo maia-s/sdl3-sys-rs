@@ -1,6 +1,6 @@
 use super::{
-    CanCmp, CanCopy, Cast, Define, DefineValue, Enum, EnumKind, Expr, GetSpan, ParseContext,
-    ParseErr, PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
+    CanCmp, CanCopy, Cast, Define, DefineValue, Enum, EnumKind, Expr, Function, GetSpan,
+    ParseContext, ParseErr, PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
 };
 
 struct Patch<T: ?Sized> {
@@ -391,6 +391,111 @@ const ENUM_PATCHES: &[EnumPatch] = &[
         },
     },
 ];
+
+pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<bool, ParseErr> {
+    patch(ctx, f, |f| f.ident.as_str(), FUNCTION_PATCHES)
+}
+
+type FunctionPatch = Patch<Function>;
+
+const FUNCTION_PATCHES: &[FunctionPatch] = &[FunctionPatch {
+    module: None,
+    match_ident: |i| {
+        // FIXME: Should Quit functions be safe?
+        i.ends_with("_Version")
+            || i.ends_with("_GetVersion")
+            || i.ends_with("_Init")
+            || i.ends_with("_InitSubSystem")
+            || matches!(
+                i,
+                "SDL_abs"
+                    | "SDL_absf"
+                    | "SDL_acos"
+                    | "SDL_acosf"
+                    | "SDL_asin"
+                    | "SDL_asinf"
+                    | "SDL_atan"
+                    | "SDL_atan2"
+                    | "SDL_atan2f"
+                    | "SDL_atanf"
+                    | "SDL_AudioDevicePaused"
+                    | "SDL_ceil"
+                    | "SDL_ceilf"
+                    | "SDL_CloseAudioDevice"
+                    | "SDL_copysign"
+                    | "SDL_copysignf"
+                    | "SDL_cos"
+                    | "SDL_cosf"
+                    | "SDL_CreateAsyncIOQueue"
+                    | "SDL_exp"
+                    | "SDL_expf"
+                    | "SDL_fabs"
+                    | "SDL_fabsf"
+                    | "SDL_floor"
+                    | "SDL_floorf"
+                    | "SDL_fmod"
+                    | "SDL_fmodf"
+                    | "SDL_GetAudioDeviceGain"
+                    | "SDL_GetAudioDeviceName"
+                    | "SDL_GetAudioDriver"
+                    | "SDL_GetAudioFormatName"
+                    | "SDL_GetCurrentAudioDriver"
+                    | "SDL_GetError"
+                    | "SDL_GetNumAllocations"
+                    | "SDL_GetNumAudioDrivers"
+                    | "SDL_GetSilenceValueForFormat"
+                    | "SDL_isalnum"
+                    | "SDL_isalpha"
+                    | "SDL_IsAudioDevicePhysical"
+                    | "SDL_IsAudioDevicePlayback"
+                    | "SDL_isblank"
+                    | "SDL_iscntrl"
+                    | "SDL_isdigit"
+                    | "SDL_isgraph"
+                    | "SDL_isinf"
+                    | "SDL_isinff"
+                    | "SDL_islower"
+                    | "SDL_IsMainThread"
+                    | "SDL_isnan"
+                    | "SDL_isnanf"
+                    | "SDL_isprint"
+                    | "SDL_ispunct"
+                    | "SDL_isspace"
+                    | "SDL_isupper"
+                    | "SDL_isxdigit"
+                    | "SDL_log"
+                    | "SDL_log10"
+                    | "SDL_log10f"
+                    | "SDL_logf"
+                    | "SDL_lround"
+                    | "SDL_lroundf"
+                    | "SDL_PauseAudioDevice"
+                    | "SDL_pow"
+                    | "SDL_powf"
+                    | "SDL_ResumeAudioDevice"
+                    | "SDL_round"
+                    | "SDL_roundf"
+                    | "SDL_scalbn"
+                    | "SDL_scalbnf"
+                    | "SDL_SetAudioDeviceGain"
+                    | "SDL_sin"
+                    | "SDL_sinf"
+                    | "SDL_sqrt"
+                    | "SDL_sqrtf"
+                    | "SDL_tan"
+                    | "SDL_tanf"
+                    | "SDL_tolower"
+                    | "SDL_toupper"
+                    | "SDL_trunc"
+                    | "SDL_truncf"
+                    | "SDL_WasInit"
+            )
+    },
+    patch: |_, f| {
+        f.is_unsafe = false;
+        Ok(true)
+    },
+}];
 
 pub fn patch_parsed_struct(ctx: &ParseContext, e: &mut StructOrUnion) -> Result<bool, ParseErr> {
     patch(
