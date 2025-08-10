@@ -403,103 +403,67 @@ const FUNCTION_PATCHES: &[FunctionPatch] = &[
         module: None,
         match_ident: |i| {
             // FIXME: Should Quit functions be safe?
-            i.ends_with("_Version")
-                || i.ends_with("_GetVersion")
-                || i.ends_with("_Init")
-                || i.ends_with("_InitSubSystem")
-                || matches!(
-                    i,
-                    "SDL_abs"
-                        | "SDL_absf"
-                        | "SDL_acos"
-                        | "SDL_acosf"
-                        | "SDL_asin"
-                        | "SDL_asinf"
-                        | "SDL_atan"
-                        | "SDL_atan2"
-                        | "SDL_atan2f"
-                        | "SDL_atanf"
-                        | "SDL_AudioDevicePaused"
-                        | "SDL_ceil"
-                        | "SDL_ceilf"
-                        | "SDL_ClearError"
-                        | "SDL_CloseAudioDevice"
-                        | "SDL_ComposeCustomBlendMode"
-                        | "SDL_copysign"
-                        | "SDL_copysignf"
-                        | "SDL_cos"
-                        | "SDL_cosf"
-                        | "SDL_CreateAsyncIOQueue"
-                        | "SDL_exp"
-                        | "SDL_expf"
-                        | "SDL_fabs"
-                        | "SDL_fabsf"
-                        | "SDL_floor"
-                        | "SDL_floorf"
-                        | "SDL_fmod"
-                        | "SDL_fmodf"
-                        | "SDL_GetAudioDeviceGain"
-                        | "SDL_GetAudioDeviceName"
-                        | "SDL_GetAudioDriver"
-                        | "SDL_GetAudioFormatName"
-                        | "SDL_GetCameraDriver"
-                        | "SDL_GetCameraName"
-                        | "SDL_GetCameraPosition"
-                        | "SDL_GetCurrentAudioDriver"
-                        | "SDL_GetCurrentCameraDriver"
-                        | "SDL_GetError"
-                        | "SDL_GetNumAllocations"
-                        | "SDL_GetNumAudioDrivers"
-                        | "SDL_GetNumCameraDrivers"
-                        | "SDL_GetSilenceValueForFormat"
-                        | "SDL_isalnum"
-                        | "SDL_isalpha"
-                        | "SDL_IsAudioDevicePhysical"
-                        | "SDL_IsAudioDevicePlayback"
-                        | "SDL_isblank"
-                        | "SDL_iscntrl"
-                        | "SDL_isdigit"
-                        | "SDL_isgraph"
-                        | "SDL_isinf"
-                        | "SDL_isinff"
-                        | "SDL_islower"
-                        | "SDL_IsMainThread"
-                        | "SDL_isnan"
-                        | "SDL_isnanf"
-                        | "SDL_isprint"
-                        | "SDL_ispunct"
-                        | "SDL_isspace"
-                        | "SDL_isupper"
-                        | "SDL_isxdigit"
-                        | "SDL_log"
-                        | "SDL_log10"
-                        | "SDL_log10f"
-                        | "SDL_logf"
-                        | "SDL_lround"
-                        | "SDL_lroundf"
-                        | "SDL_OutOfMemory"
-                        | "SDL_PauseAudioDevice"
-                        | "SDL_pow"
-                        | "SDL_powf"
-                        | "SDL_ResumeAudioDevice"
-                        | "SDL_round"
-                        | "SDL_roundf"
-                        | "SDL_scalbn"
-                        | "SDL_scalbnf"
-                        | "SDL_SetAudioDeviceGain"
-                        | "SDL_sin"
-                        | "SDL_sinf"
-                        | "SDL_sqrt"
-                        | "SDL_sqrtf"
-                        | "SDL_tan"
-                        | "SDL_tanf"
-                        | "SDL_tolower"
-                        | "SDL_toupper"
-                        | "SDL_trunc"
-                        | "SDL_truncf"
-                        | "SDL_Unsupported"
-                        | "SDL_WasInit"
-                )
+            i.ends_with("_Version") || i.ends_with("_GetVersion") || i.ends_with("_Init")
+        },
+        patch: |_, f| {
+            f.is_unsafe = false;
+            Ok(true)
+        },
+    },
+    FunctionPatch {
+        module: Some("asyncio"),
+        match_ident: |i| matches!(i, "SDL_CreateAsyncIOQueue"),
+        patch: |_, f| {
+            f.is_unsafe = false;
+            Ok(true)
+        },
+    },
+    FunctionPatch {
+        module: Some("audio"),
+        match_ident: |i| {
+            // FIXME: Should Quit functions be safe?
+            matches!(
+                i,
+                "SDL_AudioDevicePaused"
+                    | "SDL_CloseAudioDevice"
+                    | "SDL_GetAudioDeviceGain"
+                    | "SDL_GetAudioDeviceName"
+                    | "SDL_GetAudioDriver"
+                    | "SDL_GetAudioFormatName"
+                    | "SDL_GetCurrentAudioDriver"
+                    | "SDL_GetNumAudioDrivers"
+                    | "SDL_GetSilenceValueForFormat"
+                    | "SDL_IsAudioDevicePhysical"
+                    | "SDL_IsAudioDevicePlayback"
+                    | "SDL_PauseAudioDevice"
+                    | "SDL_ResumeAudioDevice"
+                    | "SDL_SetAudioDeviceGain"
+            )
+        },
+        patch: |_, f| {
+            f.is_unsafe = false;
+            Ok(true)
+        },
+    },
+    FunctionPatch {
+        module: Some("blendmode"),
+        match_ident: |i| matches!(i, "SDL_ComposeCustomBlendMode"),
+        patch: |_, f| {
+            f.is_unsafe = false;
+            Ok(true)
+        },
+    },
+    FunctionPatch {
+        module: Some("camera"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_GetCameraDriver"
+                    | "SDL_GetCameraName"
+                    | "SDL_GetCameraPosition"
+                    | "SDL_GetCurrentCameraDriver"
+                    | "SDL_GetNumCameraDrivers"
+            )
         },
         patch: |_, f| {
             f.is_unsafe = false;
@@ -509,6 +473,102 @@ const FUNCTION_PATCHES: &[FunctionPatch] = &[
     FunctionPatch {
         module: Some("cpuinfo"),
         match_ident: |i| i.starts_with("SDL_Get") || i.starts_with("SDL_Has"),
+        patch: |_, f| {
+            f.is_unsafe = false;
+            Ok(true)
+        },
+    },
+    FunctionPatch {
+        module: Some("error"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported"
+            )
+        },
+        patch: |_, f| {
+            f.is_unsafe = false;
+            Ok(true)
+        },
+    },
+    FunctionPatch {
+        module: Some("init"),
+        match_ident: |i| matches!(i, "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit"),
+        patch: |_, f| {
+            f.is_unsafe = false;
+            Ok(true)
+        },
+    },
+    FunctionPatch {
+        module: Some("stdinc"),
+        match_ident: |i| {
+            matches!(
+                i,
+                "SDL_abs"
+                    | "SDL_absf"
+                    | "SDL_acos"
+                    | "SDL_acosf"
+                    | "SDL_asin"
+                    | "SDL_asinf"
+                    | "SDL_atan"
+                    | "SDL_atan2"
+                    | "SDL_atan2f"
+                    | "SDL_atanf"
+                    | "SDL_ceil"
+                    | "SDL_ceilf"
+                    | "SDL_copysign"
+                    | "SDL_copysignf"
+                    | "SDL_cos"
+                    | "SDL_cosf"
+                    | "SDL_exp"
+                    | "SDL_expf"
+                    | "SDL_fabs"
+                    | "SDL_fabsf"
+                    | "SDL_floor"
+                    | "SDL_floorf"
+                    | "SDL_fmod"
+                    | "SDL_fmodf"
+                    | "SDL_GetNumAllocations"
+                    | "SDL_isalnum"
+                    | "SDL_isalpha"
+                    | "SDL_isblank"
+                    | "SDL_iscntrl"
+                    | "SDL_isdigit"
+                    | "SDL_isgraph"
+                    | "SDL_isinf"
+                    | "SDL_isinff"
+                    | "SDL_islower"
+                    | "SDL_isnan"
+                    | "SDL_isnanf"
+                    | "SDL_isprint"
+                    | "SDL_ispunct"
+                    | "SDL_isspace"
+                    | "SDL_isupper"
+                    | "SDL_isxdigit"
+                    | "SDL_log"
+                    | "SDL_log10"
+                    | "SDL_log10f"
+                    | "SDL_logf"
+                    | "SDL_lround"
+                    | "SDL_lroundf"
+                    | "SDL_pow"
+                    | "SDL_powf"
+                    | "SDL_round"
+                    | "SDL_roundf"
+                    | "SDL_scalbn"
+                    | "SDL_scalbnf"
+                    | "SDL_sin"
+                    | "SDL_sinf"
+                    | "SDL_sqrt"
+                    | "SDL_sqrtf"
+                    | "SDL_tan"
+                    | "SDL_tanf"
+                    | "SDL_tolower"
+                    | "SDL_toupper"
+                    | "SDL_trunc"
+                    | "SDL_truncf"
+            )
+        },
         patch: |_, f| {
             f.is_unsafe = false;
             Ok(true)
