@@ -69,8 +69,15 @@ pub use generated::*;
 
 /// You can set a breakpoint on this function to break into the debugger when asserts
 /// want to trigger a breakpoint.
+///
+/// If the `nightly` feature is enabled, this calls [`core::arch::breakpoint()`],
+/// so you don't have to set a breakpoint manually in that case.
+#[cold]
 #[inline(never)]
-pub fn breakpoint() {}
+pub fn breakpoint() {
+    #[cfg(feature = "nightly")]
+    core::arch::breakpoint();
+}
 
 /// Extra ffi types for `sdl3-sys`
 pub mod ffi {
