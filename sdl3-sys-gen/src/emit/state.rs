@@ -820,10 +820,16 @@ impl<'a, 'b> EmitContext<'a, 'b> {
     }
 
     #[must_use]
-    pub fn disable_patch_guard(&mut self) -> impl Drop + use<> {
-        let patch_enabled = mem::replace(&mut self.inner_mut().patch_enabled, false);
-        let inner = Rc::clone(&self.inner);
-        Defer::new(move || inner.borrow_mut().patch_enabled = patch_enabled)
+    pub fn disable_patch_guard_if_patch_enabled(&mut self) -> Option<impl Drop + use<>> {
+        if self.patch_enabled() {
+            let patch_enabled = mem::replace(&mut self.inner_mut().patch_enabled, false);
+            let inner = Rc::clone(&self.inner);
+            Some(Defer::new(move || {
+                inner.borrow_mut().patch_enabled = patch_enabled
+            }))
+        } else {
+            None
+        }
     }
 
     #[must_use]

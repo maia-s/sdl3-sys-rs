@@ -3,51 +3,25 @@ use super::{
     ParseContext, ParseErr, PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
 };
 
-struct Patch<T: ?Sized> {
-    module: Option<&'static str>,
-    match_ident: fn(&str) -> bool,
-    patch: fn(&ParseContext, &mut T) -> Result<bool, ParseErr>,
-}
-
 pub fn patch_parsed_define(ctx: &ParseContext, define: &mut Define) -> Result<bool, ParseErr> {
-    patch(ctx, define, |d| d.ident.as_str(), DEFINE_PATCHES)
-}
-
-type DefinePatch = Patch<Define>;
-
-const DEFINE_PATCHES: &[Patch<Define>] = &[
-    DefinePatch {
-        module: Some("audio"),
-        match_ident: |i| i == "SDL_AUDIO_BITSIZE",
-        patch: |_ctx, define| {
+    match (ctx.module(), define.ident.as_str()) {
+        ("audio", "SDL_AUDIO_BITSIZE") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_AudioFormat");
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("audio"),
-        match_ident: |i| i == "SDL_AUDIO_FRAMESIZE",
-        patch: |_ctx, define| {
+        }
+        ("audio", "SDL_AUDIO_FRAMESIZE") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_AudioSpec");
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("audio"),
-        match_ident: |i| i.starts_with("SDL_AUDIO_IS"),
-        patch: |_ctx, define| {
+        }
+        ("audio", i) if i.starts_with("SDL_AUDIO_IS") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_AudioFormat");
             define.value = define.value.cast_expr(Type::bool());
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("audio"),
-        match_ident: |i| i == "SDL_DEFINE_AUDIO_FORMAT",
-        patch: |_ctx, define| {
+        }
+        ("audio", "SDL_DEFINE_AUDIO_FORMAT") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::bool();
             args[1].ty = Type::bool();
@@ -55,100 +29,64 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[3].ty = Type::primitive(PrimitiveType::Uint8T);
             define.value = define.value.cast_expr(Type::ident_str("SDL_AudioFormat"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("error"),
-        match_ident: |i| i == "SDL_InvalidParamError",
-        patch: |_ctx, define| {
+        }
+        ("error", "SDL_InvalidParamError") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::pointer(Type::primitive(PrimitiveType::Char), true);
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("haptic"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_HAPTIC_CARTESIAN"
-                    | "SDL_HAPTIC_POLAR"
-                    | "SDL_HAPTIC_SPHERICAL"
-                    | "SDL_HAPTIC_STEERING_AXIS"
-            )
-        },
-        patch: |_ctx, define| {
+        }
+        (
+            "haptic",
+            "SDL_HAPTIC_CARTESIAN"
+            | "SDL_HAPTIC_POLAR"
+            | "SDL_HAPTIC_SPHERICAL"
+            | "SDL_HAPTIC_STEERING_AXIS",
+        ) => {
             define.value = define.value.cast_expr(Type::ident_str("Uint8"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("haptic"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_HAPTIC_CONSTANT"
-                    | "SDL_HAPTIC_CUSTOM"
-                    | "SDL_HAPTIC_DAMPER"
-                    | "SDL_HAPTIC_FRICTION"
-                    | "SDL_HAPTIC_INERTIA"
-                    | "SDL_HAPTIC_LEFTRIGHT"
-                    | "SDL_HAPTIC_RAMP"
-                    | "SDL_HAPTIC_RESERVED1"
-                    | "SDL_HAPTIC_RESERVED2"
-                    | "SDL_HAPTIC_RESERVED3"
-                    | "SDL_HAPTIC_SAWTOOTHDOWN"
-                    | "SDL_HAPTIC_SAWTOOTHUP"
-                    | "SDL_HAPTIC_SINE"
-                    | "SDL_HAPTIC_SPRING"
-                    | "SDL_HAPTIC_SQUARE"
-                    | "SDL_HAPTIC_TRIANGLE"
-            )
-        },
-        patch: |_ctx, define| {
+        }
+        (
+            "haptic",
+            "SDL_HAPTIC_CONSTANT"
+            | "SDL_HAPTIC_CUSTOM"
+            | "SDL_HAPTIC_DAMPER"
+            | "SDL_HAPTIC_FRICTION"
+            | "SDL_HAPTIC_INERTIA"
+            | "SDL_HAPTIC_LEFTRIGHT"
+            | "SDL_HAPTIC_RAMP"
+            | "SDL_HAPTIC_RESERVED1"
+            | "SDL_HAPTIC_RESERVED2"
+            | "SDL_HAPTIC_RESERVED3"
+            | "SDL_HAPTIC_SAWTOOTHDOWN"
+            | "SDL_HAPTIC_SAWTOOTHUP"
+            | "SDL_HAPTIC_SINE"
+            | "SDL_HAPTIC_SPRING"
+            | "SDL_HAPTIC_SQUARE"
+            | "SDL_HAPTIC_TRIANGLE",
+        ) => {
             define.value = define.value.cast_expr(Type::ident_str("Uint16"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("joystick"),
-        match_ident: |i| i.starts_with("SDL_HAT_"),
-        patch: |_ctx, define| {
+        }
+        ("joystick", i) if i.starts_with("SDL_HAT_") => {
             define.value = define.value.cast_expr(Type::ident_str("Uint8"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("joystick"),
-        match_ident: |i| matches!(i, "SDL_JOYSTICK_AXIS_MAX" | "SDL_JOYSTICK_AXIS_MIN"),
-        patch: |_ctx, define| {
+        }
+        ("joystick", "SDL_JOYSTICK_AXIS_MAX" | "SDL_JOYSTICK_AXIS_MIN") => {
             define.value = define.value.cast_expr(Type::ident_str("Sint16"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("keycode"),
-        match_ident: |i| i == "SDL_SCANCODE_TO_KEYCODE",
-        patch: |_ctx, define| {
+        }
+        ("keycode", "SDL_SCANCODE_TO_KEYCODE") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_Scancode");
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("mouse"),
-        match_ident: |i| matches!(i, "SDL_BUTTON_MASK"),
-        patch: |_ctx, define| {
+        }
+        ("mouse", "SDL_BUTTON_MASK") => {
             define.value = define
                 .value
                 .cast_expr(Type::ident_str("SDL_MouseButtonFlags"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("mutex"),
-        match_ident: |_| true,
-        patch: |_, define| {
+        }
+        ("mutex", _) => {
             if let DefineValue::Expr(Expr::FnCall(call)) = &define.value {
                 if let Expr::Ident(ident) = &*call.func {
                     if matches!(
@@ -161,41 +99,25 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
                 }
             }
             Ok(false)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_ALPHA_OPAQUE" | "SDL_ALPHA_TRANSPARENT"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", "SDL_ALPHA_OPAQUE" | "SDL_ALPHA_TRANSPARENT") => {
             define.value = define.value.cast_expr(Type::ident_str("Uint8"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_BITSPERPIXEL" | "SDL_BYTESPERPIXEL"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", "SDL_BITSPERPIXEL" | "SDL_BYTESPERPIXEL") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_PixelFormat");
             define.value = define
                 .value
                 .cast_expr(Type::primitive(PrimitiveType::Uint8T));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| i.starts_with("SDL_COLORSPACE"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", i) if i.starts_with("SDL_COLORSPACE") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_Colorspace");
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_DEFINE_COLORSPACE"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", "SDL_DEFINE_COLORSPACE") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_ColorType");
             args[1].ty = Type::ident_str("SDL_ColorRange");
@@ -205,12 +127,8 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[5].ty = Type::ident_str("SDL_ChromaLocation");
             define.value = define.value.cast_expr(Type::ident_str("SDL_Colorspace"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_DEFINE_PIXELFORMAT"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", "SDL_DEFINE_PIXELFORMAT") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_PixelType");
             args[1].ty = Type::primitive(PrimitiveType::Int); // inner type of order enums
@@ -219,609 +137,362 @@ const DEFINE_PATCHES: &[Patch<Define>] = &[
             args[4].ty = Type::primitive(PrimitiveType::Uint8T);
             define.value = define.value.cast_expr(Type::ident_str("SDL_PixelFormat"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_PIXELFLAG" | "SDL_PIXELORDER"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", "SDL_PIXELFLAG" | "SDL_PIXELORDER") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_PixelFormat");
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_PIXELLAYOUT"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", "SDL_PIXELLAYOUT") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_PixelFormat");
             define.value = define.value.cast_expr(Type::ident_str("SDL_PackedLayout"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("pixels"),
-        match_ident: |i| matches!(i, "SDL_PIXELTYPE"),
-        patch: |_ctx, define| {
+        }
+        ("pixels", "SDL_PIXELTYPE") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_PixelFormat");
             define.value = define.value.cast_expr(Type::ident_str("SDL_PixelType"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("render"),
-        match_ident: |i| i.starts_with("SDL_RENDERER_VSYNC_"),
-        patch: |_ctx, define| {
+        }
+        ("render", i) if i.starts_with("SDL_RENDERER_VSYNC_") => {
             define.value = define.value.cast_expr(Type::primitive(PrimitiveType::Int));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("stdinc"),
-        match_ident: |i| i == "SDL_iconv_wchar_utf8",
-        patch: |_ctx, define| {
+        }
+        ("stdinc", "SDL_iconv_wchar_utf8") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::pointer(Type::primitive(PrimitiveType::WcharT), true);
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("surface"),
-        match_ident: |i| i == "SDL_MUSTLOCK",
-        patch: |_ctx, define| {
+        }
+        ("surface", "SDL_MUSTLOCK") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::pointer(Type::ident_str("SDL_Surface"), true);
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("system"),
-        match_ident: |i| i.starts_with("SDL_ANDROID_EXTERNAL_STORAGE_"),
-        patch: |_ctx, define| {
+        }
+        ("system", i) if i.starts_with("SDL_ANDROID_EXTERNAL_STORAGE_") => {
             define.value = define.value.cast_expr(Type::ident_str("Uint32"));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("timer"),
-        match_ident: |i| i.starts_with("SDL_NS_TO_"),
-        patch: |_ctx, define| {
+        }
+        ("timer", i) if i.starts_with("SDL_NS_TO_") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("Uint64");
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("video"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_WINDOWPOS_CENTERED_DISPLAY" | "SDL_WINDOWPOS_UNDEFINED_DISPLAY"
-            )
-        },
-        patch: |_ctx, define| {
+        }
+        ("video", "SDL_WINDOWPOS_CENTERED_DISPLAY" | "SDL_WINDOWPOS_UNDEFINED_DISPLAY") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::ident_str("SDL_DisplayID");
             define.value = define.value.cast_expr(Type::primitive(PrimitiveType::Int));
             Ok(true)
-        },
-    },
-    DefinePatch {
-        module: Some("video"),
-        match_ident: |i| matches!(i, "SDL_WINDOWPOS_ISCENTERED" | "SDL_WINDOWPOS_ISUNDEFINED"),
-        patch: |_ctx, define| {
+        }
+        ("video", "SDL_WINDOWPOS_ISCENTERED" | "SDL_WINDOWPOS_ISUNDEFINED") => {
             let args = define.args.as_mut().unwrap();
             args[0].ty = Type::primitive(PrimitiveType::Int);
             Ok(true)
-        },
-    },
-];
-
-pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, ParseErr> {
-    patch(
-        ctx,
-        e,
-        |e| e.ident.as_ref().map(|i| i.as_str()).unwrap_or(""),
-        ENUM_PATCHES,
-    )
+        }
+        _ => Ok(false),
+    }
 }
 
-type EnumPatch = Patch<Enum>;
-
-const ENUM_PATCHES: &[EnumPatch] = &[
-    EnumPatch {
-        module: Some("audio"),
-        match_ident: |i| i == "SDL_AudioFormat",
-        patch: |_, e| {
+pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, ParseErr> {
+    match (
+        ctx.module(),
+        e.ident.as_ref().map(|i| i.as_str()).unwrap_or(""),
+    ) {
+        ("audio", "SDL_AudioFormat") => {
             e.base_type = Some(Type::primitive(PrimitiveType::UnsignedInt));
             Ok(true)
-        },
-    },
-    EnumPatch {
-        module: Some("events"),
-        match_ident: |i| i == "SDL_EventType",
-        patch: |_, e| {
+        }
+        ("events", "SDL_EventType") => {
             e.base_type = Some(Type::ident_str("Uint32"));
             Ok(true)
-        },
-    },
-    EnumPatch {
-        module: Some("pixels"),
-        match_ident: |i| i == "SDL_Colorspace",
-        patch: |_, e| {
+        }
+        ("pixels", "SDL_Colorspace") => {
             e.base_type = Some(Type::ident_str("Uint32"));
             Ok(true)
-        },
-    },
-    EnumPatch {
-        module: Some("pixels"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_ChromaLocation"
-                    | "SDL_ColorPrimaries"
-                    | "SDL_ColorRange"
-                    | "SDL_ColorType"
-                    | "SDL_MatrixCoefficients"
-                    | "SDL_TransferCharacteristics"
-            )
-        },
-        patch: |_, e| {
+        }
+        (
+            "pixels",
+            "SDL_ChromaLocation"
+            | "SDL_ColorPrimaries"
+            | "SDL_ColorRange"
+            | "SDL_ColorType"
+            | "SDL_MatrixCoefficients"
+            | "SDL_TransferCharacteristics",
+        ) => {
             e.base_type = Some(Type::primitive(PrimitiveType::UnsignedInt));
             Ok(true)
-        },
-    },
-    EnumPatch {
-        module: Some("stdinc"),
-        match_ident: |i| i == "SDL_DUMMY_ENUM",
-        patch: |_, e| {
+        }
+        ("stdinc", "SDL_DUMMY_ENUM") => {
             e.hidden = true;
             e.emit_metadata = false;
             Ok(true)
-        },
-    },
-    EnumPatch {
-        module: Some("ttf"),
-        match_ident: |i| i == "TTF_Direction",
-        patch: |_, e| {
+        }
+        ("ttf", "TTF_Direction") => {
             e.base_type = Some(Type::primitive(PrimitiveType::Uint32T));
             Ok(true)
-        },
-    },
-];
+        }
+        _ => Ok(false),
+    }
+}
 
 pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<bool, ParseErr> {
-    patch(ctx, f, |f| f.ident.as_str(), FUNCTION_PATCHES)
+    match (ctx.module(), f.ident.as_str()) {
+        (_, i) if i.ends_with("_Version") || i.ends_with("_GetVersion") || i.ends_with("_Init") => {
+            // FIXME: Should Quit functions be safe?
+            f.is_unsafe = false;
+            Ok(true)
+        }
+        ("asyncio", "SDL_CreateAsyncIOQueue")
+        | (
+            "audio",
+            "SDL_AudioDevicePaused"
+            | "SDL_CloseAudioDevice"
+            | "SDL_GetAudioDeviceGain"
+            | "SDL_GetAudioDeviceName"
+            | "SDL_GetAudioDriver"
+            | "SDL_GetAudioFormatName"
+            | "SDL_GetCurrentAudioDriver"
+            | "SDL_GetNumAudioDrivers"
+            | "SDL_GetSilenceValueForFormat"
+            | "SDL_IsAudioDevicePhysical"
+            | "SDL_IsAudioDevicePlayback"
+            | "SDL_PauseAudioDevice"
+            | "SDL_ResumeAudioDevice"
+            | "SDL_SetAudioDeviceGain",
+        )
+        | ("blendmode", "SDL_ComposeCustomBlendMode")
+        | (
+            "camera",
+            "SDL_GetCameraDriver"
+            | "SDL_GetCameraName"
+            | "SDL_GetCameraPosition"
+            | "SDL_GetCurrentCameraDriver"
+            | "SDL_GetNumCameraDrivers",
+        ) => {
+            f.is_unsafe = false;
+            Ok(true)
+        }
+        ("cpuinfo", i) if i.starts_with("SDL_Get") || i.starts_with("SDL_Has") => {
+            f.is_unsafe = false;
+            Ok(true)
+        }
+        ("error", "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported")
+        | ("init", "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit")
+        | (
+            "stdinc",
+            "SDL_abs"
+            | "SDL_absf"
+            | "SDL_acos"
+            | "SDL_acosf"
+            | "SDL_asin"
+            | "SDL_asinf"
+            | "SDL_atan"
+            | "SDL_atan2"
+            | "SDL_atan2f"
+            | "SDL_atanf"
+            | "SDL_ceil"
+            | "SDL_ceilf"
+            | "SDL_copysign"
+            | "SDL_copysignf"
+            | "SDL_cos"
+            | "SDL_cosf"
+            | "SDL_exp"
+            | "SDL_expf"
+            | "SDL_fabs"
+            | "SDL_fabsf"
+            | "SDL_floor"
+            | "SDL_floorf"
+            | "SDL_fmod"
+            | "SDL_fmodf"
+            | "SDL_GetNumAllocations"
+            | "SDL_isalnum"
+            | "SDL_isalpha"
+            | "SDL_isblank"
+            | "SDL_iscntrl"
+            | "SDL_isdigit"
+            | "SDL_isgraph"
+            | "SDL_isinf"
+            | "SDL_isinff"
+            | "SDL_islower"
+            | "SDL_isnan"
+            | "SDL_isnanf"
+            | "SDL_isprint"
+            | "SDL_ispunct"
+            | "SDL_isspace"
+            | "SDL_isupper"
+            | "SDL_isxdigit"
+            | "SDL_log"
+            | "SDL_log10"
+            | "SDL_log10f"
+            | "SDL_logf"
+            | "SDL_lround"
+            | "SDL_lroundf"
+            | "SDL_pow"
+            | "SDL_powf"
+            | "SDL_round"
+            | "SDL_roundf"
+            | "SDL_scalbn"
+            | "SDL_scalbnf"
+            | "SDL_sin"
+            | "SDL_sinf"
+            | "SDL_sqrt"
+            | "SDL_sqrtf"
+            | "SDL_tan"
+            | "SDL_tanf"
+            | "SDL_tolower"
+            | "SDL_toupper"
+            | "SDL_trunc"
+            | "SDL_truncf",
+        ) => {
+            f.is_unsafe = false;
+            Ok(true)
+        }
+        _ => Ok(false),
+    }
 }
 
-type FunctionPatch = Patch<Function>;
-
-const FUNCTION_PATCHES: &[FunctionPatch] = &[
-    FunctionPatch {
-        module: None,
-        match_ident: |i| {
-            // FIXME: Should Quit functions be safe?
-            i.ends_with("_Version") || i.ends_with("_GetVersion") || i.ends_with("_Init")
-        },
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("asyncio"),
-        match_ident: |i| matches!(i, "SDL_CreateAsyncIOQueue"),
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("audio"),
-        match_ident: |i| {
-            // FIXME: Should Quit functions be safe?
-            matches!(
-                i,
-                "SDL_AudioDevicePaused"
-                    | "SDL_CloseAudioDevice"
-                    | "SDL_GetAudioDeviceGain"
-                    | "SDL_GetAudioDeviceName"
-                    | "SDL_GetAudioDriver"
-                    | "SDL_GetAudioFormatName"
-                    | "SDL_GetCurrentAudioDriver"
-                    | "SDL_GetNumAudioDrivers"
-                    | "SDL_GetSilenceValueForFormat"
-                    | "SDL_IsAudioDevicePhysical"
-                    | "SDL_IsAudioDevicePlayback"
-                    | "SDL_PauseAudioDevice"
-                    | "SDL_ResumeAudioDevice"
-                    | "SDL_SetAudioDeviceGain"
-            )
-        },
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("blendmode"),
-        match_ident: |i| matches!(i, "SDL_ComposeCustomBlendMode"),
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("camera"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_GetCameraDriver"
-                    | "SDL_GetCameraName"
-                    | "SDL_GetCameraPosition"
-                    | "SDL_GetCurrentCameraDriver"
-                    | "SDL_GetNumCameraDrivers"
-            )
-        },
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("cpuinfo"),
-        match_ident: |i| i.starts_with("SDL_Get") || i.starts_with("SDL_Has"),
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("error"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported"
-            )
-        },
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("init"),
-        match_ident: |i| matches!(i, "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit"),
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-    FunctionPatch {
-        module: Some("stdinc"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_abs"
-                    | "SDL_absf"
-                    | "SDL_acos"
-                    | "SDL_acosf"
-                    | "SDL_asin"
-                    | "SDL_asinf"
-                    | "SDL_atan"
-                    | "SDL_atan2"
-                    | "SDL_atan2f"
-                    | "SDL_atanf"
-                    | "SDL_ceil"
-                    | "SDL_ceilf"
-                    | "SDL_copysign"
-                    | "SDL_copysignf"
-                    | "SDL_cos"
-                    | "SDL_cosf"
-                    | "SDL_exp"
-                    | "SDL_expf"
-                    | "SDL_fabs"
-                    | "SDL_fabsf"
-                    | "SDL_floor"
-                    | "SDL_floorf"
-                    | "SDL_fmod"
-                    | "SDL_fmodf"
-                    | "SDL_GetNumAllocations"
-                    | "SDL_isalnum"
-                    | "SDL_isalpha"
-                    | "SDL_isblank"
-                    | "SDL_iscntrl"
-                    | "SDL_isdigit"
-                    | "SDL_isgraph"
-                    | "SDL_isinf"
-                    | "SDL_isinff"
-                    | "SDL_islower"
-                    | "SDL_isnan"
-                    | "SDL_isnanf"
-                    | "SDL_isprint"
-                    | "SDL_ispunct"
-                    | "SDL_isspace"
-                    | "SDL_isupper"
-                    | "SDL_isxdigit"
-                    | "SDL_log"
-                    | "SDL_log10"
-                    | "SDL_log10f"
-                    | "SDL_logf"
-                    | "SDL_lround"
-                    | "SDL_lroundf"
-                    | "SDL_pow"
-                    | "SDL_powf"
-                    | "SDL_round"
-                    | "SDL_roundf"
-                    | "SDL_scalbn"
-                    | "SDL_scalbnf"
-                    | "SDL_sin"
-                    | "SDL_sinf"
-                    | "SDL_sqrt"
-                    | "SDL_sqrtf"
-                    | "SDL_tan"
-                    | "SDL_tanf"
-                    | "SDL_tolower"
-                    | "SDL_toupper"
-                    | "SDL_trunc"
-                    | "SDL_truncf"
-            )
-        },
-        patch: |_, f| {
-            f.is_unsafe = false;
-            Ok(true)
-        },
-    },
-];
-
-pub fn patch_parsed_struct(ctx: &ParseContext, e: &mut StructOrUnion) -> Result<bool, ParseErr> {
-    patch(
-        ctx,
-        e,
-        |e| e.ident.as_ref().map(|i| i.as_str()).unwrap_or(""),
-        STRUCT_PATCHES,
-    )
-}
-
-type StructPatch = Patch<StructOrUnion>;
-
-const STRUCT_PATCHES: &[StructPatch] = &[
-    StructPatch {
-        module: None,
-        match_ident: |i| i.starts_with('_'),
-        patch: |_, s| {
+pub fn patch_parsed_struct(ctx: &ParseContext, s: &mut StructOrUnion) -> Result<bool, ParseErr> {
+    match (
+        ctx.module(),
+        s.ident.as_ref().map(|i| i.as_str()).unwrap_or(""),
+    ) {
+        (_, i) if i.starts_with('_') => {
             s.hidden = true;
             Ok(true)
-        },
-    },
-    StructPatch {
-        module: Some("atomic"),
-        match_ident: |i| matches!(i, "SDL_AtomicInt" | "SDL_AtomicU32"),
-        patch: |_, s| {
+        }
+        ("atomic", "SDL_AtomicInt" | "SDL_AtomicU32") => {
             // atomic
             s.can_copy = CanCopy::Never;
             s.can_eq = CanCmp::No;
             Ok(true)
-        },
-    },
-    StructPatch {
-        module: Some("events"),
-        match_ident: |i| matches!(i, "SDL_ClipboardEvent" | "SDL_UserEvent"),
-        patch: |_, s| {
+        }
+        ("events", "SDL_ClipboardEvent" | "SDL_UserEvent") => {
             // part of union
             s.can_copy = CanCopy::Always;
             Ok(true)
-        },
-    },
-    StructPatch {
-        module: Some("gpu"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_GPUBlitRegion"
-                    | "SDL_GPUBufferBinding"
-                    | "SDL_GPUBufferLocation"
-                    | "SDL_GPUBufferRegion"
-                    | "SDL_GPUColorTargetInfo"
-                    | "SDL_GPUDepthStencilTargetInfo"
-                    | "SDL_GPUGraphicsPipelineCreateInfo"
-                    | "SDL_GPUStorageBufferReadWriteBinding"
-                    | "SDL_GPUStorageTextureReadWriteBinding"
-                    | "SDL_GPUTextureLocation"
-                    | "SDL_GPUTextureRegion"
-                    | "SDL_GPUTextureSamplerBinding"
-                    | "SDL_GPUTextureTransferInfo"
-                    | "SDL_GPUTransferBufferLocation"
-            )
-        },
-        patch: |_, s| {
+        }
+        (
+            "gpu",
+            "SDL_GPUBlitRegion"
+            | "SDL_GPUBufferBinding"
+            | "SDL_GPUBufferLocation"
+            | "SDL_GPUBufferRegion"
+            | "SDL_GPUColorTargetInfo"
+            | "SDL_GPUDepthStencilTargetInfo"
+            | "SDL_GPUGraphicsPipelineCreateInfo"
+            | "SDL_GPUStorageBufferReadWriteBinding"
+            | "SDL_GPUStorageTextureReadWriteBinding"
+            | "SDL_GPUTextureLocation"
+            | "SDL_GPUTextureRegion"
+            | "SDL_GPUTextureSamplerBinding"
+            | "SDL_GPUTextureTransferInfo"
+            | "SDL_GPUTransferBufferLocation",
+        ) => {
             // pointers aren't uniquely owned
             s.can_copy = CanCopy::Always;
             Ok(true)
-        },
-    },
-    StructPatch {
-        module: Some("haptic"),
-        match_ident: |i| i == "SDL_HapticCustom",
-        patch: |_, s| {
+        }
+        ("haptic", "SDL_HapticCustom") => {
             // this must be copy because it's part of a union
             s.can_copy = CanCopy::Always;
             Ok(true)
-        },
-    },
-    StructPatch {
-        module: Some("stdinc"),
-        match_ident: |i| i == "SDL_alignment_test",
-        patch: |_, s| {
+        }
+        ("stdinc", "SDL_alignment_test") | ("system", "tagMSG") => {
             s.hidden = true;
             Ok(true)
-        },
-    },
-    StructPatch {
-        module: Some("system"),
-        match_ident: |i| i == "tagMSG",
-        patch: |_, s| {
-            s.hidden = true;
-            Ok(true)
-        },
-    },
-    StructPatch {
-        module: Some("textengine"),
-        match_ident: |i| i == "TTF_CopyOperation",
-        patch: |_, s| {
+        }
+        ("textengine", "TTF_CopyOperation") => {
             // part of union
             s.can_copy = CanCopy::Always;
             Ok(true)
-        },
-    },
-];
-
-pub fn patch_parsed_typedef(ctx: &ParseContext, e: &mut TypeDef) -> Result<bool, ParseErr> {
-    patch(ctx, e, |e| e.ident.as_str(), TYPEDEF_PATCHES)
+        }
+        _ => Ok(false),
+    }
 }
 
-type TypeDefPatch = Patch<TypeDef>;
-
-const TYPEDEF_PATCHES: &[TypeDefPatch] = &[
-    TypeDefPatch {
-        module: Some("atomic"),
-        match_ident: |i| i == "SDL_SpinLock",
-        patch: |_, td| {
+pub fn patch_parsed_typedef(ctx: &ParseContext, td: &mut TypeDef) -> Result<bool, ParseErr> {
+    match (ctx.module(), td.ident.as_str()) {
+        ("atomic", "SDL_SpinLock") => {
             td.kind = TypeDefKind::new_enum(EnumKind::Lock);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("blendmode"),
-        match_ident: |i| i == "SDL_BlendMode",
-        patch: |_, td| {
+        }
+        ("blendmode", "SDL_BlendMode") => {
             td.kind = TypeDefKind::new_enum(EnumKind::Flags);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("gpu"),
-        match_ident: |i| i == "SDL_GPUShaderFormat",
-        patch: |_, td| {
+        }
+        ("gpu", "SDL_GPUShaderFormat") => {
             td.kind = TypeDefKind::new_enum(EnumKind::Flags);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("haptic"),
-        match_ident: |i| i == "SDL_HapticDirectionType",
-        patch: |_, td| {
+        }
+        ("haptic", "SDL_HapticDirectionType") => {
             td.kind = TypeDefKind::new_enum(EnumKind::Enum);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("haptic"),
-        match_ident: |i| i == "SDL_HapticEffectType",
-        patch: |_, td| {
+        }
+        ("haptic", "SDL_HapticEffectType") => {
             td.kind = TypeDefKind::new_enum(EnumKind::Flags);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("keycode"),
-        match_ident: |i| i == "SDL_Keymod",
-        patch: |_, td| {
+        }
+        ("keycode", "SDL_Keymod") => {
             td.kind = TypeDefKind::new_enum(EnumKind::Flags);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("keycode"),
-        match_ident: |i| i == "SDL_Keycode",
-        patch: |_, td| {
+        }
+        ("keycode", "SDL_Keycode") => {
             td.kind = TypeDefKind::new_enum(EnumKind::Id);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("mouse"),
-        match_ident: |i| i == "SDL_MouseButtonFlags",
-        patch: |_, td| {
+        }
+        ("mouse", "SDL_MouseButtonFlags") => {
             let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
                 unreachable!()
             };
             *match_define = |s| s.starts_with("SDL_BUTTON_") && s.ends_with("MASK");
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("pen"),
-        match_ident: |i| i == "SDL_PenID",
-        patch: |_, td| {
+        }
+        ("pen", "SDL_PenID") => {
             let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
                 unreachable!()
             };
             *match_define = |_| false;
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("sensor"),
-        match_ident: |i| i == "SDL_SensorID",
-        patch: |_, td| {
+        }
+        ("sensor", "SDL_SensorID") => {
             let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
                 unreachable!()
             };
             *match_define = |_| false;
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("video"),
-        match_ident: |i| i == "SDL_WindowID",
-        patch: |_, td| {
+        }
+        ("video", "SDL_WindowID") => {
             let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
                 unreachable!()
             };
             *match_define = |_| false;
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("video"),
-        match_ident: |i| i == "SDL_WindowFlags",
-        patch: |_, td| {
+        }
+        ("video", "SDL_WindowFlags") => {
             let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
                 unreachable!()
             };
             *match_define = |s| s.starts_with("SDL_WINDOW_");
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("video"),
-        match_ident: |i| {
-            matches!(
-                i,
-                "SDL_GLContextFlag"
-                    | "SDL_GLContextReleaseFlag"
-                    | "SDL_GLContextResetNotification"
-                    | "SDL_GLProfile"
-            )
-        },
-        patch: |_, td| {
+        }
+        (
+            "video",
+            "SDL_GLContextFlag"
+            | "SDL_GLContextReleaseFlag"
+            | "SDL_GLContextResetNotification"
+            | "SDL_GLProfile",
+        ) => {
             td.ty = Type::ident_str("Sint32");
             td.kind = TypeDefKind::new_enum(EnumKind::Flags);
             Ok(true)
-        },
-    },
-    TypeDefPatch {
-        module: Some("ttf"),
-        match_ident: |i| matches!(i, "TTF_HintingFlags"),
-        patch: |_, td| {
+        }
+        ("ttf", "TTF_HintingFlags") => {
             td.kind = TypeDefKind::Alias;
             Ok(true)
-        },
-    },
-];
+        }
+        _ => Ok(false),
+    }
+}
 
 pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
     #[allow(clippy::single_match)]
@@ -844,23 +515,6 @@ pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, P
             _ => (),
         },
         _ => (),
-    }
-    Ok(false)
-}
-
-fn patch<T: ?Sized>(
-    ctx: &ParseContext,
-    parsed: &mut T,
-    get_ident: impl Fn(&T) -> &str,
-    patches: &[Patch<T>],
-) -> Result<bool, ParseErr> {
-    for patch in patches.iter() {
-        if (patch.module.is_none() || patch.module == Some(ctx.module()))
-            && (patch.match_ident)(get_ident(parsed))
-            && (patch.patch)(ctx, parsed)?
-        {
-            return Ok(true);
-        }
     }
     Ok(false)
 }
