@@ -25,8 +25,7 @@ use sdl3_sys::{
     events::{
         SDL_EVENT_KEY_DOWN, SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_EVENT_MOUSE_BUTTON_UP,
         SDL_EVENT_MOUSE_MOTION, SDL_EVENT_TEXT_EDITING, SDL_EVENT_TEXT_EDITING_CANDIDATES,
-        SDL_EVENT_TEXT_INPUT, SDL_Event, SDL_EventType, SDL_TextEditingCandidatesEvent,
-        SDL_TextEditingEvent,
+        SDL_EVENT_TEXT_INPUT, SDL_Event, SDL_TextEditingCandidatesEvent, SDL_TextEditingEvent,
     },
     hints::{SDL_HINT_IME_IMPLEMENTED_UI, SDL_SetHint},
     keyboard::{SDL_ClearComposition, SDL_SetTextInputArea, SDL_StartTextInput, SDL_StopTextInput},
@@ -962,7 +961,7 @@ impl EditBox {
 
     pub fn handle_event(&mut self, event: &SDL_Event) -> bool {
         unsafe {
-            match SDL_EventType(event.r#type) {
+            match event.event_type() {
                 SDL_EVENT_MOUSE_BUTTON_DOWN => {
                     return self.handle_mouse_down(event.button.x, event.button.y);
                 }

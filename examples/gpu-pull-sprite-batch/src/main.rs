@@ -338,9 +338,7 @@ impl AppState {
     }
 
     fn app_event(&mut self, event: &SDL_Event) -> AppResult {
-        let event_type = unsafe { event.r#type };
-
-        match SDL_EventType(event_type) {
+        match event.event_type() {
             SDL_EVENT_QUIT => AppResult::Success,
             _ => AppResult::Continue,
         }

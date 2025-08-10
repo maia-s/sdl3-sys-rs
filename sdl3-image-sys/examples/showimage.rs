@@ -265,7 +265,7 @@ fn main() -> ExitCode {
             let mut event = SDL_Event::default();
             unsafe {
                 while SDL_PollEvent(&mut event) {
-                    match SDL_EventType(event.r#type) {
+                    match event.event_type() {
                         SDL_EventType::KEY_UP => match event.key.key {
                             SDLK_LEFT => {
                                 if i > 0 {

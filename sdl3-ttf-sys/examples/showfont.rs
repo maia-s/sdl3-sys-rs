@@ -30,7 +30,7 @@ use sdl3_sys::{
     assert::SDL_assert,
     error::SDL_GetError,
     events::{
-        SDL_EVENT_KEY_DOWN, SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_EVENT_QUIT, SDL_Event, SDL_EventType,
+        SDL_EVENT_KEY_DOWN, SDL_EVENT_MOUSE_BUTTON_DOWN, SDL_EVENT_QUIT, SDL_Event,
         SDL_KeyboardEvent, SDL_PollEvent,
     },
     init::{SDL_INIT_VIDEO, SDL_Init, SDL_Quit},
@@ -708,7 +708,7 @@ fn main() -> ExitCode {
         unsafe {
             while SDL_PollEvent(&mut event) {
                 SDL_ConvertEventToRenderCoordinates(scene.renderer, &mut event);
-                match SDL_EventType(event.r#type) {
+                match event.event_type() {
                     SDL_EVENT_MOUSE_BUTTON_DOWN => {
                         if scene.edit.is_none()
                             || !scene.edit.as_mut().unwrap().handle_event(&event)

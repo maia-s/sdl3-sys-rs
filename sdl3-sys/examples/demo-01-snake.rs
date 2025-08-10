@@ -385,7 +385,7 @@ fn app_init() -> Option<Box<Mutex<AppState>>> {
 #[app_event]
 fn app_event(app: &mut AppState, event: &SDL_Event) -> AppResult {
     unsafe {
-        match SDL_EventType(event.r#type) {
+        match event.event_type() {
             SDL_EVENT_QUIT => AppResult::Success,
             SDL_EVENT_KEY_DOWN => app.snake_ctx.handle_key_event(event.key.scancode),
             _ => AppResult::Continue,
