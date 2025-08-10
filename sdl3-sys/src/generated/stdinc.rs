@@ -1092,7 +1092,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
+    pub safe fn SDL_GetNumAllocations() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1684,21 +1684,22 @@ unsafe extern "C" {
     ) -> *mut ::core::ffi::c_void;
 }
 
-unsafe extern "C" {
-    /// Compute the absolute value of `x`.
-    ///
-    /// ## Parameters
-    /// - `x`: an integer value.
-    ///
-    /// ## Return value
-    /// Returns the absolute value of x.
-    ///
-    /// ## Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ## Availability
-    /// This function is available since SDL 3.2.0.
-    pub fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+/// Compute the absolute value of `x`.
+///
+/// ## Parameters
+/// - `x`: an integer value.
+///
+/// ## Return value
+/// Returns the absolute value of x.
+///
+/// ## Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ## Availability
+/// This function is available since SDL 3.2.0.
+#[inline(always)]
+pub const fn SDL_abs(x: ::core::ffi::c_int) -> ::core::ffi::c_int {
+    return x.unsigned_abs() as _;
 }
 
 #[inline(always)]
@@ -1739,7 +1740,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isalpha(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isalpha(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1759,7 +1760,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isalnum(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isalnum(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1779,7 +1780,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isblank(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isblank(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1799,7 +1800,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_iscntrl(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_iscntrl(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1819,7 +1820,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1839,7 +1840,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isxdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isxdigit(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1863,7 +1864,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_isgraph`]
     /// - [`SDL_isalnum`]
-    pub fn SDL_ispunct(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_ispunct(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1890,7 +1891,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isspace(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isspace(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1910,7 +1911,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1930,7 +1931,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_islower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_islower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1954,7 +1955,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_isprint(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isprint(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -1981,7 +1982,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_isprint`]
-    pub fn SDL_isgraph(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_isgraph(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -2004,7 +2005,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_toupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_toupper(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -2027,7 +2028,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_tolower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
+    pub safe fn SDL_tolower(x: ::core::ffi::c_int) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -4703,7 +4704,7 @@ unsafe extern "C" {
     /// - [`SDL_acosf`]
     /// - [`SDL_asin`]
     /// - [`SDL_cos`]
-    pub fn SDL_acos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_acos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -4739,7 +4740,7 @@ unsafe extern "C" {
     /// - [`SDL_acos`]
     /// - [`SDL_asinf`]
     /// - [`SDL_cosf`]
-    pub fn SDL_acosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_acosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -4775,7 +4776,7 @@ unsafe extern "C" {
     /// - [`SDL_asinf`]
     /// - [`SDL_acos`]
     /// - [`SDL_sin`]
-    pub fn SDL_asin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_asin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -4811,7 +4812,7 @@ unsafe extern "C" {
     /// - [`SDL_asin`]
     /// - [`SDL_acosf`]
     /// - [`SDL_sinf`]
-    pub fn SDL_asinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_asinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -4849,7 +4850,7 @@ unsafe extern "C" {
     /// - [`SDL_atanf`]
     /// - [`SDL_atan2`]
     /// - [`SDL_tan`]
-    pub fn SDL_atan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_atan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -4887,7 +4888,7 @@ unsafe extern "C" {
     /// - [`SDL_atan`]
     /// - [`SDL_atan2f`]
     /// - [`SDL_tanf`]
-    pub fn SDL_atanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_atanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -4929,7 +4930,10 @@ unsafe extern "C" {
     /// - [`SDL_atan2f`]
     /// - [`SDL_atan`]
     /// - [`SDL_tan`]
-    pub fn SDL_atan2(y: ::core::ffi::c_double, x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_atan2(
+        y: ::core::ffi::c_double,
+        x: ::core::ffi::c_double,
+    ) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -4971,7 +4975,10 @@ unsafe extern "C" {
     /// - [`SDL_atan2`]
     /// - [`SDL_atan`]
     /// - [`SDL_tan`]
-    pub fn SDL_atan2f(y: ::core::ffi::c_float, x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_atan2f(
+        y: ::core::ffi::c_float,
+        x: ::core::ffi::c_float,
+    ) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5005,7 +5012,7 @@ unsafe extern "C" {
     /// - [`SDL_trunc`]
     /// - [`SDL_round`]
     /// - [`SDL_lround`]
-    pub fn SDL_ceil(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_ceil(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5039,7 +5046,7 @@ unsafe extern "C" {
     /// - [`SDL_truncf`]
     /// - [`SDL_roundf`]
     /// - [`SDL_lroundf`]
-    pub fn SDL_ceilf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_ceilf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 /// Copy the sign of one floating-point value to another.
@@ -5145,7 +5152,7 @@ unsafe extern "C" {
     /// - [`SDL_cosf`]
     /// - [`SDL_acos`]
     /// - [`SDL_sin`]
-    pub fn SDL_cos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_cos(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5179,7 +5186,7 @@ unsafe extern "C" {
     /// - [`SDL_cos`]
     /// - [`SDL_acosf`]
     /// - [`SDL_sinf`]
-    pub fn SDL_cosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_cosf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5217,7 +5224,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_expf`]
     /// - [`SDL_log`]
-    pub fn SDL_exp(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_exp(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5255,7 +5262,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_exp`]
     /// - [`SDL_logf`]
-    pub fn SDL_expf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_expf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 /// Compute the absolute value of `x`
@@ -5345,7 +5352,7 @@ unsafe extern "C" {
     /// - [`SDL_trunc`]
     /// - [`SDL_round`]
     /// - [`SDL_lround`]
-    pub fn SDL_floor(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_floor(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5379,7 +5386,7 @@ unsafe extern "C" {
     /// - [`SDL_truncf`]
     /// - [`SDL_roundf`]
     /// - [`SDL_lroundf`]
-    pub fn SDL_floorf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_floorf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5414,7 +5421,7 @@ unsafe extern "C" {
     /// - [`SDL_floor`]
     /// - [`SDL_round`]
     /// - [`SDL_lround`]
-    pub fn SDL_trunc(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_trunc(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5449,7 +5456,7 @@ unsafe extern "C" {
     /// - [`SDL_floorf`]
     /// - [`SDL_roundf`]
     /// - [`SDL_lroundf`]
-    pub fn SDL_truncf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_truncf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5485,7 +5492,10 @@ unsafe extern "C" {
     /// - [`SDL_floor`]
     /// - [`SDL_round`]
     /// - [`SDL_lround`]
-    pub fn SDL_fmod(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_fmod(
+        x: ::core::ffi::c_double,
+        y: ::core::ffi::c_double,
+    ) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5521,87 +5531,92 @@ unsafe extern "C" {
     /// - [`SDL_floorf`]
     /// - [`SDL_roundf`]
     /// - [`SDL_lroundf`]
-    pub fn SDL_fmodf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_fmodf(x: ::core::ffi::c_float, y: ::core::ffi::c_float)
+    -> ::core::ffi::c_float;
 }
 
-unsafe extern "C" {
-    /// Return whether the value is infinity.
-    ///
-    /// ## Parameters
-    /// - `x`: double-precision floating point value.
-    ///
-    /// ## Return value
-    /// Returns non-zero if the value is infinity, 0 otherwise.
-    ///
-    /// ## Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ## Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ## See also
-    /// - [`SDL_isinff`]
-    pub fn SDL_isinf(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
+/// Return whether the value is infinity.
+///
+/// ## Parameters
+/// - `x`: double-precision floating point value.
+///
+/// ## Return value
+/// Returns non-zero if the value is infinity, 0 otherwise.
+///
+/// ## Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ## Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ## See also
+/// - [`SDL_isinff`]
+#[inline(always)]
+pub const fn SDL_isinf(x: ::core::ffi::c_double) -> ::core::ffi::c_int {
+    return x.is_infinite() as _;
 }
 
-unsafe extern "C" {
-    /// Return whether the value is infinity.
-    ///
-    /// ## Parameters
-    /// - `x`: floating point value.
-    ///
-    /// ## Return value
-    /// Returns non-zero if the value is infinity, 0 otherwise.
-    ///
-    /// ## Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ## Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ## See also
-    /// - [`SDL_isinf`]
-    pub fn SDL_isinff(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
+/// Return whether the value is infinity.
+///
+/// ## Parameters
+/// - `x`: floating point value.
+///
+/// ## Return value
+/// Returns non-zero if the value is infinity, 0 otherwise.
+///
+/// ## Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ## Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ## See also
+/// - [`SDL_isinf`]
+#[inline(always)]
+pub const fn SDL_isinff(x: ::core::ffi::c_float) -> ::core::ffi::c_int {
+    return x.is_infinite() as _;
 }
 
-unsafe extern "C" {
-    /// Return whether the value is NaN.
-    ///
-    /// ## Parameters
-    /// - `x`: double-precision floating point value.
-    ///
-    /// ## Return value
-    /// Returns non-zero if the value is NaN, 0 otherwise.
-    ///
-    /// ## Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ## Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ## See also
-    /// - [`SDL_isnanf`]
-    pub fn SDL_isnan(x: ::core::ffi::c_double) -> ::core::ffi::c_int;
+/// Return whether the value is NaN.
+///
+/// ## Parameters
+/// - `x`: double-precision floating point value.
+///
+/// ## Return value
+/// Returns non-zero if the value is NaN, 0 otherwise.
+///
+/// ## Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ## Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ## See also
+/// - [`SDL_isnanf`]
+#[inline(always)]
+pub const fn SDL_isnan(x: ::core::ffi::c_double) -> ::core::ffi::c_int {
+    return x.is_nan() as _;
 }
 
-unsafe extern "C" {
-    /// Return whether the value is NaN.
-    ///
-    /// ## Parameters
-    /// - `x`: floating point value.
-    ///
-    /// ## Return value
-    /// Returns non-zero if the value is NaN, 0 otherwise.
-    ///
-    /// ## Thread safety
-    /// It is safe to call this function from any thread.
-    ///
-    /// ## Availability
-    /// This function is available since SDL 3.2.0.
-    ///
-    /// ## See also
-    /// - [`SDL_isnan`]
-    pub fn SDL_isnanf(x: ::core::ffi::c_float) -> ::core::ffi::c_int;
+/// Return whether the value is NaN.
+///
+/// ## Parameters
+/// - `x`: floating point value.
+///
+/// ## Return value
+/// Returns non-zero if the value is NaN, 0 otherwise.
+///
+/// ## Thread safety
+/// It is safe to call this function from any thread.
+///
+/// ## Availability
+/// This function is available since SDL 3.2.0.
+///
+/// ## See also
+/// - [`SDL_isnan`]
+#[inline(always)]
+pub const fn SDL_isnanf(x: ::core::ffi::c_float) -> ::core::ffi::c_int {
+    return x.is_nan() as _;
 }
 
 unsafe extern "C" {
@@ -5637,7 +5652,7 @@ unsafe extern "C" {
     /// - [`SDL_logf`]
     /// - [`SDL_log10`]
     /// - [`SDL_exp`]
-    pub fn SDL_log(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_log(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5672,7 +5687,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_log`]
     /// - [`SDL_expf`]
-    pub fn SDL_logf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_logf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5708,7 +5723,7 @@ unsafe extern "C" {
     /// - [`SDL_log10f`]
     /// - [`SDL_log`]
     /// - [`SDL_pow`]
-    pub fn SDL_log10(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_log10(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5744,7 +5759,7 @@ unsafe extern "C" {
     /// - [`SDL_log10`]
     /// - [`SDL_logf`]
     /// - [`SDL_powf`]
-    pub fn SDL_log10f(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_log10f(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5838,7 +5853,10 @@ unsafe extern "C" {
     /// - [`SDL_powf`]
     /// - [`SDL_exp`]
     /// - [`SDL_log`]
-    pub fn SDL_pow(x: ::core::ffi::c_double, y: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_pow(
+        x: ::core::ffi::c_double,
+        y: ::core::ffi::c_double,
+    ) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5876,7 +5894,7 @@ unsafe extern "C" {
     /// - [`SDL_pow`]
     /// - [`SDL_expf`]
     /// - [`SDL_logf`]
-    pub fn SDL_powf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_powf(x: ::core::ffi::c_float, y: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5911,7 +5929,7 @@ unsafe extern "C" {
     /// - [`SDL_floor`]
     /// - [`SDL_ceil`]
     /// - [`SDL_trunc`]
-    pub fn SDL_round(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_round(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -5946,7 +5964,7 @@ unsafe extern "C" {
     /// - [`SDL_floorf`]
     /// - [`SDL_ceilf`]
     /// - [`SDL_truncf`]
-    pub fn SDL_roundf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_roundf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -5981,7 +5999,7 @@ unsafe extern "C" {
     /// - [`SDL_floor`]
     /// - [`SDL_ceil`]
     /// - [`SDL_trunc`]
-    pub fn SDL_lround(x: ::core::ffi::c_double) -> ::core::ffi::c_long;
+    pub safe fn SDL_lround(x: ::core::ffi::c_double) -> ::core::ffi::c_long;
 }
 
 unsafe extern "C" {
@@ -6016,7 +6034,7 @@ unsafe extern "C" {
     /// - [`SDL_floorf`]
     /// - [`SDL_ceilf`]
     /// - [`SDL_truncf`]
-    pub fn SDL_lroundf(x: ::core::ffi::c_float) -> ::core::ffi::c_long;
+    pub safe fn SDL_lroundf(x: ::core::ffi::c_float) -> ::core::ffi::c_long;
 }
 
 unsafe extern "C" {
@@ -6047,7 +6065,10 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_scalbnf`]
     /// - [`SDL_pow`]
-    pub fn SDL_scalbn(x: ::core::ffi::c_double, n: ::core::ffi::c_int) -> ::core::ffi::c_double;
+    pub safe fn SDL_scalbn(
+        x: ::core::ffi::c_double,
+        n: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -6078,7 +6099,8 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_scalbn`]
     /// - [`SDL_powf`]
-    pub fn SDL_scalbnf(x: ::core::ffi::c_float, n: ::core::ffi::c_int) -> ::core::ffi::c_float;
+    pub safe fn SDL_scalbnf(x: ::core::ffi::c_float, n: ::core::ffi::c_int)
+    -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -6112,7 +6134,7 @@ unsafe extern "C" {
     /// - [`SDL_sinf`]
     /// - [`SDL_asin`]
     /// - [`SDL_cos`]
-    pub fn SDL_sin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_sin(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -6146,7 +6168,7 @@ unsafe extern "C" {
     /// - [`SDL_sin`]
     /// - [`SDL_asinf`]
     /// - [`SDL_cosf`]
-    pub fn SDL_sinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_sinf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -6178,7 +6200,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_sqrtf`]
-    pub fn SDL_sqrt(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_sqrt(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -6210,7 +6232,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_sqrt`]
-    pub fn SDL_sqrtf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_sqrtf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -6246,7 +6268,7 @@ unsafe extern "C" {
     /// - [`SDL_cos`]
     /// - [`SDL_atan`]
     /// - [`SDL_atan2`]
-    pub fn SDL_tan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
+    pub safe fn SDL_tan(x: ::core::ffi::c_double) -> ::core::ffi::c_double;
 }
 
 unsafe extern "C" {
@@ -6282,7 +6304,7 @@ unsafe extern "C" {
     /// - [`SDL_cosf`]
     /// - [`SDL_atanf`]
     /// - [`SDL_atan2f`]
-    pub fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
+    pub safe fn SDL_tanf(x: ::core::ffi::c_float) -> ::core::ffi::c_float;
 }
 
 /// An opaque handle representing string encoding conversion state.

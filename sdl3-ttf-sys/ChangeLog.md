@@ -5,7 +5,7 @@
     - Synchronize version number with sdl3-sys
     - Add metadata
     - Remove deprecated aliases
-    - Make some functions safe
+    - Make some functions safe and/or const
 
 - next:
     - Expose `TTF_TextData`

@@ -122,7 +122,7 @@ These features are mutually exclusive. Features higher in this list override lat
     - Add metadata
     - Remove deprecated aliases
     - Change return type of `SDL_Vulkan_GetVkGetInstanceProcAddr`
-    - Make some functions safe
+    - Make some functions safe and/or const
     - MSRV 1.85
 
 - 0.5.4:

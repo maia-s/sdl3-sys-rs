@@ -81,7 +81,65 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
         // safe functions
         module: None,
         match_ident: |i| {
-            i.ends_with("_Version") || i.ends_with("_GetVersion") || matches!(i, "SDL_GetError")
+            i.ends_with("_Version")
+                || i.ends_with("_GetVersion")
+                || matches!(
+                    i,
+                    "SDL_acos"
+                        | "SDL_acosf"
+                        | "SDL_asin"
+                        | "SDL_asinf"
+                        | "SDL_atan"
+                        | "SDL_atanf"
+                        | "SDL_atan2"
+                        | "SDL_atan2f"
+                        | "SDL_ceil"
+                        | "SDL_ceilf"
+                        | "SDL_cos"
+                        | "SDL_cosf"
+                        | "SDL_exp"
+                        | "SDL_expf"
+                        | "SDL_floor"
+                        | "SDL_floorf"
+                        | "SDL_fmod"
+                        | "SDL_fmodf"
+                        | "SDL_isalpha"
+                        | "SDL_isalnum"
+                        | "SDL_isblank"
+                        | "SDL_iscntrl"
+                        | "SDL_isdigit"
+                        | "SDL_isxdigit"
+                        | "SDL_ispunct"
+                        | "SDL_isspace"
+                        | "SDL_isupper"
+                        | "SDL_islower"
+                        | "SDL_isprint"
+                        | "SDL_isgraph"
+                        | "SDL_toupper"
+                        | "SDL_tolower"
+                        | "SDL_log"
+                        | "SDL_logf"
+                        | "SDL_log10"
+                        | "SDL_log10f"
+                        | "SDL_lround"
+                        | "SDL_lroundf"
+                        | "SDL_pow"
+                        | "SDL_powf"
+                        | "SDL_round"
+                        | "SDL_roundf"
+                        | "SDL_scalbn"
+                        | "SDL_scalbnf"
+                        | "SDL_sin"
+                        | "SDL_sinf"
+                        | "SDL_sqrt"
+                        | "SDL_sqrtf"
+                        | "SDL_tan"
+                        | "SDL_tanf"
+                        | "SDL_trunc"
+                        | "SDL_truncf"
+                        | "SDL_GetError"
+                        | "SDL_GetNumAllocations"
+                )
         },
         patch: |ctx, f| {
             let mut f = f.clone();
@@ -136,6 +194,32 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
     },
     EmitFunctionPatch {
         module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_abs"),
+        patch: |ctx, f| {
+            let mut fr = f.clone();
+            let arg0 = &f.args.args[0];
+            fr.extern_kw = None;
+            fr.static_kw = Some(Kw_static { span: Span::none() });
+            fr.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            "return {arg0}.unsigned_abs() as _;",
+                            arg0 = arg0.ident.as_ref().unwrap().as_str(),
+                        ),
+                        arg0.ty.clone(),
+                        true,
+                        false,
+                    ),
+                )))]),
+            });
+            fr.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
         match_ident: |i| matches!(i, "SDL_copysign" | "SDL_copysignf"),
         patch: |ctx, f| {
             let mut fr = f.clone();
@@ -176,6 +260,58 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
                     RustCode::boxed(
                         format!(
                             "return {arg0}.abs();",
+                            arg0 = arg0.ident.as_ref().unwrap().as_str(),
+                        ),
+                        arg0.ty.clone(),
+                        true,
+                        false,
+                    ),
+                )))]),
+            });
+            fr.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_isinf" | "SDL_isinff"),
+        patch: |ctx, f| {
+            let mut fr = f.clone();
+            let arg0 = &f.args.args[0];
+            fr.extern_kw = None;
+            fr.static_kw = Some(Kw_static { span: Span::none() });
+            fr.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            "return {arg0}.is_infinite() as _;",
+                            arg0 = arg0.ident.as_ref().unwrap().as_str(),
+                        ),
+                        arg0.ty.clone(),
+                        true,
+                        false,
+                    ),
+                )))]),
+            });
+            fr.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
+        module: Some("stdinc"),
+        match_ident: |i| matches!(i, "SDL_isnan" | "SDL_isnanf"),
+        patch: |ctx, f| {
+            let mut fr = f.clone();
+            let arg0 = &f.args.args[0];
+            fr.extern_kw = None;
+            fr.static_kw = Some(Kw_static { span: Span::none() });
+            fr.body = Some(Block {
+                span: Span::none(),
+                items: Items(vec![Item::Expr(Expr::Value(Value::RustCode(
+                    RustCode::boxed(
+                        format!(
+                            "return {arg0}.is_nan() as _;",
                             arg0 = arg0.ident.as_ref().unwrap().as_str(),
                         ),
                         arg0.ty.clone(),
