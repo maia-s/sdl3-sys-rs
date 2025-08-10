@@ -98,7 +98,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_OutOfMemory() -> ::core::primitive::bool;
+    pub safe fn SDL_OutOfMemory() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -157,7 +157,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_GetError`]
     /// - [`SDL_SetError`]
-    pub fn SDL_ClearError() -> ::core::primitive::bool;
+    pub safe fn SDL_ClearError() -> ::core::primitive::bool;
 }
 
 /// A macro to standardize error reporting on unsupported operations.

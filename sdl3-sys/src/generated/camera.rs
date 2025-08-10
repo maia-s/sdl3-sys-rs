@@ -216,7 +216,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetCameraDriver`]
-    pub fn SDL_GetNumCameraDrivers() -> ::core::ffi::c_int;
+    pub safe fn SDL_GetNumCameraDrivers() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -246,7 +246,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetNumCameraDrivers`]
-    pub fn SDL_GetCameraDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
+    pub safe fn SDL_GetCameraDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -265,7 +265,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_GetCurrentCameraDriver() -> *const ::core::ffi::c_char;
+    pub safe fn SDL_GetCurrentCameraDriver() -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -357,7 +357,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetCameras`]
-    pub fn SDL_GetCameraName(instance_id: SDL_CameraID) -> *const ::core::ffi::c_char;
+    pub safe fn SDL_GetCameraName(instance_id: SDL_CameraID) -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -382,7 +382,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetCameras`]
-    pub fn SDL_GetCameraPosition(instance_id: SDL_CameraID) -> SDL_CameraPosition;
+    pub safe fn SDL_GetCameraPosition(instance_id: SDL_CameraID) -> SDL_CameraPosition;
 }
 
 unsafe extern "C" {

@@ -536,7 +536,7 @@ unsafe extern "C" {
     /// - [`SDL_GetRenderDrawBlendMode`]
     /// - [`SDL_SetTextureBlendMode`]
     /// - [`SDL_GetTextureBlendMode`]
-    pub fn SDL_ComposeCustomBlendMode(
+    pub safe fn SDL_ComposeCustomBlendMode(
         srcColorFactor: SDL_BlendFactor,
         dstColorFactor: SDL_BlendFactor,
         colorOperation: SDL_BlendOperation,
