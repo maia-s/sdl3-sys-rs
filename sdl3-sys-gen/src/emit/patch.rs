@@ -139,6 +139,13 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
                         | "SDL_truncf"
                         | "SDL_GetError"
                         | "SDL_GetNumAllocations"
+                        | "SDL_Init"
+                        | "SDL_InitSubSystem"
+                        | "SDL_IsMainThread"
+                        //| "SDL_Quit" // FIXME: should Quit be safe?
+                        //| "SDL_QuitSubSystem"
+                        | "SDL_WasInit"
+                        | "TTF_Init" // | "TTF_Quit" // FIXME: should Quit be safe?
                 )
         },
         patch: |ctx, f| {
