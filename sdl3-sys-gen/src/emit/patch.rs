@@ -1210,6 +1210,25 @@ type EmitTypeDefPatch = EmitPatch<TypeDef>;
 
 const EMIT_TYPEDEF_PATCHES: &[EmitTypeDefPatch] = &[
     EmitTypeDefPatch {
+        module: Some("events"),
+        match_ident: |i| matches!(i, "SDL_Event"),
+        patch: |ctx, _| {
+            writeln!(ctx, "impl SDL_Event {{")?;
+            ctx.increase_indent();
+            writeln!(ctx, "/// Get the type of this event")?;
+            writeln!(ctx, "#[inline(always)]")?;
+            writeln!(ctx, "pub const fn event_type(&self) -> SDL_EventType {{")?;
+            ctx.increase_indent();
+            writeln!(ctx, "SDL_EventType(unsafe {{ self.r#type }})")?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            ctx.decrease_indent();
+            writeln!(ctx, "}}")?;
+            writeln!(ctx)?;
+            Ok(false)
+        },
+    },
+    EmitTypeDefPatch {
         module: Some("gamepad"),
         match_ident: |i| i == "SDL_GamepadBinding",
         patch: |ctx, _td| {

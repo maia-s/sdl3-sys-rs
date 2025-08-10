@@ -1881,6 +1881,14 @@ impl ::core::default::Default for SDL_UserEvent {
     }
 }
 
+impl SDL_Event {
+    /// Get the type of this event
+    #[inline(always)]
+    pub const fn event_type(&self) -> SDL_EventType {
+        SDL_EventType(unsafe { self.r#type })
+    }
+}
+
 /// The structure for all events in SDL.
 ///
 /// The [`SDL_Event`] structure is the core of all event handling in SDL. [`SDL_Event`]
