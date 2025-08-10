@@ -438,13 +438,19 @@ fn build(
                 if env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {
                     link_search("macos-arm64_x86_64");
                 } else if env::var("CARGO_CFG_TARGET_OS").unwrap() == "ios" {
-                    if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim" {
+                    // as of rust 1.91 target_abi="sim" will move to target_env="sim"
+                    if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim"
+                        || env::var("CARGO_CFG_TARGET_ENV").unwrap() == "sim"
+                    {
                         link_search("ios-arm64_x86_64-simulator");
                     } else {
                         link_search("ios-arm64");
                     }
                 } else if env::var("CARGO_CFG_TARGET_OS").unwrap() == "tvos" {
-                    if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim" {
+                    // as of rust 1.91 target_abi="sim" will move to target_env="sim"
+                    if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim"
+                        || env::var("CARGO_CFG_TARGET_ENV").unwrap() == "sim"
+                    {
                         link_search("tvos-arm64_x86_64-simulator");
                     } else {
                         link_search("tvos-arm64");
