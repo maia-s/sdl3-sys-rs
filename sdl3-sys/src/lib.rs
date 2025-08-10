@@ -77,6 +77,19 @@ pub use generated::*;
 pub fn breakpoint() {
     #[cfg(feature = "nightly")]
     core::arch::breakpoint();
+
+    #[cfg(not(feature = "nightly"))]
+    {
+        // raise a double panic to abort (this is no-std so we can't use std::process::abort)
+        struct Abort;
+        impl Drop for Abort {
+            fn drop(&mut self) {
+                panic!("breakpoint");
+            }
+        }
+        let _abort = Abort;
+        panic!("breakpoint");
+    }
 }
 
 /// Extra ffi types for `sdl3-sys`
