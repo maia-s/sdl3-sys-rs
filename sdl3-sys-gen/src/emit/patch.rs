@@ -255,28 +255,6 @@ pub fn patch_emit_function(ctx: &mut EmitContext, f: &Function) -> Result<bool, 
     Ok(false)
 }
 
-#[allow(unused_macros)]
-macro_rules! emit_define_alias {
-    ($module:literal, $new:literal, $old:literal, $version:literal) => {
-        EmitDefinePatch {
-            module: Some($module),
-            match_ident: |i| i == $new,
-            patch: |ctx, d| {
-                d.emit(ctx)?;
-                writeln!(
-                    ctx,
-                    r#"#[deprecated(since = "{}", note = "renamed to `{}`")]"#,
-                    $version, $new,
-                )?;
-                let mut d = d.clone();
-                d.ident = Ident::new_inline($old).into();
-                d.emit(ctx)?;
-                Ok(true)
-            },
-        }
-    };
-}
-
 pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool, EmitErr> {
     if let Some(_guard) = ctx.disable_patch_guard_if_patch_enabled() {
         let module = ctx.module().to_owned();
