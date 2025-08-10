@@ -22,7 +22,7 @@ impl MainThreadToken {
     ///
     /// See also [`MainThreadToken::assert()`]
     pub fn get() -> Option<Self> {
-        unsafe { SDL_IsMainThread() }.then_some(Self(PhantomData))
+        SDL_IsMainThread().then_some(Self(PhantomData))
     }
 
     /// Get `MainThreadToken` if called on the main thread, or panic otherwise.
