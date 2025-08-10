@@ -402,6 +402,7 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                 if env::var("CARGO_CFG_TARGET_OS").unwrap() == "macos" {
                     link_search("macos-arm64_x86_64");
                 } else if env::var("CARGO_CFG_TARGET_OS").unwrap() == "ios" {
+                    // as of rust 1.91 target_abi="sim" will move to target_env="sim"
                     if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim"
                         || env::var("CARGO_CFG_TARGET_ENV").unwrap() == "sim"
                     {
@@ -410,6 +411,7 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                         link_search("ios-arm64");
                     }
                 } else if env::var("CARGO_CFG_TARGET_OS").unwrap() == "tvos" {
+                    // as of rust 1.91 target_abi="sim" will move to target_env="sim"
                     if env::var("CARGO_CFG_TARGET_ABI").unwrap() == "sim"
                         || env::var("CARGO_CFG_TARGET_ENV").unwrap() == "sim"
                     {
