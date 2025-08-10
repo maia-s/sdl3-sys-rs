@@ -4,6 +4,8 @@
     - Make IDs and flag types newtypes
     - Add metadata
     - Remove deprecated aliases
+    - Change return type of `SDL_Vulkan_GetVkGetInstanceProcAddr`
+    - Make some functions safe
     - MSRV 1.85
 
 - 0.5.4:

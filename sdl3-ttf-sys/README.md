@@ -73,6 +73,10 @@ disables harfbuzz support. Activated features override features disabled with th
     - Synchronize version number with sdl3-sys
     - Add metadata
     - Remove deprecated aliases
+    - Make some functions safe
+
+- next:
+    - Expose `TTF_TextData`
 
 - 0.2.0:
     - Update sdl3-sys to 0.5.0

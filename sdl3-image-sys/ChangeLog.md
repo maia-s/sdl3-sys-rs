@@ -4,6 +4,7 @@
     - Update sdl3-sys to 0.6.0
     - Synchronize version number with sdl3-sys
     - Add metadata
+    - Make some functions safe
 
 - 0.2.0:
     - Update sdl3-sys to 0.5.0
