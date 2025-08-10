@@ -130,7 +130,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetRevision`]
-    pub fn SDL_GetVersion() -> ::core::ffi::c_int;
+    pub safe fn SDL_GetVersion() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {

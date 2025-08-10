@@ -43,7 +43,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL_ttf 3.0.0.
-    pub fn TTF_Version() -> ::core::ffi::c_int;
+    pub safe fn TTF_Version() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {

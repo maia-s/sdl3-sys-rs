@@ -17,6 +17,7 @@ pub struct Function {
     pub return_type: Type,
     pub args: FnDeclArgs,
     pub body: Option<Block>,
+    pub is_unsafe: bool,
 }
 
 impl GetSpan for Function {
@@ -70,6 +71,8 @@ impl Parse for Function {
 
                     let span = span0.join(&rest.start());
 
+                    let is_unsafe = true;
+
                     return Ok((
                         rest,
                         Some(Self {
@@ -83,6 +86,7 @@ impl Parse for Function {
                             return_type: ty,
                             args,
                             body,
+                            is_unsafe,
                         }),
                     ));
                 }

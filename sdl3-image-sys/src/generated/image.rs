@@ -39,7 +39,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL_image 3.0.0.
-    pub fn IMG_Version() -> ::core::ffi::c_int;
+    pub safe fn IMG_Version() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {

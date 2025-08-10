@@ -904,7 +904,7 @@ impl Emit for Function {
                     self.args.args.iter().map(|arg| arg.ty.clone()).collect(),
                     self.return_type.clone(),
                     false,
-                    true,
+                    self.is_unsafe,
                 )),
                 None,
                 SymKind::Other,
@@ -915,7 +915,11 @@ impl Emit for Function {
             )?;
             emit_extern_start(ctx, &self.abi, false)?;
             self.doc.emit(ctx)?;
-            write!(ctx, "pub fn ")?;
+            write!(ctx, "pub ")?;
+            if !self.is_unsafe {
+                write!(ctx, "safe ")?;
+            }
+            write!(ctx, "fn ")?;
             self.ident.emit(ctx)?;
             self.args.emit(ctx)?;
             if !self.return_type.is_void() {

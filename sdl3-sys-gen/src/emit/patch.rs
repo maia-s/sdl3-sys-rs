@@ -78,6 +78,19 @@ const EMIT_FUNCTION_PATCHES: &[EmitFunctionPatch] = &[
         patch: |_, _| Ok(true),
     },
     EmitFunctionPatch {
+        // safe functions
+        module: None,
+        match_ident: |i| {
+            i.ends_with("_Version") || i.ends_with("_GetVersion") || matches!(i, "SDL_GetError")
+        },
+        patch: |ctx, f| {
+            let mut f = f.clone();
+            f.is_unsafe = false;
+            f.emit(ctx)?;
+            Ok(true)
+        },
+    },
+    EmitFunctionPatch {
         module: Some("atomic"),
         match_ident: |i| {
             matches!(
@@ -449,7 +462,7 @@ const EMIT_DEFINE_PATCHES: &[EmitDefinePatch] = &[
                 }
                 #[doc(inline)]
                 pub use SDL_disabled_assert;
-                
+
             "#})?;
             Ok(true)
         },

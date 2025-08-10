@@ -139,7 +139,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_ClearError`]
     /// - [`SDL_SetError`]
-    pub fn SDL_GetError() -> *const ::core::ffi::c_char;
+    pub safe fn SDL_GetError() -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
