@@ -1074,6 +1074,28 @@ pub fn patch_emit_type_def(
                 "#})?;
                 Ok(false)
             }
+            ("guid", "SDL_GUID") => {
+                writeln!(ctx, r#"#[cfg(feature = "display-impls")]"#)?;
+                writeln!(ctx, "impl ::core::fmt::Display for SDL_GUID {{")?;
+                ctx.increase_indent();
+                writeln!(
+                    ctx,
+                    "fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{"
+                )?;
+                ctx.increase_indent();
+                writeln!(ctx, "for byte in self.data {{")?;
+                ctx.increase_indent();
+                writeln!(ctx, r#"write!(f, "{{byte:02x}}")?;"#)?;
+                ctx.decrease_indent();
+                writeln!(ctx, "}}")?;
+                writeln!(ctx, "Ok(())")?;
+                ctx.decrease_indent();
+                writeln!(ctx, "}}")?;
+                ctx.decrease_indent();
+                writeln!(ctx, "}}")?;
+                writeln!(ctx)?;
+                Ok(false)
+            }
             ("system", "MSG") => {
                 let doc = "(`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.";
                 integrate(

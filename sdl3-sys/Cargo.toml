@@ -65,6 +65,9 @@ assert-level-paranoid = []
 # Implement the Debug trait for applicable types
 debug-impls = []
 
+# Implement the Display trait for applicable types
+display-impls = []
+
 # Enable metadata
 metadata = []
 only-metadata = ["metadata", "no-link"]

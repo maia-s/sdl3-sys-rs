@@ -236,7 +236,7 @@ pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, Parse
 }
 
 pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<bool, ParseErr> {
-    // TODO/FIXME: need fix for safe: events, filesystem, gamepad
+    // TODO/FIXME: need fix/info for safe: events, filesystem, gamepad, gpu
     match (ctx.module(), f.ident.as_str()) {
         ("asyncio", "SDL_CreateAsyncIOQueue")
         | (

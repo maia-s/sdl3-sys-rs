@@ -7,6 +7,7 @@
     - Change return type of `SDL_Vulkan_GetVkGetInstanceProcAddr`
     - Make some functions safe and/or const
     - Add `SDL_Event::event_type()`
+    - Add `display-impls` feature
     - MSRV 1.85
 
 - 0.5.4:

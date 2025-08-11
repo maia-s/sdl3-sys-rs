@@ -111,6 +111,7 @@ These features are mutually exclusive. Features higher in this list override lat
 | Feature | Description |
 | ------- | ----------- |
 | `debug-impls` | Implement the `Debug` trait for most SDL types. |
+| `display-impls` | Implement the `Display` trait for applicable SDL types. |
 | `metadata`    | Enable metadata. |
 | `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. |
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
@@ -124,6 +125,7 @@ These features are mutually exclusive. Features higher in this list override lat
     - Change return type of `SDL_Vulkan_GetVkGetInstanceProcAddr`
     - Make some functions safe and/or const
     - Add `SDL_Event::event_type()`
+    - Add `display-impls` feature
     - MSRV 1.85
 
 - 0.5.4:

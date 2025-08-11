@@ -5,6 +5,16 @@
 
 use super::stdinc::*;
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_GUID {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        for byte in self.data {
+            write!(f, "{byte:02x}")?;
+        }
+        Ok(())
+    }
+}
+
 /// An [`SDL_GUID`] is a 128-bit identifier for an input device that identifies
 /// that device across runs of SDL programs on the same platform.
 ///
