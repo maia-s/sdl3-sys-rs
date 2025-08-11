@@ -1315,7 +1315,7 @@ pub const SDL_SCANCODE_RESERVED: SDL_Scancode = SDL_Scancode::RESERVED;
 pub const SDL_SCANCODE_COUNT: SDL_Scancode = SDL_Scancode::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_Scancode {
+impl sdl3_sys::metadata::GroupMetadata for SDL_Scancode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::scancode::METADATA_SDL_Scancode;
 }

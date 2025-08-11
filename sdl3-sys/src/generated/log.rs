@@ -177,7 +177,7 @@ pub const SDL_LOG_CATEGORY_RESERVED10: SDL_LogCategory = SDL_LogCategory::RESERV
 pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_LogCategory {
+impl sdl3_sys::metadata::GroupMetadata for SDL_LogCategory {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::log::METADATA_SDL_LogCategory;
 }
@@ -267,7 +267,7 @@ pub const SDL_LOG_PRIORITY_CRITICAL: SDL_LogPriority = SDL_LogPriority::CRITICAL
 pub const SDL_LOG_PRIORITY_COUNT: SDL_LogPriority = SDL_LogPriority::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_LogPriority {
+impl sdl3_sys::metadata::GroupMetadata for SDL_LogPriority {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::log::METADATA_SDL_LogPriority;
 }

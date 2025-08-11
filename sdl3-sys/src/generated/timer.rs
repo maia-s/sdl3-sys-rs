@@ -347,7 +347,7 @@ impl From<SDL_TimerID> for Uint32 {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_TimerID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_TimerID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::timer::METADATA_SDL_TimerID;
 }

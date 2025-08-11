@@ -69,7 +69,7 @@ impl From<SDL_DisplayID> for Uint32 {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_DisplayID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_DisplayID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_DisplayID;
 }
@@ -107,7 +107,7 @@ impl From<SDL_WindowID> for Uint32 {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_WindowID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_WindowID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_WindowID;
 }
@@ -193,7 +193,7 @@ pub const SDL_SYSTEM_THEME_LIGHT: SDL_SystemTheme = SDL_SystemTheme::LIGHT;
 pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_SystemTheme {
+impl sdl3_sys::metadata::GroupMetadata for SDL_SystemTheme {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_SystemTheme;
 }
@@ -318,7 +318,7 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
     SDL_DisplayOrientation::PORTRAIT_FLIPPED;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_DisplayOrientation {
+impl sdl3_sys::metadata::GroupMetadata for SDL_DisplayOrientation {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_DisplayOrientation;
 }
@@ -787,7 +787,7 @@ pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = SDL_WindowFlags::TRANSPARENT
 pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = SDL_WindowFlags::NOT_FOCUSABLE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_WindowFlags {
+impl sdl3_sys::metadata::GroupMetadata for SDL_WindowFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_WindowFlags;
 }
@@ -949,7 +949,7 @@ pub const SDL_FLASH_BRIEFLY: SDL_FlashOperation = SDL_FlashOperation::BRIEFLY;
 pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTIL_FOCUSED;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_FlashOperation {
+impl sdl3_sys::metadata::GroupMetadata for SDL_FlashOperation {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_FlashOperation;
 }
@@ -1286,7 +1286,7 @@ pub const SDL_GL_FLOATBUFFERS: SDL_GLAttr = SDL_GLAttr::FLOATBUFFERS;
 pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLAttr {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GLAttr {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_GLAttr;
 }
@@ -1446,7 +1446,7 @@ pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = SDL_GLProfile::C
 pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = SDL_GLProfile::ES;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLProfile {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GLProfile {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_GLProfile;
 }
@@ -1618,7 +1618,7 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag =
     SDL_GLContextFlag::RESET_ISOLATION_FLAG;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextFlag {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GLContextFlag {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_GLContextFlag;
 }
@@ -1762,7 +1762,7 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
     SDL_GLContextReleaseFlag::FLUSH;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextReleaseFlag {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GLContextReleaseFlag {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_GLContextReleaseFlag;
 }
@@ -1909,7 +1909,7 @@ pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
     SDL_GLContextResetNotification::LOSE_CONTEXT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GLContextResetNotification {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GLContextResetNotification {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_GLContextResetNotification;
 }
@@ -4964,7 +4964,7 @@ pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult = SDL_HitTestResult::
 pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE_LEFT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_HitTestResult {
+impl sdl3_sys::metadata::GroupMetadata for SDL_HitTestResult {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::video::METADATA_SDL_HitTestResult;
 }

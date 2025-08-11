@@ -64,7 +64,7 @@ impl Property {
 }
 
 /// Access metadata for typed groups of constants (c enums, flags, etc)
-pub trait HasGroupMetadata: 'static + Sized {
+pub trait GroupMetadata: 'static + Sized {
     /// Metadata for this group
     const GROUP_METADATA: &'static Group;
 }

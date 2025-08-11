@@ -55,7 +55,7 @@ impl From<SDL_PropertiesID> for Uint32 {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PropertiesID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PropertiesID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::properties::METADATA_SDL_PropertiesID;
 }
@@ -133,7 +133,7 @@ pub const SDL_PROPERTY_TYPE_FLOAT: SDL_PropertyType = SDL_PropertyType::FLOAT;
 pub const SDL_PROPERTY_TYPE_BOOLEAN: SDL_PropertyType = SDL_PropertyType::BOOLEAN;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PropertyType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PropertyType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::properties::METADATA_SDL_PropertyType;
 }

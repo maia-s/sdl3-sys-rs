@@ -198,7 +198,7 @@ pub const SDL_TRAYENTRY_DISABLED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::DISAB
 pub const SDL_TRAYENTRY_CHECKED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::CHECKED;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_TrayEntryFlags {
+impl sdl3_sys::metadata::GroupMetadata for SDL_TrayEntryFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::tray::METADATA_SDL_TrayEntryFlags;
 }

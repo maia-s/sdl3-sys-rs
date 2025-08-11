@@ -54,7 +54,7 @@ impl From<SDL_PenID> for Uint32 {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PenID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pen::METADATA_SDL_PenID;
 }
@@ -276,7 +276,7 @@ pub const SDL_PEN_INPUT_BUTTON_5: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_
 pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = SDL_PenInputFlags::ERASER_TIP;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenInputFlags {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PenInputFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pen::METADATA_SDL_PenInputFlags;
 }
@@ -388,7 +388,7 @@ pub const SDL_PEN_AXIS_TANGENTIAL_PRESSURE: SDL_PenAxis = SDL_PenAxis::TANGENTIA
 pub const SDL_PEN_AXIS_COUNT: SDL_PenAxis = SDL_PenAxis::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PenAxis {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PenAxis {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pen::METADATA_SDL_PenAxis;
 }

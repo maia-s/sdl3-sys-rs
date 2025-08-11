@@ -46,7 +46,7 @@ impl From<SDL_SensorID> for Uint32 {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_SensorID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_SensorID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::sensor::METADATA_SDL_SensorID;
 }
@@ -209,7 +209,7 @@ pub const SDL_SENSOR_ACCEL_R: SDL_SensorType = SDL_SensorType::ACCEL_R;
 pub const SDL_SENSOR_GYRO_R: SDL_SensorType = SDL_SensorType::GYRO_R;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_SensorType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_SensorType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::sensor::METADATA_SDL_SensorType;
 }

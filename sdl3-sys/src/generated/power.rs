@@ -100,7 +100,7 @@ pub const SDL_POWERSTATE_CHARGING: SDL_PowerState = SDL_PowerState::CHARGING;
 pub const SDL_POWERSTATE_CHARGED: SDL_PowerState = SDL_PowerState::CHARGED;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PowerState {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PowerState {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::power::METADATA_SDL_PowerState;
 }

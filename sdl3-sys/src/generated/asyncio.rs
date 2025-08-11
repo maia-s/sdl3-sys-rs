@@ -142,7 +142,7 @@ pub const SDL_ASYNCIO_TASK_WRITE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::WRI
 pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLOSE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOTaskType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_AsyncIOTaskType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::asyncio::METADATA_SDL_AsyncIOTaskType;
 }
@@ -214,7 +214,7 @@ pub const SDL_ASYNCIO_FAILURE: SDL_AsyncIOResult = SDL_AsyncIOResult::FAILURE;
 pub const SDL_ASYNCIO_CANCELED: SDL_AsyncIOResult = SDL_AsyncIOResult::CANCELED;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_AsyncIOResult {
+impl sdl3_sys::metadata::GroupMetadata for SDL_AsyncIOResult {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::asyncio::METADATA_SDL_AsyncIOResult;
 }

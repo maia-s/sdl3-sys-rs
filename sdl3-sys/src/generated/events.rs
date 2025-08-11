@@ -831,7 +831,7 @@ pub const SDL_EVENT_LAST: SDL_EventType = SDL_EventType::LAST;
 pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_EventType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::events::METADATA_SDL_EventType;
 }
@@ -2086,7 +2086,7 @@ pub const SDL_PEEKEVENT: SDL_EventAction = SDL_EventAction::PEEKEVENT;
 pub const SDL_GETEVENT: SDL_EventAction = SDL_EventAction::GETEVENT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_EventAction {
+impl sdl3_sys::metadata::GroupMetadata for SDL_EventAction {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::events::METADATA_SDL_EventAction;
 }

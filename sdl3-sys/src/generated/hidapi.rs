@@ -126,7 +126,7 @@ pub const SDL_HID_API_BUS_I2C: SDL_hid_bus_type = SDL_hid_bus_type::I2C;
 pub const SDL_HID_API_BUS_SPI: SDL_hid_bus_type = SDL_hid_bus_type::SPI;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_hid_bus_type {
+impl sdl3_sys::metadata::GroupMetadata for SDL_hid_bus_type {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::hidapi::METADATA_SDL_hid_bus_type;
 }

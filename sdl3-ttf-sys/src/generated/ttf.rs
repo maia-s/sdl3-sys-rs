@@ -727,7 +727,7 @@ pub const TTF_STYLE_UNDERLINE: TTF_FontStyleFlags = TTF_FontStyleFlags::UNDERLIN
 pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = TTF_FontStyleFlags::STRIKETHROUGH;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_FontStyleFlags {
+impl sdl3_sys::metadata::GroupMetadata for TTF_FontStyleFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::ttf::METADATA_TTF_FontStyleFlags;
 }
@@ -934,7 +934,7 @@ pub const TTF_HINTING_NONE: TTF_HintingFlags = TTF_HintingFlags::NONE;
 pub const TTF_HINTING_LIGHT_SUBPIXEL: TTF_HintingFlags = TTF_HintingFlags::LIGHT_SUBPIXEL;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_HintingFlags {
+impl sdl3_sys::metadata::GroupMetadata for TTF_HintingFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::ttf::METADATA_TTF_HintingFlags;
 }
@@ -1183,7 +1183,7 @@ pub const TTF_HORIZONTAL_ALIGN_CENTER: TTF_HorizontalAlignment = TTF_HorizontalA
 pub const TTF_HORIZONTAL_ALIGN_RIGHT: TTF_HorizontalAlignment = TTF_HorizontalAlignment::RIGHT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_HorizontalAlignment {
+impl sdl3_sys::metadata::GroupMetadata for TTF_HorizontalAlignment {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::ttf::METADATA_TTF_HorizontalAlignment;
 }
@@ -1548,7 +1548,7 @@ pub const TTF_DIRECTION_TTB: TTF_Direction = TTF_Direction::TTB;
 pub const TTF_DIRECTION_BTT: TTF_Direction = TTF_Direction::BTT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_Direction {
+impl sdl3_sys::metadata::GroupMetadata for TTF_Direction {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::ttf::METADATA_TTF_Direction;
 }
@@ -1840,7 +1840,7 @@ pub const TTF_IMAGE_COLOR: TTF_ImageType = TTF_ImageType::COLOR;
 pub const TTF_IMAGE_SDF: TTF_ImageType = TTF_ImageType::SDF;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_ImageType {
+impl sdl3_sys::metadata::GroupMetadata for TTF_ImageType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::ttf::METADATA_TTF_ImageType;
 }
@@ -3107,7 +3107,7 @@ pub const TTF_GPU_TEXTENGINE_WINDING_COUNTER_CLOCKWISE: TTF_GPUTextEngineWinding
     TTF_GPUTextEngineWinding::COUNTER_CLOCKWISE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_GPUTextEngineWinding {
+impl sdl3_sys::metadata::GroupMetadata for TTF_GPUTextEngineWinding {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::ttf::METADATA_TTF_GPUTextEngineWinding;
 }
@@ -4076,7 +4076,7 @@ pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = TTF_SubStringFlags::LINE_
 pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_END;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_SubStringFlags {
+impl sdl3_sys::metadata::GroupMetadata for TTF_SubStringFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::ttf::METADATA_TTF_SubStringFlags;
 }

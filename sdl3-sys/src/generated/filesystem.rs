@@ -273,7 +273,7 @@ pub const SDL_FOLDER_VIDEOS: SDL_Folder = SDL_Folder::VIDEOS;
 pub const SDL_FOLDER_COUNT: SDL_Folder = SDL_Folder::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_Folder {
+impl sdl3_sys::metadata::GroupMetadata for SDL_Folder {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::filesystem::METADATA_SDL_Folder;
 }
@@ -387,7 +387,7 @@ pub const SDL_PATHTYPE_DIRECTORY: SDL_PathType = SDL_PathType::DIRECTORY;
 pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PathType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PathType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::filesystem::METADATA_SDL_PathType;
 }
@@ -547,7 +547,7 @@ impl SDL_GlobFlags {
 pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = SDL_GlobFlags::CASEINSENSITIVE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GlobFlags {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GlobFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::filesystem::METADATA_SDL_GlobFlags;
 }
@@ -642,7 +642,7 @@ pub const SDL_ENUM_SUCCESS: SDL_EnumerationResult = SDL_EnumerationResult::SUCCE
 pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILURE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_EnumerationResult {
+impl sdl3_sys::metadata::GroupMetadata for SDL_EnumerationResult {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::filesystem::METADATA_SDL_EnumerationResult;
 }

@@ -166,7 +166,7 @@ pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType =
 pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::gamepad::METADATA_SDL_GamepadType;
 }
@@ -380,7 +380,7 @@ pub const SDL_GAMEPAD_BUTTON_MISC6: SDL_GamepadButton = SDL_GamepadButton::MISC6
 pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadButton {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadButton {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::gamepad::METADATA_SDL_GamepadButton;
 }
@@ -478,7 +478,7 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
     SDL_GamepadButtonLabel::TRIANGLE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadButtonLabel {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadButtonLabel {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::gamepad::METADATA_SDL_GamepadButtonLabel;
 }
@@ -573,7 +573,7 @@ pub const SDL_GAMEPAD_AXIS_RIGHT_TRIGGER: SDL_GamepadAxis = SDL_GamepadAxis::RIG
 pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadAxis {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadAxis {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::gamepad::METADATA_SDL_GamepadAxis;
 }
@@ -648,7 +648,7 @@ pub const SDL_GAMEPAD_BINDTYPE_AXIS: SDL_GamepadBindingType = SDL_GamepadBinding
 pub const SDL_GAMEPAD_BINDTYPE_HAT: SDL_GamepadBindingType = SDL_GamepadBindingType::HAT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_GamepadBindingType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadBindingType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::gamepad::METADATA_SDL_GamepadBindingType;
 }

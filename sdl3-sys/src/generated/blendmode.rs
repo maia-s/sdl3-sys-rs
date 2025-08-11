@@ -231,7 +231,7 @@ pub const SDL_BLENDMODE_MUL: SDL_BlendMode = SDL_BlendMode::MUL;
 pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = SDL_BlendMode::INVALID;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendMode {
+impl sdl3_sys::metadata::GroupMetadata for SDL_BlendMode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::blendmode::METADATA_SDL_BlendMode;
 }
@@ -316,7 +316,7 @@ pub const SDL_BLENDOPERATION_MINIMUM: SDL_BlendOperation = SDL_BlendOperation::M
 pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::MAXIMUM;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendOperation {
+impl sdl3_sys::metadata::GroupMetadata for SDL_BlendOperation {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::blendmode::METADATA_SDL_BlendOperation;
 }
@@ -439,7 +439,7 @@ pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor =
     SDL_BlendFactor::ONE_MINUS_DST_ALPHA;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_BlendFactor {
+impl sdl3_sys::metadata::GroupMetadata for SDL_BlendFactor {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::blendmode::METADATA_SDL_BlendFactor;
 }

@@ -762,7 +762,7 @@ pub const SDL_SANDBOX_SNAP: SDL_Sandbox = SDL_Sandbox::SNAP;
 pub const SDL_SANDBOX_MACOS: SDL_Sandbox = SDL_Sandbox::MACOS;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_Sandbox {
+impl sdl3_sys::metadata::GroupMetadata for SDL_Sandbox {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::system::METADATA_SDL_Sandbox;
 }

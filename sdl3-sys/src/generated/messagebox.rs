@@ -205,7 +205,7 @@ pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT: SDL_MessageBoxFlags =
     SDL_MessageBoxFlags::BUTTONS_RIGHT_TO_LEFT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxFlags {
+impl sdl3_sys::metadata::GroupMetadata for SDL_MessageBoxFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::messagebox::METADATA_SDL_MessageBoxFlags;
 }
@@ -356,7 +356,7 @@ pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT: SDL_MessageBoxButtonFlags =
     SDL_MessageBoxButtonFlags::ESCAPEKEY_DEFAULT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxButtonFlags {
+impl sdl3_sys::metadata::GroupMetadata for SDL_MessageBoxButtonFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::messagebox::METADATA_SDL_MessageBoxButtonFlags;
 }
@@ -474,7 +474,7 @@ pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED: SDL_MessageBoxColorType =
 pub const SDL_MESSAGEBOX_COLOR_COUNT: SDL_MessageBoxColorType = SDL_MessageBoxColorType::COUNT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_MessageBoxColorType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_MessageBoxColorType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::messagebox::METADATA_SDL_MessageBoxColorType;
 }

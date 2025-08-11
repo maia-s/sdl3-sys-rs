@@ -268,7 +268,7 @@ pub const SDL_ASSERTION_IGNORE: SDL_AssertState = SDL_AssertState::IGNORE;
 pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS_IGNORE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_AssertState {
+impl sdl3_sys::metadata::GroupMetadata for SDL_AssertState {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::assert::METADATA_SDL_AssertState;
 }

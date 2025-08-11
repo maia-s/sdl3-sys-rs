@@ -199,7 +199,7 @@ pub const SDL_SURFACE_LOCKED: SDL_SurfaceFlags = SDL_SurfaceFlags::LOCKED;
 pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = SDL_SurfaceFlags::SIMD_ALIGNED;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_SurfaceFlags {
+impl sdl3_sys::metadata::GroupMetadata for SDL_SurfaceFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::surface::METADATA_SDL_SurfaceFlags;
 }
@@ -269,7 +269,7 @@ pub const SDL_SCALEMODE_NEAREST: SDL_ScaleMode = SDL_ScaleMode::NEAREST;
 pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ScaleMode {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ScaleMode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::surface::METADATA_SDL_ScaleMode;
 }
@@ -341,7 +341,7 @@ pub const SDL_FLIP_HORIZONTAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL;
 pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_FlipMode {
+impl sdl3_sys::metadata::GroupMetadata for SDL_FlipMode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::surface::METADATA_SDL_FlipMode;
 }

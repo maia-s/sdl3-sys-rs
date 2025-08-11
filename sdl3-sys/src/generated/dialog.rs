@@ -343,7 +343,7 @@ pub const SDL_FILEDIALOG_SAVEFILE: SDL_FileDialogType = SDL_FileDialogType::SAVE
 pub const SDL_FILEDIALOG_OPENFOLDER: SDL_FileDialogType = SDL_FileDialogType::OPENFOLDER;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_FileDialogType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_FileDialogType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::dialog::METADATA_SDL_FileDialogType;
 }

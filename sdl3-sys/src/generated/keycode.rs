@@ -1613,7 +1613,7 @@ pub const SDLK_LHYPER: SDL_Keycode = SDL_Keycode::LHYPER;
 pub const SDLK_RHYPER: SDL_Keycode = SDL_Keycode::RHYPER;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_Keycode {
+impl sdl3_sys::metadata::GroupMetadata for SDL_Keycode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::keycode::METADATA_SDL_Keycode;
 }
@@ -1971,7 +1971,7 @@ pub const SDL_KMOD_ALT: SDL_Keymod = SDL_Keymod::ALT;
 pub const SDL_KMOD_GUI: SDL_Keymod = SDL_Keymod::GUI;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_Keymod {
+impl sdl3_sys::metadata::GroupMetadata for SDL_Keymod {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::keycode::METADATA_SDL_Keymod;
 }

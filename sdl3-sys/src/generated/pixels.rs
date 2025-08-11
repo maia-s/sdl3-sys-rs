@@ -193,7 +193,7 @@ pub const SDL_PIXELTYPE_ARRAYF32: SDL_PixelType = SDL_PixelType::ARRAYF32;
 pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PixelType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_PixelType;
 }
@@ -259,7 +259,7 @@ pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder::_4321;
 pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_BitmapOrder {
+impl sdl3_sys::metadata::GroupMetadata for SDL_BitmapOrder {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_BitmapOrder;
 }
@@ -349,7 +349,7 @@ pub const SDL_PACKEDORDER_ABGR: SDL_PackedOrder = SDL_PackedOrder::ABGR;
 pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedOrder {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PackedOrder {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_PackedOrder;
 }
@@ -431,7 +431,7 @@ pub const SDL_ARRAYORDER_BGRA: SDL_ArrayOrder = SDL_ArrayOrder::BGRA;
 pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ArrayOrder {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ArrayOrder {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_ArrayOrder;
 }
@@ -521,7 +521,7 @@ pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_210101
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PackedLayout {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PackedLayout {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_PackedLayout;
 }
@@ -1034,7 +1034,7 @@ pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PixelFormat::BGRX32;
 pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_PixelFormat {
+impl sdl3_sys::metadata::GroupMetadata for SDL_PixelFormat {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_PixelFormat;
 }
@@ -1466,7 +1466,7 @@ pub const SDL_COLOR_TYPE_RGB: SDL_ColorType = SDL_ColorType::RGB;
 pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorType {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ColorType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_ColorType;
 }
@@ -1537,7 +1537,7 @@ pub const SDL_COLOR_RANGE_LIMITED: SDL_ColorRange = SDL_ColorRange::LIMITED;
 pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorRange {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ColorRange {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_ColorRange;
 }
@@ -1670,7 +1670,7 @@ pub const SDL_COLOR_PRIMARIES_EBU3213: SDL_ColorPrimaries = SDL_ColorPrimaries::
 pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::CUSTOM;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ColorPrimaries {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ColorPrimaries {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_ColorPrimaries;
 }
@@ -1847,7 +1847,7 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
     SDL_TransferCharacteristics::CUSTOM;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_TransferCharacteristics {
+impl sdl3_sys::metadata::GroupMetadata for SDL_TransferCharacteristics {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_TransferCharacteristics;
 }
@@ -1989,7 +1989,7 @@ pub const SDL_MATRIX_COEFFICIENTS_ICTCP: SDL_MatrixCoefficients = SDL_MatrixCoef
 pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoefficients::CUSTOM;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_MatrixCoefficients {
+impl sdl3_sys::metadata::GroupMetadata for SDL_MatrixCoefficients {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_MatrixCoefficients;
 }
@@ -2067,7 +2067,7 @@ pub const SDL_CHROMA_LOCATION_CENTER: SDL_ChromaLocation = SDL_ChromaLocation::C
 pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::TOPLEFT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ChromaLocation {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ChromaLocation {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_ChromaLocation;
 }
@@ -2208,7 +2208,7 @@ pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_Colorspace::RGB_DEFAU
 pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAULT;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_Colorspace {
+impl sdl3_sys::metadata::GroupMetadata for SDL_Colorspace {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::pixels::METADATA_SDL_Colorspace;
 }

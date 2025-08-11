@@ -129,7 +129,7 @@ pub const SDL_TEXTUREACCESS_STREAMING: SDL_TextureAccess = SDL_TextureAccess::ST
 pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGET;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_TextureAccess {
+impl sdl3_sys::metadata::GroupMetadata for SDL_TextureAccess {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::render::METADATA_SDL_TextureAccess;
 }
@@ -218,7 +218,7 @@ pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentatio
     SDL_RendererLogicalPresentation::INTEGER_SCALE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_RendererLogicalPresentation {
+impl sdl3_sys::metadata::GroupMetadata for SDL_RendererLogicalPresentation {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::render::METADATA_SDL_RendererLogicalPresentation;
 }

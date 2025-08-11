@@ -62,7 +62,7 @@ impl From<SDL_ThreadID> for Uint64 {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ThreadID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::thread::METADATA_SDL_ThreadID;
 }
@@ -91,7 +91,7 @@ impl From<SDL_TLSID> for SDL_AtomicInt {
 }
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_TLSID {
+impl sdl3_sys::metadata::GroupMetadata for SDL_TLSID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::thread::METADATA_SDL_TLSID;
 }
@@ -167,7 +167,7 @@ pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = SDL_ThreadPriority::HIG
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPriority::TIME_CRITICAL;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadPriority {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ThreadPriority {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::thread::METADATA_SDL_ThreadPriority;
 }
@@ -250,7 +250,7 @@ pub const SDL_THREAD_DETACHED: SDL_ThreadState = SDL_ThreadState::DETACHED;
 pub const SDL_THREAD_COMPLETE: SDL_ThreadState = SDL_ThreadState::COMPLETE;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_ThreadState {
+impl sdl3_sys::metadata::GroupMetadata for SDL_ThreadState {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::thread::METADATA_SDL_ThreadState;
 }

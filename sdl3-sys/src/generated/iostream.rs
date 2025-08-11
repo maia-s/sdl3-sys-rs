@@ -96,7 +96,7 @@ pub const SDL_IO_STATUS_READONLY: SDL_IOStatus = SDL_IOStatus::READONLY;
 pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOStatus {
+impl sdl3_sys::metadata::GroupMetadata for SDL_IOStatus {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::iostream::METADATA_SDL_IOStatus;
 }
@@ -171,7 +171,7 @@ pub const SDL_IO_SEEK_CUR: SDL_IOWhence = SDL_IOWhence::CUR;
 pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for SDL_IOWhence {
+impl sdl3_sys::metadata::GroupMetadata for SDL_IOWhence {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::iostream::METADATA_SDL_IOWhence;
 }

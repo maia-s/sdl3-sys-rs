@@ -63,7 +63,7 @@ pub const TTF_DRAW_COMMAND_FILL: TTF_DrawCommand = TTF_DrawCommand::FILL;
 pub const TTF_DRAW_COMMAND_COPY: TTF_DrawCommand = TTF_DrawCommand::COPY;
 
 #[cfg(feature = "metadata")]
-impl sdl3_sys::metadata::HasGroupMetadata for TTF_DrawCommand {
+impl sdl3_sys::metadata::GroupMetadata for TTF_DrawCommand {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
         &crate::metadata::textengine::METADATA_TTF_DrawCommand;
 }
