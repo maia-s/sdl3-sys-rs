@@ -1512,6 +1512,7 @@ impl StructOrUnion {
         }
         true
     }
+
     pub fn can_derive_eq(
         &self,
         ctx: &EmitContext,
@@ -1654,7 +1655,7 @@ impl StructOrUnion {
                 can_default,
                 can_derive_eq,
                 false,
-                self.can_derive_debug(ctx_ool),
+                !self.manual_debug_impl && self.can_derive_debug(ctx_ool),
             )?;
             writeln!(
                 ctx_ool,

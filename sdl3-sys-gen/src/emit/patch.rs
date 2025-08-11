@@ -1075,7 +1075,32 @@ pub fn patch_emit_type_def(
                 Ok(false)
             }
             ("guid", "SDL_GUID") => {
-                writeln!(ctx, r#"#[cfg(feature = "display-impls")]"#)?;
+                let mut td = td.clone();
+                let TypeEnum::Struct(s) = &mut td.ty.ty else {
+                    unreachable!()
+                };
+                s.manual_debug_impl = true;
+                td.emit(ctx)?;
+
+                writeln!(ctx, r#"#[cfg(feature = "debug-impls")]"#)?;
+                writeln!(ctx, "impl ::core::fmt::Debug for SDL_GUID {{")?;
+                ctx.increase_indent();
+                writeln!(
+                    ctx,
+                    "fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{"
+                )?;
+                ctx.increase_indent();
+                writeln!(ctx, r#"write!(f, "SDL_GUID({{self}})")"#)?;
+                ctx.decrease_indent();
+                writeln!(ctx, "}}")?;
+                ctx.decrease_indent();
+                writeln!(ctx, "}}")?;
+                writeln!(ctx)?;
+
+                writeln!(
+                    ctx,
+                    r#"#[cfg(any(feature = "display-impls", feature = "debug-impls"))]"#
+                )?;
                 writeln!(ctx, "impl ::core::fmt::Display for SDL_GUID {{")?;
                 ctx.increase_indent();
                 writeln!(
@@ -1094,7 +1119,7 @@ pub fn patch_emit_type_def(
                 ctx.decrease_indent();
                 writeln!(ctx, "}}")?;
                 writeln!(ctx)?;
-                Ok(false)
+                Ok(true)
             }
             ("system", "MSG") => {
                 let doc = "(`sdl3-sys`) Enable a `use-windows-sys-*` feature to alias this to `MSG` from the `windows-sys` crate. Otherwise it's an opaque struct.";
