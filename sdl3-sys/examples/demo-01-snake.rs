@@ -19,7 +19,7 @@ use sdl3_main::{AppResult, app_event, app_init, app_iterate, app_quit};
 
 // You can `use sdl3_sys::everything::*` if you don't want to specify everything explicitly
 use sdl3_sys::{
-    events::{SDL_EVENT_KEY_DOWN, SDL_EVENT_QUIT, SDL_Event, SDL_EventType},
+    events::{SDL_EVENT_KEY_DOWN, SDL_EVENT_QUIT, SDL_Event},
     init::{
         SDL_INIT_VIDEO, SDL_Init, SDL_PROP_APP_METADATA_COPYRIGHT_STRING,
         SDL_PROP_APP_METADATA_CREATOR_STRING, SDL_PROP_APP_METADATA_TYPE_STRING,

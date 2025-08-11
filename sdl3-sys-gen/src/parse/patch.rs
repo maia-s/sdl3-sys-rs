@@ -236,15 +236,11 @@ pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, Parse
 }
 
 pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<bool, ParseErr> {
+    // TODO/FIXME: need fix for safe: events, filesystem, gamepad
     match (ctx.module(), f.ident.as_str()) {
-        (_, i) if i.ends_with("_Version") || i.ends_with("_GetVersion") || i.ends_with("_Init") => {
-            // FIXME: Should Quit functions be safe?
-            f.is_unsafe = false;
-            Ok(true)
-        }
         ("asyncio", "SDL_CreateAsyncIOQueue")
         | (
-            "audio",
+            "audio", // audio functions properly check if system is inited
             "SDL_AudioDevicePaused"
             | "SDL_CloseAudioDevice"
             | "SDL_GetAudioDeviceGain"
@@ -262,21 +258,14 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
         )
         | ("blendmode", "SDL_ComposeCustomBlendMode")
         | (
-            "camera",
+            "camera", // camera functions properly check if system is inited
             "SDL_GetCameraDriver"
             | "SDL_GetCameraName"
             | "SDL_GetCameraPosition"
             | "SDL_GetCurrentCameraDriver"
             | "SDL_GetNumCameraDrivers",
-        ) => {
-            f.is_unsafe = false;
-            Ok(true)
-        }
-        ("cpuinfo", i) if i.starts_with("SDL_Get") || i.starts_with("SDL_Has") => {
-            f.is_unsafe = false;
-            Ok(true)
-        }
-        ("error", "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported")
+        )
+        | ("error", "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported")
         | ("init", "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit")
         | (
             "stdinc",
@@ -344,6 +333,15 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
             | "SDL_trunc"
             | "SDL_truncf",
         ) => {
+            f.is_unsafe = false;
+            Ok(true)
+        }
+        ("cpuinfo", i) if i.starts_with("SDL_Get") || i.starts_with("SDL_Has") => {
+            f.is_unsafe = false;
+            Ok(true)
+        }
+        (_, i) if i.ends_with("_Version") || i.ends_with("_GetVersion") || i.ends_with("_Init") => {
+            // FIXME: Should Quit functions be safe?
             f.is_unsafe = false;
             Ok(true)
         }
