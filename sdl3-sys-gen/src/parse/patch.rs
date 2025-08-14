@@ -236,7 +236,7 @@ pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, Parse
 }
 
 pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<bool, ParseErr> {
-    // TODO/FIXME: need fix/info for safe: events, filesystem, gamepad, gpu
+    // TODO/FIXME: need fix/info for safe: events, gamepad, gpu
     match (ctx.module(), f.ident.as_str()) {
         ("asyncio", "SDL_CreateAsyncIOQueue")
         | (
@@ -266,6 +266,7 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
             | "SDL_GetNumCameraDrivers",
         )
         | ("error", "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported")
+        | ("filesystem", "SDL_GetBasePath" | "SDL_GetUserFolder" | "SDL_GetCurrentDirectory")
         | ("init", "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit")
         | (
             "stdinc",
