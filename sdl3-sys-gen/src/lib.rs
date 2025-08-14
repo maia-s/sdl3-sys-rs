@@ -312,7 +312,7 @@ impl Library {
                 return Err("couldn't get git revision".into());
             }
             format!(
-                "v0.0.0-x-g{}",
+                "v0.0.0-none-g{}",
                 String::from_utf8_lossy(&git_rev.stdout).trim()
             )
         };
