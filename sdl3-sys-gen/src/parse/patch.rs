@@ -267,7 +267,7 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
         )
         | ("error", "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported")
         | ("filesystem", "SDL_GetBasePath" | "SDL_GetUserFolder" | "SDL_GetCurrentDirectory")
-        | ("init", "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit")
+        | ("init", "SDL_Init" | "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit")
         | (
             "stdinc",
             "SDL_abs"
@@ -333,7 +333,10 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
             | "SDL_toupper"
             | "SDL_trunc"
             | "SDL_truncf",
-        ) => {
+        )
+        | ("image", "IMG_Init")
+        | ("mixer", "MIX_Init")
+        | ("ttf", "TTF_Init") => {
             f.is_unsafe = false;
             Ok(true)
         }
@@ -341,7 +344,7 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
             f.is_unsafe = false;
             Ok(true)
         }
-        (_, i) if i.ends_with("_Version") || i.ends_with("_GetVersion") || i.ends_with("_Init") => {
+        (_, i) if i.ends_with("_Version") || i.ends_with("_GetVersion") => {
             // FIXME: Should Quit functions be safe?
             f.is_unsafe = false;
             Ok(true)
