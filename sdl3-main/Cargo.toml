@@ -16,7 +16,7 @@ default = ["std", "log-errors"]
 alloc = []
 std = ["alloc", "sdl3-main-macros/std"]
 
-# Log errors when converting to AppState* via Try trait (currently only effective on nightly)
+# Log errors when converting to AppResult* via Try trait (currently only effective on nightly)
 log-errors = ["alloc"]
 
 nightly = []
