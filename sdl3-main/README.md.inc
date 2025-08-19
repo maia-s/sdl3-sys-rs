@@ -42,6 +42,7 @@ provides some helper types and functions to alleviate this.
       It still exists for compatibility, but it's hidden in the docs.
     - Pass arguments to main on `std` (`!std` already did)
     - Add `MainThreadData::assert_new/get/get_mut`
+    - Log error when converting to `AppResult*`
 
 - 0.5.4:
     - Fix accidental dependency on Rust 1.84
