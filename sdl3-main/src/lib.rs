@@ -10,8 +10,21 @@ extern crate alloc;
 #[cfg(feature = "std")]
 extern crate std;
 
-#[cfg(all(feature = "nightly", feature = "log-errors"))]
-use core::fmt::Display;
+use core::{
+    ffi::{c_int, c_void},
+    ptr,
+};
+use sdl3_sys::{
+    init::SDL_AppResult,
+    log::{SDL_LogCategory, SDL_LogCritical},
+};
+
+#[cfg(all(feature = "log-errors", feature = "nightly"))]
+use {
+    core::fmt::Display,
+    sdl3_sys::{error::SDL_SetError, log::SDL_LogError},
+};
+
 #[cfg(feature = "nightly")]
 use core::{convert::Infallible, ops::FromResidual};
 
@@ -195,15 +208,6 @@ pub use sdl3_main_macros::app_event;
 /// fn(S, sdl3_main::AppResult)
 /// ```
 pub use sdl3_main_macros::app_quit;
-
-use core::{
-    ffi::{c_int, c_void},
-    ptr,
-};
-use sdl3_sys::{
-    init::SDL_AppResult,
-    log::{SDL_LogCategory, SDL_LogCritical},
-};
 
 macro_rules! defer {
     ($($tt:tt)*) => {
@@ -465,13 +469,13 @@ impl From<SDL_AppResult> for AppResult {
 }
 
 #[cfg(all(feature = "nightly", feature = "log-errors"))]
-impl<E: ::core::fmt::Display> FromResidual<Result<Infallible, E>> for AppResult {
+impl<E: Display> FromResidual<Result<Infallible, E>> for AppResult {
     fn from_residual(residual: Result<Infallible, E>) -> Self {
         let Err(err) = residual;
         let err = ::alloc::format!("{err}\0");
         unsafe {
-            ::sdl3_sys::log::SDL_LogError(0, c"%s".as_ptr(), err.as_ptr());
-            ::sdl3_sys::error::SDL_SetError(c"%s".as_ptr(), err.as_ptr());
+            SDL_LogError(0, c"%s".as_ptr(), err.as_ptr());
+            SDL_SetError(c"%s".as_ptr(), err.as_ptr());
         };
         AppResult::Failure
     }
@@ -507,15 +511,13 @@ pub enum AppResultWithState<S: AppState> {
 }
 
 #[cfg(all(feature = "nightly", feature = "log-errors"))]
-impl<S: AppState, E: ::core::fmt::Display> FromResidual<Result<Infallible, E>>
-    for AppResultWithState<S>
-{
+impl<S: AppState, E: Display> FromResidual<Result<Infallible, E>> for AppResultWithState<S> {
     fn from_residual(residual: Result<Infallible, E>) -> Self {
         let Err(err) = residual;
         let err = ::alloc::format!("{err}\0");
         unsafe {
-            ::sdl3_sys::log::SDL_LogError(0, c"%s".as_ptr(), err.as_ptr());
-            ::sdl3_sys::error::SDL_SetError(c"%s".as_ptr(), err.as_ptr());
+            SDL_LogError(0, c"%s".as_ptr(), err.as_ptr());
+            SDL_SetError(c"%s".as_ptr(), err.as_ptr());
         };
         AppResultWithState::Failure(None)
     }
