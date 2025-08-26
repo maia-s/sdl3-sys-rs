@@ -113,7 +113,7 @@ pub const METADATA_SDL_ScaleMode: Group = Group {
 };
 pub const METADATA_SDL_FlipMode: Group = Group {
     module: "surface",
-    kind: GroupKind::Enum,
+    kind: GroupKind::Flags,
     name: "SDL_FlipMode",
     short_name: "FlipMode",
     doc: Some("The flip mode.\n\n## Availability\nThis enum is available since SDL 3.2.0.\n"),

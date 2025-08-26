@@ -227,6 +227,10 @@ pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, Parse
             e.emit_metadata = false;
             Ok(true)
         }
+        ("surface", "SDL_FlipMode") => {
+            e.kind = EnumKind::Flags;
+            Ok(true)
+        }
         ("ttf", "TTF_Direction") => {
             e.base_type = Some(Type::primitive(PrimitiveType::Uint32T));
             Ok(true)

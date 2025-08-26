@@ -286,7 +286,7 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_ScaleMode {
 /// | [`HORIZONTAL`](SDL_FlipMode::HORIZONTAL) | [`SDL_FLIP_HORIZONTAL`] | flip horizontally |
 /// | [`VERTICAL`](SDL_FlipMode::VERTICAL) | [`SDL_FLIP_VERTICAL`] | flip vertically |
 #[repr(transparent)]
-#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_FlipMode(pub ::core::ffi::c_int);
 
 impl ::core::cmp::PartialEq<::core::ffi::c_int> for SDL_FlipMode {
@@ -313,14 +313,100 @@ impl From<SDL_FlipMode> for ::core::ffi::c_int {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_FlipMode {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::NONE => "SDL_FLIP_NONE",
-            Self::HORIZONTAL => "SDL_FLIP_HORIZONTAL",
-            Self::VERTICAL => "SDL_FLIP_VERTICAL",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "SDL_FlipMode(")?;
+        let all_bits = all_bits | Self::NONE.0;
+        if (Self::NONE != 0 || self.0 == 0) && *self & Self::NONE == Self::NONE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NONE")?;
+        }
+        let all_bits = all_bits | Self::HORIZONTAL.0;
+        if (Self::HORIZONTAL != 0 || self.0 == 0) && *self & Self::HORIZONTAL == Self::HORIZONTAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "HORIZONTAL")?;
+        }
+        let all_bits = all_bits | Self::VERTICAL.0;
+        if (Self::VERTICAL != 0 || self.0 == 0) && *self & Self::VERTICAL == Self::VERTICAL {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "VERTICAL")?;
+        }
 
-            _ => return write!(f, "SDL_FlipMode({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for SDL_FlipMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for SDL_FlipMode {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for SDL_FlipMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for SDL_FlipMode {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for SDL_FlipMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for SDL_FlipMode {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for SDL_FlipMode {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
