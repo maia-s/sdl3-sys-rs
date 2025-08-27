@@ -159,7 +159,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetVersion`]
-    pub fn SDL_GetRevision() -> *const ::core::ffi::c_char;
+    pub safe fn SDL_GetRevision() -> *const ::core::ffi::c_char;
 }
 
 #[cfg(doc)]

@@ -311,7 +311,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_TimeFromWindows(dwLowDateTime: Uint32, dwHighDateTime: Uint32) -> SDL_Time;
+    pub safe fn SDL_TimeFromWindows(dwLowDateTime: Uint32, dwHighDateTime: Uint32) -> SDL_Time;
 }
 
 unsafe extern "C" {
@@ -327,7 +327,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_GetDaysInMonth(
+    pub safe fn SDL_GetDaysInMonth(
         year: ::core::ffi::c_int,
         month: ::core::ffi::c_int,
     ) -> ::core::ffi::c_int;
@@ -347,7 +347,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_GetDayOfYear(
+    pub safe fn SDL_GetDayOfYear(
         year: ::core::ffi::c_int,
         month: ::core::ffi::c_int,
         day: ::core::ffi::c_int,
@@ -368,7 +368,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_GetDayOfWeek(
+    pub safe fn SDL_GetDayOfWeek(
         year: ::core::ffi::c_int,
         month: ::core::ffi::c_int,
         day: ::core::ffi::c_int,

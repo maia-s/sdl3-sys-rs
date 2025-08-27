@@ -35,7 +35,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_GetNumLogicalCPUCores() -> ::core::ffi::c_int;
+    pub fn SDL_GetNumLogicalCPUCores() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -52,7 +52,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_GetCPUCacheLineSize() -> ::core::ffi::c_int;
+    pub fn SDL_GetCPUCacheLineSize() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -69,7 +69,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_HasAltiVec() -> ::core::primitive::bool;
+    pub fn SDL_HasAltiVec() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -85,7 +85,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_HasMMX() -> ::core::primitive::bool;
+    pub fn SDL_HasMMX() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -107,7 +107,7 @@ unsafe extern "C" {
     /// - [`SDL_HasSSE3`]
     /// - [`SDL_HasSSE41`]
     /// - [`SDL_HasSSE42`]
-    pub safe fn SDL_HasSSE() -> ::core::primitive::bool;
+    pub fn SDL_HasSSE() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -129,7 +129,7 @@ unsafe extern "C" {
     /// - [`SDL_HasSSE3`]
     /// - [`SDL_HasSSE41`]
     /// - [`SDL_HasSSE42`]
-    pub safe fn SDL_HasSSE2() -> ::core::primitive::bool;
+    pub fn SDL_HasSSE2() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -151,7 +151,7 @@ unsafe extern "C" {
     /// - [`SDL_HasSSE2`]
     /// - [`SDL_HasSSE41`]
     /// - [`SDL_HasSSE42`]
-    pub safe fn SDL_HasSSE3() -> ::core::primitive::bool;
+    pub fn SDL_HasSSE3() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -173,7 +173,7 @@ unsafe extern "C" {
     /// - [`SDL_HasSSE2`]
     /// - [`SDL_HasSSE3`]
     /// - [`SDL_HasSSE42`]
-    pub safe fn SDL_HasSSE41() -> ::core::primitive::bool;
+    pub fn SDL_HasSSE41() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -195,7 +195,7 @@ unsafe extern "C" {
     /// - [`SDL_HasSSE2`]
     /// - [`SDL_HasSSE3`]
     /// - [`SDL_HasSSE41`]
-    pub safe fn SDL_HasSSE42() -> ::core::primitive::bool;
+    pub fn SDL_HasSSE42() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -215,7 +215,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_HasAVX2`]
     /// - [`SDL_HasAVX512F`]
-    pub safe fn SDL_HasAVX() -> ::core::primitive::bool;
+    pub fn SDL_HasAVX() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -235,7 +235,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_HasAVX`]
     /// - [`SDL_HasAVX512F`]
-    pub safe fn SDL_HasAVX2() -> ::core::primitive::bool;
+    pub fn SDL_HasAVX2() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -255,7 +255,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_HasAVX`]
     /// - [`SDL_HasAVX2`]
-    pub safe fn SDL_HasAVX512F() -> ::core::primitive::bool;
+    pub fn SDL_HasAVX512F() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -276,7 +276,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_HasNEON`]
-    pub safe fn SDL_HasARMSIMD() -> ::core::primitive::bool;
+    pub fn SDL_HasARMSIMD() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -292,7 +292,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_HasNEON() -> ::core::primitive::bool;
+    pub fn SDL_HasNEON() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -309,7 +309,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_HasLSX() -> ::core::primitive::bool;
+    pub fn SDL_HasLSX() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -326,7 +326,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_HasLASX() -> ::core::primitive::bool;
+    pub fn SDL_HasLASX() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -340,7 +340,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_GetSystemRAM() -> ::core::ffi::c_int;
+    pub fn SDL_GetSystemRAM() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -368,7 +368,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_aligned_alloc`]
     /// - [`SDL_aligned_free`]
-    pub safe fn SDL_GetSIMDAlignment() -> ::core::primitive::usize;
+    pub fn SDL_GetSIMDAlignment() -> ::core::primitive::usize;
 }
 
 #[cfg(doc)]

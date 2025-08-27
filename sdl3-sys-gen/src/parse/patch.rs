@@ -240,38 +240,16 @@ pub fn patch_parsed_enum(ctx: &ParseContext, e: &mut Enum) -> Result<bool, Parse
 }
 
 pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<bool, ParseErr> {
-    // TODO/FIXME: need fix/info for safe: events, gamepad, gpu
     match (ctx.module(), f.ident.as_str()) {
-        ("asyncio", "SDL_CreateAsyncIOQueue")
-        | (
-            "audio", // audio functions properly check if system is inited
-            "SDL_AudioDevicePaused"
-            | "SDL_CloseAudioDevice"
-            | "SDL_GetAudioDeviceGain"
-            | "SDL_GetAudioDeviceName"
-            | "SDL_GetAudioDriver"
-            | "SDL_GetAudioFormatName"
-            | "SDL_GetCurrentAudioDriver"
-            | "SDL_GetNumAudioDrivers"
-            | "SDL_GetSilenceValueForFormat"
+        (
+            "audio",
+            "SDL_GetSilenceValueForFormat"
             | "SDL_IsAudioDevicePhysical"
-            | "SDL_IsAudioDevicePlayback"
-            | "SDL_PauseAudioDevice"
-            | "SDL_ResumeAudioDevice"
-            | "SDL_SetAudioDeviceGain",
+            | "SDL_IsAudioDevicePlayback",
         )
         | ("blendmode", "SDL_ComposeCustomBlendMode")
-        | (
-            "camera", // camera functions properly check if system is inited
-            "SDL_GetCameraDriver"
-            | "SDL_GetCameraName"
-            | "SDL_GetCameraPosition"
-            | "SDL_GetCurrentCameraDriver"
-            | "SDL_GetNumCameraDrivers",
-        )
         | ("error", "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported")
-        | ("filesystem", "SDL_GetBasePath" | "SDL_GetUserFolder" | "SDL_GetCurrentDirectory")
-        | ("init", "SDL_Init" | "SDL_InitSubSystem" | "SDL_IsMainThread" | "SDL_WasInit")
+        | ("pixels", "SDL_GetPixelFormatForMasks" | "SDL_GetPixelFormatName")
         | (
             "stdinc",
             "SDL_abs"
@@ -338,18 +316,16 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
             | "SDL_trunc"
             | "SDL_truncf",
         )
-        | ("image", "IMG_Init")
-        | ("mixer", "MIX_Init")
-        | ("ttf", "TTF_Init") => {
-            f.is_unsafe = false;
-            Ok(true)
-        }
-        ("cpuinfo", i) if i.starts_with("SDL_Get") || i.starts_with("SDL_Has") => {
-            f.is_unsafe = false;
-            Ok(true)
-        }
-        (_, i) if i.ends_with("_Version") || i.ends_with("_GetVersion") => {
-            // FIXME: Should Quit functions be safe?
+        | (
+            "time",
+            "SDL_GetDaysInMonth" | "SDL_GetDayOfWeek" | "SDL_GetDayOfYear" | "SDL_TimeFromWindows",
+        )
+        | ("thread", "SDL_GetCurrentThreadID")
+        | ("version", "SDL_GetRevision" | "SDL_GetVersion")
+        | ("image", "IMG_Version")
+        | ("mixer", "MIX_Version")
+        | ("net", "NET_Version")
+        | ("ttf", "TTF_Version") => {
             f.is_unsafe = false;
             Ok(true)
         }

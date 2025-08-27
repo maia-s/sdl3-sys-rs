@@ -111,7 +111,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`TTF_Quit`]
-    pub safe fn TTF_Init() -> ::core::primitive::bool;
+    pub fn TTF_Init() -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {

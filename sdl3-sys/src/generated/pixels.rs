@@ -2572,7 +2572,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
+    pub safe fn SDL_GetPixelFormatName(format: SDL_PixelFormat) -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -2633,7 +2633,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetMasksForPixelFormat`]
-    pub fn SDL_GetPixelFormatForMasks(
+    pub safe fn SDL_GetPixelFormatForMasks(
         bpp: ::core::ffi::c_int,
         Rmask: Uint32,
         Gmask: Uint32,

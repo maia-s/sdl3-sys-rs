@@ -47,7 +47,7 @@ fn async_large<F: FnOnce() + Send + 'static>(callback: F) -> bool {
 
 #[test]
 fn run_sync_on_main_thread_simple_on_main() {
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -70,7 +70,7 @@ fn run_sync_on_main_thread_drop_on_main() {
         }
     }
     static DROPPED: AtomicBool = AtomicBool::new(false);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -91,7 +91,7 @@ fn run_sync_on_main_thread_drop_on_main() {
 
 #[test]
 fn run_sync_on_main_thread_simple_on_thread() {
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -120,7 +120,7 @@ fn run_sync_on_main_thread_drop_on_thread() {
         }
     }
     static DROPPED: AtomicBool = AtomicBool::new(false);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -149,7 +149,7 @@ fn run_sync_on_main_thread_drop_on_thread() {
 fn run_async_on_main_thread_simple_zst_on_main() {
     static COMPLETE: AtomicBool = AtomicBool::new(false);
     static VALUE: AtomicUsize = AtomicUsize::new(0);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -169,7 +169,7 @@ fn run_async_on_main_thread_simple_zst_on_main() {
 fn run_async_on_main_thread_simple_small_on_thread() {
     static COMPLETE: AtomicBool = AtomicBool::new(false);
     static VALUE: AtomicUsize = AtomicUsize::new(0);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -193,7 +193,7 @@ fn run_async_on_main_thread_simple_small_on_thread() {
 fn run_async_on_main_thread_simple_large_on_thread() {
     static COMPLETE: AtomicBool = AtomicBool::new(false);
     static VALUE: AtomicUsize = AtomicUsize::new(0);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -224,7 +224,7 @@ fn run_async_on_main_thread_drop_zst_on_thread() {
     static DROPPED: AtomicBool = AtomicBool::new(false);
     static COMPLETE: AtomicBool = AtomicBool::new(false);
     static VALUE: AtomicUsize = AtomicUsize::new(0);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -258,7 +258,7 @@ fn run_async_on_main_thread_drop_small_on_thread() {
     static DROPPED: AtomicBool = AtomicBool::new(false);
     static COMPLETE: AtomicBool = AtomicBool::new(false);
     static VALUE: AtomicUsize = AtomicUsize::new(0);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }
@@ -293,7 +293,7 @@ fn run_async_on_main_thread_drop_large_on_thread() {
     static DROPPED: AtomicBool = AtomicBool::new(false);
     static COMPLETE: AtomicBool = AtomicBool::new(false);
     static VALUE: AtomicUsize = AtomicUsize::new(0);
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         dbg!(unsafe { CStr::from_ptr(SDL_GetError()) });
         panic!();
     }

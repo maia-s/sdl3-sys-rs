@@ -669,7 +669,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetAudioDriver`]
-    pub safe fn SDL_GetNumAudioDrivers() -> ::core::ffi::c_int;
+    pub fn SDL_GetNumAudioDrivers() -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
@@ -699,7 +699,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetNumAudioDrivers`]
-    pub safe fn SDL_GetAudioDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetAudioDriver(index: ::core::ffi::c_int) -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -718,7 +718,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_GetCurrentAudioDriver() -> *const ::core::ffi::c_char;
+    pub fn SDL_GetCurrentAudioDriver() -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -810,7 +810,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_GetAudioPlaybackDevices`]
     /// - [`SDL_GetAudioRecordingDevices`]
-    pub safe fn SDL_GetAudioDeviceName(devid: SDL_AudioDeviceID) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetAudioDeviceName(devid: SDL_AudioDeviceID) -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -1057,7 +1057,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_ResumeAudioDevice`]
     /// - [`SDL_AudioDevicePaused`]
-    pub safe fn SDL_PauseAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
+    pub fn SDL_PauseAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -1091,7 +1091,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_AudioDevicePaused`]
     /// - [`SDL_PauseAudioDevice`]
-    pub safe fn SDL_ResumeAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
+    pub fn SDL_ResumeAudioDevice(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -1119,7 +1119,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_PauseAudioDevice`]
     /// - [`SDL_ResumeAudioDevice`]
-    pub safe fn SDL_AudioDevicePaused(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
+    pub fn SDL_AudioDevicePaused(devid: SDL_AudioDeviceID) -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -1148,7 +1148,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_SetAudioDeviceGain`]
-    pub safe fn SDL_GetAudioDeviceGain(devid: SDL_AudioDeviceID) -> ::core::ffi::c_float;
+    pub fn SDL_GetAudioDeviceGain(devid: SDL_AudioDeviceID) -> ::core::ffi::c_float;
 }
 
 unsafe extern "C" {
@@ -1189,7 +1189,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetAudioDeviceGain`]
-    pub safe fn SDL_SetAudioDeviceGain(
+    pub fn SDL_SetAudioDeviceGain(
         devid: SDL_AudioDeviceID,
         gain: ::core::ffi::c_float,
     ) -> ::core::primitive::bool;
@@ -1217,7 +1217,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_OpenAudioDevice`]
-    pub safe fn SDL_CloseAudioDevice(devid: SDL_AudioDeviceID);
+    pub fn SDL_CloseAudioDevice(devid: SDL_AudioDeviceID);
 }
 
 unsafe extern "C" {
@@ -2791,7 +2791,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_GetAudioFormatName(format: SDL_AudioFormat) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetAudioFormatName(format: SDL_AudioFormat) -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {

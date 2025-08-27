@@ -61,7 +61,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetPrefPath`]
-    pub safe fn SDL_GetBasePath() -> *const ::core::ffi::c_char;
+    pub fn SDL_GetBasePath() -> *const ::core::ffi::c_char;
 }
 
 unsafe extern "C" {
@@ -304,7 +304,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_GetUserFolder(folder: SDL_Folder) -> *const ::core::ffi::c_char;
+    pub fn SDL_GetUserFolder(folder: SDL_Folder) -> *const ::core::ffi::c_char;
 }
 
 /// Types of filesystem entries.
@@ -891,7 +891,7 @@ unsafe extern "C" {
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
-    pub safe fn SDL_GetCurrentDirectory() -> *mut ::core::ffi::c_char;
+    pub fn SDL_GetCurrentDirectory() -> *mut ::core::ffi::c_char;
 }
 
 #[cfg(doc)]

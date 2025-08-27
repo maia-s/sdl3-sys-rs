@@ -487,7 +487,7 @@ unsafe extern "C" {
     /// - [`SDL_Quit`]
     /// - [`SDL_SetMainReady`]
     /// - [`SDL_WasInit`]
-    pub safe fn SDL_Init(flags: SDL_InitFlags) -> ::core::primitive::bool;
+    pub fn SDL_Init(flags: SDL_InitFlags) -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -509,7 +509,7 @@ unsafe extern "C" {
     /// - [`SDL_Init`]
     /// - [`SDL_Quit`]
     /// - [`SDL_QuitSubSystem`]
-    pub safe fn SDL_InitSubSystem(flags: SDL_InitFlags) -> ::core::primitive::bool;
+    pub fn SDL_InitSubSystem(flags: SDL_InitFlags) -> ::core::primitive::bool;
 }
 
 unsafe extern "C" {
@@ -546,7 +546,7 @@ unsafe extern "C" {
     /// ## See also
     /// - [`SDL_Init`]
     /// - [`SDL_InitSubSystem`]
-    pub safe fn SDL_WasInit(flags: SDL_InitFlags) -> SDL_InitFlags;
+    pub fn SDL_WasInit(flags: SDL_InitFlags) -> SDL_InitFlags;
 }
 
 unsafe extern "C" {
@@ -590,7 +590,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_RunOnMainThread`]
-    pub safe fn SDL_IsMainThread() -> ::core::primitive::bool;
+    pub fn SDL_IsMainThread() -> ::core::primitive::bool;
 }
 
 /// Callback run on the main thread.

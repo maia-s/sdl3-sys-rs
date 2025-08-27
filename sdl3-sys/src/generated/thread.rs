@@ -509,7 +509,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetThreadID`]
-    pub fn SDL_GetCurrentThreadID() -> SDL_ThreadID;
+    pub safe fn SDL_GetCurrentThreadID() -> SDL_ThreadID;
 }
 
 unsafe extern "C" {
