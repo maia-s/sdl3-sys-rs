@@ -115,6 +115,9 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
+- 0.5.5:
+    - Update SDL to 3.2.22
+
 - 0.5.4:
     - Update SDL to 3.2.20
 
