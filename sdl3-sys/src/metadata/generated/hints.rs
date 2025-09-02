@@ -308,7 +308,7 @@ pub const METADATA_SDL_HINT_CPU_FEATURE_MASK: Hint = Hint {
     short_name: "CPU_FEATURE_MASK",
     value: crate::hints::SDL_HINT_CPU_FEATURE_MASK,
     doc: Some(
-        "A variable that limits what CPU features are available.\n\nBy default, SDL marks all features the current CPU supports as available.\nThis hint allows to limit these to a subset.\n\nWhen the hint is unset, or empty, SDL will enable all detected CPU\nfeatures.\n\nThe variable can be set to a comma separated list containing the following\nitems:\n\n- \"all\"\n- \"altivec\"\n- \"sse\"\n- \"sse2\"\n- \"sse3\"\n- \"sse41\"\n- \"sse42\"\n- \"avx\"\n- \"avx2\"\n- \"avx512f\"\n- \"arm-simd\"\n- \"neon\"\n- \"lsx\"\n- \"lasx\"\n\nThe items can be prefixed by '+'/'-' to add/remove features.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable that limits what CPU features are available.\n\nBy default, SDL marks all features the current CPU supports as available.\nThis hint allows the enabled features to be limited to a subset.\n\nWhen the hint is unset, or empty, SDL will enable all detected CPU\nfeatures.\n\nThe variable can be set to a comma separated list containing the following\nitems:\n\n- \"all\"\n- \"altivec\"\n- \"sse\"\n- \"sse2\"\n- \"sse3\"\n- \"sse41\"\n- \"sse42\"\n- \"avx\"\n- \"avx2\"\n- \"avx512f\"\n- \"arm-simd\"\n- \"neon\"\n- \"lsx\"\n- \"lasx\"\n\nThe items can be prefixed by '+'/'-' to add/remove features.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };

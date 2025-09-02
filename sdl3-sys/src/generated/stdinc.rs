@@ -3348,7 +3348,7 @@ unsafe extern "C" {
     /// Convert an integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
-    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// produces a decimal number, 16 hexadecimal, etc. Must be in the range of 2
     /// to 36.
     ///
     /// Note that this function will overflow a buffer if `str` is not large enough
@@ -3386,7 +3386,7 @@ unsafe extern "C" {
     /// Convert an unsigned integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
-    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// produces a decimal number, 16 hexadecimal, etc. Must be in the range of 2
     /// to 36.
     ///
     /// Note that this function will overflow a buffer if `str` is not large enough
@@ -3424,7 +3424,7 @@ unsafe extern "C" {
     /// Convert a long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
-    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// produces a decimal number, 16 hexadecimal, etc. Must be in the range of 2
     /// to 36.
     ///
     /// Note that this function will overflow a buffer if `str` is not large enough
@@ -3462,7 +3462,7 @@ unsafe extern "C" {
     /// Convert an unsigned long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
-    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// produces a decimal number, 16 hexadecimal, etc. Must be in the range of 2
     /// to 36.
     ///
     /// Note that this function will overflow a buffer if `str` is not large enough
@@ -3500,7 +3500,7 @@ unsafe extern "C" {
     /// Convert a long long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
-    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// produces a decimal number, 16 hexadecimal, etc. Must be in the range of 2
     /// to 36.
     ///
     /// Note that this function will overflow a buffer if `str` is not large enough
@@ -3538,7 +3538,7 @@ unsafe extern "C" {
     /// Convert an unsigned long long integer into a string.
     ///
     /// This requires a radix to specified for string format. Specifying 10
-    /// produces a decimal number, 16 hexidecimal, etc. Must be in the range of 2
+    /// produces a decimal number, 16 hexadecimal, etc. Must be in the range of 2
     /// to 36.
     ///
     /// Note that this function will overflow a buffer if `str` is not large enough
@@ -3993,7 +3993,7 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
-    /// Searches a string for the first occurence of any character contained in a
+    /// Searches a string for the first occurrence of any character contained in a
     /// breakset, and returns a pointer from the string to that character.
     ///
     /// ## Parameters
@@ -4004,7 +4004,7 @@ unsafe extern "C" {
     ///   `str`.
     ///
     /// ## Return value
-    /// Returns A pointer to the location, in str, of the first occurence of a
+    /// Returns A pointer to the location, in str, of the first occurrence of a
     ///   character present in the breakset, or NULL if none is found.
     ///
     /// ## Thread safety
@@ -6364,7 +6364,7 @@ unsafe extern "C" {
     /// This function converts text between encodings, reading from and writing to
     /// a buffer.
     ///
-    /// It returns the number of succesful conversions on success. On error,
+    /// It returns the number of successful conversions on success. On error,
     /// [`SDL_ICONV_E2BIG`] is returned when the output buffer is too small, or
     /// [`SDL_ICONV_EILSEQ`] is returned when an invalid input sequence is encountered,
     /// or [`SDL_ICONV_EINVAL`] is returned when an incomplete input sequence is

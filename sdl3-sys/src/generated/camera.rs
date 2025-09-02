@@ -119,7 +119,7 @@ pub struct SDL_CameraSpec {
     pub height: ::core::ffi::c_int,
     /// Frame rate numerator ((num / denom) == FPS, (denom / num) == duration in seconds)
     pub framerate_numerator: ::core::ffi::c_int,
-    /// Frame rate demoninator ((num / denom) == FPS, (denom / num) == duration in seconds)
+    /// Frame rate denominator ((num / denom) == FPS, (denom / num) == duration in seconds)
     pub framerate_denominator: ::core::ffi::c_int,
 }
 

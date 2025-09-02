@@ -94,14 +94,14 @@ apply_cfg!(#[cfg(doc)] => {
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    apply_cfg!(#[cfg(all(windows, target_env = "msvc"))] => {
+    apply_cfg!(#[cfg(any(all(windows, target_env = "msvc"), all(windows, target_env = "gnu")))] => {
         #[inline(always)]
         pub unsafe fn SDL_TriggerBreakpoint() {
             crate::breakpoint()
         }
     });
 
-    apply_cfg!(#[cfg(not(all(windows, target_env = "msvc")))] => {
+    apply_cfg!(#[cfg(not(any(all(windows, target_env = "msvc"), all(windows, target_env = "gnu"))))] => {
         #[inline(always)]
         pub unsafe fn SDL_TriggerBreakpoint() {
             crate::breakpoint()

@@ -1,7 +1,7 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
-This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.20`, inclusive.
+This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.22`, inclusive.
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
 However, many of these aren't valid when passed to SDL without further modification.
@@ -127,6 +127,9 @@ These features are mutually exclusive. Features higher in this list override lat
     - Add `SDL_Event::event_type()`
     - Add `display-impls` feature
     - MSRV 1.85
+
+- 0.5.5:
+    - Update SDL to 3.2.22
 
 - 0.5.4:
     - Update SDL to 3.2.20

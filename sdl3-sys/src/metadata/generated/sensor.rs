@@ -71,5 +71,11 @@ pub const METADATA_SDL_SensorType: Group = Group {
             doc: Some("Gyroscope for right Joy-Con controller\n"),
             available_since: None,
         },
+        GroupValue {
+            name: "SDL_SENSOR_COUNT",
+            short_name: "COUNT",
+            doc: None,
+            available_since: None,
+        },
     ],
 };

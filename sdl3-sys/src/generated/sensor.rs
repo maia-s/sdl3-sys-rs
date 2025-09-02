@@ -128,6 +128,7 @@ pub const SDL_STANDARD_GRAVITY: ::core::ffi::c_float = 9.80665_f32;
 /// | [`GYRO_L`](SDL_SensorType::GYRO_L) | [`SDL_SENSOR_GYRO_L`] | Gyroscope for left Joy-Con controller |
 /// | [`ACCEL_R`](SDL_SensorType::ACCEL_R) | [`SDL_SENSOR_ACCEL_R`] | Accelerometer for right Joy-Con controller |
 /// | [`GYRO_R`](SDL_SensorType::GYRO_R) | [`SDL_SENSOR_GYRO_R`] | Gyroscope for right Joy-Con controller |
+/// | [`COUNT`](SDL_SensorType::COUNT) | [`SDL_SENSOR_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SDL_SensorType(pub ::core::ffi::c_int);
@@ -166,6 +167,7 @@ impl ::core::fmt::Debug for SDL_SensorType {
             Self::GYRO_L => "SDL_SENSOR_GYRO_L",
             Self::ACCEL_R => "SDL_SENSOR_ACCEL_R",
             Self::GYRO_R => "SDL_SENSOR_GYRO_R",
+            Self::COUNT => "SDL_SENSOR_COUNT",
 
             _ => return write!(f, "SDL_SensorType({})", self.0),
         })
@@ -189,6 +191,7 @@ impl SDL_SensorType {
     pub const ACCEL_R: Self = Self((5_i32 as ::core::ffi::c_int));
     /// Gyroscope for right Joy-Con controller
     pub const GYRO_R: Self = Self((6_i32 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((7_i32 as ::core::ffi::c_int));
 }
 
 /// Returned for an invalid sensor
@@ -207,6 +210,7 @@ pub const SDL_SENSOR_GYRO_L: SDL_SensorType = SDL_SensorType::GYRO_L;
 pub const SDL_SENSOR_ACCEL_R: SDL_SensorType = SDL_SensorType::ACCEL_R;
 /// Gyroscope for right Joy-Con controller
 pub const SDL_SENSOR_GYRO_R: SDL_SensorType = SDL_SensorType::GYRO_R;
+pub const SDL_SENSOR_COUNT: SDL_SensorType = SDL_SensorType::COUNT;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_SensorType {

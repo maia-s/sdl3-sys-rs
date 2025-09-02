@@ -1682,7 +1682,7 @@ pub const METADATA_SDL_GPUCompareOp: Group = Group {
         GroupValue {
             name: "SDL_GPU_COMPAREOP_GREATER_OR_EQUAL",
             short_name: "GREATER_OR_EQUAL",
-            doc: Some("The comparison evalutes reference >= test.\n"),
+            doc: Some("The comparison evaluates reference >= test.\n"),
             available_since: None,
         },
         GroupValue {
