@@ -5,7 +5,7 @@ use sdl3_sys::{
 };
 
 fn main() -> Result<(), &'static CStr> {
-    if SDL_Init(SDL_INIT_VIDEO) {
+    if unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         println!("Successfully initialized SDL!");
         unsafe { SDL_Quit() };
         Ok(())
