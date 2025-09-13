@@ -249,6 +249,10 @@ pub fn patch_parsed_function(ctx: &ParseContext, f: &mut Function) -> Result<boo
         )
         | ("blendmode", "SDL_ComposeCustomBlendMode")
         | ("error", "SDL_ClearError" | "SDL_GetError" | "SDL_OutOfMemory" | "SDL_Unsupported")
+        | (
+            "gpu",
+            "SDL_GetGPUTextureFormatFromPixelFormat" | "SDL_GetPixelFormatFromGPUTextureFormat",
+        )
         | ("pixels", "SDL_GetPixelFormatForMasks" | "SDL_GetPixelFormatName")
         | (
             "stdinc",
