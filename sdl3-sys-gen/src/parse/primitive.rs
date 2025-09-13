@@ -105,6 +105,8 @@ impl Parse for PrimitiveTypeParse {
             let n_short = query!(PrimitiveCombineKw::Short(_));
             let n_int = query!(PrimitiveCombineKw::Int(_));
             let n_long = query!(PrimitiveCombineKw::Long(_));
+            let n_i8 = query!(PrimitiveCombineKw::I8(_));
+            let n_i16 = query!(PrimitiveCombineKw::I16(_));
             let n_i32 = query!(PrimitiveCombineKw::I32(_));
             let n_i64 = query!(PrimitiveCombineKw::I64(_));
 
@@ -116,6 +118,8 @@ impl Parse for PrimitiveTypeParse {
                 || n_short > 1
                 || n_int > 1
                 || n_long > 2
+                || n_i8 > 1
+                || n_i16 > 1
                 || n_i32 > 1
                 || n_i64 > 1
             {
@@ -129,8 +133,8 @@ impl Parse for PrimitiveTypeParse {
             if (n_signed > 0 && n_unsigned > 0)
                 || (n_short > 0 && n_long > 0)
                 || (n_char > 0 && (n_int > 0 || n_short > 0 || n_long > 0))
-                || (n_i32 > 0 && n_i64 > 0)
-                || ((n_i32 > 0 || n_i64 > 0)
+                || (n_i8 + n_i16 + n_i32 + n_i64 > 1)
+                || ((n_i8 + n_i16 + n_i32 + n_i64 > 0)
                     && (n_char > 0 || n_short > 0 || n_int > 0 || n_long > 0))
             {
                 return Err(ParseErr::new(
@@ -144,7 +148,19 @@ impl Parse for PrimitiveTypeParse {
                 Some(Self {
                     span,
                     is_const,
-                    ty: if n_i32 > 0 {
+                    ty: if n_i8 > 0 {
+                        if n_unsigned > 0 {
+                            PrimitiveType::Uint8T
+                        } else {
+                            PrimitiveType::Int8T
+                        }
+                    } else if n_i16 > 0 {
+                        if n_unsigned > 0 {
+                            PrimitiveType::Uint16T
+                        } else {
+                            PrimitiveType::Int16T
+                        }
+                    } else if n_i32 > 0 {
                         if n_unsigned > 0 {
                             PrimitiveType::Uint32T
                         } else {
@@ -265,6 +281,8 @@ enum PrimitiveCombineKw {
     Short(Span),
     Int(Span),
     Long(Span),
+    I8(Span),
+    I16(Span),
     I32(Span),
     I64(Span),
 }
@@ -279,6 +297,8 @@ impl GetSpan for PrimitiveCombineKw {
             | Self::Short(span)
             | Self::Int(span)
             | Self::Long(span)
+            | Self::I8(span)
+            | Self::I16(span)
             | Self::I32(span)
             | Self::I64(span) => span.clone(),
         }
@@ -302,6 +322,8 @@ impl Parse for PrimitiveCombineKw {
                 "short" => return Ok((rest, Some(PrimitiveCombineKw::Short(i.span)))),
                 "int" => return Ok((rest, Some(PrimitiveCombineKw::Int(i.span)))),
                 "long" => return Ok((rest, Some(PrimitiveCombineKw::Long(i.span)))),
+                "__int8" => return Ok((rest, Some(PrimitiveCombineKw::I8(i.span)))),
+                "__int16" => return Ok((rest, Some(PrimitiveCombineKw::I16(i.span)))),
                 "__int32" => return Ok((rest, Some(PrimitiveCombineKw::I32(i.span)))),
                 "__int64" => return Ok((rest, Some(PrimitiveCombineKw::I64(i.span)))),
                 _ => (),
