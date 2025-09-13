@@ -86,14 +86,16 @@ use-x11-dl-v2 = ["dep:x11-dl-v2"]
 # Misc CMake options for when building from source
 sdl-asan = []
 sdl-ccache = []
-sdl-gpu-dxvk = []
 sdl-libc = []
 sdl-rpath = []
 no-sdl-asan = []
 no-sdl-ccache = []
-no-sdl-gpu-dxvk = []
 no-sdl-libc = []
 no-sdl-rpath = []
+
+# Not currently used by SDL, retained for backwards compatibility
+sdl-gpu-dxvk = []
+no-sdl-gpu-dxvk = []
 
 [package.metadata.docs.rs]
 all-features = true

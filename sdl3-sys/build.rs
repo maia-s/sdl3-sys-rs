@@ -21,7 +21,6 @@ fn main() -> Result<(), Box<dyn Error>> {
             cmake_vars! { config =>
                 SDL_ASAN,
                 SDL_CCACHE,
-                SDL_GPU_DXVK,
                 SDL_LIBC,
                 SDL_RPATH,
                 SDL_UNIX_CONSOLE_BUILD,
