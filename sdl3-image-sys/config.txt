@@ -7,3 +7,4 @@ version_header: SDL_image.h
 headers_prefix: SDL_
 sym_prefix: IMG_
 define_prefix: SDL_IMAGE_
+hint_prop_prefix: IMG_

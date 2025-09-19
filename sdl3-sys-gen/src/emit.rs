@@ -824,8 +824,8 @@ impl Emit for Define {
                 writeln!(ctx, ";")?;
                 writeln!(ctx)?;
                 let ident_s = self.ident.as_str();
-                let hint_pfx = format!("{}HINT_", ctx.generator.sym_prefix);
-                let prop_pfx = format!("{}PROP_", ctx.generator.sym_prefix);
+                let hint_pfx = format!("{}HINT_", ctx.generator.hint_prop_prefix);
+                let prop_pfx = format!("{}PROP_", ctx.generator.hint_prop_prefix);
                 if ident_s.starts_with(&hint_pfx) {
                     ctx.register_hint_metadata(HintMetadata {
                         name: ident_s.to_owned(),

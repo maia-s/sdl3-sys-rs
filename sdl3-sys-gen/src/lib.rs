@@ -496,6 +496,7 @@ pub fn generate(root: &Path, libs: &[String]) -> Result<(), Error> {
         let mut generator = Gen::new(
             lib.lib_name.clone(),
             lib.config("sym_prefix").to_owned(),
+            lib.config("hint_prop_prefix").to_owned(),
             emitted_sdl3,
             headers_path.clone(),
             lib.output_path(),
@@ -563,6 +564,7 @@ pub type EmittedItems = BTreeMap<String, InnerEmitContext>;
 pub struct Gen {
     lib_name: String,
     sym_prefix: String,
+    hint_prop_prefix: String,
     revision: String,
     parsed: ParsedItems,
     emitted: RefCell<EmittedItems>,
@@ -576,6 +578,7 @@ impl Gen {
     pub fn new(
         lib_name: String,
         sym_prefix: String,
+        hint_prop_prefix: String,
         emitted_sdl3: EmittedItems,
         headers_path: PathBuf,
         output_path: PathBuf,
@@ -585,6 +588,7 @@ impl Gen {
         Ok(Self {
             lib_name,
             sym_prefix,
+            hint_prop_prefix,
             revision,
             parsed: ParsedItems::new(),
             emitted_sdl3,
@@ -799,7 +803,7 @@ impl Gen {
             let mut module_out = format!(
                 "//! Metadata for items in the `crate::{module}` module\n\nuse super::*;\n\n"
             );
-            let hint_pfx = format!("{}HINT_", self.sym_prefix);
+            let hint_pfx = format!("{}HINT_", self.hint_prop_prefix);
             for hint in &metadata.hints {
                 let short_name = hint.name.strip_prefix(&hint_pfx).unwrap();
                 writeln!(metadata_out_hints, "    &{module}::METADATA_{},", hint.name)?;
@@ -826,7 +830,7 @@ impl Gen {
                     }
                 )?;
             }
-            let prop_pfx = format!("{}PROP_", self.sym_prefix);
+            let prop_pfx = format!("{}PROP_", self.hint_prop_prefix);
             for prop in &metadata.properties {
                 writeln!(metadata_out_props, "    &{module}::METADATA_{},", prop.name)?;
                 let short_name = prop.name.strip_prefix(&prop_pfx).unwrap();

@@ -7,3 +7,4 @@ version_header: SDL_ttf.h
 headers_prefix: SDL_
 sym_prefix: TTF_
 define_prefix: SDL_TTF_
+hint_prop_prefix: TTF_

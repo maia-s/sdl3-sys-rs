@@ -7,3 +7,4 @@ version_header: SDL_version.h
 headers_prefix: SDL_
 sym_prefix: SDL_
 define_prefix: SDL_
+hint_prop_prefix: SDL_
