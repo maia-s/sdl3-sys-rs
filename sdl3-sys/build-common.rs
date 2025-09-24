@@ -340,6 +340,11 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
 
             #[cfg(not(feature = "link-static"))]
             {
+                fn safe_symlink(original: impl AsRef<Path>, link: impl AsRef<Path>) -> std::io::Result<()> {
+                    let (original, link) = (original.as_ref(), link.as_ref());
+                    if link.exists() { std::fs::remove_file(link)?; }
+                    std::os::unix::fs::symlink(original, link)
+                }
                 // copy built library to top level target dir
                 let toplevel = top_level_cargo_target_dir();
                 #[cfg(windows)]
@@ -353,13 +358,13 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                     // apple targets
                     if cfg!(feature = "link-framework") {
                         let lib = format!("{LIB_NAME}.framework");
-                        std::os::unix::fs::symlink(out_dir.join(&lib), toplevel.join(&lib))?;
+                        safe_symlink(out_dir.join(&lib), toplevel.join(&lib))?;
                     } else {
                         let lib_dir = out_dir.join("lib");
                         let link = format!("lib{LIB_NAME}.dylib");
                         let lib = std::fs::read_link(lib_dir.join(&link))?;
                         std::fs::copy(lib_dir.join(&lib), toplevel.join(&lib))?;
-                        std::os::unix::fs::symlink(&lib, toplevel.join(&link))?;
+                        safe_symlink(&lib, toplevel.join(&link))?;
                     }
                 }
                 #[cfg(all(unix, not(target_vendor = "apple")))]
@@ -378,8 +383,8 @@ fn build(f: impl FnOnce(&mut Config) -> Result<(), Box<dyn Error>>) -> Result<()
                     if let Some(link) = link {
                         let lib = std::fs::read_link(lib_dir.join(&link))?;
                         std::fs::copy(lib_dir.join(&lib), toplevel.join(&lib))?;
-                        std::os::unix::fs::symlink(&lib, toplevel.join(&link))?;
-                        std::os::unix::fs::symlink(&link, toplevel.join(&link_base))?;
+                        safe_symlink(&lib, toplevel.join(&link))?;
+                        safe_symlink(&link, toplevel.join(&link_base))?;
                     }
                 }
             }
