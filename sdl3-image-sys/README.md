@@ -49,7 +49,7 @@ If an image format is supported by an enabled backend, the backend will handle i
 
 #### Defaults
 
-Backends and formats are autodetected by default. You can disable them by default instead and enable only the features you want. 
+Backends and formats are autodetected by default. You can disable them by default instead and enable only the features you want.
 
 (These are not cmake features)
 
@@ -129,6 +129,9 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 | `debug-impls` | Implement the `Debug` trait for most SDL_image types. |
 
 ## Recent changes
+
+- next:
+    - Fix an issue where creating symlinks after a build could fail.
 
 - 0.2.0:
     - Update sdl3-sys to 0.5.0

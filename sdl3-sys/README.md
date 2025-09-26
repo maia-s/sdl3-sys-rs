@@ -115,6 +115,9 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
+- next:
+    - Fix an issue where creating symlinks after a build could fail.
+
 - 0.5.5:
     - Update SDL to 3.2.22
 
