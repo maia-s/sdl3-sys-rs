@@ -454,14 +454,14 @@ fn main() -> ExitCode {
     let font_file = args_it.next().expect("missing font");
     let font_file_c = CString::new(font_file.clone()).unwrap();
 
-    if !SDL_Init(SDL_INIT_VIDEO) {
+    if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
         unsafe { SDL_Log(c"Couldn't initialize SDL: %s".as_ptr(), SDL_GetError()) };
         return ExitCode::FAILURE;
     }
     defer!(unsafe { SDL_Quit() });
 
     // Initialize the TTF library
-    if !TTF_Init() {
+    if !unsafe { TTF_Init() } {
         unsafe { SDL_Log(c"Couldn't initialize TTF: %s".as_ptr(), SDL_GetError()) };
         return ExitCode::FAILURE;
     }

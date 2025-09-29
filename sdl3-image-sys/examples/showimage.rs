@@ -151,7 +151,7 @@ fn main() -> ExitCode {
     }
 
     if !unsafe { SDL_Init(SDL_INIT_VIDEO) } {
-        log_and_quit!(2, c"SDL_Init(SDL_INIT_VIDEO) failed: %s)", SDL_GetError(),);
+        log_and_quit!(2, c"SDL_Init(SDL_INIT_VIDEO) failed: %s)", SDL_GetError());
     }
     defer!(unsafe { SDL_Quit() });
 
