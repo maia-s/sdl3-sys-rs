@@ -237,7 +237,7 @@ impl Library {
         let sys_crate = Crate::new(root, format!("{name}-sys"));
         let lib_name = sys_crate.config("lib_name");
         let lib_rev_name = sys_crate.config("lib_rev_name");
-        let lib_rev_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
+        let lib_rev_name_meta = lib_rev_name.replace('_', "-"); // version metadata can't have `_`
         let lib_dir = sys_crate.config("lib_dir");
         let include_dir = sys_crate.config("include_dir");
         let version_header = src_crate
