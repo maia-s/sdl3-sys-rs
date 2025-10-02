@@ -11,7 +11,7 @@ use std::ffi::CString;
 use str_block::str_block;
 
 const VULKAN_CRATE_VERSIONS: &[(&str, &[&str])] = &[("ash", &["0.38"])];
-const WINDOWS_CRATE_VERSIONS: &[(&str, &[&str])] = &[("windows-sys", &["0.60", "0.59"])];
+const WINDOWS_CRATE_VERSIONS: &[(&str, &[&str])] = &[("windows-sys", &["0.59"])];
 const X11_CRATE_VERSIONS: &[(&str, &[&str])] = &[("x11", &["2"]), ("x11-dl", &["2"])];
 
 fn integrate(

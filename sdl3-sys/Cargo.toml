@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sys"
-version = "0.6.0+SDL3-3.2.22"
+version = "0.6.0+SDL3-3.2.24"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -79,9 +79,11 @@ nightly = []
 use-ash-v0-38 = ["dep:ash-v0-38"]
 use-libc-v0-2 = ["dep:libc-v0-2"]
 use-windows-sys-v0-59 = ["dep:windows-sys-v0-59"]
-use-windows-sys-v0-60 = ["dep:windows-sys-v0-60"]
 use-x11-v2 = ["dep:x11-v2"]
 use-x11-dl-v2 = ["dep:x11-dl-v2"]
+
+# Retained for backwards compatibility
+use-windows-sys-v0-60 = ["use-windows-sys-v0-59"]
 
 # Misc CMake options for when building from source
 sdl-asan = []
@@ -114,13 +116,7 @@ optional = true
 
 [dependencies.windows-sys-v0-59]
 package = "windows-sys"
-version = "0.59"
-optional = true
-features = ["Win32_UI_WindowsAndMessaging"]
-
-[dependencies.windows-sys-v0-60]
-package = "windows-sys"
-version = "0.60"
+version = ">=0.59, <=0.61"
 optional = true
 features = ["Win32_UI_WindowsAndMessaging"]
 
@@ -147,7 +143,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-src]
-version = "3.2.22"
+version = "3.2.24"
 path = "../sdl3-src"
 optional = true
 

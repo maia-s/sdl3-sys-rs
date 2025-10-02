@@ -1178,7 +1178,7 @@ pub const METADATA_SDL_HINT_JOYSTICK_WGI: Hint = Hint {
     short_name: "JOYSTICK_WGI",
     value: crate::hints::SDL_HINT_JOYSTICK_WGI,
     doc: Some(
-        "A variable controlling whether Windows.Gaming.Input should be used for\ncontroller handling.\n\nThe variable can be set to the following values:\n\n- \"0\": WGI is not used.\n- \"1\": WGI is used. (default)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable controlling whether Windows.Gaming.Input should be used for\ncontroller handling.\n\nThe variable can be set to the following values:\n\n- \"0\": WGI is not used. (default)\n- \"1\": WGI is used.\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };

@@ -1,7 +1,7 @@
 # sdl3-sys: Low level Rust bindings for SDL 3
 
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
-This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.22`, inclusive.
+This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.2.24`, inclusive.
 
 Many types can be initialized to all zero with the `Default` trait for convenience.
 However, many of these aren't valid when passed to SDL without further modification.
@@ -83,7 +83,7 @@ for these types unless otherwise specified.
 | ------- | ----------- |
 | `use-ash-v0-38` | Use Vulkan types from the `ash` crate (v0.38). |
 | `use-libc-v0-2` | Use `wchar_t` type from the `libc` crate (v0.2). By default `sdl3-sys` will alias `wchar_t` to `u16` on Windows and `u32` otherwise. |
-| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59</li><li>`use-windows-sys-v0-60`: v0.60</li></ul> |
+| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59 or compatible (currently 0.59..=0.61</li></ul> |
 | `use-x11-v2` | Use X11 types from the `x11` crate (v2). |
 | `use-x11-dl-v2` | Use X11 types from the `x11-dl` crate (v2). |
 
@@ -126,6 +126,11 @@ These features are mutually exclusive. Features higher in this list override lat
     - Add `SDL_Event::event_type()`
     - Add `display-impls` feature
     - MSRV 1.85
+
+- 0.5.6:
+    - Update SDL to 3.2.24
+    - Fix an issue where creating symlinks after a build could fail
+    - Support windows-sys 0.61 (compatible with 0.59 and 0.60)
 
 - 0.5.5:
     - Update SDL to 3.2.22
