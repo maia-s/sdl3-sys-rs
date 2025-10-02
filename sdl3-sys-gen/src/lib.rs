@@ -236,7 +236,8 @@ impl Library {
         let src_crate = Crate::new(root, format!("{name}-src"));
         let sys_crate = Crate::new(root, format!("{name}-sys"));
         let lib_name = sys_crate.config("lib_name");
-        let lib_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
+        let lib_rev_name = sys_crate.config("lib_rev_name");
+        let lib_rev_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
         let lib_dir = sys_crate.config("lib_dir");
         let include_dir = sys_crate.config("include_dir");
         let version_header = src_crate
@@ -346,7 +347,7 @@ impl Library {
             } else {
                 todo!()
             };
-        let revision = format!("{lib_name}-{revision_ver}");
+        let revision = format!("{lib_rev_name}-{revision_ver}");
         let revision_meta = revision.replace('_', "-");
 
         patch_file(
@@ -413,7 +414,7 @@ impl Library {
             &[
                 LinesPatch {
                     match_lines: &[&|s| {
-                        s.starts_with("version =") && s.contains(&format!("+{lib_name_meta}-"))
+                        s.starts_with("version =") && s.contains(&format!("+{lib_rev_name_meta}-"))
                     }],
                     apply: &|lines| {
                         let line = &lines[0];
