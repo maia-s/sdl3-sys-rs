@@ -1,5 +1,8 @@
 # Changes
 
+- 0.5.10
+    - Update SDL to 3.2.26
+
 - 0.5.9
     - Fix copy/paste error in 0.5.8 that prevented building from source from working
       (Thanks to Hudson Regis)

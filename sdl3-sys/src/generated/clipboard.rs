@@ -194,11 +194,10 @@ extern "C" {
 ///
 /// ### Return value
 /// Returns a pointer to the data for the provided mime-type. Returning NULL
-///   or setting the length to 0 will cause no data to be sent to the
-///   "receiver". It is up to the receiver to handle this. Essentially
-///   returning no data is more or less undefined behavior and may cause
-///   breakage in receiving applications. The returned data will not be
-///   freed, so it needs to be retained and dealt with internally.
+///   or setting the length to 0 will cause zero length data to be sent
+///   to the "receiver", which should be able to handle this. The
+///   returned data will not be freed, so it needs to be retained and
+///   dealt with internally.
 ///
 /// ### Availability
 /// This function is available since SDL 3.2.0.
