@@ -1,7 +1,9 @@
 # Changes
 
-- next:
-    - Fix an issue where creating symlinks after a build could fail.
+- 0.5.6:
+    - Update SDL to 3.2.24
+    - Fix an issue where creating symlinks after a build could fail
+    - Support windows-sys 0.61 (compatible with 0.59 and 0.60)
 
 - 0.5.5:
     - Update SDL to 3.2.22

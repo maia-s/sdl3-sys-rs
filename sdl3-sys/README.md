@@ -84,7 +84,7 @@ for these types unless otherwise specified.
 | ------- | ----------- |
 | `use-ash-v0-38` | Use Vulkan types from the `ash` crate (v0.38). |
 | `use-libc-v0-2` | Use `wchar_t` type from the `libc` crate (v0.2). By default `sdl3-sys` will alias `wchar_t` to `u16` on Windows and `u32` otherwise. |
-| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59</li><li>`use-windows-sys-v0-60`: v0.60</li></ul> |
+| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59 or compatible (currently 0.59..=0.61</li></ul> |
 | `use-x11-v2` | Use X11 types from the `x11` crate (v2). |
 | `use-x11-dl-v2` | Use X11 types from the `x11-dl` crate (v2). |
 
@@ -115,8 +115,10 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
-- next:
-    - Fix an issue where creating symlinks after a build could fail.
+- 0.5.6:
+    - Update SDL to 3.2.24
+    - Fix an issue where creating symlinks after a build could fail
+    - Support windows-sys 0.61 (compatible with 0.59 and 0.60)
 
 - 0.5.5:
     - Update SDL to 3.2.22
