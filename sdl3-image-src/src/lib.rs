@@ -8,7 +8,7 @@ pub const SOURCE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/SDL_image");
 pub const SOURCE_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "\\SDL_image");
 
 /// Revision
-pub const REVISION: &str = "SDL3_image-release-3.2.4";
+pub const REVISION: &str = "SDL_image-release-3.2.4";
 
 /// Version part of the revision
 pub const VERSION: &str = "3.2.4";

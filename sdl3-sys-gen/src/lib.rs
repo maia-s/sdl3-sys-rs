@@ -172,6 +172,11 @@ impl Library {
         } else {
             format!("{pfx_uc}_{module}")
         };
+        let lib_base_name = if module.is_empty() {
+            pfx_base_uc.clone()
+        } else {
+            format!("{pfx_base_uc}_{module}")
+        };
         let lib_name_meta = lib_name.replace('_', "-"); // version metadata can't have `_`
         let lib_dir = if module.is_empty() {
             pfx_base_uc
@@ -207,14 +212,14 @@ impl Library {
                     (
                         ver.clone(),
                         ver.clone(),
-                        format!("{lib_name}-{revision_tag}"),
+                        format!("{lib_base_name}-{revision_tag}"),
                         format!("{lib_name_meta}-{ver}"),
                     )
                 }
 
                 (_, "0") => {
                     let ver = format!("{version}-{revision_tag_base}");
-                    let rev = format!("{lib_name}-{revision_tag}");
+                    let rev = format!("{lib_base_name}-{revision_tag}");
                     let rev_meta = format!("{lib_name_meta}-{revision_tag}");
                     (format!("{ver}-{revision_offset}"), ver, rev, rev_meta)
                 }
@@ -223,7 +228,7 @@ impl Library {
                     let ver =
                         format!("{version}-{revision_tag_base}-{revision_offset}-{revision_hash}");
                     let rev =
-                        format!("{lib_name}-{revision_tag}-{revision_offset}-{revision_hash}");
+                        format!("{lib_base_name}-{revision_tag}-{revision_offset}-{revision_hash}");
                     let rev_meta =
                         format!("{lib_name_meta}-{revision_tag}-{revision_offset}-{revision_hash}");
                     (ver.clone(), ver, rev, rev_meta)

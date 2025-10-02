@@ -17,7 +17,7 @@ apply_cfg!(#[cfg(doc)] => {
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL3-release-3.2.24".as_ptr();
+    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL-release-3.2.24".as_ptr();
 
 });
 
