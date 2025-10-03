@@ -343,7 +343,7 @@ version = "3.2.24"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.5.6+SDL3-3.2.24"
+version = "0.5.7+SDL3-3.2.24"
 dependencies = [
  "ash",
  "cmake",
