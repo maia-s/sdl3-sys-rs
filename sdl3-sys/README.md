@@ -127,6 +127,9 @@ These features are mutually exclusive. Features higher in this list override lat
     - Add `display-impls` feature
     - MSRV 1.85
 
+- 0.5.7:
+    - Fix docs.rs docs
+
 - 0.5.6:
     - Update SDL to 3.2.24
     - Fix an issue where creating symlinks after a build could fail

@@ -1,7 +1,7 @@
 #![no_std]
 #![deny(unsafe_op_in_unsafe_fn)]
 #![doc = include_str!("../README.md.inc")]
-#![cfg_attr(all(feature = "nightly", doc), feature(doc_auto_cfg))] // https://github.com/rust-lang/rust/issues/43781
+#![cfg_attr(all(feature = "nightly", doc), feature(doc_cfg))] // https://github.com/rust-lang/rust/issues/43781
 #![cfg_attr(feature = "nightly", feature(try_trait_v2))] // https://github.com/rust-lang/rust/issues/84277
 
 #[cfg(feature = "alloc")]
