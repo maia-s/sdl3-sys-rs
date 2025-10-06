@@ -22,7 +22,7 @@ links = "SDL3"
 default = []
 
 # Build and link SDL 3 from source instead of linking a pre-existing library
-build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-src"]
+build-from-source = ["dep:cc", "dep:cmake", "dep:rpkg-config", "dep:sdl3-src"]
 
 # Build and link a static SDL library from source
 build-from-source-static = ["build-from-source", "link-static"]
@@ -90,6 +90,10 @@ no-sdl-gpu-dxvk = []
 no-sdl-libc = []
 no-sdl-rpath = []
 
+# Define SDL_LEAN_AND_MEAN when compiling SDL (disabled by default)
+sdl-lean-and-mean = []
+no-sdl-lean-and-mean = []
+
 [package.metadata.docs.rs]
 all-features = true
 
@@ -119,6 +123,10 @@ optional = true
 [dependencies.x11-dl-v2]
 package = "x11-dl"
 version = "2.21"
+optional = true
+
+[build-dependencies.cc]
+version = "1.2"
 optional = true
 
 [build-dependencies.cmake]

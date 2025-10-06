@@ -65,6 +65,7 @@ Most of these features only work on some targets; don't enable them unless you n
 | `sdl-asan`               | Compile SDL with Address Sanitizer. |
 | `sdl-ccache`             | Compile SDL with Ccache. |
 | `sdl-gpu-dxvk`           | Build SDL GPU with DXVK support. |
+| `sdl-lean-and-mean`      | Define SDL_LEAN_AND_MEAN when building SDL (disabled by default). |
 | `sdl-libc`               | Link SDL with system C library (default). Use `no-sdl-libc` to disable. |
 | `sdl-rpath`              | Set RPATH when linking SDL (default on some targets). Use `no-sdl-rpath` to disable. |
 | `sdl-unix-console-build` | Allow building SDL without X11 or Wayland support on Linux and other targets that usually use X11/Wayland. By default, SDL requires either X11 or Wayland on these targets as a sanity check. |
@@ -114,6 +115,9 @@ These features are mutually exclusive. Features higher in this list override lat
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
 
 ## Recent changes
+
+- next:
+    - Add support for SDL_LEAN_AND_MEAN
 
 - 0.5.7:
     - Fix docs.rs docs
