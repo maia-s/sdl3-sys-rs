@@ -400,6 +400,7 @@ name = "sdl3-sys"
 version = "0.6.0+SDL-3.2.24"
 dependencies = [
  "ash",
+ "cc",
  "cmake",
  "libc",
  "pkg-config",

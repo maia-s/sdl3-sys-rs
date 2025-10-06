@@ -10,6 +10,9 @@
     - Add `display-impls` feature
     - MSRV 1.85
 
+- next:
+    - Add support for SDL_LEAN_AND_MEAN
+
 - 0.5.7:
     - Fix docs.rs docs
 

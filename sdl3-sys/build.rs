@@ -10,6 +10,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         let _ = config;
         #[cfg(feature = "build-from-source")]
         {
+            #[cfg(feature = "sdl-lean-and-mean")]
+            {
+                let mut build = cc::Build::new();
+                build.define("SDL_LEAN_AND_MEAN", "1");
+                config.init_c_cfg(build);
+            }
+
             config.define("SDL_REVISION", sdl3_src::REVISION);
 
             if LINK_FRAMEWORK {
