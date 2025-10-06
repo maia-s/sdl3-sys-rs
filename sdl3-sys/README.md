@@ -54,7 +54,7 @@ convention for libraries. You can change this behaviour with the following featu
 
 When building from source with the `build-from-source` feature flag, you can enable these
 additional features to configure the build. They have no effect when not building from source.
-They correspond to SDL CMake variables, and you can prefix them with `no-` to disable them,
+Most of them correspond to SDL CMake variables. You can prefix them with `no-` to disable them,
 e.g. `no-sdl-libc` to not link with the system C library. If you both enable and disable a
 feature, enable takes precedence.
 
