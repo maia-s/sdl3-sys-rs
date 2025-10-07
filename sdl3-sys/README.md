@@ -85,7 +85,7 @@ for these types unless otherwise specified.
 | ------- | ----------- |
 | `use-ash-v0-38` | Use Vulkan types from the `ash` crate (v0.38). |
 | `use-libc-v0-2` | Use `wchar_t` type from the `libc` crate (v0.2). By default `sdl3-sys` will alias `wchar_t` to `u16` on Windows and `u32` otherwise. |
-| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59 or compatible (currently 0.59..=0.61</li></ul> |
+| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59 or compatible (currently 0.59..=0.61)</li></ul> |
 | `use-x11-v2` | Use X11 types from the `x11` crate (v2). |
 | `use-x11-dl-v2` | Use X11 types from the `x11-dl` crate (v2). |
 
