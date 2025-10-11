@@ -53,6 +53,7 @@ fn skip(module: &str) -> bool {
         "begin_code",
         "close_code",
         "copying",
+        "dlopennote",
         "egl",
         "endian",
         "intrin",
