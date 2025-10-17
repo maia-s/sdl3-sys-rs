@@ -376,6 +376,7 @@ fn build(
 
             #[cfg(not(feature = "link-static"))]
             {
+                #[cfg(unix)]
                 fn safe_symlink(original: impl AsRef<Path>, link: impl AsRef<Path>) -> std::io::Result<()> {
                     let (original, link) = (original.as_ref(), link.as_ref());
                     if link.exists() { std::fs::remove_file(link)?; }
