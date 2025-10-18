@@ -376,6 +376,7 @@ fn build(
 
             #[cfg(not(feature = "link-static"))]
             {
+                #[cfg(unix)]
                 fn safe_symlink(
                     original: impl AsRef<Path>,
                     link: impl AsRef<Path>,
