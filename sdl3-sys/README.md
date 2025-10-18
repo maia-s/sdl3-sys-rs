@@ -116,7 +116,9 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
-- next:
+- 0.5.8:
+    - Fix compiling for Windows and Android when building from source
+      (Thanks to Andrew Minnich and abnormalmaps)
     - Add support for SDL_LEAN_AND_MEAN
 
 - 0.5.7:
