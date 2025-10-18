@@ -54,7 +54,7 @@ convention for libraries. You can change this behaviour with the following featu
 
 When building from source with the `build-from-source` feature flag, you can enable these
 additional features to configure the build. They have no effect when not building from source.
-They correspond to SDL CMake variables, and you can prefix them with `no-` to disable them,
+Most of them correspond to SDL CMake variables. You can prefix them with `no-` to disable them,
 e.g. `no-sdl-libc` to not link with the system C library. If you both enable and disable a
 feature, enable takes precedence.
 
@@ -84,7 +84,7 @@ for these types unless otherwise specified.
 | ------- | ----------- |
 | `use-ash-v0-38` | Use Vulkan types from the `ash` crate (v0.38). |
 | `use-libc-v0-2` | Use `wchar_t` type from the `libc` crate (v0.2). By default `sdl3-sys` will alias `wchar_t` to `u16` on Windows and `u32` otherwise. |
-| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59 or compatible (currently 0.59..=0.61</li></ul> |
+| `use-windows-sys-*` | Use Windows types from the `windows-sys` crate. <ul><li>`use-windows-sys-v0-59`: v0.59 or compatible (currently 0.59..=0.61)</li></ul> |
 | `use-x11-v2` | Use X11 types from the `x11` crate (v2). |
 | `use-x11-dl-v2` | Use X11 types from the `x11-dl` crate (v2). |
 
@@ -128,7 +128,9 @@ These features are mutually exclusive. Features higher in this list override lat
     - Add `display-impls` feature
     - MSRV 1.85
 
-- next:
+- 0.5.8:
+    - Fix compiling for Windows and Android when building from source
+      (Thanks to Andrew Minnich and abnormalmaps)
     - Add support for SDL_LEAN_AND_MEAN
 
 - 0.5.7:

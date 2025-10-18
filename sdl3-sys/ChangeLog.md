@@ -10,7 +10,9 @@
     - Add `display-impls` feature
     - MSRV 1.85
 
-- next:
+- 0.5.8:
+    - Fix compiling for Windows and Android when building from source
+      (Thanks to Andrew Minnich and abnormalmaps)
     - Add support for SDL_LEAN_AND_MEAN
 
 - 0.5.7:
