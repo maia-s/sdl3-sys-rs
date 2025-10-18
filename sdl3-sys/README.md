@@ -116,6 +116,10 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
+- 0.5.9
+    - Fix copy/paste error in 0.5.8 that prevented building from source from working
+      (Thanks to Hudson Regis)
+
 - 0.5.8:
     - Fix compiling for Windows and Android when building from source
       (Thanks to Andrew Minnich and abnormalmaps)
