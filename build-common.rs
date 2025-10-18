@@ -391,7 +391,7 @@ fn build(
                 let toplevel = top_level_cargo_target_dir();
                 if env::var("CARGO_CFG_TARGET_OS").unwrap() == "android" {
                     // Android only provides one libSDL.so binary
-                    let lib = format!("lib{lib_name}.so");
+                    let lib = format!("lib{LIB_NAME}.so");
                     std::fs::copy(out_dir.join("lib").join(&lib), toplevel.join(&lib))?;
                 } else {
                     #[cfg(windows)]
