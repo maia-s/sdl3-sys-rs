@@ -327,7 +327,14 @@ impl Library {
                 match (revision_tag_base, revision_offset) {
                     ("release", "0") => (revision_tag_base, version.clone()),
 
-                    (_, "0") => (revision_tag_base, format!("{version}-{revision_tag}")),
+                    (_, "0") => {
+                        let ver = format!("{version}-{revision_tag}");
+                        if let Some(ver) = ver.strip_suffix(&format!("-{version}")) {
+                            (revision_tag_base, ver.to_owned())
+                        } else {
+                            (revision_tag_base, ver)
+                        }
+                    }
 
                     (_, _) => (
                         revision_tag_base,
