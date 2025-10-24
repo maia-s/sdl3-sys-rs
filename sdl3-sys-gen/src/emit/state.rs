@@ -295,6 +295,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             format!("SDL_{module}_h_"), "SDL_locale_h", "SDL_main_impl_h_",
             format!("SDL_{module}_h_").to_ascii_uppercase(),
             "SDL_TTF_TEXTENGINE_H_",
+            "SDL_ASSERT_FILE",
             "SDL_ASSERT_LEVEL",
             "SDL_AssertBreakpoint",
             "SDL_AtomicDecRef",
@@ -304,6 +305,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_DEFAULT_ASSERT_LEVEL", // !!! FIXME
             "SDL_DEFINE_STDBOOL",
             "SDL_EndThreadFunction",
+            "SDL_FILE",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
             "SDL_INCLUDE_STDBOOL_H",
             "SDL_INTERNAL",
