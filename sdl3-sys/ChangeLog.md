@@ -1,6 +1,7 @@
 # Changes
 
-- 0.6.0 WIP:
+- 0.6.0-pre-0:
+    - Update SDL to preview-3.3.2
     - Make IDs and flag types newtypes
     - Add metadata
     - Remove deprecated aliases
