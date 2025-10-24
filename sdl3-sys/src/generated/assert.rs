@@ -116,7 +116,21 @@ apply_cfg!(#[cfg(doc)] => {
 apply_cfg!(#[cfg(not(doc))] => {
 });
 
-// [sdl3-sys-gen] skipped constant value define `SDL_ASSERT_FILE`
+apply_cfg!(#[cfg(doc)] => {
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+});
+
+apply_cfg!(#[cfg(doc)] => {
+    // [sdl3-sys-gen] skipped constant value define `SDL_ASSERT_FILE`
+
+});
+
+apply_cfg!(#[cfg(not(doc))] => {
+    // [sdl3-sys-gen] skipped constant value define `SDL_ASSERT_FILE`
+
+});
 
 apply_cfg!(#[cfg(doc)] => {
 });

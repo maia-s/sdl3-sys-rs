@@ -10,6 +10,9 @@ apply_cfg!(#[cfg(doc)] => {
     /// clue in debugging forensics and not something the app will parse in any
     /// way.
     ///
+    /// SDL_revision.h must be included in your program explicitly if you want
+    /// access to the [`SDL_REVISION`] constant.
+    ///
     /// ## Availability
     /// This macro is available since SDL 3.2.0.
     pub const SDL_REVISION: *const ::core::ffi::c_char = c"Some arbitrary string decided at SDL build time".as_ptr();
@@ -17,7 +20,7 @@ apply_cfg!(#[cfg(doc)] => {
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL-3.3.2-preview".as_ptr();
+    pub const SDL_REVISION: *const ::core::ffi::c_char = c"SDL-3.3.4-prerelease".as_ptr();
 
 });
 

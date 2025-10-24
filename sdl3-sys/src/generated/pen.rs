@@ -13,12 +13,28 @@
 //! - [`SDL_EVENT_PEN_BUTTON_DOWN`], [`SDL_EVENT_PEN_BUTTON_UP`] ([`SDL_PenButtonEvent`])
 //! - [`SDL_EVENT_PEN_AXIS`] ([`SDL_PenAxisEvent`])
 //!
-//! When a pen starts providing input, SDL will assign it a unique [`SDL_PenID`],
-//! which will remain for the life of the process, as long as the pen stays
-//! connected.
-//!
 //! Pens may provide more than simple touch input; they might have other axes,
 //! such as pressure, tilt, rotation, etc.
+//!
+//! When a pen starts providing input, SDL will assign it a unique [`SDL_PenID`],
+//! which will remain for the life of the process, as long as the pen stays
+//! connected. A pen leaving proximity (being taken far enough away from the
+//! digitizer tablet that it no longer reponds) and then coming back should
+//! fire proximity events, but the [`SDL_PenID`] should remain consistent.
+//! Unplugging the digitizer and reconnecting may cause future input to have a
+//! new [`SDL_PenID`], as SDL may not know that this is the same hardware.
+//!
+//! Please note that various platforms vary wildly in how (and how well) they
+//! support pen input. If your pen supports some piece of functionality but SDL
+//! doesn't seem to, it might actually be the operating system's fault. For
+//! example, some platforms can manage multiple devices at the same time, but
+//! others will make any connected pens look like a single logical device, much
+//! how all USB mice connected to a computer will move the same system cursor.
+//! cursor. Other platforms might not support pen buttons, or the distance
+//! axis, etc. Very few platforms can even report _what_ functionality the pen
+//! supports in the first place, so best practices is to either build UI to let
+//! the user configure their pens, or be prepared to handle new functionality
+//! for a pen the first time an event is reported.
 
 use super::stdinc::*;
 
@@ -32,7 +48,12 @@ use super::touch::*;
 ///
 /// These show up in pen events when SDL sees input from them. They remain
 /// consistent as long as SDL can recognize a tool to be the same pen; but if a
-/// pen physically leaves the area and returns, it might get a new ID.
+/// pen's digitizer table is physically detached from the computer, it might
+/// get a new ID when reconnected, as SDL won't know it's the same device.
+///
+/// These IDs are only stable within a single run of a program; the next time a
+/// program is run, the pen's ID will likely be different, even if the hardware
+/// hasn't been disconnected, etc.
 ///
 /// ## Availability
 /// This datatype is available since SDL 3.2.0.
@@ -95,6 +116,7 @@ pub const SDL_PEN_TOUCHID: SDL_TouchID = SDL_TouchID((-2_i32 as Uint64));
 /// | [`BUTTON_4`](SDL_PenInputFlags::BUTTON_4) | [`SDL_PEN_INPUT_BUTTON_4`] | button 4 is pressed |
 /// | [`BUTTON_5`](SDL_PenInputFlags::BUTTON_5) | [`SDL_PEN_INPUT_BUTTON_5`] | button 5 is pressed |
 /// | [`ERASER_TIP`](SDL_PenInputFlags::ERASER_TIP) | [`SDL_PEN_INPUT_ERASER_TIP`] | eraser tip is used |
+/// | [`IN_PROXIMITY`](SDL_PenInputFlags::IN_PROXIMITY) | [`SDL_PEN_INPUT_IN_PROXIMITY`] | pen is in proximity (since SDL 3.4.0) |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
 pub struct SDL_PenInputFlags(pub Uint32);
@@ -182,6 +204,16 @@ impl ::core::fmt::Debug for SDL_PenInputFlags {
             first = false;
             write!(f, "ERASER_TIP")?;
         }
+        let all_bits = all_bits | Self::IN_PROXIMITY.0;
+        if (Self::IN_PROXIMITY != 0 || self.0 == 0)
+            && *self & Self::IN_PROXIMITY == Self::IN_PROXIMITY
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "IN_PROXIMITY")?;
+        }
 
         if self.0 & !all_bits != 0 {
             if !first {
@@ -267,6 +299,8 @@ impl SDL_PenInputFlags {
     pub const BUTTON_5: Self = Self((32_u32 as Uint32));
     /// eraser tip is used
     pub const ERASER_TIP: Self = Self((1073741824_u32 as Uint32));
+    /// pen is in proximity (since SDL 3.4.0)
+    pub const IN_PROXIMITY: Self = Self((2147483648_u32 as Uint32));
 }
 
 /// pen is pressed down
@@ -283,6 +317,8 @@ pub const SDL_PEN_INPUT_BUTTON_4: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_
 pub const SDL_PEN_INPUT_BUTTON_5: SDL_PenInputFlags = SDL_PenInputFlags::BUTTON_5;
 /// eraser tip is used
 pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = SDL_PenInputFlags::ERASER_TIP;
+/// pen is in proximity (since SDL 3.4.0)
+pub const SDL_PEN_INPUT_IN_PROXIMITY: SDL_PenInputFlags = SDL_PenInputFlags::IN_PROXIMITY;
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PenInputFlags {

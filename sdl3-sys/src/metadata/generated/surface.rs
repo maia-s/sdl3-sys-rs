@@ -47,6 +47,15 @@ pub const METADATA_SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_SURFACE_ROTATION_NUMBER: Property = Property {
+    module: "surface",
+    name: "SDL_PROP_SURFACE_ROTATION_NUMBER",
+    short_name: "SURFACE_ROTATION_NUMBER",
+    value: crate::surface::SDL_PROP_SURFACE_ROTATION_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_SurfaceFlags: Group = Group {
     module: "surface",
     kind: GroupKind::Flags,

@@ -2466,8 +2466,8 @@ unsafe extern "C" {
     /// - `event`: the event to modify.
     ///
     /// ## Return value
-    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
-    ///   information.
+    /// Returns true if the event is converted or doesn't need conversion, or
+    ///   false on failure; call [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
     /// This function should only be called on the main thread.

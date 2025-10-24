@@ -9,9 +9,9 @@ pub const METADATA_SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: Property = 
     value: crate::video::SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER,
     ty: PropertyType::POINTER,
     doc: Some(
-        "The pointer to the global `wl_display` object used by the Wayland video\nbackend.\n\nCan be set before the video subsystem is initialized to import an external\n`wl_display` object from an application or toolkit for use in SDL, or read\nafter initialization to export the `wl_display` used by the Wayland video\nbackend. Setting this property after the video subsystem has been\ninitialized has no effect, and reading it when the video subsystem is\nuninitialized will either return the user provided value, if one was set\nprior to initialization, or NULL. See docs/README-wayland.md for more\ninformation.\n",
+        "The pointer to the global `wl_display` object used by the Wayland video\nbackend.\n\nCan be set before the video subsystem is initialized to import an external\n`wl_display` object from an application or toolkit for use in SDL, or read\nafter initialization to export the `wl_display` used by the Wayland video\nbackend. Setting this property after the video subsystem has been\ninitialized has no effect, and reading it when the video subsystem is\nuninitialized will either return the user provided value, if one was set\nprior to initialization, or NULL. See docs/README-wayland.md for more\ninformation.\n\n## Availability\nThis macro is available since SDL 3.2.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
 pub const METADATA_SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN: Property = Property {
     module: "video",
@@ -36,6 +36,15 @@ pub const METADATA_SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER: Property = Proper
     name: "SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER",
     short_name: "DISPLAY_WAYLAND_WL_OUTPUT_POINTER",
     value: crate::video::SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER: Property = Property {
+    module: "video",
+    name: "SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER",
+    short_name: "DISPLAY_WINDOWS_HMONITOR_POINTER",
+    value: crate::video::SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER,
     ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
@@ -297,6 +306,15 @@ pub const METADATA_SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: Property = Propert
     name: "SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER",
     short_name: "WINDOW_CREATE_COCOA_VIEW_POINTER",
     value: crate::video::SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER: Property = Property {
+    module: "video",
+    name: "SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER",
+    short_name: "WINDOW_CREATE_WINDOWSCENE_POINTER",
+    value: crate::video::SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER,
     ty: PropertyType::POINTER,
     doc: None,
     available_since: None,
@@ -1240,7 +1258,9 @@ pub const METADATA_SDL_GLAttr: Group = Group {
         GroupValue {
             name: "SDL_GL_FRAMEBUFFER_SRGB_CAPABLE",
             short_name: "FRAMEBUFFER_SRGB_CAPABLE",
-            doc: Some("requests sRGB capable visual; defaults to 0.\n"),
+            doc: Some(
+                "requests sRGB-capable visual if 1. Defaults to -1 (\"don't care\"). This is a request; GL drivers might not comply!\n",
+            ),
             available_since: None,
         },
         GroupValue {

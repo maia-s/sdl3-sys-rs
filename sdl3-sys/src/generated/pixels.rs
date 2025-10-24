@@ -1300,7 +1300,7 @@ pub const fn SDL_ISPIXELFORMAT_ARRAY(format: SDL_PixelFormat) -> ::core::primiti
 /// - `format`: an [`SDL_PixelFormat`] to check.
 ///
 /// ## Return value
-/// Returns true if the format is 10-bit, false otherwise.
+/// Returns true if the format is a floating point, false otherwise.
 ///
 /// ## Thread safety
 /// It is safe to call this macro from any thread.

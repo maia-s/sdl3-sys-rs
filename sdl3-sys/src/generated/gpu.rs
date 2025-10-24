@@ -5344,7 +5344,7 @@ unsafe extern "C" {
     /// - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN`]\: The app is able to
     ///   provide Metal shader libraries if applicable.
     ///
-    /// With the D3D12 renderer:
+    /// With the D3D12 backend:
     ///
     /// - [`SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING`]\: the prefix to
     ///   use for all vertex semantics, default is "TEXCOORD".
@@ -5356,6 +5356,20 @@ unsafe extern "C" {
     ///   useful for targeting Intel Haswell and Broadwell GPUs; other hardware
     ///   either supports Tier 2 Resource Binding or does not support D3D12 in any
     ///   capacity. Defaults to false.
+    ///
+    /// With the Vulkan backend:
+    ///
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN`]\:
+    ///   By default, Vulkan device enumeration includes drivers of all types,
+    ///   including software renderers (for example, the Lavapipe Mesa driver).
+    ///   This can be useful if your application _requires_ SDL_GPU, but if you can
+    ///   provide your own fallback renderer (for example, an OpenGL renderer) this
+    ///   property can be set to true. Defaults to false.
+    /// - [`SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER`]\: a pointer to an
+    ///   [`SDL_GPUVulkanOptions`] structure to be processed during device creation.
+    ///   This allows configuring a variety of Vulkan-specific options such as
+    ///   increasing the API version and opting into extensions aside from the
+    ///   minimal set SDL requires.
     ///
     /// ## Parameters
     /// - `props`: the properties to use.
@@ -5423,6 +5437,55 @@ pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_ALLOW_FEWER_RESOURCE_SLOTS_BOOLEAN:
 
 pub const SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: *const ::core::ffi::c_char =
     c"SDL.gpu.device.create.d3d12.semantic".as_ptr();
+
+pub const SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN:
+    *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.vulkan.requirehardwareacceleration".as_ptr();
+
+pub const SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER: *const ::core::ffi::c_char =
+    c"SDL.gpu.device.create.vulkan.options".as_ptr();
+
+/// A structure specifying additional options when using Vulkan.
+///
+/// When no such structure is provided, SDL will use Vulkan API version 1.0 and
+/// a minimal set of features. The requested API version influences how the
+/// feature_list is processed by SDL. When requesting API version 1.0, the
+/// feature_list is ignored. Only the vulkan_10_phyisical_device_features and
+/// the extension lists are used. When requesting API version 1.1, the
+/// feature_list is scanned for feature structures introduced in Vulkan 1.1.
+/// When requesting Vulkan 1.2 or higher, the feature_list is additionally
+/// scanned for compound feature structs such as
+/// VkPhysicalDeviceVulkan11Features. The device and instance extension lists,
+/// as well as vulkan_10_physical_device_features, are always processed.
+///
+/// ## Availability
+/// This struct is available since SDL 3.4.0.
+#[repr(C)]
+#[cfg_attr(feature = "debug-impls", derive(Debug))]
+pub struct SDL_GPUVulkanOptions {
+    /// The Vulkan API version to request for the instance. Use Vulkan's VK_MAKE_VERSION or VK_MAKE_API_VERSION.
+    pub vulkan_api_version: Uint32,
+    /// Pointer to the first element of a chain of Vulkan feature structs. (Requires API version 1.1 or higher.)
+    pub feature_list: *mut ::core::ffi::c_void,
+    /// Pointer to a VkPhysicalDeviceFeatures struct to enable additional Vulkan 1.0 features.
+    pub vulkan_10_physical_device_features: *mut ::core::ffi::c_void,
+    /// Number of additional device extensions to require.
+    pub device_extension_count: Uint32,
+    /// Pointer to a list of additional device extensions to require.
+    pub device_extension_names: *mut *const ::core::ffi::c_char,
+    /// Number of additional instance extensions to require.
+    pub instance_extension_count: Uint32,
+    /// Pointer to a list of additional instance extensions to require.
+    pub instance_extension_names: *mut *const ::core::ffi::c_char,
+}
+
+impl ::core::default::Default for SDL_GPUVulkanOptions {
+    /// Initialize all fields to zero
+    #[inline(always)]
+    fn default() -> Self {
+        unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() }
+    }
+}
 
 unsafe extern "C" {
     /// Destroys a GPU context previously returned by [`SDL_CreateGPUDevice`].
@@ -6084,6 +6147,12 @@ unsafe extern "C" {
     ///
     /// Useful for debugging.
     ///
+    /// On Direct3D 12, using [`SDL_InsertGPUDebugLabel`] requires
+    /// WinPixEventRuntime.dll to be in your PATH or in the same directory as your
+    /// executable. See
+    /// [here](https://devblogs.microsoft.com/pix/winpixeventruntime/)
+    /// for instructions on how to obtain it.
+    ///
     /// ## Parameters
     /// - `command_buffer`: a command buffer.
     /// - `text`: a UTF-8 string constant to insert as the label.
@@ -6104,6 +6173,11 @@ unsafe extern "C" {
     ///
     /// Each call to [`SDL_PushGPUDebugGroup`] must have a corresponding call to
     /// [`SDL_PopGPUDebugGroup`].
+    ///
+    /// On Direct3D 12, using [`SDL_PushGPUDebugGroup`] requires WinPixEventRuntime.dll
+    /// to be in your PATH or in the same directory as your executable. See
+    /// [here](https://devblogs.microsoft.com/pix/winpixeventruntime/)
+    /// for instructions on how to obtain it.
     ///
     /// On some backends (e.g. Metal), pushing a debug group during a
     /// render/blit/compute pass will create a group that is scoped to the native
@@ -6127,6 +6201,11 @@ unsafe extern "C" {
 
 unsafe extern "C" {
     /// Ends the most-recently pushed debug group.
+    ///
+    /// On Direct3D 12, using [`SDL_PopGPUDebugGroup`] requires WinPixEventRuntime.dll
+    /// to be in your PATH or in the same directory as your executable. See
+    /// [here](https://devblogs.microsoft.com/pix/winpixeventruntime/)
+    /// for instructions on how to obtain it.
     ///
     /// ## Parameters
     /// - `command_buffer`: a command buffer.

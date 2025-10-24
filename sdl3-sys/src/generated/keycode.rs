@@ -17,10 +17,12 @@ use super::scancode::*;
 /// `SDLK_*` constant for those keys that do not generate characters.
 ///
 /// A special exception is the number keys at the top of the keyboard which map
-/// to SDLK_0...SDLK_9 on AZERTY layouts.
+/// by default to SDLK_0...SDLK_9 on AZERTY layouts.
 ///
 /// Keys with the `SDLK_EXTENDED_MASK` bit set do not map to a scancode or
 /// unicode code point.
+///
+/// Many common keycodes are listed below, but this list is not exhaustive.
 ///
 /// ## Availability
 /// This datatype is available since SDL 3.2.0.

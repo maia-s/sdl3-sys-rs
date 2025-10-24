@@ -563,7 +563,7 @@ const _: () = ::core::assert!(
         == (2 * ::core::mem::size_of::<*mut ::core::ffi::c_void>()))
 );
 
-const _: () = ::core::assert!((!(0 as ::core::ffi::c_int) == ((-1_i32) as ::core::ffi::c_int)));
+const _: () = ::core::assert!((!(0 as ::core::ffi::c_int) == (-1_i32 as ::core::ffi::c_int)));
 
 apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_os = "vita"))))] => {
     #[doc(hidden)]
@@ -6556,7 +6556,7 @@ pub unsafe fn SDL_iconv_wchar_utf8(S: *const crate::ffi::c_wchar_t) -> *mut ::co
         SDL_iconv_string(
             c"UTF-8".as_ptr(),
             c"WCHAR_T".as_ptr(),
-            (S as *mut ::core::ffi::c_char),
+            (S as *const ::core::ffi::c_char),
             ((unsafe { SDL_wcslen(S) } + 1_usize)
                 * ::core::mem::size_of::<crate::ffi::c_wchar_t>()),
         )

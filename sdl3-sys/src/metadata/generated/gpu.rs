@@ -148,6 +148,25 @@ pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: Proper
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN:
+    Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN",
+    short_name: "GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER",
+    short_name: "GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER,
+    ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_GPU_DEVICE_NAME_STRING: Property = Property {
     module: "gpu",
     name: "SDL_PROP_GPU_DEVICE_NAME_STRING",

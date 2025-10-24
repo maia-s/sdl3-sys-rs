@@ -123,6 +123,9 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_WindowID {
 /// uninitialized will either return the user provided value, if one was set
 /// prior to initialization, or NULL. See docs/README-wayland.md for more
 /// information.
+///
+/// ## Availability
+/// This macro is available since SDL 3.2.0.
 pub const SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER: *const ::core::ffi::c_char =
     c"SDL.video.wayland.wl_display".as_ptr();
 
@@ -1228,7 +1231,7 @@ pub type SDL_EGLIntArrayCallback = ::core::option::Option<
 /// | [`CONTEXT_FLAGS`](SDL_GLAttr::CONTEXT_FLAGS) | [`SDL_GL_CONTEXT_FLAGS`] | some combination of 0 or more of elements of the [`SDL_GLContextFlag`] enumeration; defaults to 0. |
 /// | [`CONTEXT_PROFILE_MASK`](SDL_GLAttr::CONTEXT_PROFILE_MASK) | [`SDL_GL_CONTEXT_PROFILE_MASK`] | type of GL context (Core, Compatibility, ES). See [`SDL_GLProfile`]; default value depends on platform. |
 /// | [`SHARE_WITH_CURRENT_CONTEXT`](SDL_GLAttr::SHARE_WITH_CURRENT_CONTEXT) | [`SDL_GL_SHARE_WITH_CURRENT_CONTEXT`] | OpenGL context sharing; defaults to 0. |
-/// | [`FRAMEBUFFER_SRGB_CAPABLE`](SDL_GLAttr::FRAMEBUFFER_SRGB_CAPABLE) | [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] | requests sRGB capable visual; defaults to 0. |
+/// | [`FRAMEBUFFER_SRGB_CAPABLE`](SDL_GLAttr::FRAMEBUFFER_SRGB_CAPABLE) | [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] | requests sRGB-capable visual if 1. Defaults to -1 ("don't care"). This is a request; GL drivers might not comply! |
 /// | [`CONTEXT_RELEASE_BEHAVIOR`](SDL_GLAttr::CONTEXT_RELEASE_BEHAVIOR) | [`SDL_GL_CONTEXT_RELEASE_BEHAVIOR`] | sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH. |
 /// | [`CONTEXT_RESET_NOTIFICATION`](SDL_GLAttr::CONTEXT_RESET_NOTIFICATION) | [`SDL_GL_CONTEXT_RESET_NOTIFICATION`] | set context reset notification. See [`SDL_GLContextResetNotification`]; defaults to NO_NOTIFICATION. |
 /// | [`CONTEXT_NO_ERROR`](SDL_GLAttr::CONTEXT_NO_ERROR) | [`SDL_GL_CONTEXT_NO_ERROR`] | |
@@ -1343,7 +1346,7 @@ impl SDL_GLAttr {
     pub const CONTEXT_PROFILE_MASK: Self = Self((20 as ::core::ffi::c_int));
     /// OpenGL context sharing; defaults to 0.
     pub const SHARE_WITH_CURRENT_CONTEXT: Self = Self((21 as ::core::ffi::c_int));
-    /// requests sRGB capable visual; defaults to 0.
+    /// requests sRGB-capable visual if 1. Defaults to -1 ("don't care"). This is a request; GL drivers might not comply!
     pub const FRAMEBUFFER_SRGB_CAPABLE: Self = Self((22 as ::core::ffi::c_int));
     /// sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.
     pub const CONTEXT_RELEASE_BEHAVIOR: Self = Self((23 as ::core::ffi::c_int));
@@ -1398,7 +1401,7 @@ pub const SDL_GL_CONTEXT_FLAGS: SDL_GLAttr = SDL_GLAttr::CONTEXT_FLAGS;
 pub const SDL_GL_CONTEXT_PROFILE_MASK: SDL_GLAttr = SDL_GLAttr::CONTEXT_PROFILE_MASK;
 /// OpenGL context sharing; defaults to 0.
 pub const SDL_GL_SHARE_WITH_CURRENT_CONTEXT: SDL_GLAttr = SDL_GLAttr::SHARE_WITH_CURRENT_CONTEXT;
-/// requests sRGB capable visual; defaults to 0.
+/// requests sRGB-capable visual if 1. Defaults to -1 ("don't care"). This is a request; GL drivers might not comply!
 pub const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE: SDL_GLAttr = SDL_GLAttr::FRAMEBUFFER_SRGB_CAPABLE;
 /// sets context the release behavior. See [`SDL_GLContextReleaseFlag`]; defaults to FLUSH.
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR: SDL_GLAttr = SDL_GLAttr::CONTEXT_RELEASE_BEHAVIOR;
@@ -2180,6 +2183,11 @@ unsafe extern "C" {
     /// - [`SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER`]\: the wl_output associated
     ///   with the display
     ///
+    /// On Windows:
+    ///
+    /// - [`SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER`]\: the monitor handle
+    ///   (HMONITOR) associated with the display
+    ///
     /// ## Parameters
     /// - `displayID`: the instance ID of the display to query.
     ///
@@ -2203,6 +2211,9 @@ pub const SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER: *const ::core::ffi::
 
 pub const SDL_PROP_DISPLAY_WAYLAND_WL_OUTPUT_POINTER: *const ::core::ffi::c_char =
     c"SDL.display.wayland.wl_output".as_ptr();
+
+pub const SDL_PROP_DISPLAY_WINDOWS_HMONITOR_POINTER: *const ::core::ffi::c_char =
+    c"SDL.display.windows.hmonitor".as_ptr();
 
 unsafe extern "C" {
     /// Get the name of a display in UTF-8 encoding.
@@ -3012,6 +3023,12 @@ unsafe extern "C" {
     /// - [`SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER`]\: the `(__unsafe_unretained)`
     ///   NSView associated with the window, defaults to `[window contentView]`
     ///
+    /// These are additional supported properties on iOS, tvOS, and visionOS:
+    ///
+    /// - [`SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER`]\: the `(__unsafe_unretained)`
+    ///   UIWindowScene associated with the window, defaults to the active window
+    ///   scene.
+    ///
     /// These are additional supported properties on Wayland:
     ///
     /// - [`SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN`] - true if
@@ -3183,6 +3200,9 @@ pub const SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER: *const ::core::ffi::c_cha
 
 pub const SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER: *const ::core::ffi::c_char =
     c"SDL.window.create.cocoa.view".as_ptr();
+
+pub const SDL_PROP_WINDOW_CREATE_WINDOWSCENE_POINTER: *const ::core::ffi::c_char =
+    c"SDL.window.create.uikit.windowscene".as_ptr();
 
 pub const SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL.window.create.wayland.surface_role_custom".as_ptr();
@@ -3799,6 +3819,7 @@ unsafe extern "C" {
     /// - [`SDL_GetRenderOutputSize`]
     /// - [`SDL_GetWindowSizeInPixels`]
     /// - [`SDL_SetWindowSize`]
+    /// - [`SDL_EVENT_WINDOW_RESIZED`]
     pub fn SDL_GetWindowSize(
         window: *mut SDL_Window,
         w: *mut ::core::ffi::c_int,

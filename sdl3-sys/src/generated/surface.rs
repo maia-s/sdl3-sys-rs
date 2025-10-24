@@ -633,6 +633,12 @@ unsafe extern "C" {
     ///   left edge of the image, if this surface is being used as a cursor.
     /// - [`SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER`]\: the hotspot pixel offset from the
     ///   top edge of the image, if this surface is being used as a cursor.
+    /// - [`SDL_PROP_SURFACE_ROTATION_NUMBER`]\: the number of degrees a surface's
+    ///   data is meant to be rotated clockwise to make the image right-side up.
+    ///   Default 0. This is used by the camera API, if a mobile device is oriented
+    ///   differently than what its camera provides (i.e. - the camera always
+    ///   provides portrait images but the phone is being held in landscape
+    ///   orientation). Since SDL 3.4.0.
     ///
     /// ## Parameters
     /// - `surface`: the [`SDL_Surface`] structure to query.
@@ -663,6 +669,9 @@ pub const SDL_PROP_SURFACE_HOTSPOT_X_NUMBER: *const ::core::ffi::c_char =
 
 pub const SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: *const ::core::ffi::c_char =
     c"SDL.surface.hotspot.y".as_ptr();
+
+pub const SDL_PROP_SURFACE_ROTATION_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.surface.rotation".as_ptr();
 
 unsafe extern "C" {
     /// Set the colorspace used by a surface.
@@ -983,6 +992,61 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
+    /// Load a BMP or PNG image from a seekable SDL data stream.
+    ///
+    /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
+    /// will result in a memory leak.
+    ///
+    /// ## Parameters
+    /// - `src`: the data stream for the surface.
+    /// - `closeio`: if true, calls [`SDL_CloseIO()`] on `src` before returning, even
+    ///   in the case of an error.
+    ///
+    /// ## Return value
+    /// Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_DestroySurface`]
+    /// - [`SDL_LoadSurface`]
+    pub fn SDL_LoadSurface_IO(
+        src: *mut SDL_IOStream,
+        closeio: ::core::primitive::bool,
+    ) -> *mut SDL_Surface;
+}
+
+unsafe extern "C" {
+    /// Load a BMP or PNG image from a file.
+    ///
+    /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
+    /// will result in a memory leak.
+    ///
+    /// ## Parameters
+    /// - `file`: the file to load.
+    ///
+    /// ## Return value
+    /// Returns a pointer to a new [`SDL_Surface`] structure or NULL on failure; call
+    ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_DestroySurface`]
+    /// - [`SDL_LoadSurface_IO`]
+    pub fn SDL_LoadSurface(file: *const ::core::ffi::c_char) -> *mut SDL_Surface;
+}
+
+unsafe extern "C" {
     /// Load a BMP image from a seekable SDL data stream.
     ///
     /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
@@ -1111,6 +1175,10 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Load a PNG image from a seekable SDL data stream.
     ///
+    /// This is intended as a convenience function for loading images from trusted
+    /// sources. If you want to load arbitrary images you should use libpng or
+    /// another image loading library designed with security in mind.
+    ///
     /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
     /// will result in a memory leak.
     ///
@@ -1141,6 +1209,10 @@ unsafe extern "C" {
 
 unsafe extern "C" {
     /// Load a PNG image from a file.
+    ///
+    /// This is intended as a convenience function for loading images from trusted
+    /// sources. If you want to load arbitrary images you should use libpng or
+    /// another image loading library designed with security in mind.
     ///
     /// The new surface should be freed with [`SDL_DestroySurface()`]. Not doing so
     /// will result in a memory leak.

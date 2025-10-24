@@ -398,7 +398,7 @@ pub const METADATA_SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT: Hint = Hint {
     short_name: "EMSCRIPTEN_FILL_DOCUMENT",
     value: crate::hints::SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT,
     doc: Some(
-        "Dictate that newly-created windows will fill the whole browser window.\n\nThe canvas element fills the entire document. Resize events will be\ngenerated as the browser window is resized, as that will adjust the canvas\nsize as well. The canvas will cover anything else on the page, including\nany controls provided by Emscripten in its generated HTML file. Often times\nthis is desirable for a browser-based game, but it means several things\nthat we expect of an SDL window on other platforms might not work as\nexpected, such as minimum window sizes and aspect ratios.\n\nThis hint overrides [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]\nproperties when creating an SDL window.\n\nThis hint only applies to the emscripten platform.\n\nThis hint should be set before creating a window.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+        "Dictate that windows on Emscripten will fill the whole browser window.\n\nWhen enabled, the canvas element fills the entire document. Resize events\nwill be generated as the browser window is resized, as that will adjust the\ncanvas size as well. The canvas will cover anything else on the page,\nincluding any controls provided by Emscripten in its generated HTML file\n(in fact, any elements on the page that aren't the canvas will be moved\ninto a hidden `div` element).\n\nOften times this is desirable for a browser-based game, but it means\nseveral things that we expect of an SDL window on other platforms might not\nwork as expected, such as minimum window sizes and aspect ratios.\n\nThis hint overrides [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]\nproperties when creating an SDL window.\n\nThis hint only applies to the Emscripten platform.\n\nThis hint can be set at any time (before creating the window, or to toggle\nits state later). Only one window can fill the document at a time.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
@@ -1432,6 +1432,16 @@ pub const METADATA_SDL_HINT_MAC_SCROLL_MOMENTUM: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_MAC_PRESS_AND_HOLD: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_MAC_PRESS_AND_HOLD",
+    short_name: "MAC_PRESS_AND_HOLD",
+    value: crate::hints::SDL_HINT_MAC_PRESS_AND_HOLD,
+    doc: Some(
+        "A variable controlling whether holding down a key will repeat the pressed\nkey or open the accents menu on macOS.\n\nThe variable can be set to the following values:\n\n- \"0\": Holding a key will open the accents menu for that key.\n- \"1\": Holding a key will repeat the pressed key. (default)\n\nThis hint needs to be set before [`SDL_Init()`].\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+};
 pub const METADATA_SDL_HINT_MAIN_CALLBACK_RATE: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_MAIN_CALLBACK_RATE",
@@ -2451,6 +2461,16 @@ pub const METADATA_SDL_HINT_WINDOWS_RAW_KEYBOARD: Hint = Hint {
         "A variable controlling whether raw keyboard events are used on Windows.\n\nThe variable can be set to the following values:\n\n- \"0\": The Windows message loop is used for keyboard events. (default)\n- \"1\": Low latency raw keyboard events are used.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS",
+    short_name: "WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS",
+    value: crate::hints::SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS,
+    doc: Some(
+        "A variable controlling whether or not the RIDEV_NOHOTKEYS flag is set when\nenabling Windows raw keyboard events.\n\nThis blocks any hotkeys that have been registered by applications from\nhaving any effect beyond generating raw WM_INPUT events.\n\nThis flag does not affect system-hotkeys like ALT-TAB or CTRL-ALT-DEL, but\ndoes affect the Windows Logo key since it is a userland hotkey registered\nby explorer.exe.\n\nThe variable can be set to the following values:\n\n- \"0\": Hotkeys are not excluded. (default)\n- \"1\": Hotkeys are excluded.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL: Hint = Hint {
     module: "hints",

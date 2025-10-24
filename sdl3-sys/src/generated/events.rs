@@ -1659,6 +1659,9 @@ pub struct SDL_PinchFingerEvent {
 /// is there." The pen touching and lifting off from the tablet while not
 /// leaving the area are handled by [`SDL_EVENT_PEN_DOWN`] and [`SDL_EVENT_PEN_UP`].
 ///
+/// Not all platforms have a window associated with the pen during proximity
+/// events. Some wait until motion/button/etc events to offer this info.
+///
 /// ## Availability
 /// This struct is available since SDL 3.2.0.
 #[repr(C)]

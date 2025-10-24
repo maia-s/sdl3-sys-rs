@@ -393,11 +393,11 @@ version = "0.2.0"
 
 [[package]]
 name = "sdl3-src"
-version = "3.3.2-preview"
+version = "3.3.4-prerelease"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.6.0-pre-0+SDL-3.3.2-preview"
+version = "0.6.0-pre-0+SDL-3.3.4-prerelease"
 dependencies = [
  "ash",
  "cc",

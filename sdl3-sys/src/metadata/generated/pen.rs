@@ -8,7 +8,7 @@ pub const METADATA_SDL_PenID: Group = Group {
     name: "SDL_PenID",
     short_name: "PenID",
     doc: Some(
-        "SDL pen instance IDs.\n\nZero is used to signify an invalid/null device.\n\nThese show up in pen events when SDL sees input from them. They remain\nconsistent as long as SDL can recognize a tool to be the same pen; but if a\npen physically leaves the area and returns, it might get a new ID.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
+        "SDL pen instance IDs.\n\nZero is used to signify an invalid/null device.\n\nThese show up in pen events when SDL sees input from them. They remain\nconsistent as long as SDL can recognize a tool to be the same pen; but if a\npen's digitizer table is physically detached from the computer, it might\nget a new ID when reconnected, as SDL won't know it's the same device.\n\nThese IDs are only stable within a single run of a program; the next time a\nprogram is run, the pen's ID will likely be different, even if the hardware\nhasn't been disconnected, etc.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[],
@@ -63,6 +63,12 @@ pub const METADATA_SDL_PenInputFlags: Group = Group {
             name: "SDL_PEN_INPUT_ERASER_TIP",
             short_name: "ERASER_TIP",
             doc: Some("eraser tip is used\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_PEN_INPUT_IN_PROXIMITY",
+            short_name: "IN_PROXIMITY",
+            doc: Some("pen is in proximity (since SDL 3.4.0)\n"),
             available_since: None,
         },
     ],

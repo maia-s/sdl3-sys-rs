@@ -748,22 +748,26 @@ pub const SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR: *const ::core::ffi::c_char =
 pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: *const ::core::ffi::c_char =
     c"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT".as_ptr();
 
-/// Dictate that newly-created windows will fill the whole browser window.
+/// Dictate that windows on Emscripten will fill the whole browser window.
 ///
-/// The canvas element fills the entire document. Resize events will be
-/// generated as the browser window is resized, as that will adjust the canvas
-/// size as well. The canvas will cover anything else on the page, including
-/// any controls provided by Emscripten in its generated HTML file. Often times
-/// this is desirable for a browser-based game, but it means several things
-/// that we expect of an SDL window on other platforms might not work as
-/// expected, such as minimum window sizes and aspect ratios.
+/// When enabled, the canvas element fills the entire document. Resize events
+/// will be generated as the browser window is resized, as that will adjust the
+/// canvas size as well. The canvas will cover anything else on the page,
+/// including any controls provided by Emscripten in its generated HTML file
+/// (in fact, any elements on the page that aren't the canvas will be moved
+/// into a hidden `div` element).
+///
+/// Often times this is desirable for a browser-based game, but it means
+/// several things that we expect of an SDL window on other platforms might not
+/// work as expected, such as minimum window sizes and aspect ratios.
 ///
 /// This hint overrides [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]
 /// properties when creating an SDL window.
 ///
-/// This hint only applies to the emscripten platform.
+/// This hint only applies to the Emscripten platform.
 ///
-/// This hint should be set before creating a window.
+/// This hint can be set at any time (before creating the window, or to toggle
+/// its state later). Only one window can fill the document at a time.
 ///
 /// ## Availability
 /// This hint is available since SDL 3.4.0.
@@ -2561,6 +2565,21 @@ pub const SDL_HINT_MAC_OPTION_AS_ALT: *const ::core::ffi::c_char =
 pub const SDL_HINT_MAC_SCROLL_MOMENTUM: *const ::core::ffi::c_char =
     c"SDL_MAC_SCROLL_MOMENTUM".as_ptr();
 
+/// A variable controlling whether holding down a key will repeat the pressed
+/// key or open the accents menu on macOS.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Holding a key will open the accents menu for that key.
+/// - "1": Holding a key will repeat the pressed key. (default)
+///
+/// This hint needs to be set before [`SDL_Init()`].
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
+pub const SDL_HINT_MAC_PRESS_AND_HOLD: *const ::core::ffi::c_char =
+    c"SDL_MAC_PRESS_AND_HOLD".as_ptr();
+
 /// Request [`SDL_AppIterate()`] be called at a specific rate.
 ///
 /// If this is set to a number, it represents Hz, so "60" means try to iterate
@@ -4294,6 +4313,28 @@ pub const SDL_HINT_WINDOWS_GAMEINPUT: *const ::core::ffi::c_char =
 /// This hint is available since SDL 3.2.0.
 pub const SDL_HINT_WINDOWS_RAW_KEYBOARD: *const ::core::ffi::c_char =
     c"SDL_WINDOWS_RAW_KEYBOARD".as_ptr();
+
+/// A variable controlling whether or not the RIDEV_NOHOTKEYS flag is set when
+/// enabling Windows raw keyboard events.
+///
+/// This blocks any hotkeys that have been registered by applications from
+/// having any effect beyond generating raw WM_INPUT events.
+///
+/// This flag does not affect system-hotkeys like ALT-TAB or CTRL-ALT-DEL, but
+/// does affect the Windows Logo key since it is a userland hotkey registered
+/// by explorer.exe.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Hotkeys are not excluded. (default)
+/// - "1": Hotkeys are excluded.
+///
+/// This hint can be set anytime.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
+pub const SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS: *const ::core::ffi::c_char =
+    c"SDL_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS".as_ptr();
 
 /// A variable controlling whether SDL uses Kernel Semaphores on Windows.
 ///
