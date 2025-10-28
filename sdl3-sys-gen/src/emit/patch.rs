@@ -2,9 +2,9 @@ use super::{
     Cfg, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, StructSym, SymKind, Value,
 };
 use crate::parse::{
-    Block, CanCmp, CanDefault, Define, DefineValue, Expr, FnCall, Function, GetSpan, Ident,
-    IdentOrKw, Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral, StructOrUnion,
-    Type, TypeDef, TypeDefKind, TypeEnum,
+    Block, CanCmp, CanDefault, Define, DefineValue, Expr, ExprNoCommaOrType, FnCall, Function,
+    GetSpan, Ident, IdentOrKw, Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral,
+    StructOrUnion, Type, TypeDef, TypeDefKind, TypeEnum,
 };
 use core::fmt::Write;
 use std::ffi::CString;
@@ -763,7 +763,7 @@ pub fn patch_emit_macro_call(
                 Ok(true)
             }
             ("vulkan", "VK_DEFINE_HANDLE") => {
-                let Expr::Ident(arg) = &call.args[0] else {
+                let Expr::Ident(arg) = &call.args[0].expr()? else {
                     unreachable!()
                 };
                 let name = arg.as_str().strip_prefix("Vk").unwrap();
@@ -806,7 +806,7 @@ pub fn patch_emit_macro_call(
                 Ok(true)
             }
             ("vulkan", "VK_DEFINE_NON_DISPATCHABLE_HANDLE") => {
-                let Expr::Ident(arg) = &call.args[0] else {
+                let Expr::Ident(arg) = &call.args[0].expr()? else {
                     panic!()
                 };
                 let name = arg.as_str().strip_prefix("Vk").unwrap();
@@ -877,7 +877,7 @@ pub fn patch_eval_macro_call(
             if args.len() != 1 {
                 return err();
             }
-            let Expr::Ident(define) = &args[0] else {
+            let ExprNoCommaOrType::ExprNoComma(Expr::Ident(define)) = &args[0] else {
                 return err();
             };
             let define = define.clone().try_into()?;
@@ -889,7 +889,7 @@ pub fn patch_eval_macro_call(
                 Ok(Some(Value::Bool(false)))
             }
         }
-        "SDL_COMPILE_TIME_ASSERT" => match call.args[1].try_eval(ctx)? {
+        "SDL_COMPILE_TIME_ASSERT" => match call.args[1].expr()?.try_eval(ctx)? {
             Some(Value::RustCode(mut rc)) if call.args.len() == 2 => {
                 rc.value.insert_str(0, "::core::assert!(");
                 rc.value.push(')');
@@ -910,7 +910,7 @@ pub fn patch_eval_macro_call(
             if args.len() != 1 {
                 return err();
             }
-            let Expr::Ident(builtin) = &args[0] else {
+            let Expr::Ident(builtin) = &args[0].expr()? else {
                 return err();
             };
             Ok(Some(Value::Bool(match builtin.as_str() {
@@ -920,7 +920,7 @@ pub fn patch_eval_macro_call(
         }
         "SDL_SINT64_C" => {
             assert!(call.args.len() == 1);
-            let Some(arg) = call.args[0].try_eval(ctx)? else {
+            let Some(arg) = call.args[0].expr()?.try_eval(ctx)? else {
                 return Ok(None);
             };
             Ok(Some(match arg {
@@ -933,7 +933,7 @@ pub fn patch_eval_macro_call(
         }
         "SDL_UINT64_C" => {
             assert!(call.args.len() == 1);
-            let Some(arg) = call.args[0].try_eval(ctx)? else {
+            let Some(arg) = call.args[0].expr()?.try_eval(ctx)? else {
                 return Ok(None);
             };
             Ok(Some(match arg {
@@ -944,6 +944,7 @@ pub fn patch_eval_macro_call(
                 _ => todo!(),
             }))
         }
+        "SDL_const_cast" | "SDL_reinterpret_cast" | "SDL_static_cast" => todo!(),
         _ => Ok(None),
     }
 }

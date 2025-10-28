@@ -6,8 +6,8 @@ use super::{
     WsAndComments,
 };
 use crate::{
-    parse::{Kw_else, Kw_while},
     Defer,
+    parse::{Kw_else, Kw_while},
 };
 use core::iter::FusedIterator;
 use std::borrow::Cow;
@@ -395,6 +395,7 @@ impl Parse for Return {
     }
 }
 
+#[derive(Debug)]
 pub struct StructOrUnionItem(StructOrUnion);
 
 impl Parse for StructOrUnionItem {

@@ -1,9 +1,9 @@
 use crate::parse::is_keyword;
 
 use super::{
-    patch_parsed_define, Ambiguous, Delimited, DocComment, DocCommentPost, EnumVariant, Expr,
-    GetSpan, Ident, IdentOrKw, IntegerLiteral, Item, Items, Literal, Op, Parse, ParseContext,
-    ParseErr, ParseRawRes, Punctuated, Span, Type, TypeDefKind, WsAndComments,
+    Ambiguous, Delimited, DocComment, DocCommentPost, EnumVariant, Expr, GetSpan, Ident, IdentOrKw,
+    IntegerLiteral, Item, Items, Literal, Op, Parse, ParseContext, ParseErr, ParseRawRes,
+    Punctuated, Span, Type, TypeDefKind, WsAndComments, patch_parsed_define,
 };
 use core::{cell::Cell, mem};
 use std::borrow::Cow;
@@ -300,7 +300,7 @@ impl<const ALLOW_INITIAL_ELSE: bool> Parse for PreProcBlock<ALLOW_INITIAL_ELSE> 
                                         return Err(ParseErr::new(
                                             pp.span,
                                             "expected `#endif` after `#else`, got another else",
-                                        ))
+                                        ));
                                     }
 
                                     Some(ConditionalExpr::IfDef(i)) if skip_ifdef(i.as_str()) => {

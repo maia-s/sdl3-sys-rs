@@ -1815,6 +1815,7 @@ impl Eval for FnCall {
                     write!(ctx, "(")?;
                     let mut first = true;
                     for (arg, arg_ty) in self.args.iter().zip(f.args.iter()) {
+                        let arg = arg.expr()?;
                         if !first {
                             write!(ctx, ", ")?;
                         }

@@ -466,6 +466,7 @@ where
     }
 }
 
+#[derive(Debug)]
 struct Terminated<T, Term> {
     value: T,
     #[allow(dead_code)]

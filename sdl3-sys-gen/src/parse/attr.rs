@@ -1,5 +1,6 @@
 use super::{
-    CallArgs, Delimited, Expr, GetSpan, Ident, Op, Parse, ParseContext, Span, WsAndComments,
+    CallArgs, Delimited, ExprNoCommaOrType, GetSpan, Ident, Op, Parse, ParseContext, Span,
+    WsAndComments,
 };
 
 pub const ATTR_ABI: usize = 0;
@@ -15,7 +16,7 @@ pub type FnAttributes = Attributes<ATTR_FN>;
 #[derive(Clone, Debug)]
 pub struct Attribute<const KIND: usize> {
     pub ident: Ident,
-    pub args: Vec<Expr>,
+    pub args: Vec<ExprNoCommaOrType>,
 }
 
 impl<const KIND: usize> GetSpan for Attribute<KIND> {
@@ -43,7 +44,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
                 ATTR_ABI => match ident.as_str() {
                     "__cdecl" | "APIENTRY" | "APIENTRYP" | "EGLAPIENTRY" | "EGLAPIENTRYP"
                     | "GLAPIENTRY" | "GL_APIENTRY" | "GL_APIENTRYP" | "SDLCALL" | "WINAPI" => {
-                        return Ok((rest, Some(Self { ident, args })))
+                        return Ok((rest, Some(Self { ident, args })));
                     }
 
                     "__attribute__" => {
@@ -63,7 +64,7 @@ impl<const KIND: usize> Parse for Attribute<KIND> {
 
                 ATTR_ARG => match ident.as_str() {
                     "SDL_PRINTF_FORMAT_STRING" | "SDL_SCANF_FORMAT_STRING" | "SDL_UNUSED" => {
-                        return Ok((rest, Some(Self { ident, args })))
+                        return Ok((rest, Some(Self { ident, args })));
                     }
 
                     "SDL_IN_BYTECAP" | "SDL_OUT_BYTECAP" | "SDL_INOUT_Z_CAP" | "SDL_OUT_Z_CAP" => {

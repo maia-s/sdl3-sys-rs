@@ -1,6 +1,6 @@
 use super::{
-    CanCmp, CanCopy, Cast, Define, DefineValue, Enum, EnumKind, Expr, Function, GetSpan,
-    ParseContext, ParseErr, PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
+    CanCmp, CanCopy, Define, DefineValue, Enum, EnumKind, Expr, Function, ParseContext, ParseErr,
+    PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
 };
 
 pub fn patch_parsed_define(ctx: &ParseContext, define: &mut Define) -> Result<bool, ParseErr> {
@@ -480,27 +480,6 @@ pub fn patch_parsed_typedef(ctx: &ParseContext, td: &mut TypeDef) -> Result<bool
     }
 }
 
-pub fn patch_parsed_expr(_ctx: &ParseContext, expr: &mut Expr) -> Result<bool, ParseErr> {
-    #[allow(clippy::single_match)]
-    match expr {
-        Expr::FnCall(f) => match &*f.func {
-            Expr::Ident(i) => match i.as_str() {
-                "SDL_const_cast" | "SDL_reinterpret_cast" | "SDL_static_cast" => {
-                    let Expr::Ident(ty) = f.args[0].clone() else {
-                        todo!()
-                    };
-                    *expr = Expr::Cast(Cast::boxed(
-                        f.span(),
-                        Type::ident(ty.try_into().unwrap()),
-                        f.args[1].clone(),
-                    ));
-                    return Ok(true);
-                }
-                _ => (),
-            },
-            _ => (),
-        },
-        _ => (),
-    }
+pub fn patch_parsed_expr(_ctx: &ParseContext, _expr: &mut Expr) -> Result<bool, ParseErr> {
     Ok(false)
 }

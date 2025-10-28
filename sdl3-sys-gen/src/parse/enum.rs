@@ -1,6 +1,7 @@
 use super::{
-    patch_parsed_enum, Conditional, DocComment, Expr, ExprNoComma, GetSpan, Ident, Item, Kw_enum,
-    Op, Parse, ParseContext, ParseErr, ParseRawRes, PreProcBlock, Span, Type, WsAndComments,
+    Conditional, DocComment, Expr, ExprNoComma, GetSpan, Ident, Item, Kw_enum, Op, Parse,
+    ParseContext, ParseErr, ParseRawRes, PreProcBlock, Span, Type, WsAndComments,
+    patch_parsed_enum,
 };
 use core::cell::Cell;
 use std::borrow::Cow;
