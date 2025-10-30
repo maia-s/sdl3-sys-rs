@@ -1,5 +1,6 @@
 use super::{
-    CallArgs, Delimited, Expr, GetSpan, Ident, Op, Parse, ParseContext, Span, WsAndComments,
+    CallArgs, Delimited, ExprNoCommaOrType, GetSpan, Ident, Op, Parse, ParseContext, Span,
+    WsAndComments,
 };
 
 pub const ATTR_ABI: usize = 0;
@@ -15,7 +16,7 @@ pub type FnAttributes = Attributes<ATTR_FN>;
 #[derive(Clone, Debug)]
 pub struct Attribute<const KIND: usize> {
     pub ident: Ident,
-    pub args: Vec<Expr>,
+    pub args: Vec<ExprNoCommaOrType>,
 }
 
 impl<const KIND: usize> GetSpan for Attribute<KIND> {

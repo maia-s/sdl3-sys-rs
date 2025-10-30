@@ -1,8 +1,10 @@
 use super::{
-    patch_parsed_expr, Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Items, Kw_sizeof, Literal, Op, Parse, ParseContext, ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type, WsAndComments
+    patch_parsed_expr, Balanced, Delimited, ExprOp, GetSpan, Ident, IdentOrKw, Items, Kw_sizeof,
+    Literal, Op, Parse, ParseContext, ParseErr, ParseRawRes, Precedence, Punctuated, Span, Type,
+    WsAndComments,
 };
 use crate::emit::Value;
-use std::cmp::Ordering;
+use std::{borrow::Cow, cmp::Ordering};
 
 #[derive(Clone, Debug)]
 pub enum Expr {
@@ -28,7 +30,7 @@ pub enum Expr {
     // only created by VarDecl
     ArrayValues {
         span: Span,
-        values: Vec<Expr>
+        values: Vec<Expr>,
     },
 
     // only created by the emitter
@@ -36,7 +38,8 @@ pub enum Expr {
 }
 
 impl Expr {
-    pub fn try_parse_raw_with_prec(ctx: &ParseContext, 
+    pub fn try_parse_raw_with_prec(
+        ctx: &ParseContext,
         input: &Span,
         prec: Precedence,
         allow_cast: bool,
@@ -69,8 +72,7 @@ impl Expr {
             } else {
                 return Ok((input.clone(), None));
             }
-        } else if let Some(p) = Parenthesized::try_parse(ctx, &mut rest)?
-        {
+        } else if let Some(p) = Parenthesized::try_parse(ctx, &mut rest)? {
             Expr::Parenthesized(Box::new(p))
         } else if let Some(ident) = IdentOrKw::try_parse(ctx, &mut rest)? {
             Self::Ident(ident)
@@ -94,21 +96,45 @@ impl Expr {
                     match op.as_str().as_bytes() {
                         b"++" | b"--" => {
                             rest = rest2;
-                            lhs = Expr::PostOp(Box::new(UnaryOp {
-                                op,
-                                expr: lhs,
-                            }))
+                            lhs = Expr::PostOp(Box::new(UnaryOp { op, expr: lhs }))
                         }
 
                         b"(" => {
                             let rest_ = op.span.join(&rest2);
 
                             if let Expr::Ident(ident) = &lhs {
-                                if ident.as_str() == "__has_include" {
-                                    let (rest_, arg) = Balanced::<Op::<'('>,Op::<')'>>::parse_raw(ctx, &rest_)?;
-                                    rest = rest_;
-                                    lhs = Expr::HasInclude(HasInclude { span: lhs.span().join(&arg.span), include: arg.inner });
-                                    continue;
+                                match ident.as_str() {
+                                    "__has_include" => {
+                                        let (rest_, arg) =
+                                            Balanced::<Op<'('>, Op<')'>>::parse_raw(ctx, &rest_)?;
+                                        rest = rest_;
+                                        lhs = Expr::HasInclude(HasInclude {
+                                            span: lhs.span().join(&arg.span),
+                                            include: arg.inner,
+                                        });
+                                        continue;
+                                    }
+                                    "SDL_const_cast"
+                                    | "SDL_reinterpret_cast"
+                                    | "SDL_static_cast" => {
+                                        rest = rest_;
+                                        Op::<'('>::parse(ctx, &mut rest)?;
+                                        WsAndComments::try_parse(ctx, &mut rest)?;
+                                        let ty = Type::parse(ctx, &mut rest)?;
+                                        WsAndComments::try_parse(ctx, &mut rest)?;
+                                        Op::<','>::parse(ctx, &mut rest)?;
+                                        WsAndComments::try_parse(ctx, &mut rest)?;
+                                        let expr = Expr::parse(ctx, &mut rest)?;
+                                        WsAndComments::try_parse(ctx, &mut rest)?;
+                                        let close_paren = Op::<')'>::parse(ctx, &mut rest)?;
+                                        lhs = Expr::Cast(Box::new(Cast {
+                                            span: lhs.span().join(&close_paren.span()),
+                                            ty,
+                                            expr,
+                                        }));
+                                        continue;
+                                    }
+                                    _ => (),
                                 }
                             }
 
@@ -150,11 +176,13 @@ impl Expr {
                         }
 
                         _ => {
-                            if let (rest_, Some(rhs)) = Expr::try_parse_raw_with_prec(ctx, &rest2, new_prec, true)? {
+                            if let (rest_, Some(rhs)) =
+                                Expr::try_parse_raw_with_prec(ctx, &rest2, new_prec, true)?
+                            {
                                 rest = rest_;
                                 lhs = Expr::BinaryOp(Box::new(BinaryOp { op, lhs, rhs }));
                             } else {
-                                return Ok((input.clone(),None))
+                                return Ok((input.clone(), None));
                             }
                         }
                     }
@@ -176,7 +204,7 @@ impl Expr {
                     }
                     Ordering::Less => {
                         return Err(ParseErr::new(
-                            lhs.span(), 
+                            lhs.span(),
                             "expression is valid both as a cast and as a non-cast expression, but expression is longer"
                         ));
                     }
@@ -193,7 +221,8 @@ impl Expr {
         Ok((rest, Some(lhs)))
     }
 
-    pub fn parse_raw_with_prec(ctx: &ParseContext, 
+    pub fn parse_raw_with_prec(
+        ctx: &ParseContext,
         input: &Span,
         prec: Precedence,
         allow_cast: bool,
@@ -236,11 +265,11 @@ impl GetSpan for Expr {
 }
 
 impl Parse for Expr {
-    fn desc() -> std::borrow::Cow<'static, str> {
+    fn desc() -> Cow<'static, str> {
         "expression".into()
     }
 
-    fn try_parse_raw(ctx: &ParseContext, input: &super::Span) -> ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         Expr::try_parse_raw_with_prec(ctx, input, Precedence::max(), true)
     }
 }
@@ -248,13 +277,51 @@ impl Parse for Expr {
 pub struct ExprNoComma(pub Expr);
 
 impl Parse for ExprNoComma {
-    fn desc() -> std::borrow::Cow<'static, str> {
-        Expr::desc()
+    fn desc() -> Cow<'static, str> {
+        "expression (no comma)".into()
     }
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         let (rest, expr) = Expr::try_parse_raw_with_prec(ctx, input, Precedence::comma(), true)?;
         Ok((rest, expr.map(Self)))
+    }
+}
+
+#[derive(Clone, Debug)]
+pub enum ExprNoCommaOrType {
+    ExprNoComma(Expr),
+    Type(Type),
+}
+
+impl Parse for ExprNoCommaOrType {
+    fn desc() -> Cow<'static, str> {
+        "expression (no comma) or type".into()
+    }
+
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
+        match Expr::parse_raw_with_prec(ctx, input, Precedence::comma(), true) {
+            Ok((rest, expr)) => Ok((rest, Some(Self::ExprNoComma(expr)))),
+            Err(_) => match Type::parse_raw(ctx, input) {
+                Ok((rest, ty)) => Ok((rest, Some(Self::Type(ty)))),
+                Err(_) => Ok((input.clone(), None)),
+            },
+        }
+    }
+}
+
+impl ExprNoCommaOrType {
+    pub fn expr(&self) -> Result<&Expr, ParseErr> {
+        match self {
+            Self::ExprNoComma(expr) => Ok(expr),
+            Self::Type(ty) => Err(ParseErr::new(ty.span(), "expected expression")),
+        }
+    }
+
+    pub fn ty(&self) -> Result<&Type, ParseErr> {
+        match self {
+            Self::ExprNoComma(expr) => Err(ParseErr::new(expr.span(), "expected type")),
+            Self::Type(ty) => Ok(ty),
+        }
     }
 }
 
@@ -270,7 +337,7 @@ impl GetSpan for HasInclude {
     }
 }
 
-#[derive(Clone,Debug)]
+#[derive(Clone, Debug)]
 pub struct Parenthesized {
     pub span: Span,
     pub expr: Expr,
@@ -283,20 +350,27 @@ impl GetSpan for Parenthesized {
 }
 
 impl Parse for Parenthesized {
-    fn desc() -> std::borrow::Cow<'static, str> {
+    fn desc() -> Cow<'static, str> {
         "parenthesized expression".into()
     }
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(Delimited {
-            open,
-            value: expr,
-            close,
-        })) = Delimited::<Op<'('>, Expr, Op<')'>>::try_parse_raw(ctx, input)? {
-            Ok((rest, Some(Self {
-                span: open.span.join(&close.span),
-                expr,
-            })))
+        if let (
+            rest,
+            Some(Delimited {
+                open,
+                value: expr,
+                close,
+            }),
+        ) = Delimited::<Op<'('>, Expr, Op<')'>>::try_parse_raw(ctx, input)?
+        {
+            Ok((
+                rest,
+                Some(Self {
+                    span: open.span.join(&close.span),
+                    expr,
+                }),
+            ))
         } else {
             Ok((input.clone(), None))
         }
@@ -316,7 +390,7 @@ impl GetSpan for Asm {
 }
 
 impl Parse for Asm {
-    fn desc() -> std::borrow::Cow<'static, str> {
+    fn desc() -> Cow<'static, str> {
         "asm".into()
     }
 
@@ -325,21 +399,35 @@ impl Parse for Asm {
             match ident.as_str().as_bytes() {
                 b"__asm__" => {
                     WsAndComments::try_parse(ctx, &mut rest)?;
-                    if let (rest_, Some(_)) = Ident::try_parse_raw_if(ctx, &rest, |i| i.as_str() == "__volatile__")? {
+                    if let (rest_, Some(_)) =
+                        Ident::try_parse_raw_if(ctx, &rest, |i| i.as_str() == "__volatile__")?
+                    {
                         rest = rest_;
                         WsAndComments::try_parse(ctx, &mut rest)?;
                     }
                     let body = Balanced::<Op<'('>, Op<')'>>::parse(ctx, &mut rest)?;
-                    return Ok((rest, Some(Self { span: ident.span.join(&body.span), kind: ident.span() })))
+                    return Ok((
+                        rest,
+                        Some(Self {
+                            span: ident.span.join(&body.span),
+                            kind: ident.span(),
+                        }),
+                    ));
                 }
 
                 b"_asm" => {
                     WsAndComments::try_parse(ctx, &mut rest)?;
                     let body = Balanced::<Op<'{'>, Op<'}'>>::parse(ctx, &mut rest)?;
-                    return Ok((rest, Some(Self { span: ident.span.join(&body.span), kind: ident.span() })))
+                    return Ok((
+                        rest,
+                        Some(Self {
+                            span: ident.span.join(&body.span),
+                            kind: ident.span(),
+                        }),
+                    ));
                 }
 
-                _ => ()
+                _ => (),
             }
         }
         Ok((input.clone(), None))
@@ -399,7 +487,10 @@ pub enum Alternative {
 
 impl Ambiguous {
     pub fn new(span: Span) -> Self {
-        Self { span, alternatives:Vec::new() }
+        Self {
+            span,
+            alternatives: Vec::new(),
+        }
     }
 
     pub fn push_expr(&mut self, expr: Expr) {
@@ -424,10 +515,10 @@ impl GetSpan for Ambiguous {
 #[derive(Default)]
 pub struct CallArgs {
     span: Span,
-    args: Vec<Expr>,
+    args: Vec<ExprNoCommaOrType>,
 }
 
-impl From<CallArgs> for Vec<Expr> {
+impl From<CallArgs> for Vec<ExprNoCommaOrType> {
     fn from(value: CallArgs) -> Self {
         value.args
     }
@@ -440,17 +531,19 @@ impl GetSpan for CallArgs {
 }
 
 impl Parse for CallArgs {
-    fn desc() -> std::borrow::Cow<'static, str> {
+    fn desc() -> Cow<'static, str> {
         "arguments".into()
     }
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(args)) =
-            Delimited::<Op<'('>, Option<Punctuated<ExprNoComma, Op![,]>>, Op<')'>>::try_parse_raw(ctx, input)?
+        if let (rest, Some(args)) = Delimited::<
+            Op<'('>,
+            Option<Punctuated<ExprNoCommaOrType, Op![,]>>,
+            Op<')'>,
+        >::try_parse_raw(ctx, input)?
         {
             let span = args.open.span.join(&args.close.span);
-            let args: Vec<ExprNoComma> = args.value.map(|v| v.into()).unwrap_or_default();
-            let args = args.into_iter().map(|v| v.0).collect();
+            let args: Vec<ExprNoCommaOrType> = args.value.map(|v| v.into()).unwrap_or_default();
             Ok((rest, Some(Self { span, args })))
         } else {
             Ok((input.clone(), None))
@@ -467,7 +560,7 @@ pub struct Cast {
 
 impl Cast {
     pub fn boxed(span: Span, ty: Type, expr: Expr) -> Box<Self> {
-        Box::new(Self {span, ty, expr })
+        Box::new(Self { span, ty, expr })
     }
 }
 
@@ -478,7 +571,7 @@ impl GetSpan for Cast {
 }
 
 impl Parse for Cast {
-    fn desc() -> std::borrow::Cow<'static, str> {
+    fn desc() -> Cow<'static, str> {
         "cast expression".into()
     }
 
@@ -490,9 +583,12 @@ impl Parse for Cast {
                 let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
                 if let (rest, Some(_close_paren)) = Op::<')'>::try_parse_raw(ctx, &rest)? {
                     let (rest, _) = WsAndComments::try_parse_raw(ctx, &rest)?;
-                    if let (rest, Some(expr)) =
-                        Expr::try_parse_raw_with_prec(ctx, &rest, Precedence::right_to_left(2), true)?
-                    {
+                    if let (rest, Some(expr)) = Expr::try_parse_raw_with_prec(
+                        ctx,
+                        &rest,
+                        Precedence::right_to_left(2),
+                        true,
+                    )? {
                         return Ok((
                             rest,
                             Some(Self {
@@ -513,7 +609,7 @@ impl Parse for Cast {
 pub struct FnCall {
     pub span: Span,
     pub func: Box<Expr>,
-    pub args: Vec<Expr>,
+    pub args: Vec<ExprNoCommaOrType>,
 }
 
 impl GetSpan for FnCall {
@@ -523,11 +619,11 @@ impl GetSpan for FnCall {
 }
 
 impl Parse for FnCall {
-    fn desc() -> std::borrow::Cow<'static, str> {
+    fn desc() -> Cow<'static, str> {
         "function call".into()
     }
 
-    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> super::ParseRawRes<Option<Self>> {
+    fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
         // this only parses ident(), not general expr()
         let mut rest = input.trim_wsc_start()?;
         if let Some(func) = IdentOrKw::try_parse(ctx, &mut rest)? {
@@ -563,7 +659,7 @@ impl GetSpan for SizeOf {
 }
 
 impl Parse for SizeOf {
-    fn desc() -> std::borrow::Cow<'static, str> {
+    fn desc() -> Cow<'static, str> {
         "sizeof".into()
     }
 

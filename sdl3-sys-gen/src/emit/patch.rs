@@ -790,7 +790,7 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
         module: Some("vulkan"),
         match_ident: |i| i == "VK_DEFINE_HANDLE",
         patch: |ctx, call| {
-            let Expr::Ident(arg) = &call.args[0] else {
+            let Expr::Ident(arg) = &call.args[0].expr()? else {
                 unreachable!()
             };
             let name = arg.as_str().strip_prefix("Vk").unwrap();
@@ -835,7 +835,7 @@ const EMIT_MACRO_CALL_PATCHES: &[EmitMacroCallPatch] = &[
         module: Some("vulkan"),
         match_ident: |i| i == "VK_DEFINE_NON_DISPATCHABLE_HANDLE",
         patch: |ctx, call| {
-            let Expr::Ident(arg) = &call.args[0] else {
+            let Expr::Ident(arg) = &call.args[0].expr()? else {
                 panic!()
             };
             let name = arg.as_str().strip_prefix("Vk").unwrap();
@@ -908,7 +908,7 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
             if args.len() != 1 {
                 return err();
             }
-            let Expr::Ident(define) = &args[0] else {
+            let Expr::Ident(define) = &args[0].expr()? else {
                 return err();
             };
             let define = define.clone().try_into()?;
@@ -923,7 +923,7 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
     },
     EvalMacroCallPatch {
         matches: |_, i| i == "SDL_COMPILE_TIME_ASSERT",
-        patch: |ctx, call| match call.args[1].try_eval(ctx)? {
+        patch: |ctx, call| match call.args[1].expr()?.try_eval(ctx)? {
             Some(Value::RustCode(mut rc)) if call.args.len() == 2 => {
                 rc.value.insert_str(0, "::core::assert!(");
                 rc.value.push(')');
@@ -947,7 +947,7 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
             if args.len() != 1 {
                 return err();
             }
-            let Expr::Ident(builtin) = &args[0] else {
+            let Expr::Ident(builtin) = &args[0].expr()? else {
                 return err();
             };
             Ok(Some(Value::Bool(match builtin.as_str() {
@@ -960,7 +960,7 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
         matches: |_, i| i == "SDL_SINT64_C",
         patch: |ctx, call| {
             assert!(call.args.len() == 1);
-            let Some(arg) = call.args[0].try_eval(ctx)? else {
+            let Some(arg) = call.args[0].expr()?.try_eval(ctx)? else {
                 return Ok(None);
             };
             Ok(Some(match arg {
@@ -976,7 +976,7 @@ const EVAL_MACRO_CALL_PATCHES: &[EvalMacroCallPatch] = &[
         matches: |_, i| i == "SDL_UINT64_C",
         patch: |ctx, call| {
             assert!(call.args.len() == 1);
-            let Some(arg) = call.args[0].try_eval(ctx)? else {
+            let Some(arg) = call.args[0].expr()?.try_eval(ctx)? else {
                 return Ok(None);
             };
             Ok(Some(match arg {
