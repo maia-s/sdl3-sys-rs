@@ -30,6 +30,7 @@ impl MainThreadToken {
     /// On targets that don't support threads, this will always succeed.
     ///
     /// See also [`MainThreadToken::get()`]
+    #[track_caller]
     pub fn assert() -> Self {
         Self::get().expect("This operation can only be performed on the main thread")
     }
@@ -87,6 +88,7 @@ impl<T> MainThreadData<T> {
     /// Create a new `MainThreadData`. Panic if not called on the main thread.
     ///
     /// See also [`Self::new()`]
+    #[track_caller]
     #[inline(always)]
     pub fn assert_new(data: T) -> Self {
         Self::new(MainThreadToken::assert(), data)
@@ -95,6 +97,7 @@ impl<T> MainThreadData<T> {
     /// Get shared access to this data. Panic if not called on the main thread.
     ///
     /// See also [`Self::get()`], [`Self::get_on_main_thread()`]
+    #[track_caller]
     #[inline(always)]
     pub fn assert_get(&self) -> &T {
         self.get(MainThreadToken::assert())
@@ -103,6 +106,7 @@ impl<T> MainThreadData<T> {
     /// Get shared access to this data. Panic if not called on the main thread.
     ///
     /// See also [`Self::get_mut()`], [`Self::get_mut_on_main_thread()`]
+    #[track_caller]
     #[inline(always)]
     pub fn assert_get_mut(&mut self) -> &mut T {
         self.get_mut(MainThreadToken::assert())
