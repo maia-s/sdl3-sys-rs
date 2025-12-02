@@ -2,8 +2,7 @@
 
 - 0.6.0 WIP:
     - Update sdl3-sys to 0.6.0
-    - Deprecated `MainThreadToken::init()`. It's no longer necessary and does nothing now.
-      It still exists for compatibility, but it's hidden in the docs.
+    - `MainThreadToken::init()` is no longer necessary in most cases
     - Pass arguments to main on `std` (`!std` already did)
     - Add `MainThreadData::assert_new/get/get_mut`
     - Log error when converting to `AppResult*`

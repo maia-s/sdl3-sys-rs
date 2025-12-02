@@ -1,17 +1,65 @@
 use core::{
+    cell::Cell,
     ffi::c_void,
     marker::PhantomData,
     mem::ManuallyDrop,
     ptr::{addr_of_mut, NonNull},
+    sync::atomic::Ordering,
 };
 use sdl3_sys::{
     init::{SDL_IsMainThread, SDL_RunOnMainThread},
     stdinc::{SDL_aligned_alloc, SDL_aligned_free},
+    thread::{SDL_GetCurrentThreadID, SDL_ThreadID},
+    timer::SDL_Delay,
 };
+
+#[cfg(target_has_atomic = "8")]
+type AtomicLeastU8 = core::sync::atomic::AtomicU8;
+#[cfg(all(not(target_has_atomic = "8"), target_has_atomic = "16"))]
+type AtomicLeastU8 = core::sync::atomic::AtomicU16;
+#[cfg(all(
+    not(any(target_has_atomic = "8", target_has_atomic = "16")),
+    target_has_atomic = "32"
+))]
+type AtomicLeastU8 = core::sync::atomic::AtomicU32;
+#[cfg(all(
+    not(any(
+        target_has_atomic = "8",
+        target_has_atomic = "16",
+        target_has_atomic = "32"
+    )),
+    target_has_atomic = "64"
+))]
+type AtomicLeastU8 = core::sync::atomic::AtomicU64;
+#[cfg(all(
+    not(any(
+        target_has_atomic = "8",
+        target_has_atomic = "16",
+        target_has_atomic = "32",
+        target_has_atomic = "64"
+    )),
+    target_has_atomic = "128"
+))]
+type AtomicLeastU8 = core::sync::atomic::AtomicU128;
+#[cfg(not(any(
+    target_has_atomic = "8",
+    target_has_atomic = "16",
+    target_has_atomic = "32",
+    target_has_atomic = "64",
+    target_has_atomic = "128"
+)))]
+compile_error!("no supported atomic integer type");
 
 /// Zero sized token that can only exist on the main thread.
 ///
 /// Call [`MainThreadToken::get()`] or [`MainThreadToken::assert()`] to get one.
+///
+/// As of `sdl3-main` 0.6, it's not required to call [`MainThreadToken::init()`].
+/// If SDL has been inited properly, only the thread that SDL considers the main thread
+/// can get a `MainThreadToken`. Otherwise, the first call to either of [`MainThreadToken::get()`]
+/// or [`MainThreadToken::assert()`] will determine which thread `MainThreadToken` considers
+/// the main thread for the lifetime of the process. [`MainThreadToken::init()`] is equivalent
+/// to [`MainThreadToken::assert()`] and is retained for backwards compatibility.
 #[derive(Clone, Copy)]
 pub struct MainThreadToken(PhantomData<*const ()>);
 
@@ -22,7 +70,37 @@ impl MainThreadToken {
     ///
     /// See also [`MainThreadToken::assert()`]
     pub fn get() -> Option<Self> {
-        unsafe { SDL_IsMainThread() }.then_some(Self(PhantomData))
+        struct ThreadId(Cell<SDL_ThreadID>);
+        unsafe impl Sync for ThreadId {}
+
+        static MAIN_THREAD_ID: ThreadId = ThreadId(Cell::new(SDL_ThreadID(0)));
+        static MAIN_THREAD_ID_STATUS: AtomicLeastU8 = AtomicLeastU8::new(0);
+
+        loop {
+            match MAIN_THREAD_ID_STATUS.load(Ordering::Acquire) {
+                0 => {
+                    // if this returns false we know it's not the main thread, but true may be
+                    // unreliable depending on how/if SDL was inited and the version of SDL
+                    if !unsafe { SDL_IsMainThread() } {
+                        return None;
+                    }
+                    if MAIN_THREAD_ID_STATUS
+                        .compare_exchange(0, 1, Ordering::Relaxed, Ordering::Relaxed)
+                        .is_ok()
+                    {
+                        MAIN_THREAD_ID.0.set(SDL_GetCurrentThreadID());
+                        MAIN_THREAD_ID_STATUS.store(2, Ordering::Release);
+                        return Some(Self(PhantomData));
+                    }
+                }
+                1 => (),
+                _ => {
+                    return (MAIN_THREAD_ID.0.get() == SDL_GetCurrentThreadID())
+                        .then_some(Self(PhantomData));
+                }
+            }
+            unsafe { SDL_Delay(0) }
+        }
     }
 
     /// Get `MainThreadToken` if called on the main thread, or panic otherwise.
@@ -35,13 +113,17 @@ impl MainThreadToken {
         Self::get().expect("This operation can only be performed on the main thread")
     }
 
-    #[doc(hidden)]
+    /// Initialize `MainThreadToken` (if it wasn't already) if called on the main thread,
+    /// or panic otherwise.
+    ///
+    /// As of `sdl3-main` 0.6, this function is equivalent to [`MainThreadToken::assert()`].
+    ///
+    /// On targets that don't support threads, this will always succeed.
+    #[track_caller]
     #[inline(always)]
-    #[deprecated(
-        since = "0.6.0",
-        note = "`MainThreadToken::init()` is no longer necessary. You can remove this call."
-    )]
-    pub unsafe fn init() {}
+    pub unsafe fn init() {
+        Self::assert();
+    }
 }
 
 /// Data that can only be accessed from the main thread. Accessors take a [`MainThreadToken`].
