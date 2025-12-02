@@ -11,6 +11,9 @@
     - Add `display-impls` feature
     - MSRV 1.85
 
+- 0.5.11
+    - Update SDL to 3.2.28
+
 - 0.5.10
     - Update SDL to 3.2.26
 
