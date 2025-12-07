@@ -5450,7 +5450,7 @@ pub const SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER: *const ::core::ffi:
 /// When no such structure is provided, SDL will use Vulkan API version 1.0 and
 /// a minimal set of features. The requested API version influences how the
 /// feature_list is processed by SDL. When requesting API version 1.0, the
-/// feature_list is ignored. Only the vulkan_10_phyisical_device_features and
+/// feature_list is ignored. Only the vulkan_10_physical_device_features and
 /// the extension lists are used. When requesting API version 1.1, the
 /// feature_list is scanned for feature structures introduced in Vulkan 1.1.
 /// When requesting Vulkan 1.2 or higher, the feature_list is additionally
@@ -6359,7 +6359,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Pushes data to a vertex uniform slot on the command buffer.
     ///
-    /// Subsequent draw calls will use this uniform data.
+    /// Subsequent draw calls in this command buffer will use this uniform data.
     ///
     /// The data being pushed must respect std140 layout conventions. In practical
     /// terms this means you must ensure that vec3 and vec4 fields are 16-byte
@@ -6387,7 +6387,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Pushes data to a fragment uniform slot on the command buffer.
     ///
-    /// Subsequent draw calls will use this uniform data.
+    /// Subsequent draw calls in this command buffer will use this uniform data.
     ///
     /// The data being pushed must respect std140 layout conventions. In practical
     /// terms this means you must ensure that vec3 and vec4 fields are 16-byte
@@ -6412,7 +6412,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Pushes data to a uniform slot on the command buffer.
     ///
-    /// Subsequent draw calls will use this uniform data.
+    /// Subsequent draw calls in this command buffer will use this uniform data.
     ///
     /// The data being pushed must respect std140 layout conventions. In practical
     /// terms this means you must ensure that vec3 and vec4 fields are 16-byte
@@ -6963,7 +6963,7 @@ unsafe extern "C" {
     /// The textures must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].
     ///
     /// Be sure your shader is set up according to the requirements documented in
-    /// [`SDL_CreateGPUShader()`].
+    /// [`SDL_CreateGPUComputePipeline()`].
     ///
     /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
@@ -6977,7 +6977,7 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
-    /// - [`SDL_CreateGPUShader`]
+    /// - [`SDL_CreateGPUComputePipeline`]
     pub fn SDL_BindGPUComputeSamplers(
         compute_pass: *mut SDL_GPUComputePass,
         first_slot: Uint32,
@@ -6993,7 +6993,7 @@ unsafe extern "C" {
     /// [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_READ`].
     ///
     /// Be sure your shader is set up according to the requirements documented in
-    /// [`SDL_CreateGPUShader()`].
+    /// [`SDL_CreateGPUComputePipeline()`].
     ///
     /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
@@ -7005,7 +7005,7 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
-    /// - [`SDL_CreateGPUShader`]
+    /// - [`SDL_CreateGPUComputePipeline`]
     pub fn SDL_BindGPUComputeStorageTextures(
         compute_pass: *mut SDL_GPUComputePass,
         first_slot: Uint32,
@@ -7021,7 +7021,7 @@ unsafe extern "C" {
     /// [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_READ`].
     ///
     /// Be sure your shader is set up according to the requirements documented in
-    /// [`SDL_CreateGPUShader()`].
+    /// [`SDL_CreateGPUComputePipeline()`].
     ///
     /// ## Parameters
     /// - `compute_pass`: a compute pass handle.
@@ -7033,7 +7033,7 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
-    /// - [`SDL_CreateGPUShader`]
+    /// - [`SDL_CreateGPUComputePipeline`]
     pub fn SDL_BindGPUComputeStorageBuffers(
         compute_pass: *mut SDL_GPUComputePass,
         first_slot: Uint32,

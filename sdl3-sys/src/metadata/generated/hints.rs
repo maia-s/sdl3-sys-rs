@@ -392,16 +392,6 @@ pub const METADATA_SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
-pub const METADATA_SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT: Hint = Hint {
-    module: "hints",
-    name: "SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT",
-    short_name: "EMSCRIPTEN_FILL_DOCUMENT",
-    value: crate::hints::SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT,
-    doc: Some(
-        "Dictate that windows on Emscripten will fill the whole browser window.\n\nWhen enabled, the canvas element fills the entire document. Resize events\nwill be generated as the browser window is resized, as that will adjust the\ncanvas size as well. The canvas will cover anything else on the page,\nincluding any controls provided by Emscripten in its generated HTML file\n(in fact, any elements on the page that aren't the canvas will be moved\ninto a hidden `div` element).\n\nOften times this is desirable for a browser-based game, but it means\nseveral things that we expect of an SDL window on other platforms might not\nwork as expected, such as minimum window sizes and aspect ratios.\n\nThis hint overrides [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]\nproperties when creating an SDL window.\n\nThis hint only applies to the Emscripten platform.\n\nThis hint can be set at any time (before creating the window, or to toggle\nits state later). Only one window can fill the document at a time.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
-    ),
-    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
-};
 pub const METADATA_SDL_HINT_ENABLE_SCREEN_KEYBOARD: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_ENABLE_SCREEN_KEYBOARD",
@@ -1491,6 +1481,16 @@ pub const METADATA_SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR: Hint = Hint {
         "A variable setting which system cursor to use as the default cursor.\n\nThis should be an integer corresponding to the [`SDL_SystemCursor`] enum. The\ndefault value is zero ([`SDL_SYSTEM_CURSOR_DEFAULT`]).\n\nThis hint needs to be set before [`SDL_Init()`].\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
+pub const METADATA_SDL_HINT_MOUSE_DPI_SCALE_CURSORS: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_MOUSE_DPI_SCALE_CURSORS",
+    short_name: "MOUSE_DPI_SCALE_CURSORS",
+    value: crate::hints::SDL_HINT_MOUSE_DPI_SCALE_CURSORS,
+    doc: Some(
+        "A variable setting whether we should scale cursors by the current display\nscale.\n\nThe variable can be set to the following values:\n\n- \"0\": Cursors will not change size based on the display content scale.\n(default)\n- \"1\": Cursors will automatically match the display content scale (e.g. a\n2x sized cursor will be used when the window is on a monitor with 200%\nscale). This is currently implemented on Windows and Wayland.\n\nThis hint needs to be set before creating cursors.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_MOUSE_EMULATE_WARP_WITH_RELATIVE: Hint = Hint {
     module: "hints",

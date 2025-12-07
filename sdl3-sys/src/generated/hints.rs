@@ -748,32 +748,6 @@ pub const SDL_HINT_EMSCRIPTEN_CANVAS_SELECTOR: *const ::core::ffi::c_char =
 pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: *const ::core::ffi::c_char =
     c"SDL_EMSCRIPTEN_KEYBOARD_ELEMENT".as_ptr();
 
-/// Dictate that windows on Emscripten will fill the whole browser window.
-///
-/// When enabled, the canvas element fills the entire document. Resize events
-/// will be generated as the browser window is resized, as that will adjust the
-/// canvas size as well. The canvas will cover anything else on the page,
-/// including any controls provided by Emscripten in its generated HTML file
-/// (in fact, any elements on the page that aren't the canvas will be moved
-/// into a hidden `div` element).
-///
-/// Often times this is desirable for a browser-based game, but it means
-/// several things that we expect of an SDL window on other platforms might not
-/// work as expected, such as minimum window sizes and aspect ratios.
-///
-/// This hint overrides [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]
-/// properties when creating an SDL window.
-///
-/// This hint only applies to the Emscripten platform.
-///
-/// This hint can be set at any time (before creating the window, or to toggle
-/// its state later). Only one window can fill the document at a time.
-///
-/// ## Availability
-/// This hint is available since SDL 3.4.0.
-pub const SDL_HINT_EMSCRIPTEN_FILL_DOCUMENT: *const ::core::ffi::c_char =
-    c"SDL_EMSCRIPTEN_FILL_DOCUMENT".as_ptr();
-
 /// A variable that controls whether the on-screen keyboard should be shown
 /// when text input is active.
 ///
@@ -2658,6 +2632,24 @@ pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME: *const ::core::ffi::c_char =
 /// This hint is available since SDL 3.2.0.
 pub const SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR: *const ::core::ffi::c_char =
     c"SDL_MOUSE_DEFAULT_SYSTEM_CURSOR".as_ptr();
+
+/// A variable setting whether we should scale cursors by the current display
+/// scale.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Cursors will not change size based on the display content scale.
+///   (default)
+/// - "1": Cursors will automatically match the display content scale (e.g. a
+///   2x sized cursor will be used when the window is on a monitor with 200%
+///   scale). This is currently implemented on Windows and Wayland.
+///
+/// This hint needs to be set before creating cursors.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
+pub const SDL_HINT_MOUSE_DPI_SCALE_CURSORS: *const ::core::ffi::c_char =
+    c"SDL_MOUSE_DPI_SCALE_CURSORS".as_ptr();
 
 /// A variable controlling whether warping a hidden mouse cursor will activate
 /// relative mouse mode.

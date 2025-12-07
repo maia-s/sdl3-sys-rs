@@ -47,12 +47,12 @@ pub const METADATA_SDL_PROP_SURFACE_HOTSPOT_Y_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
-pub const METADATA_SDL_PROP_SURFACE_ROTATION_NUMBER: Property = Property {
+pub const METADATA_SDL_PROP_SURFACE_ROTATION_FLOAT: Property = Property {
     module: "surface",
-    name: "SDL_PROP_SURFACE_ROTATION_NUMBER",
-    short_name: "SURFACE_ROTATION_NUMBER",
-    value: crate::surface::SDL_PROP_SURFACE_ROTATION_NUMBER,
-    ty: PropertyType::NUMBER,
+    name: "SDL_PROP_SURFACE_ROTATION_FLOAT",
+    short_name: "SURFACE_ROTATION_FLOAT",
+    value: crate::surface::SDL_PROP_SURFACE_ROTATION_FLOAT,
+    ty: PropertyType::FLOAT,
     doc: None,
     available_since: None,
 };

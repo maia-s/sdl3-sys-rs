@@ -369,6 +369,7 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_DisplayOrientation {
 /// | [`TOOLTIP`](SDL_WindowFlags::TOOLTIP) | [`SDL_WINDOW_TOOLTIP`] | window should be treated as a tooltip and does not get mouse or keyboard focus, requires a parent window |
 /// | [`POPUP_MENU`](SDL_WindowFlags::POPUP_MENU) | [`SDL_WINDOW_POPUP_MENU`] | window should be treated as a popup menu, requires a parent window |
 /// | [`KEYBOARD_GRABBED`](SDL_WindowFlags::KEYBOARD_GRABBED) | [`SDL_WINDOW_KEYBOARD_GRABBED`] | window has grabbed keyboard input |
+/// | [`FILL_DOCUMENT`](SDL_WindowFlags::FILL_DOCUMENT) | [`SDL_WINDOW_FILL_DOCUMENT`] | window is in fill-document mode (Emscripten only), since SDL 3.4.0 |
 /// | [`VULKAN`](SDL_WindowFlags::VULKAN) | [`SDL_WINDOW_VULKAN`] | window usable for Vulkan surface |
 /// | [`METAL`](SDL_WindowFlags::METAL) | [`SDL_WINDOW_METAL`] | window usable for Metal view |
 /// | [`TRANSPARENT`](SDL_WindowFlags::TRANSPARENT) | [`SDL_WINDOW_TRANSPARENT`] | window with transparent buffer |
@@ -586,6 +587,16 @@ impl ::core::fmt::Debug for SDL_WindowFlags {
             first = false;
             write!(f, "KEYBOARD_GRABBED")?;
         }
+        let all_bits = all_bits | Self::FILL_DOCUMENT.0;
+        if (Self::FILL_DOCUMENT != 0 || self.0 == 0)
+            && *self & Self::FILL_DOCUMENT == Self::FILL_DOCUMENT
+        {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "FILL_DOCUMENT")?;
+        }
         let all_bits = all_bits | Self::VULKAN.0;
         if (Self::VULKAN != 0 || self.0 == 0) && *self & Self::VULKAN == Self::VULKAN {
             if !first {
@@ -734,6 +745,8 @@ impl SDL_WindowFlags {
     pub const POPUP_MENU: Self = Self((524288_u64 as Uint64));
     /// window has grabbed keyboard input
     pub const KEYBOARD_GRABBED: Self = Self((1048576_u64 as Uint64));
+    /// window is in fill-document mode (Emscripten only), since SDL 3.4.0
+    pub const FILL_DOCUMENT: Self = Self((2097152_u64 as Uint64));
     /// window usable for Vulkan surface
     pub const VULKAN: Self = Self((268435456_u64 as Uint64));
     /// window usable for Metal view
@@ -786,6 +799,8 @@ pub const SDL_WINDOW_TOOLTIP: SDL_WindowFlags = SDL_WindowFlags::TOOLTIP;
 pub const SDL_WINDOW_POPUP_MENU: SDL_WindowFlags = SDL_WindowFlags::POPUP_MENU;
 /// window has grabbed keyboard input
 pub const SDL_WINDOW_KEYBOARD_GRABBED: SDL_WindowFlags = SDL_WindowFlags::KEYBOARD_GRABBED;
+/// window is in fill-document mode (Emscripten only), since SDL 3.4.0
+pub const SDL_WINDOW_FILL_DOCUMENT: SDL_WindowFlags = SDL_WindowFlags::FILL_DOCUMENT;
 /// window usable for Vulkan surface
 pub const SDL_WINDOW_VULKAN: SDL_WindowFlags = SDL_WindowFlags::VULKAN;
 /// window usable for Metal view
@@ -3062,15 +3077,6 @@ unsafe extern "C" {
     ///
     /// - [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING`]\: the id given to the
     ///   canvas element. This should start with a '#' sign
-    /// - [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]\: true to make
-    ///   the canvas element fill the entire document. Resize events will be
-    ///   generated as the browser window is resized, as that will adjust the
-    ///   canvas size as well. The canvas will cover anything else on the page,
-    ///   including any controls provided by Emscripten in its generated HTML file.
-    ///   Often times this is desirable for a browser-based game, but it means
-    ///   several things that we expect of an SDL window on other platforms might
-    ///   not work as expected, such as minimum window sizes and aspect ratios.
-    ///   Default false.
     /// - [`SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING`]\: override the
     ///   binding element for keyboard inputs for this canvas. The variable can be
     ///   one of:
@@ -3224,9 +3230,6 @@ pub const SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
 
 pub const SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING: *const ::core::ffi::c_char =
     c"SDL.window.create.emscripten.canvas_id".as_ptr();
-
-pub const SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN: *const ::core::ffi::c_char =
-    c"SDL.window.create.emscripten.fill_document".as_ptr();
 
 pub const SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING: *const ::core::ffi::c_char =
     c"SDL.window.create.emscripten.keyboard_element".as_ptr();
@@ -3416,9 +3419,6 @@ unsafe extern "C" {
     ///
     /// - [`SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING`]\: the id the canvas element
     ///   will have
-    /// - [`SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN`]\: true if the canvas is
-    ///   set to consume the entire browser window, bypassing some SDL window
-    ///   functionality.
     /// - [`SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING`]\: the keyboard
     ///   element that associates keyboard events to this window
     ///
@@ -3544,9 +3544,6 @@ pub const SDL_PROP_WINDOW_X11_WINDOW_NUMBER: *const ::core::ffi::c_char =
 pub const SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING: *const ::core::ffi::c_char =
     c"SDL.window.emscripten.canvas_id".as_ptr();
 
-pub const SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN: *const ::core::ffi::c_char =
-    c"SDL.window.emscripten.fill_document".as_ptr();
-
 pub const SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING: *const ::core::ffi::c_char =
     c"SDL.window.emscripten.keyboard_element".as_ptr();
 
@@ -3572,6 +3569,7 @@ unsafe extern "C" {
     /// - [`SDL_MinimizeWindow`]
     /// - [`SDL_SetWindowFullscreen`]
     /// - [`SDL_SetWindowMouseGrab`]
+    /// - [`SDL_SetWindowFillDocument`]
     /// - [`SDL_ShowWindow`]
     pub fn SDL_GetWindowFlags(window: *mut SDL_Window) -> SDL_WindowFlags;
 }
@@ -4219,6 +4217,46 @@ unsafe extern "C" {
     pub fn SDL_SetWindowAlwaysOnTop(
         window: *mut SDL_Window,
         on_top: ::core::primitive::bool,
+    ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Set the window to fill the current document space (Emscripten only).
+    ///
+    /// This will add or remove the window's [`SDL_WINDOW_FILL_DOCUMENT`] flag.
+    ///
+    /// Currently this flag only applies to the Emscripten target.
+    ///
+    /// When enabled, the canvas element fills the entire document. Resize events
+    /// will be generated as the browser window is resized, as that will adjust the
+    /// canvas size as well. The canvas will cover anything else on the page,
+    /// including any controls provided by Emscripten in its generated HTML file
+    /// (in fact, any elements on the page that aren't the canvas will be moved
+    /// into a hidden `div` element).
+    ///
+    /// Often times this is desirable for a browser-based game, but it means
+    /// several things that we expect of an SDL window on other platforms might not
+    /// work as expected, such as minimum window sizes and aspect ratios.
+    ///
+    /// ## Parameters
+    /// - `window`: the window of which to change the fill-document state.
+    /// - `fill`: true to set the window to fill the document, false to disable.
+    ///
+    /// ## Return value
+    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL 3.4.0.
+    ///
+    /// ## See also
+    /// - [`SDL_GetWindowFlags`]
+    pub fn SDL_SetWindowFillDocument(
+        window: *mut SDL_Window,
+        fill: ::core::primitive::bool,
     ) -> ::core::primitive::bool;
 }
 

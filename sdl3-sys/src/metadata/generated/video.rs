@@ -383,15 +383,6 @@ pub const METADATA_SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_CANVAS_ID_STRING: Property 
     doc: None,
     available_since: None,
 };
-pub const METADATA_SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN: Property = Property {
-    module: "video",
-    name: "SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
-    short_name: "WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
-    value: crate::video::SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN,
-    ty: PropertyType::BOOLEAN,
-    doc: None,
-    available_since: None,
-};
 pub const METADATA_SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_CREATE_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
@@ -725,15 +716,6 @@ pub const METADATA_SDL_PROP_WINDOW_EMSCRIPTEN_CANVAS_ID_STRING: Property = Prope
     doc: None,
     available_since: None,
 };
-pub const METADATA_SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN: Property = Property {
-    module: "video",
-    name: "SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
-    short_name: "WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN",
-    value: crate::video::SDL_PROP_WINDOW_EMSCRIPTEN_FILL_DOCUMENT_BOOLEAN,
-    ty: PropertyType::BOOLEAN,
-    doc: None,
-    available_since: None,
-};
 pub const METADATA_SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING: Property = Property {
     module: "video",
     name: "SDL_PROP_WINDOW_EMSCRIPTEN_KEYBOARD_ELEMENT_STRING",
@@ -979,6 +961,12 @@ pub const METADATA_SDL_WindowFlags: Group = Group {
             name: "SDL_WINDOW_KEYBOARD_GRABBED",
             short_name: "KEYBOARD_GRABBED",
             doc: Some("window has grabbed keyboard input\n"),
+            available_since: None,
+        },
+        GroupValue {
+            name: "SDL_WINDOW_FILL_DOCUMENT",
+            short_name: "FILL_DOCUMENT",
+            doc: Some("window is in fill-document mode (Emscripten only), since SDL 3.4.0\n"),
             available_since: None,
         },
         GroupValue {
