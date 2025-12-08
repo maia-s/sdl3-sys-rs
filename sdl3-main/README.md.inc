@@ -1,5 +1,11 @@
 # sdl3-main
 
+<div class="warning">
+
+This version is a prerelease. There may be breaking changes before the final 0.6.0 release.
+
+</div>
+
 This crate provides tools for using SDL 3's main and callback APIs, and
 for interfacing with the main thread of the process.
 
@@ -36,10 +42,14 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
-- 0.6.0 WIP:
-    - Update sdl3-sys to 0.6.0
-    - Deprecated `MainThreadToken::init()`. It's no longer necessary and does nothing now.
-      It still exists for compatibility, but it's hidden in the docs.
+- 0.6.0-pre-1:
+    - Update sdl3-sys to 0.6.0-pre-1
+    - Fix issue from 0.6.0-pre-0 that made it possible to get a `MainThreadToken`
+      on multiple threads
+
+- 0.6.0-pre-0:
+    - Update sdl3-sys to 0.6.0-pre-0
+    - `MainThreadToken::init()` is no longer necessary in most cases
     - Pass arguments to main on `std` (`!std` already did)
     - Add `MainThreadData::assert_new/get/get_mut`
     - Log error when converting to `AppResult*`

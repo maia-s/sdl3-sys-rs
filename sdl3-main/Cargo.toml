@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-main"
-version = "0.6.0-pre-0.1"
+version = "0.6.0-pre-1"
 edition = "2021"
 rust-version = "1.81"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -33,7 +33,7 @@ libtest-mimic-collect = "0.3"
 
 [dependencies.sdl3-sys]
 path = "../sdl3-sys"
-version = "0.6.0-pre-0"
+version = "0.6.0-pre-1"
 
 [dependencies.sdl3-main-macros]
 path = "../sdl3-main-macros"
