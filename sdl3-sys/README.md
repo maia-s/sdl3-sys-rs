@@ -125,7 +125,7 @@ These features are mutually exclusive. Features higher in this list override lat
 ## Recent changes
 
 - 0.6.0-pre-1:
-    - Update SDL to preview-3.3.4
+    - Update SDL to prerelease-3.3.4
 
 - 0.6.0-pre-0:
     - Update SDL to preview-3.3.2
