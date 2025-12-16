@@ -42,6 +42,9 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
+- 0.6.0-pre-2:
+    - Update sdl3-sys to 0.6.0-pre-2
+
 - 0.6.0-pre-1:
     - Update sdl3-sys to 0.6.0-pre-1
     - Fix issue from 0.6.0-pre-0 that made it possible to get a `MainThreadToken`
