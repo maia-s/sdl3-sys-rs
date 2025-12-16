@@ -3833,7 +3833,7 @@ unsafe extern "C" {
     /// notches, TV overscan, etc. This function provides the area of the window
     /// which is safe to have interactable content. You should continue rendering
     /// into the rest of the window, but it should not contain visually important
-    /// or interactible content.
+    /// or interactable content.
     ///
     /// ## Parameters
     /// - `window`: the window to query.

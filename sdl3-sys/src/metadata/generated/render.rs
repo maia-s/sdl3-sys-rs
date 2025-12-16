@@ -582,6 +582,15 @@ pub const METADATA_SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: Property = Pro
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER: Property = Property {
+    module: "render",
+    name: "SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER",
+    short_name: "TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER",
+    value: crate::render::SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER: Property = Property {
     module: "render",
     name: "SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER",

@@ -17,7 +17,7 @@ pub const SDL_MAJOR_VERSION: ::core::primitive::i32 = 3;
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 3;
+pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 4;
 
 /// The current micro (or patchlevel) version of the SDL headers.
 ///
@@ -25,7 +25,7 @@ pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 3;
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 6;
+pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 0;
 
 /// This macro turns the version numbers into a numeric value.
 ///

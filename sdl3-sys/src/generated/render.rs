@@ -1132,9 +1132,10 @@ unsafe extern "C" {
     ///
     /// With the vulkan renderer:
     ///
-    /// - [`SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER`]\: the VkImage with layout
-    ///   VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL associated with the texture, if
-    ///   you want to wrap an existing texture.
+    /// - [`SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER`]\: the VkImage associated
+    ///   with the texture, if you want to wrap an existing texture.
+    /// - [`SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER`]\: the VkImageLayout for the
+    ///   VkImage, defaults to VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL.
     ///
     /// With the GPU renderer:
     ///
@@ -1248,6 +1249,9 @@ pub const SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER: *const ::core::ffi
 
 pub const SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER: *const ::core::ffi::c_char =
     c"SDL.texture.create.vulkan.texture".as_ptr();
+
+pub const SDL_PROP_TEXTURE_CREATE_VULKAN_LAYOUT_NUMBER: *const ::core::ffi::c_char =
+    c"SDL.texture.create.vulkan.layout".as_ptr();
 
 pub const SDL_PROP_TEXTURE_CREATE_GPU_TEXTURE_POINTER: *const ::core::ffi::c_char =
     c"SDL.texture.create.gpu.texture".as_ptr();

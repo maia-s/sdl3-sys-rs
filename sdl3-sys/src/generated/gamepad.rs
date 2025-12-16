@@ -2074,7 +2074,7 @@ unsafe extern "C" {
     /// [`SDL_Gamepad`] mappings in your own code.
     ///
     /// ## Parameters
-    /// - `str`: string representing a [`SDL_Gamepad`] axis.
+    /// - `str`: string representing a [`SDL_Gamepad`] button.
     ///
     /// ## Return value
     /// Returns the [`SDL_GamepadButton`] enum corresponding to the input string, or
@@ -2400,7 +2400,7 @@ unsafe extern "C" {
     /// Get the current state of a gamepad sensor.
     ///
     /// The number of values and interpretation of the data is sensor dependent.
-    /// See SDL_sensor.h for the details for each type of sensor.
+    /// See the remarks in [`SDL_SensorType`] for details for each type of sensor.
     ///
     /// ## Parameters
     /// - `gamepad`: the gamepad to query.

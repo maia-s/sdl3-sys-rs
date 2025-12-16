@@ -562,6 +562,16 @@ pub const METADATA_SDL_HINT_HIDAPI_LIBUSB: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_HIDAPI_LIBUSB_GAMECUBE: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_HIDAPI_LIBUSB_GAMECUBE",
+    short_name: "HIDAPI_LIBUSB_GAMECUBE",
+    value: crate::hints::SDL_HINT_HIDAPI_LIBUSB_GAMECUBE,
+    doc: Some(
+        "A variable to control whether HIDAPI uses libusb for GameCube adapters.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI will not use libusb for GameCube adapters.\n- \"1\": HIDAPI will use libusb for GameCube adapters if available. (default)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+};
 pub const METADATA_SDL_HINT_HIDAPI_LIBUSB_WHITELIST: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_HIDAPI_LIBUSB_WHITELIST",
@@ -1978,7 +1988,7 @@ pub const METADATA_SDL_HINT_VIDEO_DISPLAY_PRIORITY: Hint = Hint {
     short_name: "VIDEO_DISPLAY_PRIORITY",
     value: crate::hints::SDL_HINT_VIDEO_DISPLAY_PRIORITY,
     doc: Some(
-        "A comma separated list containing the names of the displays that SDL should\nsort to the front of the display list.\n\nWhen this hint is set, displays with matching name strings will be\nprioritized in the list of displays, as exposed by calling\n[`SDL_GetDisplays()`], with the first listed becoming the primary display. The\nnaming convention can vary depending on the environment, but it is usually\na connector name (e.g. 'DP-1', 'DP-2', 'HDMI-A-1',etc...).\n\nOn Wayland and X11 desktops, the connector names associated with displays\ncan typically be found by using the `xrandr` utility.\n\nThis hint is currently supported on the following drivers:\n\n- KMSDRM (kmsdrm)\n- Wayland (wayland)\n- X11 (x11)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A comma separated list containing the names of the displays that SDL should\nsort to the front of the display list.\n\nWhen this hint is set, displays with matching name strings will be\nprioritized in the list of displays, as exposed by calling\n[`SDL_GetDisplays()`], with the first listed becoming the primary display. The\nnaming convention can vary depending on the environment, but it is usually\na connector name (e.g. 'DP-1', 'DP-2', 'HDMI-A-1', etc...).\n\nOn Wayland desktops, the connector names associated with displays can be\nfound in the `name` property of the info output from `wayland-info -i\nwl_output`. On X11 desktops, the `xrandr` utility can be used to retrieve\nthe connector names associated with displays.\n\nThis hint is currently supported on the following drivers:\n\n- KMSDRM (kmsdrm)\n- Wayland (wayland)\n- X11 (x11)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
@@ -2078,7 +2088,7 @@ pub const METADATA_SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS: Hint = Hint {
     short_name: "VIDEO_MINIMIZE_ON_FOCUS_LOSS",
     value: crate::hints::SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS,
     doc: Some(
-        "A variable controlling whether fullscreen windows are minimized when they\nlose focus.\n\nThe variable can be set to the following values:\n\n- \"0\": Fullscreen windows will not be minimized when they lose focus.\n(default)\n- \"1\": Fullscreen windows are minimized when they lose focus.\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable controlling whether fullscreen windows are minimized when they\nlose focus.\n\nThe variable can be set to the following values:\n\n- \"0\": Fullscreen windows will not be minimized when they lose focus.\n- \"1\": Fullscreen windows are minimized when they lose focus.\n- \"auto\": Fullscreen windows are minimized when they lose focus if they use\nexclusive fullscreen modes, so the desktop video mode is restored.\n(default)\n\nThis hint can be set anytime.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };

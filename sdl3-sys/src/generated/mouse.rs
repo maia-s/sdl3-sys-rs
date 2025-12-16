@@ -1055,7 +1055,7 @@ unsafe extern "C" {
     /// safe to do so.
     ///
     /// ## Return value
-    /// Returns the default cursor on success or NULL on failuree; call
+    /// Returns the default cursor on success or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
