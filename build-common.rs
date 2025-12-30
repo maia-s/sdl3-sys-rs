@@ -399,23 +399,44 @@ fn build(
                                 #[cfg(windows)]
                                 {
                                     // this will likely fail, but let's try
-                                    let _ = std::os::windows::fs::symlink_dir(entry.path(), &target);
+                                    let _ =
+                                        std::os::windows::fs::symlink_dir(entry.path(), &target);
                                 }
 
                                 break;
                             }
                         }
                     }
-
                 }
                 #[cfg(not(feature = "link-framework"))]
                 {
+                    let wanted_dylib_base = format!("lib{lib_name}");
                     let wanted_so_base = format!("lib{lib_name}.so");
                     let wanted_dll = format!("{lib_name}.dll");
-                    let wanted_dylib = format!("lib{lib_name}.dylib");
+                    let mut got_dylib = None;
                     let mut got_so = None;
 
-                    let mut get_so = |entry: std::fs::DirEntry| {
+                    let mut get_dylib = |entry: &std::fs::DirEntry| {
+                        if let Some((true, _, _)) = got_dylib {
+                            return true;
+                        }
+                        if let Some(filename) = entry.file_name().to_str() {
+                            if let Some(dlext) = filename.strip_prefix(&wanted_dylib_base) {
+                                if let Some(dlext) = dlext.strip_suffix(".dylib") {
+                                    if let Some(dlext) = dlext.strip_prefix('.') {
+                                        if dlext.parse::<u32>().is_ok() {
+                                            got_dylib =
+                                                Some((true, entry.path(), filename.to_owned()));
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        false
+                    };
+
+                    let mut get_so = |entry: &std::fs::DirEntry| {
                         if let Some((true, _, _)) = got_so {
                             return true;
                         }
@@ -436,17 +457,20 @@ fn build(
 
                     if let Ok(rd) = std::fs::read_dir(out_dir.join("lib64")) {
                         for entry in rd {
-                            if get_so(entry?) {
+                            if get_so(&entry?) {
                                 break;
                             }
                         }
                     }
                     if let Ok(rd) = std::fs::read_dir(out_dir.join("lib")) {
                         for entry in rd {
-                            if get_so(entry?) {
-                                break;
-                            }
+                            let entry = entry?;
+                            get_dylib(&entry);
+                            get_so(&entry);
                         }
+                    }
+                    if let Some((_, dl_path, dl_fn)) = got_dylib {
+                        std::fs::copy(dl_path, toplevel.join(&dl_fn))?;
                     }
                     if let Some((_, so_path, so_fn)) = got_so {
                         std::fs::copy(so_path, toplevel.join(&so_fn))?;
@@ -456,15 +480,6 @@ fn build(
                             let entry = entry?;
                             if entry.file_name().to_str() == Some(&wanted_dll) {
                                 std::fs::copy(entry.path(), toplevel.join(&wanted_dll))?;
-                                break;
-                            }
-                        }
-                    }
-                    if let Ok(rd) = std::fs::read_dir(out_dir) {
-                        for entry in rd {
-                            let entry = entry?;
-                            if entry.file_name().to_str() == Some(&wanted_dylib) {
-                                std::fs::copy(entry.path(), toplevel.join(&wanted_dylib))?;
                                 break;
                             }
                         }
