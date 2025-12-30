@@ -124,6 +124,9 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
+- next
+    - Fix copying the built library when cross compiling
+
 - 0.6.0-pre-2:
     - Update SDL to prerelease-3.3.6
 

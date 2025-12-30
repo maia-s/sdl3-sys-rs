@@ -1,4 +1,5 @@
-// to edit, edit `build-common.rs` in the repo root and run generate-and-check.sh
+// to edit this file, please edit `build-common.rs` in the repo root and run generate-and-check.sh
+// other copies of this file will get overwritten
 
 use std::{collections::BTreeMap, env, error::Error, fs::read_to_string, sync::OnceLock};
 
@@ -376,62 +377,96 @@ fn build(
 
             #[cfg(not(feature = "link-static"))]
             {
-                #[cfg(unix)]
-                fn safe_symlink(
-                    original: impl AsRef<Path>,
-                    link: impl AsRef<Path>,
-                ) -> std::io::Result<()> {
-                    let (original, link) = (original.as_ref(), link.as_ref());
-                    if link.exists() {
-                        std::fs::remove_file(link)?;
-                    }
-                    std::os::unix::fs::symlink(original, link)
-                }
                 // copy built library to top level target dir
                 let toplevel = top_level_cargo_target_dir();
-                if env::var("CARGO_CFG_TARGET_OS").unwrap() == "android" {
-                    // Android only provides one libSDL.so binary
-                    let lib = format!("lib{lib_name}.so");
-                    std::fs::copy(out_dir.join("lib").join(&lib), toplevel.join(&lib))?;
-                } else {
-                    #[cfg(windows)]
-                    {
-                        // windows
-                        let lib = format!("{lib_name}.dll");
-                        std::fs::copy(out_dir.join("bin").join(&lib), toplevel.join(&lib))?;
-                    }
-                    #[cfg(target_vendor = "apple")]
-                    {
-                        // apple targets
-                        if cfg!(feature = "link-framework") {
-                            let lib = format!("{lib_name}.framework");
-                            safe_symlink(out_dir.join(&lib), toplevel.join(&lib))?;
-                        } else {
-                            let lib_dir = out_dir.join("lib");
-                            let link = format!("lib{lib_name}.dylib");
-                            let lib = std::fs::read_link(lib_dir.join(&link))?;
-                            std::fs::copy(lib_dir.join(&lib), toplevel.join(&lib))?;
-                            safe_symlink(&lib, toplevel.join(&link))?;
-                        }
-                    }
-                    #[cfg(all(unix, not(target_vendor = "apple")))]
-                    {
-                        // linux/unix
-                        let link_base = format!("lib{lib_name}.so");
-                        let mut lib_dir = std::path::PathBuf::new();
-                        let mut link = None;
-                        for ld in ["lib64", "lib"] {
-                            lib_dir = out_dir.join(ld);
-                            if let Ok(l) = std::fs::read_link(lib_dir.join(&link_base)) {
-                                link = Some(l);
+
+                #[cfg(feature = "link-framework")]
+                {
+                    let wanted_framework = format!("{lib_name}.framework}");
+                    if let Ok(rd) = std::fs::read_dir(out_dir) {
+                        for entry in rd {
+                            let entry = entry?;
+                            if entry.file_name().to_str() == Some(&wanted_framework) {
+                                // the framework is a directory so we can't just copy it as a file
+
+                                let target = toplevel.join(&wanted_framework);
+                                let _ = std::fs::remove_file(&target);
+
+                                #[cfg(unix)]
+                                {
+                                    std::os::unix::symlink(entry.path(), &target)?;
+                                }
+                                #[cfg(windows)]
+                                {
+                                    // this will likely fail, but let's try
+                                    let _ = std::os::windows::fs::symlink_dir(entry.path(), &target);
+                                }
+
                                 break;
                             }
                         }
-                        if let Some(link) = link {
-                            let lib = std::fs::read_link(lib_dir.join(&link))?;
-                            std::fs::copy(lib_dir.join(&lib), toplevel.join(&lib))?;
-                            safe_symlink(&lib, toplevel.join(&link))?;
-                            safe_symlink(&link, toplevel.join(&link_base))?;
+                    }
+
+                }
+                #[cfg(not(feature = "link-framework"))]
+                {
+                    let wanted_so_base = format!("lib{lib_name}.so");
+                    let wanted_dll = format!("{lib_name}.dll");
+                    let wanted_dylib = format!("lib{lib_name}.dylib");
+                    let mut got_so = None;
+
+                    let mut get_so = |entry: std::fs::DirEntry| {
+                        if let Some((true, _, _)) = got_so {
+                            return true;
+                        }
+                        if let Some(filename) = entry.file_name().to_str() {
+                            if let Some(soext) = filename.strip_prefix(&wanted_so_base) {
+                                if let Some(soext) = soext.strip_prefix('.') {
+                                    if soext.parse::<u32>().is_ok() {
+                                        got_so = Some((true, entry.path(), filename.to_owned()));
+                                        return true;
+                                    }
+                                } else if soext.is_empty() {
+                                    got_so = Some((false, entry.path(), filename.to_owned()));
+                                }
+                            }
+                        }
+                        false
+                    };
+
+                    if let Ok(rd) = std::fs::read_dir(out_dir.join("lib64")) {
+                        for entry in rd {
+                            if get_so(entry?) {
+                                break;
+                            }
+                        }
+                    }
+                    if let Ok(rd) = std::fs::read_dir(out_dir.join("lib")) {
+                        for entry in rd {
+                            if get_so(entry?) {
+                                break;
+                            }
+                        }
+                    }
+                    if let Some((_, so_path, so_fn)) = got_so {
+                        std::fs::copy(so_path, toplevel.join(&so_fn))?;
+                    }
+                    if let Ok(rd) = std::fs::read_dir(out_dir.join("bin")) {
+                        for entry in rd {
+                            let entry = entry?;
+                            if entry.file_name().to_str() == Some(&wanted_dll) {
+                                std::fs::copy(entry.path(), toplevel.join(&wanted_dll))?;
+                                break;
+                            }
+                        }
+                    }
+                    if let Ok(rd) = std::fs::read_dir(out_dir) {
+                        for entry in rd {
+                            let entry = entry?;
+                            if entry.file_name().to_str() == Some(&wanted_dylib) {
+                                std::fs::copy(entry.path(), toplevel.join(&wanted_dylib))?;
+                                break;
+                            }
                         }
                     }
                 }
