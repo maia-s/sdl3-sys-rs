@@ -33,7 +33,7 @@ libtest-mimic-collect = "0.3"
 
 [dependencies.sdl3-sys]
 path = "../sdl3-sys"
-version = "0.6.0-pre-2"
+version = "0.6.0"
 
 [dependencies.sdl3-main-macros]
 path = "../sdl3-main-macros"
