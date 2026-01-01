@@ -17,7 +17,9 @@ fn main() -> Result<(), Box<dyn Error>> {
                 config.init_c_cfg(build);
             }
 
+            config.define("SDL_EXAMPLES", "OFF");
             config.define("SDL_REVISION", sdl3_src::REVISION);
+            config.define("SDL_TESTS", "OFF");
 
             if LINK_FRAMEWORK {
                 config.define("SDL_FRAMEWORK", "ON");
