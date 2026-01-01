@@ -1,7 +1,7 @@
 # Changes
 
-- 0.6.0-pre-*:
-    - Update SDL to prerelease-3.3.6
+- 0.6.0:
+    - Update SDL to 3.4.0
     - Make IDs and flag types newtypes
     - Add metadata
     - Remove deprecated aliases
@@ -9,8 +9,11 @@
     - Make some functions safe and/or const
     - Add `SDL_Event::event_type()`
     - Add `display-impls` feature
-    - Fix copying the built library when cross compiling
     - MSRV 1.85
+
+- 0.5.12
+    - Update SDL to 3.2.30
+    - Fix copying the built library when cross compiling
 
 - 0.5.11
     - Update SDL to 3.2.28

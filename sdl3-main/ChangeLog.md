@@ -1,6 +1,6 @@
 # Changes
 
-- 0.6.0 WIP:
+- 0.6.0:
     - Update sdl3-sys to 0.6.0
     - `MainThreadToken::init()` is no longer necessary in most cases
     - Pass arguments to main on `std` (`!std` already did)
