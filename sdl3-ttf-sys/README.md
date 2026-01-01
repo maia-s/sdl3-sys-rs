@@ -68,14 +68,15 @@ disables harfbuzz support. Activated features override features disabled with th
 
 ## Recent changes
 
-- 0.6.0 WIP:
+- 0.6.0:
     - Update sdl3-sys to 0.6.0
     - Synchronize version number with sdl3-sys
     - Add metadata
     - Remove deprecated aliases
     - Make some functions safe and/or const
+    - MSRV 1.85
 
-- next:
+- 0.2.1:
     - Expose `TTF_TextData`
     - Fix an issue where creating symlinks after a build could fail
     - Fix copying the built library when cross compiling
