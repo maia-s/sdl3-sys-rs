@@ -382,7 +382,7 @@ fn build(
 
                 #[cfg(feature = "link-framework")]
                 {
-                    let wanted_framework = format!("{lib_name}.framework}");
+                    let wanted_framework = format!("{lib_name}.framework");
                     if let Ok(rd) = std::fs::read_dir(out_dir) {
                         for entry in rd {
                             let entry = entry?;
@@ -394,7 +394,7 @@ fn build(
 
                                 #[cfg(unix)]
                                 {
-                                    std::os::unix::symlink(entry.path(), &target)?;
+                                    std::os::unix::fs::symlink(entry.path(), &target)?;
                                 }
                                 #[cfg(windows)]
                                 {
