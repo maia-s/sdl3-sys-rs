@@ -63,8 +63,8 @@ disables harfbuzz support. Activated features override features disabled with th
 | Feature | Description |
 | ------- | ----------- |
 | `debug-impls` | Implement the `Debug` trait for most SDL_ttf types. |
-| `metadata`    | Enable metadata. |
-| `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. |
+| `metadata`    | Enable metadata. Also see `only-metadata`. |
+| `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. Recommended when you need metadata but don't need to call into SDL, e.g. for build scripts. |
 
 ## Recent changes
 

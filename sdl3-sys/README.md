@@ -112,8 +112,8 @@ These features are mutually exclusive. Features higher in this list override lat
 | ------- | ----------- |
 | `debug-impls` | Implement the `Debug` trait for most SDL types. |
 | `display-impls` | Implement the `Display` trait for applicable SDL types. |
-| `metadata`    | Enable metadata. |
-| `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. |
+| `metadata`    | Enable metadata. Also see `only-metadata`. |
+| `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. Recommended when you need metadata but don't need to call into SDL, e.g. for build scripts. |
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
 
 ## Recent changes
