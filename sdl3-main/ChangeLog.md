@@ -6,6 +6,7 @@
     - Pass arguments to main on `std` (`!std` already did)
     - Add `MainThreadData::assert_new/get/get_mut`
     - Log error when converting to `AppResult*`
+    - MSRV 1.85
 
 - 0.5.4:
     - Fix accidental dependency on Rust 1.84

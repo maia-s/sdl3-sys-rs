@@ -2,7 +2,7 @@
 name = "sdl3-main"
 version = "0.6.0"
 edition = "2021"
-rust-version = "1.81"
+rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"
 description = "Tools for using SDL's main and callback APIs"
