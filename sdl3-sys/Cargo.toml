@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sys"
-version = "0.5.11+SDL3-3.2.30"
+version = "0.5.12+SDL3-3.2.30"
 edition = "2021"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
 license = "Zlib"

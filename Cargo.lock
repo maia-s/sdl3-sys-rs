@@ -350,7 +350,7 @@ version = "3.2.30"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.5.11+SDL3-3.2.30"
+version = "0.5.12+SDL3-3.2.30"
 dependencies = [
  "ash",
  "cc",

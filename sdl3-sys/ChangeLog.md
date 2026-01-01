@@ -1,5 +1,9 @@
 # Changes
 
+- 0.5.12
+    - Update SDL to 3.2.30
+    - Fix copying the built library when cross compiling
+
 - 0.5.11
     - Update SDL to 3.2.28
 

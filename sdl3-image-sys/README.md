@@ -132,6 +132,7 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 - next:
     - Fix an issue where creating symlinks after a build could fail.
+    - Fix copying the built library when cross compiling
 
 - 0.2.0:
     - Update sdl3-sys to 0.5.0
