@@ -1,12 +1,14 @@
 # Changes
 
-- 0.6.0 WIP:
+- 0.6.0:
     - Update sdl3-sys to 0.6.0
     - Synchronize version number with sdl3-sys
     - Add metadata
     - Make some functions safe and/or const
+    - MSRV 1.85
 
-- next:
+- 0.2.1:
+    - Update SDL_image to 3.2.6
     - Fix an issue where creating symlinks after a build could fail
     - Fix copying the built library when cross compiling
 

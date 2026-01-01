@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-image-sys"
-version = "0.6.0-pre-0+SDL-image-3.2.4"
+version = "0.6.0+SDL-image-3.2.6"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -162,7 +162,7 @@ no-sdlimage-tif-shared = []
 no-sdlimage-webp-shared = []
 
 [dependencies]
-sdl3-sys = { version = "0.6.0-pre-0", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.6.0", path = "../sdl3-sys" }
 
 [build-dependencies.cmake]
 version = "0.1"
@@ -177,7 +177,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-image-src]
-version = "3.2.4"
+version = "3.2.6"
 path = "../sdl3-image-src"
 optional = true
 

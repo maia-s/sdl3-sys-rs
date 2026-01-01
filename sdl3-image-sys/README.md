@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_image, an add-on library for
 [SDL 3](https://libsdl.org) for loading images.
-This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.2.4`, inclusive.
+This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.2.6`, inclusive.
 
 <div class="warning">
 
@@ -132,13 +132,15 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
-- 0.6.0 WIP:
+- 0.6.0:
     - Update sdl3-sys to 0.6.0
     - Synchronize version number with sdl3-sys
     - Add metadata
     - Make some functions safe and/or const
+    - MSRV 1.85
 
-- next:
+- 0.2.1:
+    - Update SDL_image to 3.2.6
     - Fix an issue where creating symlinks after a build could fail
     - Fix copying the built library when cross compiling
 

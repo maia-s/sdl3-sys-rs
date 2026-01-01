@@ -9,7 +9,7 @@ pub const SDL_IMAGE_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
 pub const SDL_IMAGE_MINOR_VERSION: ::core::primitive::i32 = 2;
 
-pub const SDL_IMAGE_MICRO_VERSION: ::core::primitive::i32 = 4;
+pub const SDL_IMAGE_MICRO_VERSION: ::core::primitive::i32 = 6;
 
 /// * This is the version number macro for the current SDL_image version.
 pub const SDL_IMAGE_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
@@ -2252,10 +2252,15 @@ unsafe extern "C" {
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct IMG_Animation {
+    /// The width of the frames
     pub w: ::core::ffi::c_int,
+    /// The height of the frames
     pub h: ::core::ffi::c_int,
+    /// The number of frames
     pub count: ::core::ffi::c_int,
+    /// An array of frames
     pub frames: *mut *mut SDL_Surface,
+    /// An array of frame delays, in milliseconds
     pub delays: *mut ::core::ffi::c_int,
 }
 
