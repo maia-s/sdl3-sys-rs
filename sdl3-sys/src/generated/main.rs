@@ -98,6 +98,9 @@ unsafe extern "C" {
     /// Returns [`SDL_APP_FAILURE`] to terminate with an error, [`SDL_APP_SUCCESS`] to
     ///   terminate with success, [`SDL_APP_CONTINUE`] to continue.
     ///
+    /// ## Thread safety
+    /// This function is called once by SDL, at startup, on a single thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -337,6 +340,9 @@ unsafe extern "C" {
     /// will not be changed it is necessary to define SDL_MAIN_HANDLED before
     /// including SDL.h.
     ///
+    /// ## Thread safety
+    /// This function is not thread safe.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -454,6 +460,9 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ## Thread safety
+        /// This function is not thread safe.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         pub fn SDL_RegisterApp(name: *const ::core::ffi::c_char, style: Uint32, hInst: *mut ::core::ffi::c_void) -> ::core::primitive::bool;
@@ -472,6 +481,9 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         /// deregistered when the registration counter in [`SDL_RegisterApp`] decrements to
         /// zero through calls to this function.
         ///
+        /// ## Thread safety
+        /// This function is not thread safe.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         pub fn SDL_UnregisterApp();
@@ -484,6 +496,9 @@ unsafe extern "C" {
     ///
     /// This function is only needed for Xbox GDK support; all other platforms will
     /// do nothing and set an "unsupported" error message.
+    ///
+    /// ## Thread safety
+    /// This function is not thread safe.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

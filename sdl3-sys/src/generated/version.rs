@@ -25,7 +25,7 @@ pub const SDL_MINOR_VERSION: ::core::primitive::i32 = 4;
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
-pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 0;
+pub const SDL_MICRO_VERSION: ::core::primitive::i32 = 2;
 
 /// This macro turns the version numbers into a numeric value.
 ///
@@ -54,6 +54,9 @@ pub const fn SDL_VERSIONNUM(
 /// ## Parameters
 /// - `version`: the version number.
 ///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
+///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
@@ -67,6 +70,9 @@ pub const fn SDL_VERSIONNUM_MAJOR(version: ::core::primitive::i32) -> ::core::pr
 ///
 /// ## Parameters
 /// - `version`: the version number.
+///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
@@ -82,6 +88,9 @@ pub const fn SDL_VERSIONNUM_MINOR(version: ::core::primitive::i32) -> ::core::pr
 /// ## Parameters
 /// - `version`: the version number.
 ///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
+///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
@@ -90,6 +99,9 @@ pub const fn SDL_VERSIONNUM_MICRO(version: ::core::primitive::i32) -> ::core::pr
 }
 
 /// This is the version number macro for the current SDL version.
+///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
@@ -100,6 +112,9 @@ pub const SDL_VERSION: ::core::primitive::i32 =
     SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_MICRO_VERSION);
 
 /// This macro will evaluate to true if compiled with SDL at least X.Y.Z.
+///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
@@ -124,6 +139,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the version of the linked library.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -154,6 +172,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns an arbitrary string, uniquely identifying the exact revision of
     ///   the SDL library in use.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

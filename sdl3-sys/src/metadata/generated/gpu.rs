@@ -148,6 +148,25 @@ pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING: Proper
     doc: None,
     available_since: None,
 };
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER: Property =
+    Property {
+        module: "gpu",
+        name: "SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER",
+        short_name: "GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER",
+        value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_VERSION_NUMBER,
+        ty: PropertyType::NUMBER,
+        doc: None,
+        available_since: None,
+    };
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING",
+    short_name: "GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_D3D12_AGILITY_SDK_PATH_STRING,
+    ty: PropertyType::STRING,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN:
     Property = Property {
     module: "gpu",
@@ -164,6 +183,15 @@ pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER: Property =
     short_name: "GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER",
     value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER,
     ty: PropertyType::POINTER,
+    doc: None,
+    available_since: None,
+};
+pub const METADATA_SDL_PROP_GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN: Property = Property {
+    module: "gpu",
+    name: "SDL_PROP_GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN",
+    short_name: "GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN",
+    value: crate::gpu::SDL_PROP_GPU_DEVICE_CREATE_METAL_ALLOW_MACFAMILY1_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
     doc: None,
     available_since: None,
 };
@@ -2246,7 +2274,7 @@ pub const METADATA_SDL_GPUTextureTransferInfo: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUTextureTransferInfo",
     doc: Some(
-        "A structure specifying parameters related to transferring data to or from a\ntexture.\n\nIf either of `pixels_per_row` or `rows_per_layer` is zero, then width and\nheight of passed [`SDL_GPUTextureRegion`] to [`SDL_UploadToGPUTexture`] or\n[`SDL_DownloadFromGPUTexture`] are used as default values respectively and data\nis considered to be tightly packed.\n\n**WARNING**: Direct3D 12 requires texture data row pitch to be 256 byte\naligned, and offsets to be aligned to 512 bytes. If they are not, SDL will\nmake a temporary copy of the data that is properly aligned, but this adds\noverhead to the transfer process. Apps can avoid this by aligning their\ndata appropriately, or using a different GPU backend than Direct3D 12.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n",
+        "A structure specifying parameters related to transferring data to or from a\ntexture.\n\nIf either of `pixels_per_row` or `rows_per_layer` is zero, then width and\nheight of passed [`SDL_GPUTextureRegion`] to [`SDL_UploadToGPUTexture`] or\n[`SDL_DownloadFromGPUTexture`] are used as default values respectively and data\nis considered to be tightly packed.\n\n**WARNING**: On some older/integrated hardware, Direct3D 12 requires texture\ndata row pitch to be 256 byte aligned, and offsets to be aligned to 512 bytes.\nIf they are not, SDL will make a temporary copy of the data that is properly\naligned, but this adds overhead to the transfer process. Apps can avoid this\nby aligning their data appropriately, or using a different GPU backend than\nDirect3D 12.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[

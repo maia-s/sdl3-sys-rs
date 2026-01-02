@@ -40,6 +40,9 @@ unsafe extern "C" {
     /// Returns the initialized and unlocked mutex or NULL on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -69,6 +72,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `mutex`: the mutex to lock.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -95,6 +101,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success, false if the mutex would block.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -117,6 +126,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `mutex`: the mutex to unlock.
     ///
+    /// ## Thread safety
+    /// This call must be paired with a previous locking call on the same thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -137,6 +149,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `mutex`: the mutex to destroy.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -177,6 +192,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the initialized and unlocked read/write lock or NULL on failure;
     ///   call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -221,6 +239,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `rwlock`: the read/write lock to lock.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -255,6 +276,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `rwlock`: the read/write lock to lock.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -284,6 +308,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true on success, false if the lock would block.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -320,6 +347,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success, false if the lock would block.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -347,6 +377,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `rwlock`: the rwlock to unlock.
     ///
+    /// ## Thread safety
+    /// This call must be paired with a previous locking call on the same thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -369,6 +402,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `rwlock`: the rwlock to destroy.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -394,6 +430,9 @@ unsafe extern "C" {
     /// Returns a new semaphore or NULL on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -416,6 +455,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `sem`: the semaphore to destroy.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -436,6 +478,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `sem`: the semaphore wait on.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -460,6 +505,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if the wait succeeds, false if the wait would block.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -486,6 +534,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the wait succeeds or false if the wait times out.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -504,6 +555,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `sem`: the semaphore to increment.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -524,6 +578,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the current value of the semaphore.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetSemaphoreValue(sem: *mut SDL_Semaphore) -> Uint32;
@@ -535,6 +592,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns a new condition variable or NULL on failure; call [`SDL_GetError()`]
     ///   for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -553,6 +613,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `cond`: the condition variable to destroy.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

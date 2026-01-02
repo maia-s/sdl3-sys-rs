@@ -34,6 +34,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_OpenURL(url: *const ::core::ffi::c_char) -> ::core::primitive::bool;

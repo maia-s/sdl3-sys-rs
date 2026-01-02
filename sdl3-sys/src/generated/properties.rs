@@ -209,6 +209,9 @@ unsafe extern "C" {
     /// Returns a valid property ID on success or 0 on failure; call
     ///   [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetGlobalProperties() -> SDL_PropertiesID;

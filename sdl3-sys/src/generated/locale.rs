@@ -82,6 +82,9 @@ unsafe extern "C" {
     ///   allocation that should be freed with [`SDL_free()`] when it is no
     ///   longer needed.
     ///
+    /// ## Thread safety
+    /// This function is not thread safe.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPreferredLocales(count: *mut ::core::ffi::c_int) -> *mut *mut SDL_Locale;

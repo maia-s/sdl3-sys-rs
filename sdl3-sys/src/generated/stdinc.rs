@@ -6344,6 +6344,9 @@ unsafe extern "C" {
     /// Returns a handle that must be freed with [`SDL_iconv_close`], or
     ///   [`SDL_ICONV_ERROR`] on failure.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -6365,6 +6368,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns 0 on success, or -1 on failure.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -6408,6 +6414,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the number of conversions on success, or a negative error code.
+    ///
+    /// ## Thread safety
+    /// Do not use the same [`SDL_iconv_t`] from two threads at once.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -6459,6 +6468,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns a new string, converted to the new encoding, or NULL on error.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -6486,6 +6498,9 @@ unsafe extern "C" {
 /// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
 ///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
+///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
@@ -6511,6 +6526,9 @@ pub unsafe fn SDL_iconv_utf8_locale(S: *const ::core::ffi::c_char) -> *mut ::cor
 ///
 /// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
+///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
@@ -6538,6 +6556,9 @@ pub unsafe fn SDL_iconv_utf8_ucs2(S: *const ::core::ffi::c_char) -> *mut Uint16 
 /// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
 ///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
+///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
@@ -6563,6 +6584,9 @@ pub unsafe fn SDL_iconv_utf8_ucs4(S: *const ::core::ffi::c_char) -> *mut Uint32 
 ///
 /// ## Return value
 /// Returns a new string, converted to the new encoding, or NULL on error.
+///
+/// ## Thread safety
+/// It is safe to call this macro from any thread.
 ///
 /// ## Availability
 /// This macro is available since SDL 3.2.0.

@@ -154,6 +154,9 @@ unsafe extern "C" {
     /// Returns the current battery state or [`SDL_POWERSTATE_ERROR`] on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// This function is not thread safe.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPowerInfo(

@@ -235,6 +235,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// This function is not thread safe.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetDateTimeLocalePreferences(
@@ -253,6 +256,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -273,6 +279,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -297,6 +306,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_DateTimeToTime(
@@ -317,6 +329,9 @@ unsafe extern "C" {
     ///   Windows FILETIME value.
     /// - `dwHighDateTime`: a pointer filled in with the high portion of the
     ///   Windows FILETIME value.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -341,6 +356,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the converted SDL time.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub safe fn SDL_TimeFromWindows(dwLowDateTime: Uint32, dwHighDateTime: Uint32) -> SDL_Time;
@@ -356,6 +374,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the number of days in the requested month or -1 on failure; call
     ///   [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -377,6 +398,9 @@ unsafe extern "C" {
     /// Returns the day of year \[0-365\] if the date is valid or -1 on failure;
     ///   call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub safe fn SDL_GetDayOfYear(
@@ -397,6 +421,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns a value between 0 and 6 (0 being Sunday) if the date is valid or
     ///   -1 on failure; call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

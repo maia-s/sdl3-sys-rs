@@ -568,9 +568,9 @@ pub const METADATA_SDL_HINT_HIDAPI_LIBUSB_GAMECUBE: Hint = Hint {
     short_name: "HIDAPI_LIBUSB_GAMECUBE",
     value: crate::hints::SDL_HINT_HIDAPI_LIBUSB_GAMECUBE,
     doc: Some(
-        "A variable to control whether HIDAPI uses libusb for GameCube adapters.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI will not use libusb for GameCube adapters.\n- \"1\": HIDAPI will use libusb for GameCube adapters if available. (default)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
+        "A variable to control whether HIDAPI uses libusb for GameCube adapters.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI will not use libusb for GameCube adapters.\n- \"1\": HIDAPI will use libusb for GameCube adapters if available. (default)\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_HIDAPI_LIBUSB_WHITELIST: Hint = Hint {
     module: "hints",
@@ -958,9 +958,9 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: Hint = Hint {
     short_name: "JOYSTICK_HIDAPI_STEAM_HORI",
     value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI,
     doc: Some(
-        "A variable controlling whether the HIDAPI driver for HORI licensed Steam\ncontrollers should be used.\n\nThis variable can be set to the following values: \"0\" - HIDAPI driver is\nnot used \"1\" - HIDAPI driver is used\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+        "A variable controlling whether the HIDAPI driver for HORI licensed Steam\ncontrollers should be used.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.2.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_LG4FF: Hint = Hint {
     module: "hints",
@@ -968,9 +968,9 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_LG4FF: Hint = Hint {
     short_name: "JOYSTICK_HIDAPI_LG4FF",
     value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_LG4FF,
     doc: Some(
-        "A variable controlling whether the HIDAPI driver for some Logitech wheels\nshould be used.\n\nThis variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used\n- \"1\": HIDAPI driver is used\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+        "A variable controlling whether the HIDAPI driver for some Logitech wheels\nshould be used.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_8BITDO: Hint = Hint {
     module: "hints",
@@ -978,9 +978,9 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_8BITDO: Hint = Hint {
     short_name: "JOYSTICK_HIDAPI_8BITDO",
     value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_8BITDO,
     doc: Some(
-        "A variable controlling whether the HIDAPI driver for 8BitDo controllers\nshould be used.\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+        "A variable controlling whether the HIDAPI driver for 8BitDo controllers\nshould be used.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_SINPUT: Hint = Hint {
     module: "hints",
@@ -988,9 +988,9 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_SINPUT: Hint = Hint {
     short_name: "JOYSTICK_HIDAPI_SINPUT",
     value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_SINPUT,
     doc: Some(
-        "A variable controlling whether the HIDAPI driver for SInput controllers\nshould be used.\n\nMore info - <https://github.com/HandHeldLegend/SInput-HID>\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+        "A variable controlling whether the HIDAPI driver for SInput controllers\nshould be used.\n\nMore info - <https://github.com/HandHeldLegend/SInput-HID>\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_ZUIKI: Hint = Hint {
     module: "hints",
@@ -998,9 +998,9 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_ZUIKI: Hint = Hint {
     short_name: "JOYSTICK_HIDAPI_ZUIKI",
     value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_ZUIKI,
     doc: Some(
-        "A variable controlling whether the HIDAPI driver for ZUIKI controllers\nshould be used.\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+        "A variable controlling whether the HIDAPI driver for ZUIKI controllers\nshould be used.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI: Hint = Hint {
     module: "hints",
@@ -1008,9 +1008,9 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI: Hint = Hint {
     short_name: "JOYSTICK_HIDAPI_FLYDIGI",
     value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI,
     doc: Some(
-        "A variable controlling whether the HIDAPI driver for Flydigi controllers\nshould be used.\n\nThis variable can be set to the following values:\n\n\"0\" - HIDAPI driver is not used. \"1\" - HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]\n",
+        "A variable controlling whether the HIDAPI driver for Flydigi controllers\nshould be used.\n\nThe variable can be set to the following values:\n\n- \"0\": HIDAPI driver is not used.\n- \"1\": HIDAPI driver is used.\n\nThe default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_SWITCH: Hint = Hint {
     module: "hints",
@@ -1438,7 +1438,7 @@ pub const METADATA_SDL_HINT_MAC_PRESS_AND_HOLD: Hint = Hint {
     short_name: "MAC_PRESS_AND_HOLD",
     value: crate::hints::SDL_HINT_MAC_PRESS_AND_HOLD,
     doc: Some(
-        "A variable controlling whether holding down a key will repeat the pressed\nkey or open the accents menu on macOS.\n\nThe variable can be set to the following values:\n\n- \"0\": Holding a key will open the accents menu for that key.\n- \"1\": Holding a key will repeat the pressed key. (default)\n\nThis hint needs to be set before [`SDL_Init()`].\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+        "A variable controlling whether holding down a key will repeat the pressed\nkey or open the accents menu on macOS.\n\nThe variable can be set to the following values:\n\n- \"0\": Holding a key will repeat the pressed key.\n- \"1\": Holding a key will open the accents menu for that key. (default)\n\nThis hint needs to be set before [`SDL_Init()`].\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
@@ -1642,6 +1642,16 @@ pub const METADATA_SDL_HINT_OPENGL_ES_DRIVER: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER",
+    short_name: "OPENGL_FORCE_SRGB_FRAMEBUFFER",
+    value: crate::hints::SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER,
+    doc: Some(
+        "A variable controlling whether to force an sRGB-capable OpenGL context.\n\nAt OpenGL context creation time, some platforms can request an sRGB-capable\ncontext. However, sometimes any form of the request can cause surprising\nresults on some drivers, platforms, and hardware. Usually the surprise is\nin the form of rendering that is either a little darker or a little\nbrighter than intended.\n\nThis hint allows the user to override the app's sRGB requests and either\nforce a specific value, or avoid requesting anything at all, depending on\nwhat makes things work correctly for their system.\n\nThis is meant as a fail-safe; apps should probably not explicitly set this,\nand most users should not, either.\n\nNote that some platforms cannot make this request at all, and on all\nplatforms this request can be denied by the operating system.\n\nIn addition to attempting to obtain the type of sRGB-capable OpenGL context\nrequested by this hint, SDL will try to force the state of\nGL_FRAMEBUFFER_SRGB on the new context, if appropriate.\n\nThe variable can be set to the following values:\n\n- \"0\": Force a request for an OpenGL context that is _not_ sRGB-capable.\n- \"1\": Force a request for an OpenGL context that _is_ sRGB-capable.\n- \"skip\": Don't make any request for an sRGB-capable context\n(don't specify the attribute at all during context creation time).\n- any other string is undefined behavior.\n\nIf unset, or set to an empty string, SDL will make a request using the\nvalue the app specified with the [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] attribute.\n\nThis hint should be set before an OpenGL context is created.\n\n## Availability\nThis hint is available since SDL 3.4.2.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 2)),
+};
 pub const METADATA_SDL_HINT_OPENVR_LIBRARY: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_OPENVR_LIBRARY",
@@ -1828,9 +1838,9 @@ pub const METADATA_SDL_HINT_PS2_GS_WIDTH: Hint = Hint {
     short_name: "PS2_GS_WIDTH",
     value: crate::hints::SDL_HINT_PS2_GS_WIDTH,
     doc: Some(
-        "Variable controlling the width of the PS2's framebuffer in pixels\n\nBy default, this variable is \"640\"\n",
+        "A variable controlling the width of the PS2's framebuffer in pixels.\n\nBy default, the variable is \"640\".\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_PS2_GS_HEIGHT: Hint = Hint {
     module: "hints",
@@ -1838,9 +1848,9 @@ pub const METADATA_SDL_HINT_PS2_GS_HEIGHT: Hint = Hint {
     short_name: "PS2_GS_HEIGHT",
     value: crate::hints::SDL_HINT_PS2_GS_HEIGHT,
     doc: Some(
-        "Variable controlling the height of the PS2's framebuffer in pixels\n\nBy default, this variable is \"448\"\n",
+        "A variable controlling the height of the PS2's framebuffer in pixels.\n\nBy default, the variable is \"448\".\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_PS2_GS_PROGRESSIVE: Hint = Hint {
     module: "hints",
@@ -1848,9 +1858,9 @@ pub const METADATA_SDL_HINT_PS2_GS_PROGRESSIVE: Hint = Hint {
     short_name: "PS2_GS_PROGRESSIVE",
     value: crate::hints::SDL_HINT_PS2_GS_PROGRESSIVE,
     doc: Some(
-        "Variable controlling whether the signal is interlaced or progressive\n\n- \"0\": Image is interlaced. (default)\n- \"1\": Image is progressive\n",
+        "A variable controlling whether the signal is interlaced or progressive.\n\nThe variable can be set to the following values:\n\n- \"0\": Image is interlaced. (default)\n- \"1\": Image is progressive.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_PS2_GS_MODE: Hint = Hint {
     module: "hints",
@@ -1858,9 +1868,9 @@ pub const METADATA_SDL_HINT_PS2_GS_MODE: Hint = Hint {
     short_name: "PS2_GS_MODE",
     value: crate::hints::SDL_HINT_PS2_GS_MODE,
     doc: Some(
-        "Variable controlling the video mode of the console\n\n- \"\": Console-native. (default)\n- \"NTSC\": 60hz region\n- \"PAL\": 50hz region\n",
+        "A variable controlling the video mode of the console.\n\nThe variable can be set to the following values:\n\n- \"\": Console-native. (default)\n- \"NTSC\": 60hz region.\n- \"PAL\": 50hz region.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
-    available_since: None,
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
 pub const METADATA_SDL_HINT_RPI_VIDEO_LAYER: Hint = Hint {
     module: "hints",

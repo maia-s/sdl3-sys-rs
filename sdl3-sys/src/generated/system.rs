@@ -66,6 +66,9 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
         /// - `callback`: the [`SDL_WindowsMessageHook`] function to call.
         /// - `userdata`: a pointer to pass to every iteration of `callback`.
         ///
+        /// ## Thread safety
+        /// This function should only be called on the main thread.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         ///
@@ -183,6 +186,9 @@ unsafe extern "C" {
     /// - `callback`: the [`SDL_X11EventHook`] function to call.
     /// - `userdata`: a pointer to pass to every iteration of `callback`.
     ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_SetX11EventHook(callback: SDL_X11EventHook, userdata: *mut ::core::ffi::c_void);
@@ -201,6 +207,9 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
         /// ## Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
+        ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
         ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
@@ -221,6 +230,9 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
         /// ## Return value
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
+        ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
         ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
@@ -285,6 +297,9 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ## Thread safety
+        /// This function should only be called on the main thread.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         ///
@@ -300,6 +315,9 @@ apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "vi
         ///
         /// ## Parameters
         /// - `enabled`: true to enable the event pump, false to disable it.
+        ///
+        /// ## Thread safety
+        /// This function should only be called on the main thread.
         ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
@@ -400,6 +418,9 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// ## Return value
         /// Returns the Android API level.
         ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         pub fn SDL_GetAndroidSDKVersion() -> ::core::ffi::c_int;
@@ -411,6 +432,9 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         /// ## Return value
         /// Returns true if this is a Chromebook, false otherwise.
         ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         pub fn SDL_IsChromebook() -> ::core::primitive::bool;
@@ -421,6 +445,9 @@ apply_cfg!(#[cfg(any(doc, target_os = "android"))] => {
         ///
         /// ## Return value
         /// Returns true if this is a DeX docking station, false otherwise.
+        ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
         ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
@@ -669,6 +696,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if the device is a tablet, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_IsTablet() -> ::core::primitive::bool;
@@ -681,6 +711,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if the device is a TV, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

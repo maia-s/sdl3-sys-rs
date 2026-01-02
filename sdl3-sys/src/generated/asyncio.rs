@@ -318,6 +318,9 @@ unsafe extern "C" {
     /// Returns a pointer to the [`SDL_AsyncIO`] structure that is created or NULL on
     ///   failure; call [`SDL_GetError()`] for more information.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -714,6 +717,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

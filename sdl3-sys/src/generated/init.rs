@@ -509,6 +509,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -534,6 +537,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -552,6 +558,9 @@ unsafe extern "C" {
     ///
     /// ## Parameters
     /// - `flags`: any of the flags used by [`SDL_Init()`]; see [`SDL_Init`] for details.
+    ///
+    /// ## Thread safety
+    /// This function is not thread safe.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -572,6 +581,9 @@ unsafe extern "C" {
     /// Returns a mask of all initialized subsystems if `flags` is 0, otherwise it
     ///   returns the initialization status of the specified subsystems.
     ///
+    /// ## Thread safety
+    /// This function is not thread safe.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -591,6 +603,9 @@ unsafe extern "C" {
     /// You can use this function with atexit() to ensure that it is run when your
     /// application is shutdown, but it is not wise to do this from a library or
     /// other dynamically loaded code.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

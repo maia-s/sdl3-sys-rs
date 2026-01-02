@@ -16,6 +16,9 @@ unsafe extern "C" {
     /// Returns the name of the platform. If the correct platform name is not
     ///   available, returns a string beginning with the text "Unknown".
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetPlatform() -> *const ::core::ffi::c_char;

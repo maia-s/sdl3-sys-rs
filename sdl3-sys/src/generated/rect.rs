@@ -291,6 +291,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -315,6 +318,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -342,6 +348,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if any points were enclosed or false if all the points were
     ///   outside of the clipping rectangle.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -371,6 +380,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if there is an intersection, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -563,6 +575,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -588,6 +603,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if there is an intersection, false otherwise.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -612,6 +630,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -640,6 +661,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true if any points were enclosed or false if all the points were
     ///   outside of the clipping rectangle.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -670,6 +694,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns true if there is an intersection, false otherwise.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

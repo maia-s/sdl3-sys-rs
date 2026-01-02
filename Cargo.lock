@@ -409,11 +409,11 @@ dependencies = [
 
 [[package]]
 name = "sdl3-src"
-version = "3.4.0"
+version = "3.4.2"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.6.0+SDL-3.4.0"
+version = "0.6.1+SDL-3.4.2"
 dependencies = [
  "ash",
  "cc",

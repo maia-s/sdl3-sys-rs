@@ -3677,6 +3677,9 @@ unsafe extern "C" {
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.4.0.
     ///
@@ -3706,6 +3709,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.4.0.
@@ -4264,7 +4270,7 @@ unsafe extern "C" {
     /// - [`SDL_DestroyGPURenderState`]
     pub fn SDL_CreateGPURenderState(
         renderer: *mut SDL_Renderer,
-        createinfo: *mut SDL_GPURenderStateCreateInfo,
+        createinfo: *const SDL_GPURenderStateCreateInfo,
     ) -> *mut SDL_GPURenderState;
 }
 

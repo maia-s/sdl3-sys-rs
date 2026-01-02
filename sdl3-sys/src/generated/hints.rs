@@ -1052,7 +1052,7 @@ pub const SDL_HINT_HIDAPI_LIBUSB: *const ::core::ffi::c_char = c"SDL_HIDAPI_LIBU
 /// This hint should be set before SDL is initialized.
 ///
 /// ## Availability
-/// This hint is available since SDL 3.2.0.
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_HIDAPI_LIBUSB_GAMECUBE: *const ::core::ffi::c_char =
     c"SDL_HIDAPI_LIBUSB_GAMECUBE".as_ptr();
 
@@ -1730,33 +1730,51 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_STEAMDECK: *const ::core::ffi::c_char =
 /// A variable controlling whether the HIDAPI driver for HORI licensed Steam
 /// controllers should be used.
 ///
-/// This variable can be set to the following values: "0" - HIDAPI driver is
-/// not used "1" - HIDAPI driver is used
+/// The variable can be set to the following values:
 ///
-/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]
+/// - "0": HIDAPI driver is not used.
+/// - "1": HIDAPI driver is used.
+///
+/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
+///
+/// This hint should be set before initializing joysticks and gamepads.
+///
+/// ## Availability
+/// This hint is available since SDL 3.2.0.
 pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM_HORI: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_HIDAPI_STEAM_HORI".as_ptr();
 
 /// A variable controlling whether the HIDAPI driver for some Logitech wheels
 /// should be used.
 ///
-/// This variable can be set to the following values:
+/// The variable can be set to the following values:
 ///
-/// - "0": HIDAPI driver is not used
-/// - "1": HIDAPI driver is used
+/// - "0": HIDAPI driver is not used.
+/// - "1": HIDAPI driver is used.
 ///
-/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]
+/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
+///
+/// This hint should be set before initializing joysticks and gamepads.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_JOYSTICK_HIDAPI_LG4FF: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_HIDAPI_LG4FF".as_ptr();
 
 /// A variable controlling whether the HIDAPI driver for 8BitDo controllers
 /// should be used.
 ///
-/// This variable can be set to the following values:
+/// The variable can be set to the following values:
 ///
-/// "0" - HIDAPI driver is not used. "1" - HIDAPI driver is used.
+/// - "0": HIDAPI driver is not used.
+/// - "1": HIDAPI driver is used.
 ///
-/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]
+/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
+///
+/// This hint should be set before initializing joysticks and gamepads.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_JOYSTICK_HIDAPI_8BITDO: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_HIDAPI_8BITDO".as_ptr();
 
@@ -1765,33 +1783,51 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_8BITDO: *const ::core::ffi::c_char =
 ///
 /// More info - <https://github.com/HandHeldLegend/SInput-HID>
 ///
-/// This variable can be set to the following values:
+/// The variable can be set to the following values:
 ///
-/// "0" - HIDAPI driver is not used. "1" - HIDAPI driver is used.
+/// - "0": HIDAPI driver is not used.
+/// - "1": HIDAPI driver is used.
 ///
-/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]
+/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
+///
+/// This hint should be set before initializing joysticks and gamepads.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_JOYSTICK_HIDAPI_SINPUT: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_HIDAPI_SINPUT".as_ptr();
 
 /// A variable controlling whether the HIDAPI driver for ZUIKI controllers
 /// should be used.
 ///
-/// This variable can be set to the following values:
+/// The variable can be set to the following values:
 ///
-/// "0" - HIDAPI driver is not used. "1" - HIDAPI driver is used.
+/// - "0": HIDAPI driver is not used.
+/// - "1": HIDAPI driver is used.
 ///
-/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]
+/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
+///
+/// This hint should be set before initializing joysticks and gamepads.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_JOYSTICK_HIDAPI_ZUIKI: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_HIDAPI_ZUIKI".as_ptr();
 
 /// A variable controlling whether the HIDAPI driver for Flydigi controllers
 /// should be used.
 ///
-/// This variable can be set to the following values:
+/// The variable can be set to the following values:
 ///
-/// "0" - HIDAPI driver is not used. "1" - HIDAPI driver is used.
+/// - "0": HIDAPI driver is not used.
+/// - "1": HIDAPI driver is used.
 ///
-/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`]
+/// The default is the value of [`SDL_HINT_JOYSTICK_HIDAPI`].
+///
+/// This hint should be set before initializing joysticks and gamepads.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_JOYSTICK_HIDAPI_FLYDIGI: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_HIDAPI_FLYDIGI".as_ptr();
 
@@ -2558,8 +2594,8 @@ pub const SDL_HINT_MAC_SCROLL_MOMENTUM: *const ::core::ffi::c_char =
 ///
 /// The variable can be set to the following values:
 ///
-/// - "0": Holding a key will open the accents menu for that key.
-/// - "1": Holding a key will repeat the pressed key. (default)
+/// - "0": Holding a key will repeat the pressed key.
+/// - "1": Holding a key will open the accents menu for that key. (default)
 ///
 /// This hint needs to be set before [`SDL_Init()`].
 ///
@@ -2913,6 +2949,46 @@ pub const SDL_HINT_EGL_LIBRARY: *const ::core::ffi::c_char = c"SDL_EGL_LIBRARY".
 /// This hint is available since SDL 3.2.0.
 pub const SDL_HINT_OPENGL_ES_DRIVER: *const ::core::ffi::c_char = c"SDL_OPENGL_ES_DRIVER".as_ptr();
 
+/// A variable controlling whether to force an sRGB-capable OpenGL context.
+///
+/// At OpenGL context creation time, some platforms can request an sRGB-capable
+/// context. However, sometimes any form of the request can cause surprising
+/// results on some drivers, platforms, and hardware. Usually the surprise is
+/// in the form of rendering that is either a little darker or a little
+/// brighter than intended.
+///
+/// This hint allows the user to override the app's sRGB requests and either
+/// force a specific value, or avoid requesting anything at all, depending on
+/// what makes things work correctly for their system.
+///
+/// This is meant as a fail-safe; apps should probably not explicitly set this,
+/// and most users should not, either.
+///
+/// Note that some platforms cannot make this request at all, and on all
+/// platforms this request can be denied by the operating system.
+///
+/// In addition to attempting to obtain the type of sRGB-capable OpenGL context
+/// requested by this hint, SDL will try to force the state of
+/// GL_FRAMEBUFFER_SRGB on the new context, if appropriate.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Force a request for an OpenGL context that is _not_ sRGB-capable.
+/// - "1": Force a request for an OpenGL context that _is_ sRGB-capable.
+/// - "skip": Don't make any request for an sRGB-capable context
+///   (don't specify the attribute at all during context creation time).
+/// - any other string is undefined behavior.
+///
+/// If unset, or set to an empty string, SDL will make a request using the
+/// value the app specified with the [`SDL_GL_FRAMEBUFFER_SRGB_CAPABLE`] attribute.
+///
+/// This hint should be set before an OpenGL context is created.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.2.
+pub const SDL_HINT_OPENGL_FORCE_SRGB_FRAMEBUFFER: *const ::core::ffi::c_char =
+    c"SDL_OPENGL_FORCE_SRGB_FRAMEBUFFER".as_ptr();
+
 /// Mechanism to specify openvr_api library location
 ///
 /// By default, when using the OpenVR driver, it will search for the API
@@ -3230,28 +3306,44 @@ pub const SDL_HINT_ROG_GAMEPAD_MICE: *const ::core::ffi::c_char = c"SDL_ROG_GAME
 pub const SDL_HINT_ROG_GAMEPAD_MICE_EXCLUDED: *const ::core::ffi::c_char =
     c"SDL_ROG_GAMEPAD_MICE_EXCLUDED".as_ptr();
 
-/// Variable controlling the width of the PS2's framebuffer in pixels
+/// A variable controlling the width of the PS2's framebuffer in pixels.
 ///
-/// By default, this variable is "640"
+/// By default, the variable is "640".
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_PS2_GS_WIDTH: *const ::core::ffi::c_char = c"SDL_PS2_GS_WIDTH".as_ptr();
 
-/// Variable controlling the height of the PS2's framebuffer in pixels
+/// A variable controlling the height of the PS2's framebuffer in pixels.
 ///
-/// By default, this variable is "448"
+/// By default, the variable is "448".
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_PS2_GS_HEIGHT: *const ::core::ffi::c_char = c"SDL_PS2_GS_HEIGHT".as_ptr();
 
-/// Variable controlling whether the signal is interlaced or progressive
+/// A variable controlling whether the signal is interlaced or progressive.
+///
+/// The variable can be set to the following values:
 ///
 /// - "0": Image is interlaced. (default)
-/// - "1": Image is progressive
+/// - "1": Image is progressive.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_PS2_GS_PROGRESSIVE: *const ::core::ffi::c_char =
     c"SDL_PS2_GS_PROGRESSIVE".as_ptr();
 
-/// Variable controlling the video mode of the console
+/// A variable controlling the video mode of the console.
+///
+/// The variable can be set to the following values:
 ///
 /// - "": Console-native. (default)
-/// - "NTSC": 60hz region
-/// - "PAL": 50hz region
+/// - "NTSC": 60hz region.
+/// - "PAL": 50hz region.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_PS2_GS_MODE: *const ::core::ffi::c_char = c"SDL_PS2_GS_MODE".as_ptr();
 
 /// A variable controlling which Dispmanx layer to use on a Raspberry PI.

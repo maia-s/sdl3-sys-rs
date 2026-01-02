@@ -364,6 +364,9 @@ apply_cfg!(#[cfg(doc)] => {
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         ///
@@ -435,6 +438,9 @@ apply_cfg!(#[cfg(doc)] => {
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         ///
@@ -482,6 +488,9 @@ apply_cfg!(#[cfg(not(doc))] => {
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
         ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
+        ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
         pub fn SDL_CreateThreadRuntime(r#fn: SDL_ThreadFunction, name: *const ::core::ffi::c_char, data: *mut ::core::ffi::c_void, pfnBeginThread: SDL_FunctionPointer, pfnEndThread: SDL_FunctionPointer) -> *mut SDL_Thread;
@@ -499,6 +508,9 @@ apply_cfg!(#[cfg(not(doc))] => {
         /// Returns an opaque pointer to the new thread object on success, NULL if the
         ///   new thread could not be created; call [`SDL_GetError()`] for more
         ///   information.
+        ///
+        /// ## Thread safety
+        /// It is safe to call this function from any thread.
         ///
         /// ## Availability
         /// This function is available since SDL 3.2.0.
@@ -551,6 +563,9 @@ unsafe extern "C" {
     /// Returns a pointer to a UTF-8 string that names the specified thread, or
     ///   NULL if it doesn't have a name.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     pub fn SDL_GetThreadName(thread: *mut SDL_Thread) -> *const ::core::ffi::c_char;
@@ -568,6 +583,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns the ID of the current thread.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -591,6 +609,9 @@ unsafe extern "C" {
     /// Returns the ID of the specified thread, or the ID of the current thread if
     ///   `thread` is NULL.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -612,6 +633,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
     ///   information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -647,6 +671,10 @@ unsafe extern "C" {
     ///   function by its 'return', or -1 if the thread has been
     ///   detached or isn't valid, may be NULL.
     ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread, but only
+    ///   a single thread can wait any specific thread to finish.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -665,6 +693,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns the current state of a thread, or [`SDL_THREAD_UNKNOWN`] if the thread
     ///   isn't valid.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -699,6 +730,9 @@ unsafe extern "C" {
     /// either that function or this one, but not both, or behavior is undefined.
     ///
     /// It is safe to pass NULL to this function; it is a no-op.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Parameters
     /// - `thread`: the [`SDL_Thread`] pointer that was returned from the

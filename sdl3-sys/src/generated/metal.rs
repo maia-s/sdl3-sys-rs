@@ -28,6 +28,9 @@ unsafe extern "C" {
     /// ## Return value
     /// Returns handle NSView or UIView.
     ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -46,6 +49,9 @@ unsafe extern "C" {
     /// ## Parameters
     /// - `view`: the [`SDL_MetalView`] object.
     ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
+    ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
     ///
@@ -62,6 +68,9 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns a pointer.
+    ///
+    /// ## Thread safety
+    /// This function should only be called on the main thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
