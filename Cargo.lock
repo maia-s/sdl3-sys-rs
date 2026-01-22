@@ -367,7 +367,7 @@ version = "3.4.0"
 
 [[package]]
 name = "sdl3-image-sys"
-version = "0.6.0+SDL-image-3.4.0"
+version = "0.6.1+SDL-image-3.4.0"
 dependencies = [
  "cmake",
  "pkg-config",

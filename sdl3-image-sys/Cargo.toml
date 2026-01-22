@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-image-sys"
-version = "0.6.0+SDL-image-3.4.0"
+version = "0.6.1+SDL-image-3.4.0"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
