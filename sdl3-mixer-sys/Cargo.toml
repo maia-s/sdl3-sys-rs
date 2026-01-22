@@ -95,7 +95,9 @@ no-default-wavpack = ["no-sdlmixer-wavpack"]
 sdlmixer-deps-shared = []
 no-sdlmixer-deps-shared = []
 
-sdlmixer-vendored = []
+sdlmixer-vendored = [
+    "no-sdlmixer-mod-xmp", # not vendored in crate for size reasons
+]
 no-sdlmixer-vendored = []
 
 sdlmixer-aiff = []
