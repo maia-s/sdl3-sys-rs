@@ -16,7 +16,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             if LINK_FRAMEWORK {
                 // !!!FIXME
-                panic!("SDL3_mixer is currently missing a configuration option to build as a framework. You can download the official framework build from <https://github.com/libsdl-org/SDL_mixer/releases>.");
+                panic!(
+                    "SDL3_mixer is currently missing a configuration option to build as a framework. You can download the official framework build from <https://github.com/libsdl-org/SDL_mixer/releases>."
+                );
                 //config.define("SDL_FRAMEWORK", "ON");
             } else if cfg!(feature = "link-static") {
                 config.define("BUILD_SHARED_LIBS", "OFF");
@@ -31,6 +33,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 SDLMIXER_WAVE,
                 SDLMIXER_VOC,
                 SDLMIXER_AU,
+                SDLMIXER_FLAC,
                 SDLMIXER_FLAC_LIBFLAC,
                 SDLMIXER_FLAC_LIBFLAC_SHARED,
                 SDLMIXER_FLAC_DRFLAC,
@@ -42,6 +45,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 SDLMIXER_MP3_DRMP3,
                 SDLMIXER_MP3_MPG123,
                 SDLMIXER_MP3_MPG123_SHARED,
+                SDLMIXER_MIDI,
                 SDLMIXER_MIDI_FLUIDSYNTH,
                 SDLMIXER_MIDI_FLUIDSYNTH_SHARED,
                 SDLMIXER_MIDI_TIMIDITY,

@@ -67,47 +67,30 @@ no-default-formats = [
     "no-default-wavpack",
 ]
 
-no-default-aiff = [
-    "no-sdlmixer-aiff",
-]
-no-default-wave = [
-    "no-sdlmixer-wave",
-]
-no-default-voc = [
-    "no-sdlmixer-voc",
-]
-no-default-au = [
-    "no-sdlmixer-au",
-]
+no-default-aiff = ["no-sdlmixer-aiff"]
+no-default-wave = ["no-sdlmixer-wave"]
+no-default-voc = ["no-sdlmixer-voc"]
+no-default-au = ["no-sdlmixer-au"]
 no-default-flac = [
+    "no-sdlmixer-flac",
     "no-sdlmixer-flac-libflac",
     "no-sdlmixer-flac-drflac",
 ]
-no-default-gme = [
-    "no-sdlmixer-gme",
-]
-no-default-mod = [
-    "no-sdlmixer-mod-xmp"
-]
-no-default-mp3 = [
-    "no-sdlmixer-mp3-drmp3",
-    "no-sdlmixer-mp3-mpg123",
-]
+no-default-gme = ["no-sdlmixer-gme"]
+no-default-mod = ["no-sdlmixer-mod-xmp"]
+no-default-mp3 = ["no-sdlmixer-mp3-drmp3", "no-sdlmixer-mp3-mpg123"]
 no-default-midi = [
+    "no-sdlmixer-midi",
     "no-sdlmixer-midi-fluidsynth",
     "no-sdlmixer-midi-timidity",
 ]
-no-default-opus = [
-    "no-sdlmixer-opus",
-]
+no-default-opus = ["no-sdlmixer-opus"]
 no-default-vorbis = [
     "no-sdlmixer-vorbis-stb",
     "no-sdlmixer-vorbis-tremor",
     "no-sdlmixer-vorbis-vorbisfile",
 ]
-no-default-wavpack = [
-    "no-sdlmixer-wavpack",
-]
+no-default-wavpack = ["no-sdlmixer-wavpack"]
 
 sdlmixer-deps-shared = []
 no-sdlmixer-deps-shared = []
@@ -127,9 +110,11 @@ no-sdlmixer-voc = []
 sdlmixer-au = []
 no-sdlmixer-au = []
 
-sdlmixer-flac-libflac = []
+sdlmixer-flac = []
+sdlmixer-flac-libflac = ["sdlmixer-flac"]
 sdlmixer-flac-libflac-shared = ["sdlmixer-flac-libflac"]
-sdlmixer-flac-drflac = []
+sdlmixer-flac-drflac = ["sdlmixer-flac"]
+no-sdlmixer-flac = ["no-sdlmixer-flac-libflac", "no-sdlmixer-flac-drflac"]
 no-sdlmixer-flac-libflac = []
 no-sdlmixer-flac-libflac-shared = []
 no-sdlmixer-flac-drflac = []
@@ -141,7 +126,7 @@ no-sdlmixer-gme-shared = []
 
 sdlmixer-mod-xmp = []
 sdlmixer-mod-xmp-lite = ["sdlmixer-mod-xmp"]
-sdlmixer-mod-xmp-shared = ["sdlmixer-mod-xmp"] # xmp or xmp-lite
+sdlmixer-mod-xmp-shared = ["sdlmixer-mod-xmp"]     # xmp or xmp-lite
 no-sdlmixer-mod-xmp = ["no-sdlmixer-mod-xmp-lite"]
 no-sdlmixer-mod-xmp-lite = []
 no-sdlmixer-mod-xmp-shared = []
@@ -153,9 +138,11 @@ no-sdlmixer-mp3-drmp3 = []
 no-sdlmixer-mp3-mpg123 = []
 no-sdlmixer-mp3-mpg123-shared = []
 
-sdlmixer-midi-fluidsynth = []
+sdlmixer-midi = []
+sdlmixer-midi-fluidsynth = ["sdlmixer-midi"]
 sdlmixer-midi-fluidsynth-shared = ["sdlmixer-midi-fluidsynth"]
-sdlmixer-midi-timidity = []
+sdlmixer-midi-timidity = ["sdlmixer-midi"]
+no-sdlmixer-midi = ["no-sdlmixer-midi-fluidsynth", "no-sdlmixer-midi-timidity"]
 no-sdlmixer-midi-fluidsynth = []
 no-sdlmixer-midi-fluidsynth-shared = []
 no-sdlmixer-midi-timidity = []
