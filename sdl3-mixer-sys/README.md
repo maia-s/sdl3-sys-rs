@@ -1,8 +1,14 @@
 # sdl3-mixer-sys: Low level Rust bindings for SDL3_mixer
 
+<div class="warning">
+
+This version is a prerelease. There may be breaking changes before the final 0.6.0 release.
+
+</div>
+
 These are low level Rust bindings for SDL3_mixer, an add-on library for
 [SDL 3](https://libsdl.org) for loading and playing audio files.
-This version of `sdl3-mixer-sys` has bindings for SDL_image versions `3.2.0` to `3.2.4`, inclusive.
+This version of `sdl3-mixer-sys` has bindings for SDL_mixer version `3.1.2-prerelease`.
 
 <div class="warning">
 
@@ -121,7 +127,7 @@ Formats are autodetected by default. You can disable them by default instead and
 
 ## Recent changes
 
-- 0.6.0 WIP:
-    - First release
+- 0.6.0-pre-0:
+    - Prerelease
 
 See ChangeLog.md for older changes
