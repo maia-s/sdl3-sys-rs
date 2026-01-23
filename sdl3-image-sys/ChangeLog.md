@@ -1,10 +1,14 @@
 # Changes
 
-- next
+- 0.6.2
+    - Update SDL_image to 3.4.2
     - Require exact version match for source crate when building from source (fix for Android)
     - Add `new` and `value` assoc function/method for groups (ids, enums, etc)
     - impl Display for ids under the `display-impls` feature
     - Add metadata for structs and unions
+
+- 0.6.1:
+    - Update SDL_image to 3.4.0
 
 - 0.6.0:
     - Update sdl3-sys to 0.6.0

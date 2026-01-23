@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_image, an add-on library for
 [SDL 3](https://libsdl.org) for loading images.
-This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.4.0`, inclusive.
+This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.4.2`, inclusive.
 
 <div class="warning">
 
@@ -132,11 +132,15 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
-- next
+- 0.6.2
+    - Update SDL_image to 3.4.2
     - Require exact version match for source crate when building from source (fix for Android)
     - Add `new` and `value` assoc function/method for groups (ids, enums, etc)
     - impl Display for ids under the `display-impls` feature
     - Add metadata for structs and unions
+
+- 0.6.1:
+    - Update SDL_image to 3.4.0
 
 - 0.6.0:
     - Update sdl3-sys to 0.6.0
@@ -144,15 +148,5 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
     - Add metadata
     - Make some functions safe and/or const
     - MSRV 1.85
-
-- 0.2.1:
-    - Update SDL_image to 3.2.6
-    - Fix an issue where creating symlinks after a build could fail
-    - Fix copying the built library when cross compiling
-
-- 0.2.0:
-    - Update sdl3-sys to 0.5.0
-    - Add `no-link` feature
-    - On Apple targets, look for frameworks in `~/Library/Frameworks` too
 
 See ChangeLog.md for older changes

@@ -363,11 +363,11 @@ checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
 name = "sdl3-image-src"
-version = "3.4.0"
+version = "3.4.2"
 
 [[package]]
 name = "sdl3-image-sys"
-version = "0.6.1+SDL-image-3.4.0"
+version = "0.6.2+SDL-image-3.4.2"
 dependencies = [
  "cmake",
  "pkg-config",

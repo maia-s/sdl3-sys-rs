@@ -25,6 +25,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             }
 
             config.define("SDLIMAGE_SAMPLES", "OFF");
+            config.define("SDLIMAGE_TESTS", "OFF");
 
             cmake_vars! { config =>
                 SDLIMAGE_DEPS_SHARED,
