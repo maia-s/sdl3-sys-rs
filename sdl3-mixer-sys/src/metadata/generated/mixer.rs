@@ -254,6 +254,15 @@ pub const METADATA_MIX_PROP_PLAY_APPEND_SILENCE_MILLISECONDS_NUMBER: Property = 
     doc: None,
     available_since: None,
 };
+pub const METADATA_MIX_PROP_PLAY_HALT_WHEN_EXHAUSTED_BOOLEAN: Property = Property {
+    module: "mixer",
+    name: "MIX_PROP_PLAY_HALT_WHEN_EXHAUSTED_BOOLEAN",
+    short_name: "PLAY_HALT_WHEN_EXHAUSTED_BOOLEAN",
+    value: crate::mixer::MIX_PROP_PLAY_HALT_WHEN_EXHAUSTED_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_MIX_StereoGains: Struct = Struct {
     module: "mixer",
     kind: StructKind::Struct,

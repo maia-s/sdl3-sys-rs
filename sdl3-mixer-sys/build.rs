@@ -24,7 +24,8 @@ fn main() -> Result<(), Box<dyn Error>> {
                 config.define("BUILD_SHARED_LIBS", "OFF");
             }
 
-            config.define("SDLMIXER_SAMPLES", "OFF");
+            config.define("SDLMIXER_EXAMPLES", "OFF");
+            config.define("SDLMIXER_TESTS", "OFF");
 
             cmake_vars! { config =>
                 SDLMIXER_DEPS_SHARED,

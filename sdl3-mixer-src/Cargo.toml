@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-mixer-src"
-version = "3.1.2-prerelease"
+version = "3.2.0"
 edition = "2021"
 authors = ["SDL developers"]
 license = "Zlib"

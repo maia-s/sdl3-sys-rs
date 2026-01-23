@@ -105,7 +105,7 @@ pub const SDL_MIXER_MAJOR_VERSION: ::core::primitive::i32 = 3;
 ///
 /// ## Availability
 /// This macro is available since SDL_mixer 3.0.0.
-pub const SDL_MIXER_MINOR_VERSION: ::core::primitive::i32 = 1;
+pub const SDL_MIXER_MINOR_VERSION: ::core::primitive::i32 = 2;
 
 /// The current micro (or patchlevel) version of the SDL_mixer headers.
 ///
@@ -113,7 +113,7 @@ pub const SDL_MIXER_MINOR_VERSION: ::core::primitive::i32 = 1;
 ///
 /// ## Availability
 /// This macro is available since SDL_mixer 3.0.0.
-pub const SDL_MIXER_MICRO_VERSION: ::core::primitive::i32 = 2;
+pub const SDL_MIXER_MICRO_VERSION: ::core::primitive::i32 = 0;
 
 /// This is the current version number macro of the SDL_mixer headers.
 ///
@@ -179,7 +179,7 @@ unsafe extern "C" {
     /// Returns true on success, false on error; call [`SDL_GetError()`] for details.
     ///
     /// ## Thread safety
-    /// It is safe to call this function from any thread.
+    /// This function is not thread safe.
     ///
     /// ## Availability
     /// This function is available since SDL_mixer 3.0.0.
@@ -218,7 +218,7 @@ unsafe extern "C" {
     /// this function as a safety net against memory leaks.
     ///
     /// ## Thread safety
-    /// It is safe to call this function from any thread.
+    /// This function is not thread safe.
     ///
     /// ## Availability
     /// This function is available since SDL_mixer 3.0.0.
@@ -333,7 +333,7 @@ unsafe extern "C" {
     ///   [`SDL_GetError()`] for more information.
     ///
     /// ## Thread safety
-    /// It is safe to call this function from any thread.
+    /// This function should only be called on the main thread.
     ///
     /// ## Availability
     /// This function is available since SDL_mixer 3.0.0.
@@ -397,7 +397,10 @@ unsafe extern "C" {
     /// - `mixer`: the mixer to destroy.
     ///
     /// ## Thread safety
-    /// It is safe to call this function from any thread.
+    /// If this is used with a [`MIX_Mixer`] from [`MIX_CreateMixerDevice`],
+    ///   then this function should only be called on the main thread.
+    ///   If this is used with a [`MIX_Mixer`] from [`MIX_CreateMixer`], then
+    ///   it is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL_mixer 3.0.0.
@@ -472,6 +475,83 @@ unsafe extern "C" {
         mixer: *mut MIX_Mixer,
         spec: *mut SDL_AudioSpec,
     ) -> ::core::primitive::bool;
+}
+
+unsafe extern "C" {
+    /// Lock a mixer by obtaining its internal mutex.
+    ///
+    /// While locked, the mixer will not be able to mix more audio or change its
+    /// internal state in another thread. Those other threads will block until the
+    /// mixer is unlocked again.
+    ///
+    /// Under the hood, this function calls [`SDL_LockMutex()`], so all the same rules
+    /// apply: the lock can be recursive, it must be unlocked the same number of
+    /// times from the same thread that locked it, etc.
+    ///
+    /// Just about every SDL_mixer API _also_ locks the mixer while doing its work,
+    /// as does the SDL audio device thread while actual mixing is in progress, so
+    /// basic use of this library never requires the app to explicitly lock the
+    /// device to be thread safe. There are two scenarios where this can be useful,
+    /// however:
+    ///
+    /// - The app has a provided a callback that the mixing thread might call, and
+    ///   there is some app state that needs to be protected against race
+    ///   conditions as changes are made and mixing progresses simultaneously. Any
+    ///   lock can be used for this, but this is a conveniently-available lock.
+    /// - The app wants to make multiple, atomic changes to the mix. For example,
+    ///   to start several tracks at the exact same moment, one would lock the
+    ///   mixer, call [`MIX_PlayTrack`] multiple times, and then unlock again; all the
+    ///   tracks will start mixing on the same sample frame.
+    ///
+    /// Each call to this function must be paired with a call to [`MIX_UnlockMixer`]
+    /// from the same thread. It is safe to lock a mixer multiple times; it remains
+    /// locked until the final matching unlock call.
+    ///
+    /// Do not lock the mixer for significant amounts of time, or it can cause
+    /// audio dropouts. Just do simply things quickly and unlock again.
+    ///
+    /// Locking a NULL mixer is a safe no-op.
+    ///
+    /// ## Parameters
+    /// - `mixer`: the mixer to lock. May be NULL.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL_mixer 3.0.0.
+    ///
+    /// ## See also
+    /// - [`MIX_UnlockMixer`]
+    pub fn MIX_LockMixer(mixer: *mut MIX_Mixer);
+}
+
+unsafe extern "C" {
+    /// Unlock a mixer previously locked by a call to [`MIX_LockMixer()`].
+    ///
+    /// While locked, the mixer will not be able to mix more audio or change its
+    /// internal state another thread. Those other threads will block until the
+    /// mixer is unlocked again.
+    ///
+    /// Under the hood, this function calls [`SDL_LockMutex()`], so all the same rules
+    /// apply: the lock can be recursive, it must be unlocked the same number of
+    /// times from the same thread that locked it, etc.
+    ///
+    /// Unlocking a NULL mixer is a safe no-op.
+    ///
+    /// ## Parameters
+    /// - `mixer`: the mixer to unlock. May be NULL.
+    ///
+    /// ## Thread safety
+    /// This call must be paired with a previous [`MIX_LockMixer`] call
+    ///   on the same thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL_mixer 3.0.0.
+    ///
+    /// ## See also
+    /// - [`MIX_LockMixer`]
+    pub fn MIX_UnlockMixer(mixer: *mut MIX_Mixer);
 }
 
 unsafe extern "C" {
@@ -581,6 +661,76 @@ unsafe extern "C" {
         mixer: *mut MIX_Mixer,
         path: *const ::core::ffi::c_char,
         predecode: ::core::primitive::bool,
+    ) -> *mut MIX_Audio;
+}
+
+unsafe extern "C" {
+    /// Load audio for playback from a memory buffer without making a copy.
+    ///
+    /// When loading audio through most other LoadAudio functions, the data will be
+    /// cached fully in RAM in its original data format, for decoding on-demand.
+    /// This function does most of the same work as those functions, but instead
+    /// uses a buffer of memory provided by the app that it does not make a copy
+    /// of.
+    ///
+    /// This buffer must live for the entire time the returned [`MIX_Audio`] lives, as
+    /// the mixer will access the buffer whenever it needs to mix more data.
+    ///
+    /// This function is meant to maximize efficiency: if the data is already in
+    /// memory and can remain there, don't copy it. This data can be in any
+    /// supported audio file format (WAV, MP3, etc); it will be decoded on the fly
+    /// while mixing. Unlike [`MIX_LoadAudio()`], there is no `predecode` option
+    /// offered here, as this is meant to optimize for data that's already in
+    /// memory and intends to exist there for significant time; since predecoding
+    /// would only need the file format data once, upfront, one could simply wrap
+    /// it in [`SDL_CreateIOFromConstMem()`] and pass that to [`MIX_LoadAudio_IO()`].
+    ///
+    /// [`MIX_Audio`] objects can be shared between multiple mixers. The `mixer`
+    /// parameter just suggests the most likely mixer to use this audio, in case
+    /// some optimization might be applied, but this is not required, and a NULL
+    /// mixer may be specified.
+    ///
+    /// If `free_when_done` is true, SDL_mixer will call `SDL_free(data)` when the
+    /// returned [`MIX_Audio`] is eventually destroyed. This can be useful when the
+    /// data is not static, but rather loaded elsewhere for this specific [`MIX_Audio`]
+    /// and simply wants to avoid the extra copy.
+    ///
+    /// As audio format information is obtained from the file format metadata, this
+    /// isn't useful for raw PCM data; in that case, use [`MIX_LoadRawAudioNoCopy()`]
+    /// instead, which offers an [`SDL_AudioSpec`].
+    ///
+    /// Once a [`MIX_Audio`] is created, it can be assigned to a [`MIX_Track`] with
+    /// [`MIX_SetTrackAudio()`], or played without any management with [`MIX_PlayAudio()`].
+    ///
+    /// When done with a [`MIX_Audio`], it can be freed with [`MIX_DestroyAudio()`].
+    ///
+    /// ## Parameters
+    /// - `mixer`: a mixer this audio is intended to be used with. May be NULL.
+    /// - `data`: the buffer where the audio data lives.
+    /// - `datalen`: the size, in bytes, of the buffer.
+    /// - `free_when_done`: if true, `data` will be given to [`SDL_free()`] when the
+    ///   [`MIX_Audio`] is destroyed.
+    ///
+    /// ## Return value
+    /// Returns an audio object that can be used to make sound on a mixer, or NULL
+    ///   on failure; call [`SDL_GetError()`] for more information.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL_mixer 3.0.0.
+    ///
+    /// ## See also
+    /// - [`MIX_DestroyAudio`]
+    /// - [`MIX_SetTrackAudio`]
+    /// - [`MIX_LoadRawAudioNoCopy`]
+    /// - [`MIX_LoadAudio_IO`]
+    pub fn MIX_LoadAudioNoCopy(
+        mixer: *mut MIX_Mixer,
+        data: *const ::core::ffi::c_void,
+        datalen: ::core::primitive::usize,
+        free_when_done: ::core::primitive::bool,
     ) -> *mut MIX_Audio;
 }
 
@@ -754,7 +904,7 @@ unsafe extern "C" {
     /// Load raw PCM data from a memory buffer without making a copy.
     ///
     /// This buffer must live for the entire time the returned [`MIX_Audio`] lives, as
-    /// it will access it whenever it needs to mix more data.
+    /// the mixer will access the buffer whenever it needs to mix more data.
     ///
     /// This function is meant to maximize efficiency: if the data is already in
     /// memory and can remain there, don't copy it. But it can also lead to some
@@ -1033,7 +1183,7 @@ unsafe extern "C" {
     /// will be processed and mixed together to form the final output from the
     /// mixer.
     ///
-    /// There are no limits to the number of tracks on may create, beyond running
+    /// There are no limits to the number of tracks one may create, beyond running
     /// out of memory, but in normal practice there are a small number of tracks
     /// that are reused between all loaded audio as appropriate.
     ///
@@ -1443,8 +1593,8 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns an array of the tracks, NULL-terminated, or NULL on failure; call
-    ///   [`SDL_GetError()`] for more information. The returned pointer hould be
-    ///   freed with [`SDL_free()`] when it is no longer needed.
+    ///   [`SDL_GetError()`] for more information. The returned pointer should
+    ///   be freed with [`SDL_free()`] when it is no longer needed.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
@@ -1981,6 +2131,24 @@ unsafe extern "C" {
     ///   [`MIX_PROP_PLAY_APPEND_SILENCE_FRAMES_NUMBER`] property, but the value is
     ///   specified in milliseconds instead of sample frames. If both properties
     ///   are specified, the sample frames value is favored. Default 0.
+    /// - [`MIX_PROP_PLAY_HALT_WHEN_EXHAUSTED_BOOLEAN`]\: If true, when input is
+    ///   completely consumed for the track, the mixer will mark the track as
+    ///   stopped (and call any appropriate [`MIX_TrackStoppedCallback`], etc); to play
+    ///   more, the track will need to be restarted. If false, the track will just
+    ///   not contribute to the mix, but it will not be marked as stopped. There
+    ///   may be clever logic tricks this exposes generally, but this property is
+    ///   specifically useful when the track's input is an [`SDL_AudioStream`] assigned
+    ///   via [`MIX_SetTrackAudioStream()`]. Setting this property to true can be
+    ///   useful when pushing a complete piece of audio to the stream that has a
+    ///   definite ending, as the track will operate like any other audio was
+    ///   applied. Setting to false means as new data is added to the stream, the
+    ///   mixer will start using it as soon as possible, which is useful when audio
+    ///   should play immediately as it drips in: new VoIP packets, etc. Note that
+    ///   in this situation, if the audio runs out when needed, there _will_ be
+    ///   gaps in the mixed output, so try to buffer enough data to avoid this when
+    ///   possible. Note that a track is not consider exhausted until all its loops
+    ///   and appended silence have been mixed (and also, that loops don't mean
+    ///   anything when the input is an AudioStream). Default true.
     ///
     /// If this function fails, mixing of this track will not start (or restart, if
     /// it was already started).
@@ -2044,6 +2212,9 @@ pub const MIX_PROP_PLAY_APPEND_SILENCE_FRAMES_NUMBER: *const ::core::ffi::c_char
 
 pub const MIX_PROP_PLAY_APPEND_SILENCE_MILLISECONDS_NUMBER: *const ::core::ffi::c_char =
     c"SDL_mixer.play.append_silence_milliseconds".as_ptr();
+
+pub const MIX_PROP_PLAY_HALT_WHEN_EXHAUSTED_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL_mixer.play.halt_when_exhausted".as_ptr();
 
 unsafe extern "C" {
     /// Start (or restart) mixing all tracks with a specific tag for playback.
@@ -3555,13 +3726,23 @@ unsafe extern "C" {
     /// This function can not be used with mixers from [`MIX_CreateMixerDevice()`];
     /// those generate audio as needed internally.
     ///
+    /// This function returns the number of _bytes_ of real audio mixed, which
+    /// might be less than `buflen`. While all `buflen` bytes of `buffer` will be
+    /// initialized, if available tracks to mix run out, the end of the buffer will
+    /// be initialized with silence; this silence will not be counted in the return
+    /// value, so the caller has the option to identify how much of the buffer has
+    /// legimitate contents vs appended silence. As such, any value >= 0 signifies
+    /// success. A return value of -1 means failure (out of memory, invalid
+    /// parameters, etc).
+    ///
     /// ## Parameters
     /// - `mixer`: the mixer for which to generate more audio.
     /// - `buffer`: a pointer to a buffer to store audio in.
     /// - `buflen`: the number of bytes to store in buffer.
     ///
     /// ## Return value
-    /// Returns true on success or false on failure; call [`SDL_GetError()`] for more
+    /// Returns The number of bytes of mixed audio, discounting appended silence,
+    ///   on success, or -1 on failure; call [`SDL_GetError()`] for more
     ///   information.
     ///
     /// ## Thread safety
@@ -3576,7 +3757,7 @@ unsafe extern "C" {
         mixer: *mut MIX_Mixer,
         buffer: *mut ::core::ffi::c_void,
         buflen: ::core::ffi::c_int,
-    ) -> ::core::primitive::bool;
+    ) -> ::core::ffi::c_int;
 }
 
 unsafe extern "C" {
