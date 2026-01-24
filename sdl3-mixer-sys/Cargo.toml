@@ -8,7 +8,7 @@ license = "Zlib"
 description = "Low level Rust bindings for SDL3_mixer"
 repository = "https://codeberg.org/maia/sdl3-sys-rs"
 documentation = "https://docs.rs/sdl3-mixer-sys"
-keywords = ["sdl", "graphics"]
+keywords = ["sdl", "audio", "audio-codecs", "mixer"]
 categories = ["external-ffi-bindings", "no-std"]
 links = "SDL3_mixer"
 
