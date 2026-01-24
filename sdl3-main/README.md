@@ -36,6 +36,9 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
+- next:
+    - Make `MainThreadToken::init()` safe
+
 - 0.6.0:
     - Update sdl3-sys to 0.6.0
     - `MainThreadToken::init()` is no longer necessary in most cases

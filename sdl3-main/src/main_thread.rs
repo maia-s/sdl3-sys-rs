@@ -121,7 +121,7 @@ impl MainThreadToken {
     /// On targets that don't support threads, this will always succeed.
     #[track_caller]
     #[inline(always)]
-    pub unsafe fn init() {
+    pub fn init() {
         Self::assert();
     }
 }
