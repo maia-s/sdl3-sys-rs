@@ -454,6 +454,8 @@ impl Library {
                     let pfx = &line[..line.find(match_).unwrap() + match_.len()];
                     if version == "3.2.0" {
                         format!("{pfx} `{version}`.\n")
+                    } else if revision_ver.contains('-') {
+                        format!("{pfx} `{revision_ver}`.\n")
                     } else {
                         format!("{pfx}s `3.2.0` to `{revision_ver}`, inclusive.\n")
                     }
