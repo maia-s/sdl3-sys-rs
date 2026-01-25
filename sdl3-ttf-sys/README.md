@@ -68,6 +68,10 @@ disables harfbuzz support. Activated features override features disabled with th
 
 ## Recent changes
 
+- next:
+    - Add `from_raw` assoc function and `into_raw` and `value` methods for groups (ids, enums, etc),
+      and impl Display for ids under the `display-impls` feature
+
 - 0.6.0:
     - Update sdl3-sys to 0.6.0
     - Synchronize version number with sdl3-sys
@@ -75,15 +79,5 @@ disables harfbuzz support. Activated features override features disabled with th
     - Remove deprecated aliases
     - Make some functions safe and/or const
     - MSRV 1.85
-
-- 0.2.1:
-    - Expose `TTF_TextData`
-    - Fix an issue where creating symlinks after a build could fail
-    - Fix copying the built library when cross compiling
-
-- 0.2.0:
-    - Update sdl3-sys to 0.5.0
-    - Add `no-link` feature
-    - On Apple targets, look for frameworks in `~/Library/Frameworks` too
 
 See ChangeLog.md for older changes

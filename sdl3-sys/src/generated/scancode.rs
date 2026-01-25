@@ -1314,6 +1314,30 @@ pub const SDL_SCANCODE_RESERVED: SDL_Scancode = SDL_Scancode::RESERVED;
 /// not a key, just marks the number of scancodes for array bounds
 pub const SDL_SCANCODE_COUNT: SDL_Scancode = SDL_Scancode::COUNT;
 
+impl SDL_Scancode {
+    /// Initialize a `SDL_Scancode` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_Scancode {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_Scancode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =

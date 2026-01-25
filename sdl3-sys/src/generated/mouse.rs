@@ -72,6 +72,38 @@ impl From<SDL_MouseID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_MouseID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_MouseID {
+    /// Initialize a `SDL_MouseID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_MouseID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_MouseID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -250,6 +282,30 @@ pub const SDL_SYSTEM_CURSOR_SW_RESIZE: SDL_SystemCursor = SDL_SystemCursor::SW_R
 pub const SDL_SYSTEM_CURSOR_W_RESIZE: SDL_SystemCursor = SDL_SystemCursor::W_RESIZE;
 pub const SDL_SYSTEM_CURSOR_COUNT: SDL_SystemCursor = SDL_SystemCursor::COUNT;
 
+impl SDL_SystemCursor {
+    /// Initialize a `SDL_SystemCursor` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_SystemCursor {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_SystemCursor {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -315,6 +371,30 @@ impl SDL_MouseWheelDirection {
 pub const SDL_MOUSEWHEEL_NORMAL: SDL_MouseWheelDirection = SDL_MouseWheelDirection::NORMAL;
 /// The scroll direction is flipped / natural
 pub const SDL_MOUSEWHEEL_FLIPPED: SDL_MouseWheelDirection = SDL_MouseWheelDirection::FLIPPED;
+
+impl SDL_MouseWheelDirection {
+    /// Initialize a `SDL_MouseWheelDirection` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_MouseWheelDirection {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_MouseWheelDirection {
@@ -1335,6 +1415,30 @@ pub const SDL_BUTTON_MMASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::MMASK;
 pub const SDL_BUTTON_RMASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::RMASK;
 pub const SDL_BUTTON_X1MASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::X1MASK;
 pub const SDL_BUTTON_X2MASK: SDL_MouseButtonFlags = SDL_MouseButtonFlags::X2MASK;
+
+impl SDL_MouseButtonFlags {
+    /// Initialize a `SDL_MouseButtonFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_MouseButtonFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_MouseButtonFlags {

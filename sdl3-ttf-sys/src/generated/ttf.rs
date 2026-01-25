@@ -726,6 +726,30 @@ pub const TTF_STYLE_UNDERLINE: TTF_FontStyleFlags = TTF_FontStyleFlags::UNDERLIN
 /// Strikethrough text
 pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = TTF_FontStyleFlags::STRIKETHROUGH;
 
+impl TTF_FontStyleFlags {
+    /// Initialize a `TTF_FontStyleFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl TTF_FontStyleFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for TTF_FontStyleFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -932,6 +956,30 @@ pub const TTF_HINTING_MONO: TTF_HintingFlags = TTF_HintingFlags::MONO;
 pub const TTF_HINTING_NONE: TTF_HintingFlags = TTF_HintingFlags::NONE;
 /// Light hinting with subpixel rendering for more precise font edges.
 pub const TTF_HINTING_LIGHT_SUBPIXEL: TTF_HintingFlags = TTF_HintingFlags::LIGHT_SUBPIXEL;
+
+impl TTF_HintingFlags {
+    /// Initialize a `TTF_HintingFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl TTF_HintingFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for TTF_HintingFlags {
@@ -1181,6 +1229,30 @@ pub const TTF_HORIZONTAL_ALIGN_INVALID: TTF_HorizontalAlignment = TTF_Horizontal
 pub const TTF_HORIZONTAL_ALIGN_LEFT: TTF_HorizontalAlignment = TTF_HorizontalAlignment::LEFT;
 pub const TTF_HORIZONTAL_ALIGN_CENTER: TTF_HorizontalAlignment = TTF_HorizontalAlignment::CENTER;
 pub const TTF_HORIZONTAL_ALIGN_RIGHT: TTF_HorizontalAlignment = TTF_HorizontalAlignment::RIGHT;
+
+impl TTF_HorizontalAlignment {
+    /// Initialize a `TTF_HorizontalAlignment` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl TTF_HorizontalAlignment {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for TTF_HorizontalAlignment {
@@ -1547,6 +1619,30 @@ pub const TTF_DIRECTION_TTB: TTF_Direction = TTF_Direction::TTB;
 /// Bottom to Top
 pub const TTF_DIRECTION_BTT: TTF_Direction = TTF_Direction::BTT;
 
+impl TTF_Direction {
+    /// Initialize a `TTF_Direction` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::primitive::u32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::primitive::u32 {
+        self.0
+    }
+}
+
+impl TTF_Direction {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::primitive::u32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for TTF_Direction {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1838,6 +1934,30 @@ pub const TTF_IMAGE_ALPHA: TTF_ImageType = TTF_ImageType::ALPHA;
 pub const TTF_IMAGE_COLOR: TTF_ImageType = TTF_ImageType::COLOR;
 /// The alpha channel has signed distance field information
 pub const TTF_IMAGE_SDF: TTF_ImageType = TTF_ImageType::SDF;
+
+impl TTF_ImageType {
+    /// Initialize a `TTF_ImageType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl TTF_ImageType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for TTF_ImageType {
@@ -3106,6 +3226,30 @@ pub const TTF_GPU_TEXTENGINE_WINDING_CLOCKWISE: TTF_GPUTextEngineWinding =
 pub const TTF_GPU_TEXTENGINE_WINDING_COUNTER_CLOCKWISE: TTF_GPUTextEngineWinding =
     TTF_GPUTextEngineWinding::COUNTER_CLOCKWISE;
 
+impl TTF_GPUTextEngineWinding {
+    /// Initialize a `TTF_GPUTextEngineWinding` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl TTF_GPUTextEngineWinding {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for TTF_GPUTextEngineWinding {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -4074,6 +4218,30 @@ pub const TTF_SUBSTRING_LINE_START: TTF_SubStringFlags = TTF_SubStringFlags::LIN
 pub const TTF_SUBSTRING_LINE_END: TTF_SubStringFlags = TTF_SubStringFlags::LINE_END;
 /// This substring contains the end of the text
 pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_END;
+
+impl TTF_SubStringFlags {
+    /// Initialize a `TTF_SubStringFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl TTF_SubStringFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for TTF_SubStringFlags {

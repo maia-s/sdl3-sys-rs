@@ -54,6 +54,38 @@ impl From<SDL_KeyboardID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_KeyboardID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_KeyboardID {
+    /// Initialize a `SDL_KeyboardID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_KeyboardID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_KeyboardID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -581,6 +613,30 @@ pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_HIDDEN: SDL_TextInputType =
 pub const SDL_TEXTINPUT_TYPE_NUMBER_PASSWORD_VISIBLE: SDL_TextInputType =
     SDL_TextInputType::NUMBER_PASSWORD_VISIBLE;
 
+impl SDL_TextInputType {
+    /// Initialize a `SDL_TextInputType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_TextInputType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_TextInputType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -665,6 +721,30 @@ pub const SDL_CAPITALIZE_SENTENCES: SDL_Capitalization = SDL_Capitalization::SEN
 pub const SDL_CAPITALIZE_WORDS: SDL_Capitalization = SDL_Capitalization::WORDS;
 /// All letters will be capitalized
 pub const SDL_CAPITALIZE_LETTERS: SDL_Capitalization = SDL_Capitalization::LETTERS;
+
+impl SDL_Capitalization {
+    /// Initialize a `SDL_Capitalization` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_Capitalization {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_Capitalization {

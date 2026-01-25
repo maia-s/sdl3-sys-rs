@@ -176,6 +176,30 @@ pub const SDL_LOG_CATEGORY_RESERVED9: SDL_LogCategory = SDL_LogCategory::RESERVE
 pub const SDL_LOG_CATEGORY_RESERVED10: SDL_LogCategory = SDL_LogCategory::RESERVED10;
 pub const SDL_LOG_CATEGORY_CUSTOM: SDL_LogCategory = SDL_LogCategory::CUSTOM;
 
+impl SDL_LogCategory {
+    /// Initialize a `SDL_LogCategory` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_LogCategory {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_LogCategory {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -265,6 +289,30 @@ pub const SDL_LOG_PRIORITY_WARN: SDL_LogPriority = SDL_LogPriority::WARN;
 pub const SDL_LOG_PRIORITY_ERROR: SDL_LogPriority = SDL_LogPriority::ERROR;
 pub const SDL_LOG_PRIORITY_CRITICAL: SDL_LogPriority = SDL_LogPriority::CRITICAL;
 pub const SDL_LOG_PRIORITY_COUNT: SDL_LogPriority = SDL_LogPriority::COUNT;
+
+impl SDL_LogPriority {
+    /// Initialize a `SDL_LogPriority` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_LogPriority {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_LogPriority {

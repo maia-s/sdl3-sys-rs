@@ -82,6 +82,38 @@ impl From<SDL_JoystickID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_JoystickID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_JoystickID {
+    /// Initialize a `SDL_JoystickID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_JoystickID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_JoystickID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -191,6 +223,30 @@ pub const SDL_JOYSTICK_TYPE_ARCADE_PAD: SDL_JoystickType = SDL_JoystickType::ARC
 pub const SDL_JOYSTICK_TYPE_THROTTLE: SDL_JoystickType = SDL_JoystickType::THROTTLE;
 pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 
+impl SDL_JoystickType {
+    /// Initialize a `SDL_JoystickType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_JoystickType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_JoystickType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -267,6 +323,30 @@ pub const SDL_JOYSTICK_CONNECTION_WIRED: SDL_JoystickConnectionState =
     SDL_JoystickConnectionState::WIRED;
 pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState =
     SDL_JoystickConnectionState::WIRELESS;
+
+impl SDL_JoystickConnectionState {
+    /// Initialize a `SDL_JoystickConnectionState` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_JoystickConnectionState {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_JoystickConnectionState {

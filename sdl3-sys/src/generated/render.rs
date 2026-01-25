@@ -136,6 +136,30 @@ pub const SDL_TEXTUREACCESS_STREAMING: SDL_TextureAccess = SDL_TextureAccess::ST
 /// Texture can be used as a render target
 pub const SDL_TEXTUREACCESS_TARGET: SDL_TextureAccess = SDL_TextureAccess::TARGET;
 
+impl SDL_TextureAccess {
+    /// Initialize a `SDL_TextureAccess` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_TextureAccess {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_TextureAccess {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -217,6 +241,30 @@ pub const SDL_TEXTURE_ADDRESS_AUTO: SDL_TextureAddressMode = SDL_TextureAddressM
 pub const SDL_TEXTURE_ADDRESS_CLAMP: SDL_TextureAddressMode = SDL_TextureAddressMode::CLAMP;
 /// The texture is repeated (tiled)
 pub const SDL_TEXTURE_ADDRESS_WRAP: SDL_TextureAddressMode = SDL_TextureAddressMode::WRAP;
+
+impl SDL_TextureAddressMode {
+    /// Initialize a `SDL_TextureAddressMode` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_TextureAddressMode {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_TextureAddressMode {
@@ -306,6 +354,30 @@ pub const SDL_LOGICAL_PRESENTATION_OVERSCAN: SDL_RendererLogicalPresentation =
 /// The rendered content is scaled up by integer multiples to fit the output resolution
 pub const SDL_LOGICAL_PRESENTATION_INTEGER_SCALE: SDL_RendererLogicalPresentation =
     SDL_RendererLogicalPresentation::INTEGER_SCALE;
+
+impl SDL_RendererLogicalPresentation {
+    /// Initialize a `SDL_RendererLogicalPresentation` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_RendererLogicalPresentation {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_RendererLogicalPresentation {

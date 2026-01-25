@@ -83,6 +83,38 @@ impl From<SDL_PenID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_PenID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_PenID {
+    /// Initialize a `SDL_PenID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_PenID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PenID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -320,6 +352,30 @@ pub const SDL_PEN_INPUT_ERASER_TIP: SDL_PenInputFlags = SDL_PenInputFlags::ERASE
 /// pen is in proximity (since SDL 3.4.0)
 pub const SDL_PEN_INPUT_IN_PROXIMITY: SDL_PenInputFlags = SDL_PenInputFlags::IN_PROXIMITY;
 
+impl SDL_PenInputFlags {
+    /// Initialize a `SDL_PenInputFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_PenInputFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PenInputFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -432,6 +488,30 @@ pub const SDL_PEN_AXIS_TANGENTIAL_PRESSURE: SDL_PenAxis = SDL_PenAxis::TANGENTIA
 /// Total known pen axis types in this version of SDL. This number may grow in future releases!
 pub const SDL_PEN_AXIS_COUNT: SDL_PenAxis = SDL_PenAxis::COUNT;
 
+impl SDL_PenAxis {
+    /// Initialize a `SDL_PenAxis` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_PenAxis {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PenAxis {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -519,6 +599,30 @@ pub const SDL_PEN_DEVICE_TYPE_UNKNOWN: SDL_PenDeviceType = SDL_PenDeviceType::UN
 pub const SDL_PEN_DEVICE_TYPE_DIRECT: SDL_PenDeviceType = SDL_PenDeviceType::DIRECT;
 /// Pen touches something that isn't the display.
 pub const SDL_PEN_DEVICE_TYPE_INDIRECT: SDL_PenDeviceType = SDL_PenDeviceType::INDIRECT;
+
+impl SDL_PenDeviceType {
+    /// Initialize a `SDL_PenDeviceType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_PenDeviceType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PenDeviceType {

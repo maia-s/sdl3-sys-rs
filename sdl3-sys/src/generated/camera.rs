@@ -88,6 +88,38 @@ impl From<SDL_CameraID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_CameraID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_CameraID {
+    /// Initialize a `SDL_CameraID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_CameraID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_CameraID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -186,6 +218,30 @@ pub const SDL_CAMERA_POSITION_UNKNOWN: SDL_CameraPosition = SDL_CameraPosition::
 pub const SDL_CAMERA_POSITION_FRONT_FACING: SDL_CameraPosition = SDL_CameraPosition::FRONT_FACING;
 pub const SDL_CAMERA_POSITION_BACK_FACING: SDL_CameraPosition = SDL_CameraPosition::BACK_FACING;
 
+impl SDL_CameraPosition {
+    /// Initialize a `SDL_CameraPosition` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_CameraPosition {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_CameraPosition {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -257,6 +313,30 @@ pub const SDL_CAMERA_PERMISSION_STATE_PENDING: SDL_CameraPermissionState =
     SDL_CameraPermissionState::PENDING;
 pub const SDL_CAMERA_PERMISSION_STATE_APPROVED: SDL_CameraPermissionState =
     SDL_CameraPermissionState::APPROVED;
+
+impl SDL_CameraPermissionState {
+    /// Initialize a `SDL_CameraPermissionState` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_CameraPermissionState {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_CameraPermissionState {

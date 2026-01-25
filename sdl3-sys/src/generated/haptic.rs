@@ -769,6 +769,30 @@ pub const SDL_HAPTIC_STATUS: SDL_HapticEffectType = SDL_HapticEffectType::STATUS
 /// - [`SDL_ResumeHaptic`]
 pub const SDL_HAPTIC_PAUSE: SDL_HapticEffectType = SDL_HapticEffectType::PAUSE;
 
+impl SDL_HapticEffectType {
+    /// Initialize a `SDL_HapticEffectType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint16) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint16 {
+        self.0
+    }
+}
+
+impl SDL_HapticEffectType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint16 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_HapticEffectType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -899,6 +923,30 @@ pub const SDL_HAPTIC_SPHERICAL: SDL_HapticDirectionType = SDL_HapticDirectionTyp
 pub const SDL_HAPTIC_STEERING_AXIS: SDL_HapticDirectionType =
     SDL_HapticDirectionType::STEERING_AXIS;
 
+impl SDL_HapticDirectionType {
+    /// Initialize a `SDL_HapticDirectionType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint8) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint8 {
+        self.0
+    }
+}
+
+impl SDL_HapticDirectionType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint8 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_HapticDirectionType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -934,6 +982,38 @@ impl From<SDL_HapticEffectID> for ::core::ffi::c_int {
     #[inline(always)]
     fn from(value: SDL_HapticEffectID) -> Self {
         value.0
+    }
+}
+
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_HapticEffectID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <::core::ffi::c_int as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_HapticEffectID {
+    /// Initialize a `SDL_HapticEffectID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_HapticEffectID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
     }
 }
 
@@ -1516,6 +1596,38 @@ impl From<SDL_HapticID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_HapticID) -> Self {
         value.0
+    }
+}
+
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_HapticID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_HapticID {
+    /// Initialize a `SDL_HapticID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_HapticID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
     }
 }
 

@@ -1267,6 +1267,7 @@ impl Enum {
 
         ctx.write_str(&doc_out)?;
 
+        let can_derive_copy = enum_base_type.can_derive_copy(ctx) && self.kind != EnumKind::Lock;
         let can_derive_eq = if self.kind != EnumKind::Lock {
             enum_base_type.can_derive_eq(ctx)
         } else {
@@ -1277,7 +1278,7 @@ impl Enum {
         writeln!(ctx, "#[repr(transparent)]")?;
         emit_derives(
             ctx,
-            enum_base_type.can_derive_copy(ctx) && self.kind != EnumKind::Lock,
+            can_derive_copy,
             enum_base_type.can_default(ctx),
             can_derive_eq,
             matches!(self.kind, EnumKind::Enum | EnumKind::Id),
@@ -1322,6 +1323,23 @@ impl Enum {
                 "#},
                 enum_base_type_s = enum_base_type_s,
                 enum_ident_s = enum_ident_s,
+            )?;
+        }
+
+        if self.kind == EnumKind::Id && can_derive_eq != CanCmp::No {
+            writeln!(
+                ctx,
+                str_block! {"
+                    #[cfg(feature = \"display-impls\")]
+                    impl ::core::fmt::Display for {enum_ident_s} {{
+                        #[inline(always)]
+                        fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {{
+                            <{enum_base_type_s} as ::core::fmt::Display>::fmt(&self.0, f)
+                        }}
+                    }}
+                "},
+                enum_ident_s = enum_ident_s,
+                enum_base_type_s = enum_base_type_s,
             )?;
         }
 
@@ -1448,6 +1466,46 @@ impl Enum {
         }
         ctx.write_str(&global_consts)?;
         writeln!(ctx)?;
+
+        writeln!(
+            ctx,
+            str_block! {"
+                impl {enum_ident_s} {{
+                    /// Initialize a `{enum_ident_s}` from a raw value.
+                    /// # Safety
+                    /// The value should be valid for this type
+                    #[inline(always)]
+                    pub const unsafe fn from_raw(value: {enum_base_type_s}) -> Self {{
+                        Self(value)
+                    }}
+
+                    /// Get the inner raw value.
+                    #[inline(always)]
+                    pub const fn into_raw(self) -> {enum_base_type_s} {{
+                        self.0
+                    }}
+                }}
+            "},
+            enum_ident_s = enum_ident_s,
+            enum_base_type_s = enum_base_type_s,
+        )?;
+
+        if can_derive_copy {
+            writeln!(
+                ctx,
+                str_block! {"
+                    impl {enum_ident_s} {{
+                        /// Get a copy of the inner raw value.
+                        #[inline(always)]
+                        pub const fn value(&self) -> {enum_base_type_s} {{
+                            self.0
+                        }}
+                    }}
+                "},
+                enum_ident_s = enum_ident_s,
+                enum_base_type_s = enum_base_type_s,
+            )?;
+        }
 
         if self.emit_metadata {
             ctx.register_group_metadata(GroupMetadata {

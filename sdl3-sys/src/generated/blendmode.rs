@@ -230,6 +230,30 @@ pub const SDL_BLENDMODE_MOD: SDL_BlendMode = SDL_BlendMode::MOD;
 pub const SDL_BLENDMODE_MUL: SDL_BlendMode = SDL_BlendMode::MUL;
 pub const SDL_BLENDMODE_INVALID: SDL_BlendMode = SDL_BlendMode::INVALID;
 
+impl SDL_BlendMode {
+    /// Initialize a `SDL_BlendMode` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_BlendMode {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_BlendMode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -314,6 +338,30 @@ pub const SDL_BLENDOPERATION_REV_SUBTRACT: SDL_BlendOperation = SDL_BlendOperati
 pub const SDL_BLENDOPERATION_MINIMUM: SDL_BlendOperation = SDL_BlendOperation::MINIMUM;
 /// max(dst, src) : supported by D3D, OpenGL, OpenGLES, and Vulkan
 pub const SDL_BLENDOPERATION_MAXIMUM: SDL_BlendOperation = SDL_BlendOperation::MAXIMUM;
+
+impl SDL_BlendOperation {
+    /// Initialize a `SDL_BlendOperation` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_BlendOperation {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_BlendOperation {
@@ -437,6 +485,30 @@ pub const SDL_BLENDFACTOR_DST_ALPHA: SDL_BlendFactor = SDL_BlendFactor::DST_ALPH
 /// 1-dstA, 1-dstA, 1-dstA, 1-dstA
 pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA: SDL_BlendFactor =
     SDL_BlendFactor::ONE_MINUS_DST_ALPHA;
+
+impl SDL_BlendFactor {
+    /// Initialize a `SDL_BlendFactor` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_BlendFactor {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_BlendFactor {

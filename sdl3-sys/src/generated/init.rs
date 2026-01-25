@@ -250,6 +250,30 @@ pub const SDL_INIT_SENSOR: SDL_InitFlags = SDL_InitFlags::SENSOR;
 /// [`SDL_INIT_CAMERA`] implies [`SDL_INIT_EVENTS`]
 pub const SDL_INIT_CAMERA: SDL_InitFlags = SDL_InitFlags::CAMERA;
 
+impl SDL_InitFlags {
+    /// Initialize a `SDL_InitFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_InitFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_InitFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -336,6 +360,30 @@ pub const SDL_APP_CONTINUE: SDL_AppResult = SDL_AppResult::CONTINUE;
 pub const SDL_APP_SUCCESS: SDL_AppResult = SDL_AppResult::SUCCESS;
 /// Value that requests termination with error from the main callbacks.
 pub const SDL_APP_FAILURE: SDL_AppResult = SDL_AppResult::FAILURE;
+
+impl SDL_AppResult {
+    /// Initialize a `SDL_AppResult` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_AppResult {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_AppResult {

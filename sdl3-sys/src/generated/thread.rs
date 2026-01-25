@@ -62,6 +62,38 @@ impl From<SDL_ThreadID> for Uint64 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_ThreadID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint64 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_ThreadID {
+    /// Initialize a `SDL_ThreadID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint64) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint64 {
+        self.0
+    }
+}
+
+impl SDL_ThreadID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint64 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ThreadID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -88,6 +120,22 @@ impl From<SDL_TLSID> for SDL_AtomicInt {
     #[inline(always)]
     fn from(value: SDL_TLSID) -> Self {
         value.0
+    }
+}
+
+impl SDL_TLSID {
+    /// Initialize a `SDL_TLSID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: SDL_AtomicInt) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> SDL_AtomicInt {
+        self.0
     }
 }
 
@@ -166,6 +214,30 @@ pub const SDL_THREAD_PRIORITY_LOW: SDL_ThreadPriority = SDL_ThreadPriority::LOW;
 pub const SDL_THREAD_PRIORITY_NORMAL: SDL_ThreadPriority = SDL_ThreadPriority::NORMAL;
 pub const SDL_THREAD_PRIORITY_HIGH: SDL_ThreadPriority = SDL_ThreadPriority::HIGH;
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPriority::TIME_CRITICAL;
+
+impl SDL_ThreadPriority {
+    /// Initialize a `SDL_ThreadPriority` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_ThreadPriority {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ThreadPriority {
@@ -249,6 +321,30 @@ pub const SDL_THREAD_ALIVE: SDL_ThreadState = SDL_ThreadState::ALIVE;
 pub const SDL_THREAD_DETACHED: SDL_ThreadState = SDL_ThreadState::DETACHED;
 /// The thread has finished and should be cleaned up with [`SDL_WaitThread()`]
 pub const SDL_THREAD_COMPLETE: SDL_ThreadState = SDL_ThreadState::COMPLETE;
+
+impl SDL_ThreadState {
+    /// Initialize a `SDL_ThreadState` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_ThreadState {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ThreadState {

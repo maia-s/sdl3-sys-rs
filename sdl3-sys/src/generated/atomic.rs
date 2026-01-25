@@ -46,6 +46,22 @@ use super::stdinc::*;
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct SDL_SpinLock(pub ::core::ffi::c_int);
 
+impl SDL_SpinLock {
+    /// Initialize a `SDL_SpinLock` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_SpinLock {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =

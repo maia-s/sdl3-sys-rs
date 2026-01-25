@@ -68,6 +68,38 @@ impl From<SDL_DisplayID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_DisplayID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_DisplayID {
+    /// Initialize a `SDL_DisplayID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_DisplayID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_DisplayID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -103,6 +135,38 @@ impl From<SDL_WindowID> for Uint32 {
     #[inline(always)]
     fn from(value: SDL_WindowID) -> Self {
         value.0
+    }
+}
+
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_WindowID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_WindowID {
+    /// Initialize a `SDL_WindowID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_WindowID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
     }
 }
 
@@ -194,6 +258,30 @@ pub const SDL_SYSTEM_THEME_UNKNOWN: SDL_SystemTheme = SDL_SystemTheme::UNKNOWN;
 pub const SDL_SYSTEM_THEME_LIGHT: SDL_SystemTheme = SDL_SystemTheme::LIGHT;
 /// Dark colored system theme
 pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
+
+impl SDL_SystemTheme {
+    /// Initialize a `SDL_SystemTheme` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_SystemTheme {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_SystemTheme {
@@ -319,6 +407,30 @@ pub const SDL_ORIENTATION_PORTRAIT: SDL_DisplayOrientation = SDL_DisplayOrientat
 /// The display is in portrait mode, upside down
 pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
     SDL_DisplayOrientation::PORTRAIT_FLIPPED;
+
+impl SDL_DisplayOrientation {
+    /// Initialize a `SDL_DisplayOrientation` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_DisplayOrientation {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_DisplayOrientation {
@@ -810,6 +922,30 @@ pub const SDL_WINDOW_TRANSPARENT: SDL_WindowFlags = SDL_WindowFlags::TRANSPARENT
 /// window should not be focusable
 pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = SDL_WindowFlags::NOT_FOCUSABLE;
 
+impl SDL_WindowFlags {
+    /// Initialize a `SDL_WindowFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint64) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint64 {
+        self.0
+    }
+}
+
+impl SDL_WindowFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint64 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_WindowFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -996,6 +1132,30 @@ pub const SDL_FLASH_BRIEFLY: SDL_FlashOperation = SDL_FlashOperation::BRIEFLY;
 /// Flash the window until it gets focus
 pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTIL_FOCUSED;
 
+impl SDL_FlashOperation {
+    /// Initialize a `SDL_FlashOperation` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_FlashOperation {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_FlashOperation {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1085,6 +1245,30 @@ pub const SDL_PROGRESS_STATE_NORMAL: SDL_ProgressState = SDL_ProgressState::NORM
 pub const SDL_PROGRESS_STATE_PAUSED: SDL_ProgressState = SDL_ProgressState::PAUSED;
 /// The progress bar is shown in a state indicating the application had an error
 pub const SDL_PROGRESS_STATE_ERROR: SDL_ProgressState = SDL_ProgressState::ERROR;
+
+impl SDL_ProgressState {
+    /// Initialize a `SDL_ProgressState` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_ProgressState {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ProgressState {
@@ -1426,6 +1610,30 @@ pub const SDL_GL_CONTEXT_NO_ERROR: SDL_GLAttr = SDL_GLAttr::CONTEXT_NO_ERROR;
 pub const SDL_GL_FLOATBUFFERS: SDL_GLAttr = SDL_GLAttr::FLOATBUFFERS;
 pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 
+impl SDL_GLAttr {
+    /// Initialize a `SDL_GLAttr` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_GLAttr {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GLAttr {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1585,6 +1793,30 @@ pub const SDL_GL_CONTEXT_PROFILE_CORE: SDL_GLProfile = SDL_GLProfile::CORE;
 pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY: SDL_GLProfile = SDL_GLProfile::COMPATIBILITY;
 /// GLX_CONTEXT_ES2_PROFILE_BIT_EXT
 pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = SDL_GLProfile::ES;
+
+impl SDL_GLProfile {
+    /// Initialize a `SDL_GLProfile` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Sint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Sint32 {
+        self.0
+    }
+}
+
+impl SDL_GLProfile {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Sint32 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GLProfile {
@@ -1758,6 +1990,30 @@ pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG: SDL_GLContextFlag =
 pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag =
     SDL_GLContextFlag::RESET_ISOLATION_FLAG;
 
+impl SDL_GLContextFlag {
+    /// Initialize a `SDL_GLContextFlag` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Sint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Sint32 {
+        self.0
+    }
+}
+
+impl SDL_GLContextFlag {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Sint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GLContextFlag {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1901,6 +2157,30 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE: SDL_GLContextReleaseFlag =
     SDL_GLContextReleaseFlag::NONE;
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
     SDL_GLContextReleaseFlag::FLUSH;
+
+impl SDL_GLContextReleaseFlag {
+    /// Initialize a `SDL_GLContextReleaseFlag` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Sint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Sint32 {
+        self.0
+    }
+}
+
+impl SDL_GLContextReleaseFlag {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Sint32 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GLContextReleaseFlag {
@@ -2048,6 +2328,30 @@ pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION: SDL_GLContextResetNotification =
     SDL_GLContextResetNotification::NO_NOTIFICATION;
 pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
     SDL_GLContextResetNotification::LOSE_CONTEXT;
+
+impl SDL_GLContextResetNotification {
+    /// Initialize a `SDL_GLContextResetNotification` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Sint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Sint32 {
+        self.0
+    }
+}
+
+impl SDL_GLContextResetNotification {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Sint32 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GLContextResetNotification {
@@ -5208,6 +5512,30 @@ pub const SDL_HITTEST_RESIZE_BOTTOM: SDL_HitTestResult = SDL_HitTestResult::RESI
 pub const SDL_HITTEST_RESIZE_BOTTOMLEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE_BOTTOMLEFT;
 /// Region is the resizable left border.
 pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE_LEFT;
+
+impl SDL_HitTestResult {
+    /// Initialize a `SDL_HitTestResult` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_HitTestResult {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_HitTestResult {

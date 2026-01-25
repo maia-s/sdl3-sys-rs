@@ -45,6 +45,38 @@ impl From<SDL_SensorID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_SensorID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_SensorID {
+    /// Initialize a `SDL_SensorID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_SensorID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_SensorID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -211,6 +243,30 @@ pub const SDL_SENSOR_ACCEL_R: SDL_SensorType = SDL_SensorType::ACCEL_R;
 /// Gyroscope for right Joy-Con controller
 pub const SDL_SENSOR_GYRO_R: SDL_SensorType = SDL_SensorType::GYRO_R;
 pub const SDL_SENSOR_COUNT: SDL_SensorType = SDL_SensorType::COUNT;
+
+impl SDL_SensorType {
+    /// Initialize a `SDL_SensorType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_SensorType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_SensorType {

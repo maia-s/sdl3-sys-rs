@@ -192,6 +192,30 @@ pub const SDL_PIXELTYPE_ARRAYF16: SDL_PixelType = SDL_PixelType::ARRAYF16;
 pub const SDL_PIXELTYPE_ARRAYF32: SDL_PixelType = SDL_PixelType::ARRAYF32;
 pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 
+impl SDL_PixelType {
+    /// Initialize a `SDL_PixelType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_PixelType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PixelType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -257,6 +281,30 @@ impl SDL_BitmapOrder {
 pub const SDL_BITMAPORDER_NONE: SDL_BitmapOrder = SDL_BitmapOrder::NONE;
 pub const SDL_BITMAPORDER_4321: SDL_BitmapOrder = SDL_BitmapOrder::_4321;
 pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
+
+impl SDL_BitmapOrder {
+    /// Initialize a `SDL_BitmapOrder` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_BitmapOrder {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_BitmapOrder {
@@ -348,6 +396,30 @@ pub const SDL_PACKEDORDER_BGRX: SDL_PackedOrder = SDL_PackedOrder::BGRX;
 pub const SDL_PACKEDORDER_ABGR: SDL_PackedOrder = SDL_PackedOrder::ABGR;
 pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 
+impl SDL_PackedOrder {
+    /// Initialize a `SDL_PackedOrder` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_PackedOrder {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PackedOrder {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -429,6 +501,30 @@ pub const SDL_ARRAYORDER_ARGB: SDL_ArrayOrder = SDL_ArrayOrder::ARGB;
 pub const SDL_ARRAYORDER_BGR: SDL_ArrayOrder = SDL_ArrayOrder::BGR;
 pub const SDL_ARRAYORDER_BGRA: SDL_ArrayOrder = SDL_ArrayOrder::BGRA;
 pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
+
+impl SDL_ArrayOrder {
+    /// Initialize a `SDL_ArrayOrder` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_ArrayOrder {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ArrayOrder {
@@ -519,6 +615,30 @@ pub const SDL_PACKEDLAYOUT_565: SDL_PackedLayout = SDL_PackedLayout::_565;
 pub const SDL_PACKEDLAYOUT_8888: SDL_PackedLayout = SDL_PackedLayout::_8888;
 pub const SDL_PACKEDLAYOUT_2101010: SDL_PackedLayout = SDL_PackedLayout::_2101010;
 pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_1010102;
+
+impl SDL_PackedLayout {
+    /// Initialize a `SDL_PackedLayout` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_PackedLayout {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PackedLayout {
@@ -1033,6 +1153,30 @@ pub const SDL_PIXELFORMAT_BGRX32: SDL_PixelFormat = SDL_PixelFormat::BGRX32;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 
+impl SDL_PixelFormat {
+    /// Initialize a `SDL_PixelFormat` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_PixelFormat {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_PixelFormat {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1465,6 +1609,30 @@ pub const SDL_COLOR_TYPE_UNKNOWN: SDL_ColorType = SDL_ColorType::UNKNOWN;
 pub const SDL_COLOR_TYPE_RGB: SDL_ColorType = SDL_ColorType::RGB;
 pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 
+impl SDL_ColorType {
+    /// Initialize a `SDL_ColorType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
+impl SDL_ColorType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ColorType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1535,6 +1703,30 @@ pub const SDL_COLOR_RANGE_UNKNOWN: SDL_ColorRange = SDL_ColorRange::UNKNOWN;
 pub const SDL_COLOR_RANGE_LIMITED: SDL_ColorRange = SDL_ColorRange::LIMITED;
 /// Full range, e.g. 0-255 for 8-bit RGB and luma, and 1-255 for 8-bit chroma
 pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
+
+impl SDL_ColorRange {
+    /// Initialize a `SDL_ColorRange` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
+impl SDL_ColorRange {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ColorRange {
@@ -1668,6 +1860,30 @@ pub const SDL_COLOR_PRIMARIES_SMPTE432: SDL_ColorPrimaries = SDL_ColorPrimaries:
 /// EBU Tech. 3213-E
 pub const SDL_COLOR_PRIMARIES_EBU3213: SDL_ColorPrimaries = SDL_ColorPrimaries::EBU3213;
 pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::CUSTOM;
+
+impl SDL_ColorPrimaries {
+    /// Initialize a `SDL_ColorPrimaries` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
+impl SDL_ColorPrimaries {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ColorPrimaries {
@@ -1846,6 +2062,30 @@ pub const SDL_TRANSFER_CHARACTERISTICS_HLG: SDL_TransferCharacteristics =
 pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
     SDL_TransferCharacteristics::CUSTOM;
 
+impl SDL_TransferCharacteristics {
+    /// Initialize a `SDL_TransferCharacteristics` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
+impl SDL_TransferCharacteristics {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_TransferCharacteristics {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1988,6 +2228,30 @@ pub const SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL: SDL_MatrixCoefficients =
 pub const SDL_MATRIX_COEFFICIENTS_ICTCP: SDL_MatrixCoefficients = SDL_MatrixCoefficients::ICTCP;
 pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoefficients::CUSTOM;
 
+impl SDL_MatrixCoefficients {
+    /// Initialize a `SDL_MatrixCoefficients` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
+impl SDL_MatrixCoefficients {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_MatrixCoefficients {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -2065,6 +2329,30 @@ pub const SDL_CHROMA_LOCATION_LEFT: SDL_ChromaLocation = SDL_ChromaLocation::LEF
 pub const SDL_CHROMA_LOCATION_CENTER: SDL_ChromaLocation = SDL_ChromaLocation::CENTER;
 /// In HEVC for BT.2020 and BT.2100 content (in particular on Blu-rays), Cb and Cr are sampled at the same location as the group's top-left Y pixel ("co-sited", "co-located").
 pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::TOPLEFT;
+
+impl SDL_ChromaLocation {
+    /// Initialize a `SDL_ChromaLocation` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
+impl SDL_ChromaLocation {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ChromaLocation {
@@ -2206,6 +2494,30 @@ pub const SDL_COLORSPACE_BT2020_FULL: SDL_Colorspace = SDL_Colorspace::BT2020_FU
 pub const SDL_COLORSPACE_RGB_DEFAULT: SDL_Colorspace = SDL_Colorspace::RGB_DEFAULT;
 /// The default colorspace for YUV surfaces if no colorspace is specified
 pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAULT;
+
+impl SDL_Colorspace {
+    /// Initialize a `SDL_Colorspace` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_Colorspace {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_Colorspace {

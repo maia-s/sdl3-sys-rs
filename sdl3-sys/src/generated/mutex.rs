@@ -736,6 +736,30 @@ pub const SDL_INIT_STATUS_INITIALIZING: SDL_InitStatus = SDL_InitStatus::INITIAL
 pub const SDL_INIT_STATUS_INITIALIZED: SDL_InitStatus = SDL_InitStatus::INITIALIZED;
 pub const SDL_INIT_STATUS_UNINITIALIZING: SDL_InitStatus = SDL_InitStatus::UNINITIALIZING;
 
+impl SDL_InitStatus {
+    /// Initialize a `SDL_InitStatus` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_InitStatus {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_InitStatus {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =

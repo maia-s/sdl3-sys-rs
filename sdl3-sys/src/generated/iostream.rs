@@ -95,6 +95,30 @@ pub const SDL_IO_STATUS_READONLY: SDL_IOStatus = SDL_IOStatus::READONLY;
 /// Tried to read a write-only buffer
 pub const SDL_IO_STATUS_WRITEONLY: SDL_IOStatus = SDL_IOStatus::WRITEONLY;
 
+impl SDL_IOStatus {
+    /// Initialize a `SDL_IOStatus` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_IOStatus {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_IOStatus {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -169,6 +193,30 @@ pub const SDL_IO_SEEK_SET: SDL_IOWhence = SDL_IOWhence::SET;
 pub const SDL_IO_SEEK_CUR: SDL_IOWhence = SDL_IOWhence::CUR;
 /// Seek relative to the end of data
 pub const SDL_IO_SEEK_END: SDL_IOWhence = SDL_IOWhence::END;
+
+impl SDL_IOWhence {
+    /// Initialize a `SDL_IOWhence` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_IOWhence {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_IOWhence {

@@ -283,6 +283,30 @@ pub const SDL_ASSERTION_IGNORE: SDL_AssertState = SDL_AssertState::IGNORE;
 /// Ignore the assert from now on.
 pub const SDL_ASSERTION_ALWAYS_IGNORE: SDL_AssertState = SDL_AssertState::ALWAYS_IGNORE;
 
+impl SDL_AssertState {
+    /// Initialize a `SDL_AssertState` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_AssertState {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_AssertState {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =

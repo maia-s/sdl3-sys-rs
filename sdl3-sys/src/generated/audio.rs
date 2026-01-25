@@ -300,6 +300,30 @@ pub const SDL_AUDIO_S32: SDL_AudioFormat = SDL_AudioFormat::S32;
 #[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]
 pub const SDL_AUDIO_F32: SDL_AudioFormat = SDL_AudioFormat::F32;
 
+impl SDL_AudioFormat {
+    /// Initialize a `SDL_AudioFormat` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
+impl SDL_AudioFormat {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_uint {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_AudioFormat {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -544,6 +568,14 @@ impl From<SDL_AudioDeviceID> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_AudioDeviceID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_AudioDeviceID {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
@@ -598,6 +630,30 @@ pub const SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK: SDL_AudioDeviceID =
 /// This macro is available since SDL 3.2.0.
 pub const SDL_AUDIO_DEVICE_DEFAULT_RECORDING: SDL_AudioDeviceID =
     SDL_AudioDeviceID::DEFAULT_RECORDING;
+
+impl SDL_AudioDeviceID {
+    /// Initialize a `SDL_AudioDeviceID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_AudioDeviceID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_AudioDeviceID {

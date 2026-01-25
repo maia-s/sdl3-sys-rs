@@ -316,6 +316,14 @@ impl From<SDL_Keycode> for Uint32 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_Keycode {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint32 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for SDL_Keycode {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
@@ -1617,6 +1625,30 @@ pub const SDLK_LHYPER: SDL_Keycode = SDL_Keycode::LHYPER;
 /// Extended key Right Hyper
 pub const SDLK_RHYPER: SDL_Keycode = SDL_Keycode::RHYPER;
 
+impl SDL_Keycode {
+    /// Initialize a `SDL_Keycode` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_Keycode {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_Keycode {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -1974,6 +2006,30 @@ pub const SDL_KMOD_SHIFT: SDL_Keymod = SDL_Keymod::SHIFT;
 pub const SDL_KMOD_ALT: SDL_Keymod = SDL_Keymod::ALT;
 /// Any GUI key is down.
 pub const SDL_KMOD_GUI: SDL_Keymod = SDL_Keymod::GUI;
+
+impl SDL_Keymod {
+    /// Initialize a `SDL_Keymod` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint16) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint16 {
+        self.0
+    }
+}
+
+impl SDL_Keymod {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint16 {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_Keymod {

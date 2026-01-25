@@ -202,6 +202,30 @@ pub const SDL_SURFACE_LOCKED: SDL_SurfaceFlags = SDL_SurfaceFlags::LOCKED;
 /// Surface uses pixel memory allocated with [`SDL_aligned_alloc()`]
 pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = SDL_SurfaceFlags::SIMD_ALIGNED;
 
+impl SDL_SurfaceFlags {
+    /// Initialize a `SDL_SurfaceFlags` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint32) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint32 {
+        self.0
+    }
+}
+
+impl SDL_SurfaceFlags {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint32 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_SurfaceFlags {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -277,6 +301,30 @@ pub const SDL_SCALEMODE_NEAREST: SDL_ScaleMode = SDL_ScaleMode::NEAREST;
 pub const SDL_SCALEMODE_LINEAR: SDL_ScaleMode = SDL_ScaleMode::LINEAR;
 /// nearest pixel sampling with improved scaling for pixel art, available since SDL 3.4.0
 pub const SDL_SCALEMODE_PIXELART: SDL_ScaleMode = SDL_ScaleMode::PIXELART;
+
+impl SDL_ScaleMode {
+    /// Initialize a `SDL_ScaleMode` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_ScaleMode {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_ScaleMode {
@@ -450,6 +498,30 @@ pub const SDL_FLIP_HORIZONTAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL;
 pub const SDL_FLIP_VERTICAL: SDL_FlipMode = SDL_FlipMode::VERTICAL;
 /// flip horizontally and vertically (not a diagonal flip)
 pub const SDL_FLIP_HORIZONTAL_AND_VERTICAL: SDL_FlipMode = SDL_FlipMode::HORIZONTAL_AND_VERTICAL;
+
+impl SDL_FlipMode {
+    /// Initialize a `SDL_FlipMode` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_FlipMode {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_FlipMode {

@@ -172,6 +172,30 @@ pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType =
 pub const SDL_GAMEPAD_TYPE_GAMECUBE: SDL_GamepadType = SDL_GamepadType::GAMECUBE;
 pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 
+impl SDL_GamepadType {
+    /// Initialize a `SDL_GamepadType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_GamepadType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadType {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -387,6 +411,30 @@ pub const SDL_GAMEPAD_BUTTON_MISC5: SDL_GamepadButton = SDL_GamepadButton::MISC5
 pub const SDL_GAMEPAD_BUTTON_MISC6: SDL_GamepadButton = SDL_GamepadButton::MISC6;
 pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT;
 
+impl SDL_GamepadButton {
+    /// Initialize a `SDL_GamepadButton` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_GamepadButton {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadButton {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -485,6 +533,30 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_SQUARE: SDL_GamepadButtonLabel = SDL_GamepadB
 pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
     SDL_GamepadButtonLabel::TRIANGLE;
 
+impl SDL_GamepadButtonLabel {
+    /// Initialize a `SDL_GamepadButtonLabel` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_GamepadButtonLabel {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadButtonLabel {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -580,6 +652,30 @@ pub const SDL_GAMEPAD_AXIS_LEFT_TRIGGER: SDL_GamepadAxis = SDL_GamepadAxis::LEFT
 pub const SDL_GAMEPAD_AXIS_RIGHT_TRIGGER: SDL_GamepadAxis = SDL_GamepadAxis::RIGHT_TRIGGER;
 pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 
+impl SDL_GamepadAxis {
+    /// Initialize a `SDL_GamepadAxis` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_GamepadAxis {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadAxis {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -654,6 +750,30 @@ pub const SDL_GAMEPAD_BINDTYPE_NONE: SDL_GamepadBindingType = SDL_GamepadBinding
 pub const SDL_GAMEPAD_BINDTYPE_BUTTON: SDL_GamepadBindingType = SDL_GamepadBindingType::BUTTON;
 pub const SDL_GAMEPAD_BINDTYPE_AXIS: SDL_GamepadBindingType = SDL_GamepadBindingType::AXIS;
 pub const SDL_GAMEPAD_BINDTYPE_HAT: SDL_GamepadBindingType = SDL_GamepadBindingType::HAT;
+
+impl SDL_GamepadBindingType {
+    /// Initialize a `SDL_GamepadBindingType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_GamepadBindingType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadBindingType {

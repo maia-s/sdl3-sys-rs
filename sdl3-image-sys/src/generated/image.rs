@@ -3779,6 +3779,30 @@ pub const IMG_DECODER_STATUS_FAILED: IMG_AnimationDecoderStatus =
 pub const IMG_DECODER_STATUS_COMPLETE: IMG_AnimationDecoderStatus =
     IMG_AnimationDecoderStatus::COMPLETE;
 
+impl IMG_AnimationDecoderStatus {
+    /// Initialize a `IMG_AnimationDecoderStatus` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl IMG_AnimationDecoderStatus {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for IMG_AnimationDecoderStatus {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =

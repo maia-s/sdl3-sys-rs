@@ -52,6 +52,38 @@ impl From<SDL_TouchID> for Uint64 {
     }
 }
 
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_TouchID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint64 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_TouchID {
+    /// Initialize a `SDL_TouchID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint64) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint64 {
+        self.0
+    }
+}
+
+impl SDL_TouchID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint64 {
+        self.0
+    }
+}
+
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_TouchID {
     const GROUP_METADATA: &'static sdl3_sys::metadata::Group =
@@ -92,6 +124,38 @@ impl From<SDL_FingerID> for Uint64 {
     #[inline(always)]
     fn from(value: SDL_FingerID) -> Self {
         value.0
+    }
+}
+
+#[cfg(feature = "display-impls")]
+impl ::core::fmt::Display for SDL_FingerID {
+    #[inline(always)]
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        <Uint64 as ::core::fmt::Display>::fmt(&self.0, f)
+    }
+}
+
+impl SDL_FingerID {
+    /// Initialize a `SDL_FingerID` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: Uint64) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> Uint64 {
+        self.0
+    }
+}
+
+impl SDL_FingerID {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> Uint64 {
+        self.0
     }
 }
 
@@ -172,6 +236,30 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE: SDL_TouchDeviceType =
 /// trackpad with screen cursor-relative coordinates
 pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
     SDL_TouchDeviceType::INDIRECT_RELATIVE;
+
+impl SDL_TouchDeviceType {
+    /// Initialize a `SDL_TouchDeviceType` from a raw value.
+    /// # Safety
+    /// The value should be valid for this type
+    #[inline(always)]
+    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+        Self(value)
+    }
+
+    /// Get the inner raw value.
+    #[inline(always)]
+    pub const fn into_raw(self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
+
+impl SDL_TouchDeviceType {
+    /// Get a copy of the inner raw value.
+    #[inline(always)]
+    pub const fn value(&self) -> ::core::ffi::c_int {
+        self.0
+    }
+}
 
 #[cfg(feature = "metadata")]
 impl sdl3_sys::metadata::GroupMetadata for SDL_TouchDeviceType {
