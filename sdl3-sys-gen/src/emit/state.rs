@@ -307,6 +307,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_DEFINE_STDBOOL",
             "SDL_EndThreadFunction",
             "SDL_FILE",
+            "SDL_FUNCTION",
             "SDL_FUNCTION_POINTER_IS_VOID_POINTER",
             "SDL_INCLUDE_STDBOOL_H",
             "SDL_INTERNAL",
