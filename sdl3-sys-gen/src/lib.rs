@@ -919,7 +919,10 @@ impl Gen {
                         EnumKind::Lock => "Lock",
                     },
                     name = group.name,
-                    short_name = group.name.strip_prefix(&self.sym_prefix).unwrap(),
+                    short_name = group
+                        .name
+                        .strip_prefix(&self.sym_prefix)
+                        .unwrap_or(&group.name),
                     doc = if group.doc.is_empty() {
                         "None".into()
                     } else {

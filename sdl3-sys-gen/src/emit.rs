@@ -138,7 +138,7 @@ fn emit_derives(
     Ok(())
 }
 
-pub type EmitResult = Result<(), EmitErr>;
+pub type EmitResult<T = ()> = Result<T, EmitErr>;
 
 #[derive(Debug)]
 pub enum EmitErr {
@@ -553,7 +553,7 @@ impl Emit for DocCommentFile {
 }
 
 impl Conditional {
-    fn emit_cfg(&self, ctx: &mut EmitContext) -> EmitResult {
+    fn emit_cfg(&self, ctx: &mut EmitContext) -> EmitResult<bool> {
         fn eval(
             ctx: &mut EmitContext,
             cond: DefineState,

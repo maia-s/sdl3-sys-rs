@@ -282,6 +282,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__SUNPRO_C",
             "__WATCOMC__",
             "assert",
+            "OPENXR_H_",
             "PRId32",
             "PRId64",
             "PRIs64",
@@ -292,6 +293,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "PRIx64",
             "PRIX64",
             "DOXYGEN_SHOULD_IGNORE_THIS",
+            "NO_SDL_OPENXR_TYPEDEFS",
             "NO_SDL_VULKAN_TYPEDEFS",
             format!("SDL_{module}_h_"), "SDL_locale_h", "SDL_main_impl_h_",
             format!("SDL_{module}_h_").to_ascii_uppercase(),
@@ -381,6 +383,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_MAIN_HANDLED" = DefineValue::one();
             "SDL_MAIN_USE_CALLBACKS" = DefineValue::one();
             "SDL_NULL_WHILE_LOOP_CONDITION" = DefineValue::parse_expr("0")?;
+            "XR_DEFINE_HANDLE" = DefineValue::one();
         }
 
         Ok(Self {
@@ -743,7 +746,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         }
     }
 
-    pub fn emit_define_state_cfg(&mut self, define_state: &DefineState) -> EmitResult {
+    pub fn emit_define_state_cfg(&mut self, define_state: &DefineState) -> EmitResult<bool> {
         self.emit_cfg(define_state, |ctx, target_define| {
             Ok(ctx.write_str(
                 ctx.preproc_state()
@@ -755,7 +758,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         })
     }
 
-    pub fn emit_feature_cfg(&mut self, cfg: &Cfg<String>) -> EmitResult {
+    pub fn emit_feature_cfg(&mut self, cfg: &Cfg<String>) -> EmitResult<bool> {
         self.emit_cfg(cfg, |ctx, feature| {
             Ok(write!(ctx, "feature = \"{feature}\"")?)
         })
@@ -765,7 +768,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         &mut self,
         cfg: &Cfg<T>,
         emit_cfg: impl Fn(&mut EmitContext, &T) -> EmitResult,
-    ) -> EmitResult {
+    ) -> EmitResult<bool> {
         fn emit_cfg_r<T>(
             ctx: &mut EmitContext,
             emit_cfg: &impl Fn(&mut EmitContext, &T) -> EmitResult,
@@ -815,8 +818,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             write!(self, "#[cfg(")?;
             emit_cfg_r(self, &emit_cfg, coll)?;
             write!(self, ")]")?;
+            Ok(true)
+        } else {
+            Ok(false)
         }
-        Ok(())
     }
 
     pub fn patch_enabled(&self) -> bool {

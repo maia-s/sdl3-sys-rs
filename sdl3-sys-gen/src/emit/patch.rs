@@ -10,6 +10,7 @@ use core::fmt::Write;
 use std::ffi::CString;
 use str_block::str_block;
 
+const OPENXR_SYS_CRATE_VERSIONS: &[(&str, &[&str])] = &[]; // not supported until SDL 3.6
 const VULKAN_CRATE_VERSIONS: &[(&str, &[&str])] = &[("ash", &["0.38"])];
 const WINDOWS_CRATE_VERSIONS: &[(&str, &[&str])] = &[("windows-sys", &["0.59"])];
 const X11_CRATE_VERSIONS: &[(&str, &[&str])] = &[("x11", &["2"]), ("x11-dl", &["2"])];
@@ -43,7 +44,9 @@ fn integrate(
         }
     }
     write!(ctx, "apply_cfg!(")?;
-    ctx.emit_feature_cfg(&not_cfg.not())?;
+    if !ctx.emit_feature_cfg(&not_cfg.not())? {
+        writeln!(ctx, "#[cfg(all())]")?;
+    }
     writeln!(ctx, " => {{")?;
     ctx.increase_indent();
     f_else(ctx)?;
@@ -301,7 +304,7 @@ pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool,
                 | "SDL_zeroa"
                 | "VK_DEFINE_HANDLE"
                 | "VK_DEFINE_NON_DISPATCHABLE_HANDLE") => Ok(true),
-            ("assert","SDL_assert" | "SDL_assert_always" | "SDL_assert_paranoid" | "SDL_assert_release")=>{
+            ("assert", "SDL_assert" | "SDL_assert_always" | "SDL_assert_paranoid" | "SDL_assert_release") => {
                 let ident = define.ident.as_str();
                 let func = if let DefineValue::Expr(Expr::FnCall(call)) = &define.value {
                     let Expr::Ident(func) = &*call.func else {
@@ -487,6 +490,12 @@ pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool,
                     }
 
                 "#})?;
+                Ok(true)
+            }
+            ("openxr", "PFN_xrGetInstanceProcAddr") => {
+                define.doc.emit(ctx)?;
+                writeln!(ctx, "pub type PFN_xrGetInstanceProcAddr = Option<unsafe extern \"system\" fn(XrInstance, *const ::core::ffi::c_char, *mut Option<unsafe extern \"system\" fn()>)>;")?;
+                writeln!(ctx)?;
                 Ok(true)
             }
             ("stdinc", "SDL_clamp") => {
@@ -760,6 +769,39 @@ pub fn patch_emit_macro_call(
                 call.try_eval(ctx)?.emit(ctx)?;
                 writeln!(ctx, ";")?;
                 writeln!(ctx)?;
+                Ok(true)
+            }
+            ("openxr", "XR_DEFINE_HANDLE") => {
+                let Expr::Ident(arg) = &call.args[0].expr()? else {
+                    unreachable!()
+                };
+                let name = arg.as_str().strip_prefix("Xr").unwrap();
+                let doc = format!(
+                    "(`sdl3-sys`) Enable a `use-openxr-sys-*` feature to alias this to `{name}` from the `openxr-sys` crate. Otherwise it's an opaque handle."
+                );
+                integrate(
+                    ctx,
+                    OPENXR_SYS_CRATE_VERSIONS,
+                    |ctx, krate| {
+                        writeln!(
+                            ctx,
+                            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                        )?;
+                        writeln!(ctx, "/// {doc}")?;
+                        writeln!(ctx, "pub type {arg} = ::{krate}::{name};")?;
+                        Ok(())
+                    },
+                    |ctx| {
+                        writeln!(
+                            ctx,
+                            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                        )?;
+                        writeln!(ctx, "/// {doc}")?;
+                        writeln!(ctx, "#[repr(transparent)]")?;
+                        writeln!(ctx, "pub struct {arg} {{ _opaque: u64 }}")?;
+                        Ok(())
+                    },
+                )?;
                 Ok(true)
             }
             ("vulkan", "VK_DEFINE_HANDLE") => {

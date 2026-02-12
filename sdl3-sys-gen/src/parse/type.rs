@@ -605,8 +605,15 @@ impl Parse for TypeDef {
         let doc = DocComment::try_parse(ctx, &mut rest)?;
         if let Some(typedef_kw) = Kw_typedef::try_parse(ctx, &mut rest)? {
             WsAndComments::try_parse(ctx, &mut rest)?;
-            let TypeWithIdent { ty, ident } = TypeWithReqIdent::parse(ctx, &mut rest)?;
+            let TypeWithIdent { mut ty, ident } = TypeWithReqIdent::parse(ctx, &mut rest)?;
             let ident = ident.unwrap();
+            if let TypeEnum::Struct(s) = &mut ty.ty {
+                // rename anonymous struct to typedef'd name
+                if s.ident.is_none() {
+                    s.ident = Some(ident.clone());
+                    s.generated_ident = ident.clone();
+                }
+            }
             WsAndComments::try_parse(ctx, &mut rest)?;
             let semi = <Op![;]>::parse(ctx, &mut rest)?;
             let span = typedef_kw.span.join(&semi.span);
