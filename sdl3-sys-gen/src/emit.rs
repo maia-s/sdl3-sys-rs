@@ -247,26 +247,7 @@ impl Emit for Item {
             }
             Item::Warning(_) => todo!(),
             Item::FileDoc(dc) => dc.emit(ctx),
-            Item::StructOrUnion(s) => {
-                if let Some(ident) = &s.ident {
-                    if !patch_emit_struct_or_union(ctx, ident.as_str(), s)? {
-                        ctx.scope_mut().register_struct_or_union_sym(StructSym {
-                            kind: s.kind,
-                            doc: s.doc.clone(),
-                            ident: ident.clone(),
-                            fields: s.fields.clone(),
-                            emit_status: EmitStatus::NotEmitted,
-                            hidden: s.hidden,
-                            can_copy: s.can_copy,
-                            can_construct: s.can_construct,
-                            can_eq: s.can_eq,
-                        })?;
-                    }
-                    Ok(())
-                } else {
-                    todo!()
-                }
-            }
+            Item::StructOrUnion(s) => s.emit(ctx),
             Item::Enum(_) => todo!(),
             Item::Function(f) => f.emit(ctx),
             Item::Expr(e) => e.emit(ctx),
@@ -1056,6 +1037,51 @@ impl Emit for DelayedEnum {
 }
 
 impl Enum {
+    fn emit_known_values_doc(&self, ctx: &mut EmitContext, add_empty_line: bool) -> EmitResult {
+        let enum_ident = self.ident.clone().unwrap();
+        let enum_ident_s = enum_ident.as_str();
+        let idents = self.variants.iter().map(|v| v.ident.as_str());
+        let prefix = find_common_ident_prefix(enum_ident_s, idents.clone());
+        let known_values: Vec<_> = idents.collect();
+        if !known_values.is_empty() {
+            if add_empty_line {
+                writeln!(ctx, "///")?;
+            }
+            writeln!(ctx, "/// ## Known values (`sdl3-sys`)")?;
+            writeln!(
+                ctx,
+                "/// | Associated constant | Global constant | Description |"
+            )?;
+            writeln!(
+                ctx,
+                "/// | ------------------- | --------------- | ----------- |"
+            )?;
+        }
+        let mut seen_target_dependent = HashSet::new();
+        for variant in &self.variants {
+            let variant_ident = variant.ident.as_str();
+            let short_variant_ident = strip_common_ident_prefix(variant_ident, prefix);
+            if !seen_target_dependent.contains(variant_ident) {
+                write!(
+                    ctx,
+                    "/// | [`{short_variant_ident}`]({enum_ident_s}::{short_variant_ident}) | [`{variant_ident}`] |",
+                )?;
+                if !variant.cond.is_empty() {
+                    seen_target_dependent.insert(variant_ident);
+                    write!(ctx, " (target dependent)")?;
+                }
+                if let Some(doc) = &variant.doc {
+                    let doc = doc.to_string();
+                    for line in doc.lines() {
+                        write!(ctx, " {}", DocComment::insert_links(ctx, line)?)?;
+                    }
+                }
+                writeln!(ctx, " |")?;
+            }
+        }
+        Ok(())
+    }
+
     fn emit_enum(
         &self,
         ctx: &mut EmitContext,
@@ -1078,7 +1104,6 @@ impl Enum {
 
         let idents = self.variants.iter().map(|v| v.ident.as_str());
         let prefix = find_common_ident_prefix(enum_ident_s, idents.clone());
-        let known_values: Vec<_> = idents.collect();
 
         let enum_base_type = enum_base_type.unwrap_or(Type::primitive(PrimitiveType::Int));
         let enum_base_type_s = ctx.capture_output(|ctx| enum_base_type.emit(ctx))?;
@@ -1113,22 +1138,7 @@ impl Enum {
         let mut values_metadata = Vec::new();
         let mut next_expr = Some(Expr::Literal(Literal::Integer(IntegerLiteral::zero())));
 
-        if !known_values.is_empty() {
-            if doc.is_some() {
-                writeln!(ctx_doc, "///")?;
-            }
-            writeln!(ctx_doc, "/// ## Known values (`sdl3-sys`)")?;
-            writeln!(
-                ctx_doc,
-                "/// | Associated constant | Global constant | Description |"
-            )?;
-            writeln!(
-                ctx_doc,
-                "/// | ------------------- | --------------- | ----------- |"
-            )?;
-        }
-
-        let mut seen_target_dependent = HashSet::new();
+        self.emit_known_values_doc(&mut ctx_doc, doc.is_some())?;
 
         for variant in &self.variants {
             if !variant.registered.get() {
@@ -1178,24 +1188,6 @@ impl Enum {
             }
 
             next_expr = expr.try_eval_plus_one(ctx)?.map(Expr::Value);
-
-            if !seen_target_dependent.contains(variant_ident) {
-                write!(
-                    ctx_doc,
-                    "/// | [`{short_variant_ident}`]({enum_ident_s}::{short_variant_ident}) | [`{variant_ident}`] |",
-                )?;
-                if !variant.cond.is_empty() {
-                    seen_target_dependent.insert(variant_ident);
-                    write!(ctx_doc, " (target dependent)")?;
-                }
-                if let Some(doc) = &variant.doc {
-                    let doc = doc.to_string();
-                    for line in doc.lines() {
-                        write!(ctx_doc, " {}", DocComment::insert_links(ctx, line)?)?;
-                    }
-                }
-                writeln!(ctx_doc, " |")?;
-            }
 
             variant.cond.emit_cfg(&mut ctx_impl)?;
             variant.doc.emit(&mut ctx_impl)?;
@@ -1534,6 +1526,29 @@ impl Enum {
     }
 }
 
+impl Emit for StructOrUnion {
+    fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
+        if let Some(ident) = &self.ident {
+            if !patch_emit_struct_or_union(ctx, ident.as_str(), self)? {
+                ctx.scope_mut().register_struct_or_union_sym(StructSym {
+                    kind: self.kind,
+                    doc: self.doc.clone(),
+                    ident: ident.clone(),
+                    fields: self.fields.clone(),
+                    emit_status: EmitStatus::NotEmitted,
+                    hidden: self.hidden,
+                    can_copy: self.can_copy,
+                    can_construct: self.can_construct,
+                    can_eq: self.can_eq,
+                })?;
+            }
+            Ok(())
+        } else {
+            todo!()
+        }
+    }
+}
+
 impl StructOrUnion {
     pub fn can_derive_copy(
         &self,
@@ -1620,7 +1635,7 @@ impl StructOrUnion {
         with_ident: bool,
     ) -> EmitResult {
         let ident = &self.generated_ident;
-        let mut doc = self.doc.clone().or(doc);
+        let mut doc = doc.or(self.doc.clone());
 
         let is_interface = if doc
             .as_ref()

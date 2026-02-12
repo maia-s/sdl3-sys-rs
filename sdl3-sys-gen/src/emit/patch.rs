@@ -2,9 +2,9 @@ use super::{
     Cfg, DefineState, Emit, EmitContext, EmitErr, EmitResult, Eval, StructSym, SymKind, Value,
 };
 use crate::parse::{
-    Block, CanCmp, CanDefault, Define, DefineValue, Expr, ExprNoCommaOrType, FnCall, Function,
-    GetSpan, Ident, IdentOrKw, Item, Items, Kw_static, ParseErr, RustCode, Span, StringLiteral,
-    StructOrUnion, Type, TypeDef, TypeDefKind, TypeEnum,
+    Block, CanCmp, CanDefault, Define, DefineValue, DocComment, Expr, ExprNoCommaOrType, FnCall,
+    Function, GetSpan, Ident, IdentOrKw, Item, Items, Kw_static, ParseErr, RustCode, Span,
+    StringLiteral, StructOrUnion, Type, TypeDef, TypeDefKind, TypeEnum,
 };
 use core::fmt::Write;
 use std::ffi::CString;
@@ -1162,6 +1162,38 @@ pub fn patch_emit_type_def(
                 ctx.decrease_indent();
                 writeln!(ctx, "}}")?;
                 writeln!(ctx)?;
+                Ok(true)
+            }
+            (
+                "openxr",
+                "XrResult" | "XrSessionCreateInfo" | "XrStructureType" | "XrSwapchainCreateInfo",
+            ) => {
+                let name = ident.strip_prefix("Xr").unwrap();
+                let mut td = td.clone();
+                if td.doc.is_none() {
+                    td.doc = Some(DocComment::default());
+                }
+                td.doc.as_mut().unwrap().add_note(format!(
+                    "Enable a `use-openxr-sys-*` feature to alias this to `{name}` from the `openxr-sys` crate."
+                ));
+                let td = &td;
+                integrate(
+                    ctx,
+                    OPENXR_SYS_CRATE_VERSIONS,
+                    |ctx, krate| {
+                        writeln!(
+                            ctx,
+                            r#"#[cfg_attr(all(feature = "nightly", doc), doc(cfg(all())))]"#
+                        )?;
+                        td.doc.emit(ctx)?;
+                        if let TypeEnum::Enum(e) = &td.ty.ty {
+                            e.emit_known_values_doc(ctx, true)?
+                        }
+                        writeln!(ctx, "pub type {ident} = ::{krate}::{name};")?;
+                        Ok(())
+                    },
+                    |ctx| td.emit(ctx),
+                )?;
                 Ok(true)
             }
             ("system", "MSG") => {

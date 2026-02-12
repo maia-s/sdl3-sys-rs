@@ -5,7 +5,7 @@ use std::{
     fmt::{self, Display},
 };
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct DocComment {
     pub span: Span,
     pub doc: Span,
@@ -15,16 +15,38 @@ pub struct DocComment {
 
 impl Display for DocComment {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fn notes(
+            this: &DocComment,
+            f: &mut fmt::Formatter<'_>,
+            add_empty_line: bool,
+        ) -> fmt::Result {
+            if !this.notes.is_empty() {
+                if add_empty_line {
+                    writeln!(f)?;
+                }
+                write!(f, "\\sdl3-sys ")?;
+                if this.notes.len() == 1 {
+                    writeln!(f, "{}", this.notes[0])?;
+                } else {
+                    for note in &this.notes {
+                        writeln!(f, "- {note}")?;
+                    }
+                }
+            }
+            Ok(())
+        }
+
         macro_rules! pass {
             ($lines:expr) => {{
                 let mut lines = $lines;
                 let Some(first) = lines.next() else {
                     // no non-empty lines
-                    return Ok(());
+                    return notes(self, f, false);
                 };
                 let Some(second) = lines.next() else {
                     // one non-empty line
-                    return f.write_str(first.trim());
+                    f.write_str(first.trim())?;
+                    return notes(self, f, true);
                 };
                 let i = second
                     .find(|c: char| !c.is_whitespace() && c != '*')
@@ -37,11 +59,12 @@ impl Display for DocComment {
             }};
         }
 
-        let prefix = pass!(self
-            .doc
-            .as_str()
-            .lines()
-            .filter(|line| !line.trim().is_empty()));
+        let prefix = pass!(
+            self.doc
+                .as_str()
+                .lines()
+                .filter(|line| !line.trim().is_empty())
+        );
 
         let prefix2 = pass!(self.doc.as_str().lines().filter_map(|line| {
             let line = line.strip_prefix(prefix).unwrap_or(line);
@@ -87,19 +110,7 @@ impl Display for DocComment {
             }
         }
 
-        if !self.notes.is_empty() {
-            writeln!(f)?;
-            write!(f, "\\sdl3-sys ")?;
-            if self.notes.len() == 1 {
-                writeln!(f, "{}", self.notes[0])?;
-            } else {
-                for note in &self.notes {
-                    writeln!(f, "- {note}")?;
-                }
-            }
-        }
-
-        Ok(())
+        notes(self, f, true)
     }
 }
 
