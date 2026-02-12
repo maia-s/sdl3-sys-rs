@@ -100,6 +100,12 @@ pub fn patch_parsed_define(ctx: &ParseContext, define: &mut Define) -> Result<bo
             }
             Ok(false)
         }
+        ("openxr", "XR_NULL_HANDLE") => {
+            define.value = define
+                .value
+                .cast_expr(Type::primitive(PrimitiveType::Uint64T));
+            Ok(true)
+        }
         ("pixels", "SDL_ALPHA_OPAQUE" | "SDL_ALPHA_TRANSPARENT") => {
             define.value = define.value.cast_expr(Type::ident_str("Uint8"));
             Ok(true)
