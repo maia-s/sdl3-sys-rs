@@ -2194,3 +2194,1881 @@ pub const METADATA_SDL_GPUSwapchainComposition: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_GPUViewport: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUViewport",
+    doc: Some(
+        "A structure specifying a viewport.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_SetGPUViewport`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "x",
+            doc: Some("The left offset of the viewport.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "y",
+            doc: Some("The top offset of the viewport.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "w",
+            doc: Some("The width of the viewport.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "h",
+            doc: Some("The height of the viewport.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "min_depth",
+            doc: Some("The minimum depth of the viewport.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "max_depth",
+            doc: Some("The maximum depth of the viewport.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUTextureTransferInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUTextureTransferInfo",
+    doc: Some(
+        "A structure specifying parameters related to transferring data to or from a\ntexture.\n\nIf either of `pixels_per_row` or `rows_per_layer` is zero, then width and\nheight of passed [`SDL_GPUTextureRegion`] to [`SDL_UploadToGPUTexture`] or\n[`SDL_DownloadFromGPUTexture`] are used as default values respectively and data\nis considered to be tightly packed.\n\n**WARNING**: Direct3D 12 requires texture data row pitch to be 256 byte\naligned, and offsets to be aligned to 512 bytes. If they are not, SDL will\nmake a temporary copy of the data that is properly aligned, but this adds\noverhead to the transfer process. Apps can avoid this by aligning their\ndata appropriately, or using a different GPU backend than Direct3D 12.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "transfer_buffer",
+            doc: Some("The transfer buffer used in the transfer operation.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUTransferBuffer",
+        },
+        Field {
+            name: "offset",
+            doc: Some("The starting byte of the image data in the transfer buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "pixels_per_row",
+            doc: Some("The number of pixels from one row to the next.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "rows_per_layer",
+            doc: Some("The number of rows from one layer/depth-slice to the next.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUTransferBufferLocation: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUTransferBufferLocation",
+    doc: Some(
+        "A structure specifying a location in a transfer buffer.\n\nUsed when transferring buffer data to or from a transfer buffer.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUBuffer`]\n- [`SDL_DownloadFromGPUBuffer`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "transfer_buffer",
+            doc: Some("The transfer buffer used in the transfer operation.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUTransferBuffer",
+        },
+        Field {
+            name: "offset",
+            doc: Some("The starting byte of the buffer data in the transfer buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUTextureLocation: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUTextureLocation",
+    doc: Some(
+        "A structure specifying a location in a texture.\n\nUsed when copying data from one texture to another.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CopyGPUTextureToTexture`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "texture",
+            doc: Some("The texture used in the copy operation.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "mip_level",
+            doc: Some("The mip level index of the location.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "layer",
+            doc: Some("The layer index of the location.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "x",
+            doc: Some("The left offset of the location.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "y",
+            doc: Some("The top offset of the location.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "z",
+            doc: Some("The front offset of the location.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUTextureRegion: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUTextureRegion",
+    doc: Some(
+        "A structure specifying a region of a texture.\n\nUsed when transferring data to or from a texture.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n- [`SDL_CreateGPUTexture`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "texture",
+            doc: Some("The texture used in the copy operation.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "mip_level",
+            doc: Some("The mip level index to transfer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "layer",
+            doc: Some("The layer index to transfer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "x",
+            doc: Some("The left offset of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "y",
+            doc: Some("The top offset of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "z",
+            doc: Some("The front offset of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "w",
+            doc: Some("The width of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "h",
+            doc: Some("The height of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "d",
+            doc: Some("The depth of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUBlitRegion: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUBlitRegion",
+    doc: Some(
+        "A structure specifying a region of a texture used in the blit operation.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BlitGPUTexture`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "texture",
+            doc: Some("The texture.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "mip_level",
+            doc: Some("The mip level index of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "layer_or_depth_plane",
+            doc: Some(
+                "The layer index or depth plane of the region. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "x",
+            doc: Some("The left offset of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "y",
+            doc: Some("The top offset of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "w",
+            doc: Some("The width of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "h",
+            doc: Some("The height of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUBufferLocation: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUBufferLocation",
+    doc: Some(
+        "A structure specifying a location in a buffer.\n\nUsed when copying data between buffers.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CopyGPUBufferToBuffer`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "buffer",
+            doc: Some("The buffer.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUBuffer",
+        },
+        Field {
+            name: "offset",
+            doc: Some("The starting byte within the buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUBufferRegion: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUBufferRegion",
+    doc: Some(
+        "A structure specifying a region of a buffer.\n\nUsed when transferring data to or from buffers.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUBuffer`]\n- [`SDL_DownloadFromGPUBuffer`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "buffer",
+            doc: Some("The buffer.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUBuffer",
+        },
+        Field {
+            name: "offset",
+            doc: Some("The starting byte within the buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "size",
+            doc: Some("The size in bytes of the region.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUIndirectDrawCommand: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUIndirectDrawCommand",
+    doc: Some(
+        "A structure specifying the parameters of an indirect draw command.\n\nNote that the `first_vertex` and `first_instance` parameters are NOT\ncompatible with built-in vertex/instance ID variables in shaders (for\nexample, SV_VertexID); GPU APIs and shader languages do not define these\nbuilt-in variables consistently, so if your shader depends on them, the\nonly way to keep behavior consistent and portable is to always pass 0 for\nthe correlating parameter in the draw calls.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_DrawGPUPrimitivesIndirect`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "num_vertices",
+            doc: Some("The number of vertices to draw.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_instances",
+            doc: Some("The number of instances to draw.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "first_vertex",
+            doc: Some("The index of the first vertex to draw.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "first_instance",
+            doc: Some("The ID of the first instance to draw.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUIndexedIndirectDrawCommand: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUIndexedIndirectDrawCommand",
+    doc: Some(
+        "A structure specifying the parameters of an indexed indirect draw command.\n\nNote that the `first_vertex` and `first_instance` parameters are NOT\ncompatible with built-in vertex/instance ID variables in shaders (for\nexample, SV_VertexID); GPU APIs and shader languages do not define these\nbuilt-in variables consistently, so if your shader depends on them, the\nonly way to keep behavior consistent and portable is to always pass 0 for\nthe correlating parameter in the draw calls.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_DrawGPUIndexedPrimitivesIndirect`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "num_indices",
+            doc: Some("The number of indices to draw per instance.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_instances",
+            doc: Some("The number of instances to draw.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "first_index",
+            doc: Some("The base index within the index buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "vertex_offset",
+            doc: Some(
+                "The value added to the vertex index before indexing into the vertex buffer.\n",
+            ),
+            available_since: None,
+            ty: "Sint32",
+        },
+        Field {
+            name: "first_instance",
+            doc: Some("The ID of the first instance to draw.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUIndirectDispatchCommand: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUIndirectDispatchCommand",
+    doc: Some(
+        "A structure specifying the parameters of an indexed dispatch command.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_DispatchGPUComputeIndirect`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "groupcount_x",
+            doc: Some("The number of local workgroups to dispatch in the X dimension.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "groupcount_y",
+            doc: Some("The number of local workgroups to dispatch in the Y dimension.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "groupcount_z",
+            doc: Some("The number of local workgroups to dispatch in the Z dimension.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUSamplerCreateInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUSamplerCreateInfo",
+    doc: Some(
+        "A structure specifying the parameters of a sampler.\n\nNote that mip_lod_bias is a no-op for the Metal driver. For Metal, LOD bias\nmust be applied via shader instead.\n\n## Availability\nThis function is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUSampler`]\n- [`SDL_GPUFilter`]\n- [`SDL_GPUSamplerMipmapMode`]\n- [`SDL_GPUSamplerAddressMode`]\n- [`SDL_GPUCompareOp`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "min_filter",
+            doc: Some("The minification filter to apply to lookups.\n"),
+            available_since: None,
+            ty: "SDL_GPUFilter",
+        },
+        Field {
+            name: "mag_filter",
+            doc: Some("The magnification filter to apply to lookups.\n"),
+            available_since: None,
+            ty: "SDL_GPUFilter",
+        },
+        Field {
+            name: "mipmap_mode",
+            doc: Some("The mipmap filter to apply to lookups.\n"),
+            available_since: None,
+            ty: "SDL_GPUSamplerMipmapMode",
+        },
+        Field {
+            name: "address_mode_u",
+            doc: Some("The addressing mode for U coordinates outside [0, 1).\n"),
+            available_since: None,
+            ty: "SDL_GPUSamplerAddressMode",
+        },
+        Field {
+            name: "address_mode_v",
+            doc: Some("The addressing mode for V coordinates outside [0, 1).\n"),
+            available_since: None,
+            ty: "SDL_GPUSamplerAddressMode",
+        },
+        Field {
+            name: "address_mode_w",
+            doc: Some("The addressing mode for W coordinates outside [0, 1).\n"),
+            available_since: None,
+            ty: "SDL_GPUSamplerAddressMode",
+        },
+        Field {
+            name: "mip_lod_bias",
+            doc: Some("The bias to be added to mipmap LOD calculation.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "max_anisotropy",
+            doc: Some(
+                "The anisotropy value clamp used by the sampler. If enable_anisotropy is false, this is ignored.\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "compare_op",
+            doc: Some("The comparison operator to apply to fetched data before filtering.\n"),
+            available_since: None,
+            ty: "SDL_GPUCompareOp",
+        },
+        Field {
+            name: "min_lod",
+            doc: Some("Clamps the minimum of the computed LOD value.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "max_lod",
+            doc: Some("Clamps the maximum of the computed LOD value.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "enable_anisotropy",
+            doc: Some("true to enable anisotropic filtering.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "enable_compare",
+            doc: Some("true to enable comparison against a reference value during lookups.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUVertexBufferDescription: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUVertexBufferDescription",
+    doc: Some(
+        "A structure specifying the parameters of vertex buffers used in a graphics\npipeline.\n\nWhen you call [`SDL_BindGPUVertexBuffers`], you specify the binding slots of\nthe vertex buffers. For example if you called [`SDL_BindGPUVertexBuffers`] with\na first_slot of 2 and num_bindings of 3, the binding slots 2, 3, 4 would be\nused by the vertex buffers you pass in.\n\nVertex attributes are linked to buffers via the buffer_slot field of\n[`SDL_GPUVertexAttribute`]. For example, if an attribute has a buffer_slot of\n0, then that attribute belongs to the vertex buffer bound at slot 0.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUVertexAttribute`]\n- [`SDL_GPUVertexInputRate`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "slot",
+            doc: Some("The binding slot of the vertex buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "pitch",
+            doc: Some("The size of a single element + the offset between elements.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "input_rate",
+            doc: Some(
+                "Whether attribute addressing is a function of the vertex index or instance index.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPUVertexInputRate",
+        },
+        Field {
+            name: "instance_step_rate",
+            doc: Some("Reserved for future use. Must be set to 0.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUVertexAttribute: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUVertexAttribute",
+    doc: Some(
+        "A structure specifying a vertex attribute.\n\nAll vertex attribute locations provided to an [`SDL_GPUVertexInputState`] must\nbe unique.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUVertexBufferDescription`]\n- [`SDL_GPUVertexInputState`]\n- [`SDL_GPUVertexElementFormat`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "location",
+            doc: Some("The shader input location index.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "buffer_slot",
+            doc: Some("The binding slot of the associated vertex buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "format",
+            doc: Some("The size and type of the attribute data.\n"),
+            available_since: None,
+            ty: "SDL_GPUVertexElementFormat",
+        },
+        Field {
+            name: "offset",
+            doc: Some(
+                "The byte offset of this attribute relative to the start of the vertex element.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUVertexInputState: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUVertexInputState",
+    doc: Some(
+        "A structure specifying the parameters of a graphics pipeline vertex input\nstate.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUGraphicsPipelineCreateInfo`]\n- [`SDL_GPUVertexBufferDescription`]\n- [`SDL_GPUVertexAttribute`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "vertex_buffer_descriptions",
+            doc: Some("A pointer to an array of vertex buffer descriptions.\n"),
+            available_since: None,
+            ty: "*const SDL_GPUVertexBufferDescription",
+        },
+        Field {
+            name: "num_vertex_buffers",
+            doc: Some("The number of vertex buffer descriptions in the above array.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "vertex_attributes",
+            doc: Some("A pointer to an array of vertex attribute descriptions.\n"),
+            available_since: None,
+            ty: "*const SDL_GPUVertexAttribute",
+        },
+        Field {
+            name: "num_vertex_attributes",
+            doc: Some("The number of vertex attribute descriptions in the above array.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUStencilOpState: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUStencilOpState",
+    doc: Some(
+        "A structure specifying the stencil operation state of a graphics pipeline.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUDepthStencilState`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "fail_op",
+            doc: Some("The action performed on samples that fail the stencil test.\n"),
+            available_since: None,
+            ty: "SDL_GPUStencilOp",
+        },
+        Field {
+            name: "pass_op",
+            doc: Some("The action performed on samples that pass the depth and stencil tests.\n"),
+            available_since: None,
+            ty: "SDL_GPUStencilOp",
+        },
+        Field {
+            name: "depth_fail_op",
+            doc: Some(
+                "The action performed on samples that pass the stencil test and fail the depth test.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPUStencilOp",
+        },
+        Field {
+            name: "compare_op",
+            doc: Some("The comparison operator used in the stencil test.\n"),
+            available_since: None,
+            ty: "SDL_GPUCompareOp",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUColorTargetBlendState: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUColorTargetBlendState",
+    doc: Some(
+        "A structure specifying the blend state of a color target.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUColorTargetDescription`]\n- [`SDL_GPUBlendFactor`]\n- [`SDL_GPUBlendOp`]\n- [`SDL_GPUColorComponentFlags`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "src_color_blendfactor",
+            doc: Some("The value to be multiplied by the source RGB value.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlendFactor",
+        },
+        Field {
+            name: "dst_color_blendfactor",
+            doc: Some("The value to be multiplied by the destination RGB value.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlendFactor",
+        },
+        Field {
+            name: "color_blend_op",
+            doc: Some("The blend operation for the RGB components.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlendOp",
+        },
+        Field {
+            name: "src_alpha_blendfactor",
+            doc: Some("The value to be multiplied by the source alpha.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlendFactor",
+        },
+        Field {
+            name: "dst_alpha_blendfactor",
+            doc: Some("The value to be multiplied by the destination alpha.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlendFactor",
+        },
+        Field {
+            name: "alpha_blend_op",
+            doc: Some("The blend operation for the alpha component.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlendOp",
+        },
+        Field {
+            name: "color_write_mask",
+            doc: Some(
+                "A bitmask specifying which of the RGBA components are enabled for writing. Writes to all channels if enable_color_write_mask is false.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPUColorComponentFlags",
+        },
+        Field {
+            name: "enable_blend",
+            doc: Some("Whether blending is enabled for the color target.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "enable_color_write_mask",
+            doc: Some("Whether the color write mask is enabled.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUShaderCreateInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUShaderCreateInfo",
+    doc: Some(
+        "A structure specifying code and metadata for creating a shader object.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUShader`]\n- [`SDL_GPUShaderFormat`]\n- [`SDL_GPUShaderStage`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "code_size",
+            doc: Some("The size in bytes of the code pointed to.\n"),
+            available_since: None,
+            ty: "::core::primitive::usize",
+        },
+        Field {
+            name: "code",
+            doc: Some("A pointer to shader code.\n"),
+            available_since: None,
+            ty: "*const Uint8",
+        },
+        Field {
+            name: "entrypoint",
+            doc: Some(
+                "A pointer to a null-terminated UTF-8 string specifying the entry point function name for the shader.\n",
+            ),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "format",
+            doc: Some("The format of the shader code.\n"),
+            available_since: None,
+            ty: "SDL_GPUShaderFormat",
+        },
+        Field {
+            name: "stage",
+            doc: Some("The stage the shader program corresponds to.\n"),
+            available_since: None,
+            ty: "SDL_GPUShaderStage",
+        },
+        Field {
+            name: "num_samplers",
+            doc: Some("The number of samplers defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_storage_textures",
+            doc: Some("The number of storage textures defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_storage_buffers",
+            doc: Some("The number of storage buffers defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_uniform_buffers",
+            doc: Some("The number of uniform buffers defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUTextureCreateInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUTextureCreateInfo",
+    doc: Some(
+        "A structure specifying the parameters of a texture.\n\nUsage flags can be bitwise OR'd together for combinations of usages. Note\nthat certain usage combinations are invalid, for example SAMPLER and\nGRAPHICS_STORAGE.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTextureType`]\n- [`SDL_GPUTextureFormat`]\n- [`SDL_GPUTextureUsageFlags`]\n- [`SDL_GPUSampleCount`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "r#type",
+            doc: Some("The base dimensionality of the texture.\n"),
+            available_since: None,
+            ty: "SDL_GPUTextureType",
+        },
+        Field {
+            name: "format",
+            doc: Some("The pixel format of the texture.\n"),
+            available_since: None,
+            ty: "SDL_GPUTextureFormat",
+        },
+        Field {
+            name: "usage",
+            doc: Some("How the texture is intended to be used by the client.\n"),
+            available_since: None,
+            ty: "SDL_GPUTextureUsageFlags",
+        },
+        Field {
+            name: "width",
+            doc: Some("The width of the texture.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "height",
+            doc: Some("The height of the texture.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "layer_count_or_depth",
+            doc: Some(
+                "The layer count or depth of the texture. This value is treated as a layer count on 2D array textures, and as a depth value on 3D textures.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_levels",
+            doc: Some("The number of mip levels in the texture.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "sample_count",
+            doc: Some(
+                "The number of samples per texel. Only applies if the texture is used as a render target.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPUSampleCount",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUBufferCreateInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUBufferCreateInfo",
+    doc: Some(
+        "A structure specifying the parameters of a buffer.\n\nUsage flags can be bitwise OR'd together for combinations of usages. Note\nthat certain combinations are invalid, for example VERTEX and INDEX.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUBuffer`]\n- [`SDL_GPUBufferUsageFlags`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "usage",
+            doc: Some("How the buffer is intended to be used by the client.\n"),
+            available_since: None,
+            ty: "SDL_GPUBufferUsageFlags",
+        },
+        Field {
+            name: "size",
+            doc: Some("The size in bytes of the buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUTransferBufferCreateInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUTransferBufferCreateInfo",
+    doc: Some(
+        "A structure specifying the parameters of a transfer buffer.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUTransferBuffer`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "usage",
+            doc: Some("How the transfer buffer is intended to be used by the client.\n"),
+            available_since: None,
+            ty: "SDL_GPUTransferBufferUsage",
+        },
+        Field {
+            name: "size",
+            doc: Some("The size in bytes of the transfer buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};
+pub const METADATA_SDL_GPURasterizerState: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPURasterizerState",
+    doc: Some(
+        "A structure specifying the parameters of the graphics pipeline rasterizer\nstate.\n\nNote that [`SDL_GPU_FILLMODE_LINE`] is not supported on many Android devices.\nFor those devices, the fill mode will automatically fall back to FILL.\n\nAlso note that the D3D12 driver will enable depth clamping even if\nenable_depth_clip is true. If you need this clamp+clip behavior, consider\nenabling depth clip and then manually clamping depth in your fragment\nshaders on Metal and Vulkan.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUGraphicsPipelineCreateInfo`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "fill_mode",
+            doc: Some("Whether polygons will be filled in or drawn as lines.\n"),
+            available_since: None,
+            ty: "SDL_GPUFillMode",
+        },
+        Field {
+            name: "cull_mode",
+            doc: Some("The facing direction in which triangles will be culled.\n"),
+            available_since: None,
+            ty: "SDL_GPUCullMode",
+        },
+        Field {
+            name: "front_face",
+            doc: Some(
+                "The vertex winding that will cause a triangle to be determined as front-facing.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPUFrontFace",
+        },
+        Field {
+            name: "depth_bias_constant_factor",
+            doc: Some("A scalar factor controlling the depth value added to each fragment.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "depth_bias_clamp",
+            doc: Some("The maximum depth bias of a fragment.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "depth_bias_slope_factor",
+            doc: Some("A scalar factor applied to a fragment's slope in depth calculations.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "enable_depth_bias",
+            doc: Some("true to bias fragment depth values.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "enable_depth_clip",
+            doc: Some("true to enable depth clip, false to enable depth clamp.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUMultisampleState: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUMultisampleState",
+    doc: Some(
+        "A structure specifying the parameters of the graphics pipeline multisample\nstate.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUGraphicsPipelineCreateInfo`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "sample_count",
+            doc: Some("The number of samples to be used in rasterization.\n"),
+            available_since: None,
+            ty: "SDL_GPUSampleCount",
+        },
+        Field {
+            name: "sample_mask",
+            doc: Some("Reserved for future use. Must be set to 0.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "enable_mask",
+            doc: Some("Reserved for future use. Must be set to false.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "enable_alpha_to_coverage",
+            doc: Some("true enables the alpha-to-coverage feature.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding3",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUDepthStencilState: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUDepthStencilState",
+    doc: Some(
+        "A structure specifying the parameters of the graphics pipeline depth\nstencil state.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUGraphicsPipelineCreateInfo`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "compare_op",
+            doc: Some("The comparison operator used for depth testing.\n"),
+            available_since: None,
+            ty: "SDL_GPUCompareOp",
+        },
+        Field {
+            name: "back_stencil_state",
+            doc: Some("The stencil op state for back-facing triangles.\n"),
+            available_since: None,
+            ty: "SDL_GPUStencilOpState",
+        },
+        Field {
+            name: "front_stencil_state",
+            doc: Some("The stencil op state for front-facing triangles.\n"),
+            available_since: None,
+            ty: "SDL_GPUStencilOpState",
+        },
+        Field {
+            name: "compare_mask",
+            doc: Some(
+                "Selects the bits of the stencil values participating in the stencil test.\n",
+            ),
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "write_mask",
+            doc: Some("Selects the bits of the stencil values updated by the stencil test.\n"),
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "enable_depth_test",
+            doc: Some("true enables the depth test.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "enable_depth_write",
+            doc: Some(
+                "true enables depth writes. Depth writes are always disabled when enable_depth_test is false.\n",
+            ),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "enable_stencil_test",
+            doc: Some("true enables the stencil test.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding3",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUColorTargetDescription: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUColorTargetDescription",
+    doc: Some(
+        "A structure specifying the parameters of color targets used in a graphics\npipeline.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUGraphicsPipelineTargetInfo`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "format",
+            doc: Some("The pixel format of the texture to be used as a color target.\n"),
+            available_since: None,
+            ty: "SDL_GPUTextureFormat",
+        },
+        Field {
+            name: "blend_state",
+            doc: Some("The blend state to be used for the color target.\n"),
+            available_since: None,
+            ty: "SDL_GPUColorTargetBlendState",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUGraphicsPipelineTargetInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUGraphicsPipelineTargetInfo",
+    doc: Some(
+        "A structure specifying the descriptions of render targets used in a\ngraphics pipeline.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUGraphicsPipelineCreateInfo`]\n- [`SDL_GPUColorTargetDescription`]\n- [`SDL_GPUTextureFormat`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "color_target_descriptions",
+            doc: Some("A pointer to an array of color target descriptions.\n"),
+            available_since: None,
+            ty: "*const SDL_GPUColorTargetDescription",
+        },
+        Field {
+            name: "num_color_targets",
+            doc: Some("The number of color target descriptions in the above array.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "depth_stencil_format",
+            doc: Some(
+                "The pixel format of the depth-stencil target. Ignored if has_depth_stencil_target is false.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPUTextureFormat",
+        },
+        Field {
+            name: "has_depth_stencil_target",
+            doc: Some("true specifies that the pipeline uses a depth-stencil target.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding3",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUGraphicsPipelineCreateInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUGraphicsPipelineCreateInfo",
+    doc: Some(
+        "A structure specifying the parameters of a graphics pipeline state.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUGraphicsPipeline`]\n- [`SDL_GPUShader`]\n- [`SDL_GPUVertexInputState`]\n- [`SDL_GPUPrimitiveType`]\n- [`SDL_GPURasterizerState`]\n- [`SDL_GPUMultisampleState`]\n- [`SDL_GPUDepthStencilState`]\n- [`SDL_GPUGraphicsPipelineTargetInfo`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "vertex_shader",
+            doc: Some("The vertex shader used by the graphics pipeline.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUShader",
+        },
+        Field {
+            name: "fragment_shader",
+            doc: Some("The fragment shader used by the graphics pipeline.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUShader",
+        },
+        Field {
+            name: "vertex_input_state",
+            doc: Some("The vertex layout of the graphics pipeline.\n"),
+            available_since: None,
+            ty: "SDL_GPUVertexInputState",
+        },
+        Field {
+            name: "primitive_type",
+            doc: Some("The primitive topology of the graphics pipeline.\n"),
+            available_since: None,
+            ty: "SDL_GPUPrimitiveType",
+        },
+        Field {
+            name: "rasterizer_state",
+            doc: Some("The rasterizer state of the graphics pipeline.\n"),
+            available_since: None,
+            ty: "SDL_GPURasterizerState",
+        },
+        Field {
+            name: "multisample_state",
+            doc: Some("The multisample state of the graphics pipeline.\n"),
+            available_since: None,
+            ty: "SDL_GPUMultisampleState",
+        },
+        Field {
+            name: "depth_stencil_state",
+            doc: Some("The depth-stencil state of the graphics pipeline.\n"),
+            available_since: None,
+            ty: "SDL_GPUDepthStencilState",
+        },
+        Field {
+            name: "target_info",
+            doc: Some("Formats and blend modes for the render targets of the graphics pipeline.\n"),
+            available_since: None,
+            ty: "SDL_GPUGraphicsPipelineTargetInfo",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUComputePipelineCreateInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUComputePipelineCreateInfo",
+    doc: Some(
+        "A structure specifying the parameters of a compute pipeline state.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CreateGPUComputePipeline`]\n- [`SDL_GPUShaderFormat`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "code_size",
+            doc: Some("The size in bytes of the compute shader code pointed to.\n"),
+            available_since: None,
+            ty: "::core::primitive::usize",
+        },
+        Field {
+            name: "code",
+            doc: Some("A pointer to compute shader code.\n"),
+            available_since: None,
+            ty: "*const Uint8",
+        },
+        Field {
+            name: "entrypoint",
+            doc: Some(
+                "A pointer to a null-terminated UTF-8 string specifying the entry point function name for the shader.\n",
+            ),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "format",
+            doc: Some("The format of the compute shader code.\n"),
+            available_since: None,
+            ty: "SDL_GPUShaderFormat",
+        },
+        Field {
+            name: "num_samplers",
+            doc: Some("The number of samplers defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_readonly_storage_textures",
+            doc: Some("The number of readonly storage textures defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_readonly_storage_buffers",
+            doc: Some("The number of readonly storage buffers defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_readwrite_storage_textures",
+            doc: Some("The number of read-write storage textures defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_readwrite_storage_buffers",
+            doc: Some("The number of read-write storage buffers defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "num_uniform_buffers",
+            doc: Some("The number of uniform buffers defined in the shader.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "threadcount_x",
+            doc: Some(
+                "The number of threads in the X dimension. This should match the value in the shader.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "threadcount_y",
+            doc: Some(
+                "The number of threads in the Y dimension. This should match the value in the shader.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "threadcount_z",
+            doc: Some(
+                "The number of threads in the Z dimension. This should match the value in the shader.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUColorTargetInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUColorTargetInfo",
+    doc: Some(
+        "A structure specifying the parameters of a color target used by a render\npass.\n\nThe load_op field determines what is done with the texture at the beginning\nof the render pass.\n\n- LOAD: Loads the data currently in the texture. Not recommended for\nmultisample textures as it requires significant memory bandwidth.\n- CLEAR: Clears the texture to a single color.\n- DONT_CARE: The driver will do whatever it wants with the texture memory.\nThis is a good option if you know that every single pixel will be touched\nin the render pass.\n\nThe store_op field determines what is done with the color results of the\nrender pass.\n\n- STORE: Stores the results of the render pass in the texture. Not\nrecommended for multisample textures as it requires significant memory\nbandwidth.\n- DONT_CARE: The driver will do whatever it wants with the texture memory.\nThis is often a good option for depth/stencil textures.\n- RESOLVE: Resolves a multisample texture into resolve_texture, which must\nhave a sample count of 1. Then the driver may discard the multisample\ntexture memory. This is the most performant method of resolving a\nmultisample target.\n- RESOLVE_AND_STORE: Resolves a multisample texture into the\nresolve_texture, which must have a sample count of 1. Then the driver\nstores the multisample texture's contents. Not recommended as it requires\nsignificant memory bandwidth.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPURenderPass`]\n- [`SDL_FColor`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "texture",
+            doc: Some("The texture that will be used as a color target by a render pass.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "mip_level",
+            doc: Some("The mip level to use as a color target.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "layer_or_depth_plane",
+            doc: Some(
+                "The layer index or depth plane to use as a color target. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "clear_color",
+            doc: Some(
+                "The color to clear the color target to at the start of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.\n",
+            ),
+            available_since: None,
+            ty: "SDL_FColor",
+        },
+        Field {
+            name: "load_op",
+            doc: Some(
+                "What is done with the contents of the color target at the beginning of the render pass.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPULoadOp",
+        },
+        Field {
+            name: "store_op",
+            doc: Some("What is done with the results of the render pass.\n"),
+            available_since: None,
+            ty: "SDL_GPUStoreOp",
+        },
+        Field {
+            name: "resolve_texture",
+            doc: Some(
+                "The texture that will receive the results of a multisample resolve operation. Ignored if a RESOLVE* store_op is not used.\n",
+            ),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "resolve_mip_level",
+            doc: Some(
+                "The mip level of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "resolve_layer",
+            doc: Some(
+                "The layer index of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "cycle",
+            doc: Some("true cycles the texture if the texture is bound and load_op is not LOAD\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "cycle_resolve_texture",
+            doc: Some(
+                "true cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used.\n",
+            ),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUDepthStencilTargetInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUDepthStencilTargetInfo",
+    doc: Some(
+        "A structure specifying the parameters of a depth-stencil target used by a\nrender pass.\n\nThe load_op field determines what is done with the depth contents of the\ntexture at the beginning of the render pass.\n\n- LOAD: Loads the depth values currently in the texture.\n- CLEAR: Clears the texture to a single depth.\n- DONT_CARE: The driver will do whatever it wants with the memory. This is\na good option if you know that every single pixel will be touched in the\nrender pass.\n\nThe store_op field determines what is done with the depth results of the\nrender pass.\n\n- STORE: Stores the depth results in the texture.\n- DONT_CARE: The driver will do whatever it wants with the depth results.\nThis is often a good option for depth/stencil textures that don't need to\nbe reused again.\n\nThe stencil_load_op field determines what is done with the stencil contents\nof the texture at the beginning of the render pass.\n\n- LOAD: Loads the stencil values currently in the texture.\n- CLEAR: Clears the stencil values to a single value.\n- DONT_CARE: The driver will do whatever it wants with the memory. This is\na good option if you know that every single pixel will be touched in the\nrender pass.\n\nThe stencil_store_op field determines what is done with the stencil results\nof the render pass.\n\n- STORE: Stores the stencil results in the texture.\n- DONT_CARE: The driver will do whatever it wants with the stencil results.\nThis is often a good option for depth/stencil textures that don't need to\nbe reused again.\n\nNote that depth/stencil targets do not support multisample resolves.\n\nDue to ABI limitations, depth textures with more than 255 layers are not\nsupported.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPURenderPass`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "texture",
+            doc: Some(
+                "The texture that will be used as the depth stencil target by the render pass.\n",
+            ),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "clear_depth",
+            doc: Some(
+                "The value to clear the depth component to at the beginning of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "load_op",
+            doc: Some(
+                "What is done with the depth contents at the beginning of the render pass.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPULoadOp",
+        },
+        Field {
+            name: "store_op",
+            doc: Some("What is done with the depth results of the render pass.\n"),
+            available_since: None,
+            ty: "SDL_GPUStoreOp",
+        },
+        Field {
+            name: "stencil_load_op",
+            doc: Some(
+                "What is done with the stencil contents at the beginning of the render pass.\n",
+            ),
+            available_since: None,
+            ty: "SDL_GPULoadOp",
+        },
+        Field {
+            name: "stencil_store_op",
+            doc: Some("What is done with the stencil results of the render pass.\n"),
+            available_since: None,
+            ty: "SDL_GPUStoreOp",
+        },
+        Field {
+            name: "cycle",
+            doc: Some(
+                "true cycles the texture if the texture is bound and any load ops are not LOAD\n",
+            ),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "clear_stencil",
+            doc: Some(
+                "The value to clear the stencil component to at the beginning of the render pass. Ignored if [`SDL_GPU_LOADOP_CLEAR`] is not used.\n",
+            ),
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "mip_level",
+            doc: Some("The mip level to use as the depth stencil target.\n"),
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "layer",
+            doc: Some("The layer index to use as the depth stencil target.\n"),
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUBlitInfo: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUBlitInfo",
+    doc: Some(
+        "A structure containing parameters for a blit command.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BlitGPUTexture`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "source",
+            doc: Some("The source region for the blit.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlitRegion",
+        },
+        Field {
+            name: "destination",
+            doc: Some("The destination region for the blit.\n"),
+            available_since: None,
+            ty: "SDL_GPUBlitRegion",
+        },
+        Field {
+            name: "load_op",
+            doc: Some("What is done with the contents of the destination before the blit.\n"),
+            available_since: None,
+            ty: "SDL_GPULoadOp",
+        },
+        Field {
+            name: "clear_color",
+            doc: Some(
+                "The color to clear the destination region to before the blit. Ignored if load_op is not [`SDL_GPU_LOADOP_CLEAR`].\n",
+            ),
+            available_since: None,
+            ty: "SDL_FColor",
+        },
+        Field {
+            name: "flip_mode",
+            doc: Some("The flip mode for the source region.\n"),
+            available_since: None,
+            ty: "SDL_FlipMode",
+        },
+        Field {
+            name: "filter",
+            doc: Some("The filter mode used when blitting.\n"),
+            available_since: None,
+            ty: "SDL_GPUFilter",
+        },
+        Field {
+            name: "cycle",
+            doc: Some("true cycles the destination texture if it is already bound.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding3",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUBufferBinding: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUBufferBinding",
+    doc: Some(
+        "A structure specifying parameters in a buffer binding call.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BindGPUVertexBuffers`]\n- [`SDL_BindGPUIndexBuffer`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "buffer",
+            doc: Some(
+                "The buffer to bind. Must have been created with [`SDL_GPU_BUFFERUSAGE_VERTEX`] for [`SDL_BindGPUVertexBuffers`], or [`SDL_GPU_BUFFERUSAGE_INDEX`] for [`SDL_BindGPUIndexBuffer`].\n",
+            ),
+            available_since: None,
+            ty: "*mut SDL_GPUBuffer",
+        },
+        Field {
+            name: "offset",
+            doc: Some("The starting byte of the data to bind in the buffer.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUTextureSamplerBinding: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUTextureSamplerBinding",
+    doc: Some(
+        "A structure specifying parameters in a sampler binding call.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BindGPUVertexSamplers`]\n- [`SDL_BindGPUFragmentSamplers`]\n- [`SDL_GPUTexture`]\n- [`SDL_GPUSampler`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "texture",
+            doc: Some(
+                "The texture to bind. Must have been created with [`SDL_GPU_TEXTUREUSAGE_SAMPLER`].\n",
+            ),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "sampler",
+            doc: Some("The sampler to bind.\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUSampler",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUStorageBufferReadWriteBinding: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUStorageBufferReadWriteBinding",
+    doc: Some(
+        "A structure specifying parameters related to binding buffers in a compute\npass.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPUComputePass`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "buffer",
+            doc: Some(
+                "The buffer to bind. Must have been created with [`SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE`].\n",
+            ),
+            available_since: None,
+            ty: "*mut SDL_GPUBuffer",
+        },
+        Field {
+            name: "cycle",
+            doc: Some("true cycles the buffer if it is already bound.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding3",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUStorageTextureReadWriteBinding: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUStorageTextureReadWriteBinding",
+    doc: Some(
+        "A structure specifying parameters related to binding textures in a compute\npass.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BeginGPUComputePass`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "texture",
+            doc: Some(
+                "The texture to bind. Must have been created with [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE`] or [`SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_SIMULTANEOUS_READ_WRITE`].\n",
+            ),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "mip_level",
+            doc: Some("The mip level index to bind.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "layer",
+            doc: Some("The layer index to bind.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "cycle",
+            doc: Some("true cycles the texture if it is already bound.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "padding1",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding2",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding3",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_GPUVulkanOptions: Struct = Struct {
+    module: "gpu",
+    kind: StructKind::Struct,
+    name: "SDL_GPUVulkanOptions",
+    doc: Some(
+        "A structure specifying additional options when using Vulkan.\n\nWhen no such structure is provided, SDL will use Vulkan API version 1.0 and\na minimal set of features. The requested API version influences how the\nfeature_list is processed by SDL. When requesting API version 1.0, the\nfeature_list is ignored. Only the vulkan_10_physical_device_features and\nthe extension lists are used. When requesting API version 1.1, the\nfeature_list is scanned for feature structures introduced in Vulkan 1.1.\nWhen requesting Vulkan 1.2 or higher, the feature_list is additionally\nscanned for compound feature structs such as\nVkPhysicalDeviceVulkan11Features. The device and instance extension lists,\nas well as vulkan_10_physical_device_features, are always processed.\n\n## Availability\nThis struct is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+    fields: &[
+        Field {
+            name: "vulkan_api_version",
+            doc: Some(
+                "The Vulkan API version to request for the instance. Use Vulkan's VK_MAKE_VERSION or VK_MAKE_API_VERSION.\n",
+            ),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "feature_list",
+            doc: Some(
+                "Pointer to the first element of a chain of Vulkan feature structs. (Requires API version 1.1 or higher.)\n",
+            ),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_void",
+        },
+        Field {
+            name: "vulkan_10_physical_device_features",
+            doc: Some(
+                "Pointer to a VkPhysicalDeviceFeatures struct to enable additional Vulkan 1.0 features.\n",
+            ),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_void",
+        },
+        Field {
+            name: "device_extension_count",
+            doc: Some("Number of additional device extensions to require.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "device_extension_names",
+            doc: Some("Pointer to a list of additional device extensions to require.\n"),
+            available_since: None,
+            ty: "*mut *const ::core::ffi::c_char",
+        },
+        Field {
+            name: "instance_extension_count",
+            doc: Some("Number of additional instance extensions to require.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "instance_extension_names",
+            doc: Some("Pointer to a list of additional instance extensions to require.\n"),
+            available_since: None,
+            ty: "*mut *const ::core::ffi::c_char",
+        },
+    ],
+};

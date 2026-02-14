@@ -424,3 +424,148 @@ pub const METADATA_TTF_SubStringFlags: Group = Group {
         },
     ],
 };
+pub const METADATA_TTF_Text: Struct = Struct {
+    module: "ttf",
+    kind: StructKind::Struct,
+    name: "TTF_Text",
+    doc: Some(
+        "Text created with [`TTF_CreateText()`]\n\n## Availability\nThis struct is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_CreateText`]\n- [`TTF_GetTextProperties`]\n- [`TTF_DestroyText`]\n\n## Notes for `sdl3-sys`\nThis struct can't be created manually. Use the corresponding SDL functions.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
+    fields: &[
+        Field {
+            name: "text",
+            doc: Some(
+                "A copy of the UTF-8 string that this text object represents, useful for layout, debugging and retrieving substring text. This is updated when the text object is modified and will be freed automatically when the object is destroyed.\n",
+            ),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_char",
+        },
+        Field {
+            name: "num_lines",
+            doc: Some("The number of lines in the text, 0 if it's empty\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "refcount",
+            doc: Some("Application reference count, used when freeing surface\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "internal",
+            doc: Some("Private\n"),
+            available_since: None,
+            ty: "*mut TTF_TextData",
+        },
+    ],
+};
+pub const METADATA_TTF_GPUAtlasDrawSequence: Struct = Struct {
+    module: "ttf",
+    kind: StructKind::Struct,
+    name: "TTF_GPUAtlasDrawSequence",
+    doc: Some(
+        "Draw sequence returned by [`TTF_GetGPUTextDrawData`]\n\n## Availability\nThis struct is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_GetGPUTextDrawData`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
+    fields: &[
+        Field {
+            name: "atlas_texture",
+            doc: Some("Texture atlas that stores the glyphs\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUTexture",
+        },
+        Field {
+            name: "xy",
+            doc: Some("An array of vertex positions\n"),
+            available_since: None,
+            ty: "*mut SDL_FPoint",
+        },
+        Field {
+            name: "uv",
+            doc: Some("An array of normalized texture coordinates for each vertex\n"),
+            available_since: None,
+            ty: "*mut SDL_FPoint",
+        },
+        Field {
+            name: "num_vertices",
+            doc: Some("Number of vertices\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "indices",
+            doc: Some("An array of indices into the 'vertices' arrays\n"),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_int",
+        },
+        Field {
+            name: "num_indices",
+            doc: Some("Number of indices\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "image_type",
+            doc: Some("The image type of this draw sequence\n"),
+            available_since: None,
+            ty: "TTF_ImageType",
+        },
+        Field {
+            name: "next",
+            doc: Some("The next sequence (will be NULL in case of the last sequence)\n"),
+            available_since: None,
+            ty: "*mut TTF_GPUAtlasDrawSequence",
+        },
+    ],
+};
+pub const METADATA_TTF_SubString: Struct = Struct {
+    module: "ttf",
+    kind: StructKind::Struct,
+    name: "TTF_SubString",
+    doc: Some(
+        "The representation of a substring within text.\n\n## Availability\nThis struct is available since SDL_ttf 3.0.0.\n\n## See also\n- [`TTF_GetNextTextSubString`]\n- [`TTF_GetPreviousTextSubString`]\n- [`TTF_GetTextSubString`]\n- [`TTF_GetTextSubStringForLine`]\n- [`TTF_GetTextSubStringForPoint`]\n- [`TTF_GetTextSubStringsForRange`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
+    fields: &[
+        Field {
+            name: "flags",
+            doc: Some("The flags for this substring\n"),
+            available_since: None,
+            ty: "TTF_SubStringFlags",
+        },
+        Field {
+            name: "offset",
+            doc: Some("The byte offset from the beginning of the text\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "length",
+            doc: Some("The byte length starting at the offset\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "line_index",
+            doc: Some("The index of the line that contains this substring\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "cluster_index",
+            doc: Some("The internal cluster index, used for quickly iterating\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "rect",
+            doc: Some(
+                "The rectangle, relative to the top left of the text, containing the substring\n",
+            ),
+            available_since: None,
+            ty: "SDL_Rect",
+        },
+    ],
+};

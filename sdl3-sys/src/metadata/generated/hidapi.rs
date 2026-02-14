@@ -59,3 +59,110 @@ pub const METADATA_SDL_hid_bus_type: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_hid_device_info: Struct = Struct {
+    module: "hidapi",
+    kind: StructKind::Struct,
+    name: "SDL_hid_device_info",
+    doc: Some(
+        "Information about a connected HID device\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "path",
+            doc: Some("Platform-specific device path\n"),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_char",
+        },
+        Field {
+            name: "vendor_id",
+            doc: Some("Device Vendor ID\n"),
+            available_since: None,
+            ty: "::core::ffi::c_ushort",
+        },
+        Field {
+            name: "product_id",
+            doc: Some("Device Product ID\n"),
+            available_since: None,
+            ty: "::core::ffi::c_ushort",
+        },
+        Field {
+            name: "serial_number",
+            doc: Some("Serial Number\n"),
+            available_since: None,
+            ty: "*mut crate::ffi::c_wchar_t",
+        },
+        Field {
+            name: "release_number",
+            doc: Some(
+                "Device Release Number in binary-coded decimal,\nalso known as Device Version Number\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_ushort",
+        },
+        Field {
+            name: "manufacturer_string",
+            doc: Some("Manufacturer String\n"),
+            available_since: None,
+            ty: "*mut crate::ffi::c_wchar_t",
+        },
+        Field {
+            name: "product_string",
+            doc: Some("Product string\n"),
+            available_since: None,
+            ty: "*mut crate::ffi::c_wchar_t",
+        },
+        Field {
+            name: "usage_page",
+            doc: Some("Usage Page for this Device/Interface\n(Windows/Mac/hidraw only)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_ushort",
+        },
+        Field {
+            name: "usage",
+            doc: Some("Usage for this Device/Interface\n(Windows/Mac/hidraw only)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_ushort",
+        },
+        Field {
+            name: "interface_number",
+            doc: Some(
+                "The USB interface which this logical device\nrepresents.\n\nValid only if the device is a USB HID device.\nSet to -1 in all other cases.\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "interface_class",
+            doc: Some(
+                "Additional information about the USB interface.\nValid on libusb and Android implementations.\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "interface_subclass",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "interface_protocol",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "bus_type",
+            doc: Some("Underlying bus type\n"),
+            available_since: None,
+            ty: "SDL_hid_bus_type",
+        },
+        Field {
+            name: "next",
+            doc: Some("Pointer to the next device\n"),
+            available_since: None,
+            ty: "*mut SDL_hid_device_info",
+        },
+    ],
+};

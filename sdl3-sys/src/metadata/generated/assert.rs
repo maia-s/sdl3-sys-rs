@@ -44,3 +44,56 @@ pub const METADATA_SDL_AssertState: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_AssertData: Struct = Struct {
+    module: "assert",
+    kind: StructKind::Struct,
+    name: "SDL_AssertData",
+    doc: Some(
+        "Information about an assertion failure.\n\nThis structure is filled in with information about a triggered assertion,\nused by the assertion handler, then added to the assertion report. This is\nreturned as a linked list from [`SDL_GetAssertionReport()`].\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "always_ignore",
+            doc: Some("true if app should always continue when assertion is triggered.\n"),
+            available_since: None,
+            ty: "::core::primitive::bool",
+        },
+        Field {
+            name: "trigger_count",
+            doc: Some("Number of times this assertion has been triggered.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_uint",
+        },
+        Field {
+            name: "condition",
+            doc: Some("A string of this assert's test code.\n"),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "filename",
+            doc: Some("The source file where this assert lives.\n"),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "linenum",
+            doc: Some("The line in `filename` where this assert lives.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "function",
+            doc: Some("The name of the function where this assert lives.\n"),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "next",
+            doc: Some("next item in the linked list.\n"),
+            available_since: None,
+            ty: "*const SDL_AssertData",
+        },
+    ],
+};

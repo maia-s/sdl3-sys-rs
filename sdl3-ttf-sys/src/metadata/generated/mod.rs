@@ -2,7 +2,9 @@
 
 use core::ffi::CStr;
 use sdl3_sys::{
-    metadata::{Group, GroupKind, GroupValue, Hint, Property, PropertyType},
+    metadata::{
+        Field, Group, GroupKind, GroupValue, Hint, Property, PropertyType, Struct, StructKind,
+    },
     version::SDL_VERSIONNUM,
 };
 
@@ -50,4 +52,16 @@ pub const GROUPS: &[&Group] = &[
     &ttf::METADATA_TTF_ImageType,
     &ttf::METADATA_TTF_GPUTextEngineWinding,
     &ttf::METADATA_TTF_SubStringFlags,
+];
+
+/// Metadata for structs and unions in this crate
+pub const STRUCTS: &[&Struct] = &[
+    &textengine::METADATA_TTF_FillOperation,
+    &textengine::METADATA_TTF_CopyOperation,
+    &textengine::METADATA_TTF_DrawOperation,
+    &textengine::METADATA_TTF_TextData,
+    &textengine::METADATA_TTF_TextEngine,
+    &ttf::METADATA_TTF_Text,
+    &ttf::METADATA_TTF_GPUAtlasDrawSequence,
+    &ttf::METADATA_TTF_SubString,
 ];

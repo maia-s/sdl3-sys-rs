@@ -73,3 +73,54 @@ pub const METADATA_SDL_CameraPermissionState: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_CameraSpec: Struct = Struct {
+    module: "camera",
+    kind: StructKind::Struct,
+    name: "SDL_CameraSpec",
+    doc: Some(
+        "The details of an output format for a camera device.\n\nCameras often support multiple formats; each one will be encapsulated in\nthis struct.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetCameraSupportedFormats`]\n- [`SDL_GetCameraFormat`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "format",
+            doc: Some("Frame format\n"),
+            available_since: None,
+            ty: "SDL_PixelFormat",
+        },
+        Field {
+            name: "colorspace",
+            doc: Some("Frame colorspace\n"),
+            available_since: None,
+            ty: "SDL_Colorspace",
+        },
+        Field {
+            name: "width",
+            doc: Some("Frame width\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "height",
+            doc: Some("Frame height\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "framerate_numerator",
+            doc: Some(
+                "Frame rate numerator ((num / denom) == FPS, (denom / num) == duration in seconds)\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "framerate_denominator",
+            doc: Some(
+                "Frame rate denominator ((num / denom) == FPS, (denom / num) == duration in seconds)\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};

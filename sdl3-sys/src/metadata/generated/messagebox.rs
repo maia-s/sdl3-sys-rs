@@ -116,3 +116,129 @@ pub const METADATA_SDL_MessageBoxColorType: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_MessageBoxButtonData: Struct = Struct {
+    module: "messagebox",
+    kind: StructKind::Struct,
+    name: "SDL_MessageBoxButtonData",
+    doc: Some(
+        "Individual button data.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "flags",
+            doc: None,
+            available_since: None,
+            ty: "SDL_MessageBoxButtonFlags",
+        },
+        Field {
+            name: "buttonID",
+            doc: Some("User defined button id (value returned via [`SDL_ShowMessageBox`])\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "text",
+            doc: Some("The UTF-8 button text\n"),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+    ],
+};
+pub const METADATA_SDL_MessageBoxColor: Struct = Struct {
+    module: "messagebox",
+    kind: StructKind::Struct,
+    name: "SDL_MessageBoxColor",
+    doc: Some(
+        "RGB value used in a message box color scheme\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "r",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "g",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "b",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_MessageBoxColorScheme: Struct = Struct {
+    module: "messagebox",
+    kind: StructKind::Struct,
+    name: "SDL_MessageBoxColorScheme",
+    doc: Some(
+        "A set of colors to use for message box dialogs\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[Field {
+        name: "colors",
+        doc: None,
+        available_since: None,
+        ty: "[SDL_MessageBoxColor; SDL_MESSAGEBOX_COLOR_COUNT.0 as ::core::primitive::usize]",
+    }],
+};
+pub const METADATA_SDL_MessageBoxData: Struct = Struct {
+    module: "messagebox",
+    kind: StructKind::Struct,
+    name: "SDL_MessageBoxData",
+    doc: Some(
+        "MessageBox structure containing title, text, window, etc.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "flags",
+            doc: None,
+            available_since: None,
+            ty: "SDL_MessageBoxFlags",
+        },
+        Field {
+            name: "window",
+            doc: Some("Parent window, can be NULL\n"),
+            available_since: None,
+            ty: "*mut SDL_Window",
+        },
+        Field {
+            name: "title",
+            doc: Some("UTF-8 title\n"),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "message",
+            doc: Some("UTF-8 message text\n"),
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "numbuttons",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "buttons",
+            doc: None,
+            available_since: None,
+            ty: "*const SDL_MessageBoxButtonData",
+        },
+        Field {
+            name: "colorScheme",
+            doc: Some("[`SDL_MessageBoxColorScheme`], can be NULL to use system settings\n"),
+            available_since: None,
+            ty: "*const SDL_MessageBoxColorScheme",
+        },
+    ],
+};

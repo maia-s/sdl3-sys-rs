@@ -70,7 +70,7 @@ pub trait GroupMetadata: 'static + Sized {
 }
 
 #[non_exhaustive]
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub enum GroupKind {
     Enum,
     Flags,
@@ -97,6 +97,32 @@ pub struct GroupValue {
     pub short_name: &'static str,
     pub doc: Option<&'static str>,
     pub available_since: Option<c_int>,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq)]
+pub enum StructKind {
+    Struct,
+    Union,
+}
+
+/// Metadata for structs and unions
+#[derive(Clone, Copy)]
+pub struct Struct {
+    pub kind: StructKind,
+    pub module: &'static str,
+    pub name: &'static str,
+    pub doc: Option<&'static str>,
+    pub available_since: Option<c_int>,
+    pub fields: &'static [Field],
+}
+
+/// Metadata for fields of structs and unions
+#[derive(Clone, Copy)]
+pub struct Field {
+    pub name: &'static str,
+    pub doc: Option<&'static str>,
+    pub available_since: Option<c_int>,
+    pub ty: &'static str,
 }
 
 #[cfg(feature = "metadata")]

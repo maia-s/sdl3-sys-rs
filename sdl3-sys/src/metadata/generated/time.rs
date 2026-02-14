@@ -56,3 +56,68 @@ pub const METADATA_SDL_TimeFormat: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_DateTime: Struct = Struct {
+    module: "time",
+    kind: StructKind::Struct,
+    name: "SDL_DateTime",
+    doc: Some(
+        "A structure holding a calendar date and time broken down into its\ncomponents.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "year",
+            doc: Some("Year\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "month",
+            doc: Some("Month \\[01-12\\]\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "day",
+            doc: Some("Day of the month \\[01-31\\]\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "hour",
+            doc: Some("Hour \\[0-23\\]\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "minute",
+            doc: Some("Minute \\[0-59\\]\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "second",
+            doc: Some("Seconds \\[0-60\\]\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "nanosecond",
+            doc: Some("Nanoseconds \\[0-999999999\\]\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "day_of_week",
+            doc: Some("Day of the week \\[0-6\\] (0 being Sunday)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "utc_offset",
+            doc: Some("Seconds east of UTC\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};

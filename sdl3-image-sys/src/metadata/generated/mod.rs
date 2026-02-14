@@ -2,7 +2,9 @@
 
 use core::ffi::CStr;
 use sdl3_sys::{
-    metadata::{Group, GroupKind, GroupValue, Hint, Property, PropertyType},
+    metadata::{
+        Field, Group, GroupKind, GroupValue, Hint, Property, PropertyType, Struct, StructKind,
+    },
     version::SDL_VERSIONNUM,
 };
 
@@ -52,3 +54,6 @@ pub const PROPERTIES: &[&Property] = &[
 
 /// Metadata for groups in this crate
 pub const GROUPS: &[&Group] = &[&image::METADATA_IMG_AnimationDecoderStatus];
+
+/// Metadata for structs and unions in this crate
+pub const STRUCTS: &[&Struct] = &[&image::METADATA_IMG_Animation];

@@ -141,3 +141,32 @@ pub const METADATA_SDL_AudioDeviceID: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_AudioSpec: Struct = Struct {
+    module: "audio",
+    kind: StructKind::Struct,
+    name: "SDL_AudioSpec",
+    doc: Some(
+        "Format specifier for audio data.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_AudioFormat`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "format",
+            doc: Some("Audio data format\n"),
+            available_since: None,
+            ty: "SDL_AudioFormat",
+        },
+        Field {
+            name: "channels",
+            doc: Some("Number of channels: 1 mono, 2 stereo, etc\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "freq",
+            doc: Some("sample rate: sample frames per second\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};

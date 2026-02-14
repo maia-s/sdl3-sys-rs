@@ -132,6 +132,9 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
+- next
+    - Add metadata for structs and unions
+
 - 0.6.0:
     - Update sdl3-sys to 0.6.0
     - Synchronize version number with sdl3-sys

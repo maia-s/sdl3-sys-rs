@@ -104,3 +104,26 @@ pub const METADATA_SDL_FileDialogType: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_DialogFileFilter: Struct = Struct {
+    module: "dialog",
+    kind: StructKind::Struct,
+    name: "SDL_DialogFileFilter",
+    doc: Some(
+        "An entry for filters for file dialogs.\n\n`name` is a user-readable label for the filter (for example, \"Office\ndocument\").\n\n`pattern` is a semicolon-separated list of file extensions (for example,\n\"doc;docx\"). File extensions may only contain alphanumeric characters,\nhyphens, underscores and periods. Alternatively, the whole string can be a\nsingle asterisk (\"*\"), which serves as an \"All files\" filter.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_DialogFileCallback`]\n- [`SDL_ShowOpenFileDialog`]\n- [`SDL_ShowSaveFileDialog`]\n- [`SDL_ShowOpenFolderDialog`]\n- [`SDL_ShowFileDialogWithProperties`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "name",
+            doc: None,
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+        Field {
+            name: "pattern",
+            doc: None,
+            available_since: None,
+            ty: "*const ::core::ffi::c_char",
+        },
+    ],
+};

@@ -48,6 +48,8 @@ use std::{
 };
 use str_block::str_block;
 
+use crate::parse::StructKind;
+
 fn skip(module: &str) -> bool {
     [
         "begin_code",
@@ -100,6 +102,7 @@ pub struct Metadata {
     hints: Vec<HintMetadata>,
     properties: Vec<PropertyMetadata>,
     groups: Vec<GroupMetadata>,
+    structs: Vec<StructMetadata>,
 }
 
 pub struct HintMetadata {
@@ -123,6 +126,19 @@ pub struct GroupValueMetadata {
     name: String,
     short_name: String,
     doc: String,
+}
+
+pub struct StructMetadata {
+    kind: StructKind,
+    name: String,
+    doc: String,
+    fields: Vec<FieldMetadata>,
+}
+
+pub struct FieldMetadata {
+    name: String,
+    doc: String,
+    ty: String,
 }
 
 struct LinesPatch<'a> {
@@ -744,12 +760,13 @@ impl Gen {
             #![allow(non_upper_case_globals, unused)]
 
             use core::ffi::CStr;
-            use sdl3_sys::{{metadata::{{Group, GroupKind, GroupValue, Hint, Property, PropertyType}}, version::SDL_VERSIONNUM}};
+            use sdl3_sys::{{metadata::{{Field, Group, GroupKind, GroupValue, Hint, Property, PropertyType, Struct, StructKind}}, version::SDL_VERSIONNUM}};
 
         "});
         let mut metadata_out_hints = String::new();
         let mut metadata_out_props = String::new();
         let mut metadata_out_groups = String::new();
+        let mut metadata_out_structs = String::new();
         let emitted = self.emitted.borrow();
 
         fn get_available_since(doc: &str) -> String {
@@ -806,6 +823,12 @@ impl Gen {
             str_block! {"
                 /// Metadata for groups in this crate
                 pub const GROUPS: &[&Group] = &["}
+        )?;
+        writeln!(
+            metadata_out_structs,
+            str_block! {"
+                /// Metadata for structs and unions in this crate
+                pub const STRUCTS: &[&Struct] = &["}
         )?;
 
         for module in emitted.keys() {
@@ -962,6 +985,69 @@ impl Gen {
                     "}
                 )?;
             }
+            for strct in &metadata.structs {
+                let available_since = get_available_since(&strct.doc);
+                writeln!(
+                    metadata_out_structs,
+                    "    &{module}::METADATA_{},",
+                    strct.name
+                )?;
+                write!(
+                    module_out,
+                    str_block! {"
+                        pub const METADATA_{name}: Struct = Struct {{
+                            module: {module:?},
+                            kind: StructKind::{kind},
+                            name: {name:?},
+                            doc: {doc},
+                            available_since: {available_since},
+                            fields: &[
+                    "},
+                    module = module,
+                    kind = match strct.kind {
+                        StructKind::Struct => "Struct",
+                        StructKind::Union => "Union",
+                    },
+                    name = strct.name,
+                    doc = if strct.doc.is_empty() {
+                        "None".into()
+                    } else {
+                        format!("Some({:?})", strct.doc)
+                    },
+                    available_since = available_since,
+                )?;
+                if !strct.fields.is_empty() {
+                    for field in &strct.fields {
+                        write_indented!(
+                            module_out,
+                            8,
+                            str_block! {"
+                                Field {{
+                                    name: {name:?},
+                                    doc: {doc},
+                                    available_since: {available_since},
+                                    ty: {ty:?},
+                                }},
+                            "},
+                            name = field.name,
+                            doc = if field.doc.is_empty() {
+                                "None".into()
+                            } else {
+                                format!("Some({:?})", field.doc)
+                            },
+                            available_since = get_available_since(&field.doc),
+                            ty = field.ty,
+                        );
+                    }
+                }
+                write!(
+                    module_out,
+                    str_block! {"
+                            ],
+                        }};
+                    "}
+                )?;
+            }
             format_and_write(module_out, &metadata_path.join(format!("{module}.rs")))?;
         }
 
@@ -972,6 +1058,8 @@ impl Gen {
         writeln!(metadata_out, "{metadata_out_props}];")?;
         writeln!(metadata_out)?;
         writeln!(metadata_out, "{metadata_out_groups}];")?;
+        writeln!(metadata_out)?;
+        writeln!(metadata_out, "{metadata_out_structs}];")?;
 
         format_and_write(metadata_out, &metadata_path.join("mod.rs"))?;
         Ok(())

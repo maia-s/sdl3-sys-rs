@@ -1326,3 +1326,215 @@ pub const METADATA_SDL_Colorspace: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_Color: Struct = Struct {
+    module: "pixels",
+    kind: StructKind::Struct,
+    name: "SDL_Color",
+    doc: Some(
+        "A structure that represents a color as RGBA components.\n\nThe bits of this structure can be directly reinterpreted as an\ninteger-packed color which uses the [`SDL_PIXELFORMAT_RGBA32`] format\n([`SDL_PIXELFORMAT_ABGR8888`] on little-endian systems and\n[`SDL_PIXELFORMAT_RGBA8888`] on big-endian systems).\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "r",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "g",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "b",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "a",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};
+pub const METADATA_SDL_FColor: Struct = Struct {
+    module: "pixels",
+    kind: StructKind::Struct,
+    name: "SDL_FColor",
+    doc: Some(
+        "The bits of this structure can be directly reinterpreted as a float-packed\ncolor which uses the [`SDL_PIXELFORMAT_RGBA128_FLOAT`] format\n\n## Availability\nThis struct is available since SDL 3.2.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "r",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "g",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "b",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "a",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+    ],
+};
+pub const METADATA_SDL_Palette: Struct = Struct {
+    module: "pixels",
+    kind: StructKind::Struct,
+    name: "SDL_Palette",
+    doc: Some(
+        "A set of indexed colors representing a palette.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_SetPaletteColors`]\n\n## Notes for `sdl3-sys`\nThis struct can't be created manually. Use the corresponding SDL functions.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "ncolors",
+            doc: Some("number of elements in `colors`.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "colors",
+            doc: Some("an array of colors, `ncolors` long.\n"),
+            available_since: None,
+            ty: "*mut SDL_Color",
+        },
+        Field {
+            name: "version",
+            doc: Some("internal use only, do not touch.\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "refcount",
+            doc: Some("internal use only, do not touch.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};
+pub const METADATA_SDL_PixelFormatDetails: Struct = Struct {
+    module: "pixels",
+    kind: StructKind::Struct,
+    name: "SDL_PixelFormatDetails",
+    doc: Some(
+        "Details about the format of a pixel.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "format",
+            doc: None,
+            available_since: None,
+            ty: "SDL_PixelFormat",
+        },
+        Field {
+            name: "bits_per_pixel",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "bytes_per_pixel",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "padding",
+            doc: None,
+            available_since: None,
+            ty: "[Uint8; 2]",
+        },
+        Field {
+            name: "Rmask",
+            doc: None,
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "Gmask",
+            doc: None,
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "Bmask",
+            doc: None,
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "Amask",
+            doc: None,
+            available_since: None,
+            ty: "Uint32",
+        },
+        Field {
+            name: "Rbits",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "Gbits",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "Bbits",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "Abits",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "Rshift",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "Gshift",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "Bshift",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+        Field {
+            name: "Ashift",
+            doc: None,
+            available_since: None,
+            ty: "Uint8",
+        },
+    ],
+};

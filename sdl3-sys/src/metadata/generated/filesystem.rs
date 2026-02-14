@@ -182,3 +182,44 @@ pub const METADATA_SDL_EnumerationResult: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_PathInfo: Struct = Struct {
+    module: "filesystem",
+    kind: StructKind::Struct,
+    name: "SDL_PathInfo",
+    doc: Some(
+        "Information about a path on the filesystem.\n\n## Availability\nThis datatype is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetPathInfo`]\n- [`SDL_GetStoragePathInfo`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "r#type",
+            doc: Some("the path type\n"),
+            available_since: None,
+            ty: "SDL_PathType",
+        },
+        Field {
+            name: "size",
+            doc: Some("the file size in bytes\n"),
+            available_since: None,
+            ty: "Uint64",
+        },
+        Field {
+            name: "create_time",
+            doc: Some("the time when the path was created\n"),
+            available_since: None,
+            ty: "SDL_Time",
+        },
+        Field {
+            name: "modify_time",
+            doc: Some("the last time the path was modified\n"),
+            available_since: None,
+            ty: "SDL_Time",
+        },
+        Field {
+            name: "access_time",
+            doc: Some("the last time the path was read\n"),
+            available_since: None,
+            ty: "SDL_Time",
+        },
+    ],
+};

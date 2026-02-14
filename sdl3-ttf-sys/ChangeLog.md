@@ -3,6 +3,7 @@
 - next:
     - Add `from_raw` assoc function and `into_raw` and `value` methods for groups (ids, enums, etc),
       and impl Display for ids under the `display-impls` feature
+    - Add metadata for structs and unions
 
 - 0.6.0:
     - Update sdl3-sys to 0.6.0

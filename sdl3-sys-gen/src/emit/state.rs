@@ -1,6 +1,6 @@
 use super::{Emit, EmitErr, EmitResult, Eval, Value, patch::patch_emit_opaque_struct};
 use crate::{
-    Defer, Gen, GroupMetadata, HintMetadata, Metadata, PropertyMetadata,
+    Defer, Gen, GroupMetadata, HintMetadata, Metadata, PropertyMetadata, StructMetadata,
     parse::{
         CanCmp, CanCopy, CanDefault, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident,
         IdentOrKw, ParseErr, PrimitiveType, RustCode, Span, StructFields, StructKind, Type,
@@ -930,6 +930,10 @@ impl<'a, 'b> EmitContext<'a, 'b> {
 
     pub fn register_group_metadata(&self, metadata: GroupMetadata) {
         self.inner_mut().metadata.groups.push(metadata);
+    }
+
+    pub fn register_struct_metadata(&self, metadata: StructMetadata) {
+        self.inner_mut().metadata.structs.push(metadata);
     }
 }
 

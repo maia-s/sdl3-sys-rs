@@ -254,3 +254,55 @@ pub const METADATA_MIX_PROP_PLAY_APPEND_SILENCE_MILLISECONDS_NUMBER: Property = 
     doc: None,
     available_since: None,
 };
+pub const METADATA_MIX_StereoGains: Struct = Struct {
+    module: "mixer",
+    kind: StructKind::Struct,
+    name: "MIX_StereoGains",
+    doc: Some(
+        "A set of per-channel gains for tracks using [`MIX_SetTrackStereo()`].\n\nWhen forcing a track to stereo, the app can specify a per-channel gain, to\nfurther adjust the left or right outputs.\n\nWhen mixing audio that has been forced to stereo, each channel is modulated\nby these values. A value of 1.0f produces no change, 0.0f produces silence.\n\nA simple panning effect would be to set `left` to the desired value and\n`right` to `1.0f - left`.\n\n## Availability\nThis struct is available since SDL_mixer 3.0.0.\n\n## See also\n- [`MIX_SetTrackStereo`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
+    fields: &[
+        Field {
+            name: "left",
+            doc: Some("left channel gain\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "right",
+            doc: Some("right channel gain\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+    ],
+};
+pub const METADATA_MIX_Point3D: Struct = Struct {
+    module: "mixer",
+    kind: StructKind::Struct,
+    name: "MIX_Point3D",
+    doc: Some(
+        "3D coordinates for [`MIX_SetTrack3DPosition`].\n\nThe coordinates use a \"right-handed\" coordinate system, like OpenGL and\nOpenAL.\n\n## Availability\nThis struct is available since SDL_mixer 3.0.0.\n\n## See also\n- [`MIX_SetTrack3DPosition`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 0, 0)),
+    fields: &[
+        Field {
+            name: "x",
+            doc: Some("X coordinate (negative left, positive right).\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "y",
+            doc: Some("Y coordinate (negative down, positive up).\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "z",
+            doc: Some("Z coordinate (negative forward, positive back).\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+    ],
+};

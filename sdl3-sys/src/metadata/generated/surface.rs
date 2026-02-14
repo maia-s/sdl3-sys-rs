@@ -162,3 +162,62 @@ pub const METADATA_SDL_FlipMode: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_Surface: Struct = Struct {
+    module: "surface",
+    kind: StructKind::Struct,
+    name: "SDL_Surface",
+    doc: None,
+    available_since: None,
+    fields: &[
+        Field {
+            name: "flags",
+            doc: Some("The flags of the surface, read-only\n"),
+            available_since: None,
+            ty: "SDL_SurfaceFlags",
+        },
+        Field {
+            name: "format",
+            doc: Some("The format of the surface, read-only\n"),
+            available_since: None,
+            ty: "SDL_PixelFormat",
+        },
+        Field {
+            name: "w",
+            doc: Some("The width of the surface, read-only.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "h",
+            doc: Some("The height of the surface, read-only.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "pitch",
+            doc: Some("The distance in bytes between rows of pixels, read-only\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "pixels",
+            doc: Some(
+                "A pointer to the pixels of the surface, the pixels are writeable if non-NULL\n",
+            ),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_void",
+        },
+        Field {
+            name: "refcount",
+            doc: Some("Application reference count, used when freeing surface\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "reserved",
+            doc: Some("Reserved for internal use\n"),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_void",
+        },
+    ],
+};

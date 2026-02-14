@@ -311,3 +311,42 @@ pub const METADATA_IMG_AnimationDecoderStatus: Group = Group {
         },
     ],
 };
+pub const METADATA_IMG_Animation: Struct = Struct {
+    module: "image",
+    kind: StructKind::Struct,
+    name: "IMG_Animation",
+    doc: Some("* Animated image support\n"),
+    available_since: None,
+    fields: &[
+        Field {
+            name: "w",
+            doc: Some("The width of the frames\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "h",
+            doc: Some("The height of the frames\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "count",
+            doc: Some("The number of frames\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "frames",
+            doc: Some("An array of frames\n"),
+            available_since: None,
+            ty: "*mut *mut SDL_Surface",
+        },
+        Field {
+            name: "delays",
+            doc: Some("An array of frame delays, in milliseconds\n"),
+            available_since: None,
+            ty: "*mut ::core::ffi::c_int",
+        },
+    ],
+};

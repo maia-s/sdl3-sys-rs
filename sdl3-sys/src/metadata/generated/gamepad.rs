@@ -489,3 +489,161 @@ pub const METADATA_SDL_GamepadBindingType: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_GamepadBinding__AnonUnion1__AnonStruct1: Struct = Struct {
+    module: "gamepad",
+    kind: StructKind::Struct,
+    name: "SDL_GamepadBinding__AnonUnion1__AnonStruct1",
+    doc: None,
+    available_since: None,
+    fields: &[
+        Field {
+            name: "axis",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "axis_min",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "axis_max",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};
+pub const METADATA_SDL_GamepadBinding__AnonUnion1__AnonStruct2: Struct = Struct {
+    module: "gamepad",
+    kind: StructKind::Struct,
+    name: "SDL_GamepadBinding__AnonUnion1__AnonStruct2",
+    doc: None,
+    available_since: None,
+    fields: &[
+        Field {
+            name: "hat",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "hat_mask",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};
+pub const METADATA_SDL_GamepadBinding__AnonUnion1: Struct = Struct {
+    module: "gamepad",
+    kind: StructKind::Union,
+    name: "SDL_GamepadBinding__AnonUnion1",
+    doc: None,
+    available_since: None,
+    fields: &[
+        Field {
+            name: "button",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "axis",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadBinding__AnonUnion1__AnonStruct1",
+        },
+        Field {
+            name: "hat",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadBinding__AnonUnion1__AnonStruct2",
+        },
+    ],
+};
+pub const METADATA_SDL_GamepadBinding__AnonUnion2__AnonStruct1: Struct = Struct {
+    module: "gamepad",
+    kind: StructKind::Struct,
+    name: "SDL_GamepadBinding__AnonUnion2__AnonStruct1",
+    doc: None,
+    available_since: None,
+    fields: &[
+        Field {
+            name: "axis",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadAxis",
+        },
+        Field {
+            name: "axis_min",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "axis_max",
+            doc: None,
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};
+pub const METADATA_SDL_GamepadBinding__AnonUnion2: Struct = Struct {
+    module: "gamepad",
+    kind: StructKind::Union,
+    name: "SDL_GamepadBinding__AnonUnion2",
+    doc: None,
+    available_since: None,
+    fields: &[
+        Field {
+            name: "button",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadButton",
+        },
+        Field {
+            name: "axis",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadBinding__AnonUnion2__AnonStruct1",
+        },
+    ],
+};
+pub const METADATA_SDL_GamepadBinding: Struct = Struct {
+    module: "gamepad",
+    kind: StructKind::Struct,
+    name: "SDL_GamepadBinding",
+    doc: Some(
+        "A mapping between one joystick input to a gamepad control.\n\nA gamepad has a collection of several bindings, to say, for example, when\njoystick button number 5 is pressed, that should be treated like the\ngamepad's \"start\" button.\n\nSDL has these bindings built-in for many popular controllers, and can add\nmore with a simple text string. Those strings are parsed into a collection\nof these structs to make it easier to operate on the data.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetGamepadBindings`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "input_type",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadBindingType",
+        },
+        Field {
+            name: "input",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadBinding__AnonUnion1",
+        },
+        Field {
+            name: "output_type",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadBindingType",
+        },
+        Field {
+            name: "output",
+            doc: None,
+            available_since: None,
+            ty: "SDL_GamepadBinding__AnonUnion2",
+        },
+    ],
+};

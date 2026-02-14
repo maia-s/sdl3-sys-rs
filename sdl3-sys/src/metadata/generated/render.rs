@@ -1013,3 +1013,124 @@ pub const METADATA_SDL_RendererLogicalPresentation: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_Vertex: Struct = Struct {
+    module: "render",
+    kind: StructKind::Struct,
+    name: "SDL_Vertex",
+    doc: Some("Vertex structure.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n"),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "position",
+            doc: Some("Vertex position, in [`SDL_Renderer`] coordinates\n"),
+            available_since: None,
+            ty: "SDL_FPoint",
+        },
+        Field {
+            name: "color",
+            doc: Some("Vertex color\n"),
+            available_since: None,
+            ty: "SDL_FColor",
+        },
+        Field {
+            name: "tex_coord",
+            doc: Some("Normalized texture coordinates, if needed\n"),
+            available_since: None,
+            ty: "SDL_FPoint",
+        },
+    ],
+};
+pub const METADATA_SDL_Texture: Struct = Struct {
+    module: "render",
+    kind: StructKind::Struct,
+    name: "SDL_Texture",
+    doc: None,
+    available_since: None,
+    fields: &[
+        Field {
+            name: "format",
+            doc: Some("The format of the texture, read-only\n"),
+            available_since: None,
+            ty: "SDL_PixelFormat",
+        },
+        Field {
+            name: "w",
+            doc: Some("The width of the texture, read-only.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "h",
+            doc: Some("The height of the texture, read-only.\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "refcount",
+            doc: Some("Application reference count, used when freeing texture\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+    ],
+};
+pub const METADATA_SDL_GPURenderStateCreateInfo: Struct = Struct {
+    module: "render",
+    kind: StructKind::Struct,
+    name: "SDL_GPURenderStateCreateInfo",
+    doc: Some(
+        "A structure specifying the parameters of a GPU render state.\n\n## Availability\nThis struct is available since SDL 3.4.0.\n\n## See also\n- [`SDL_CreateGPURenderState`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+    fields: &[
+        Field {
+            name: "fragment_shader",
+            doc: Some("The fragment shader to use when this render state is active\n"),
+            available_since: None,
+            ty: "*mut SDL_GPUShader",
+        },
+        Field {
+            name: "num_sampler_bindings",
+            doc: Some(
+                "The number of additional fragment samplers to bind when this render state is active\n",
+            ),
+            available_since: None,
+            ty: "Sint32",
+        },
+        Field {
+            name: "sampler_bindings",
+            doc: Some("Additional fragment samplers to bind when this render state is active\n"),
+            available_since: None,
+            ty: "*const SDL_GPUTextureSamplerBinding",
+        },
+        Field {
+            name: "num_storage_textures",
+            doc: Some("The number of storage textures to bind when this render state is active\n"),
+            available_since: None,
+            ty: "Sint32",
+        },
+        Field {
+            name: "storage_textures",
+            doc: Some("Storage textures to bind when this render state is active\n"),
+            available_since: None,
+            ty: "*const *mut SDL_GPUTexture",
+        },
+        Field {
+            name: "num_storage_buffers",
+            doc: Some("The number of storage buffers to bind when this render state is active\n"),
+            available_since: None,
+            ty: "Sint32",
+        },
+        Field {
+            name: "storage_buffers",
+            doc: Some("Storage buffers to bind when this render state is active\n"),
+            available_since: None,
+            ty: "*const *mut SDL_GPUBuffer",
+        },
+        Field {
+            name: "props",
+            doc: Some("A properties ID for extensions. Should be 0 if no extensions are needed.\n"),
+            available_since: None,
+            ty: "SDL_PropertiesID",
+        },
+    ],
+};

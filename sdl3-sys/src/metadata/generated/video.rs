@@ -1473,3 +1473,70 @@ pub const METADATA_SDL_HitTestResult: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_DisplayMode: Struct = Struct {
+    module: "video",
+    kind: StructKind::Struct,
+    name: "SDL_DisplayMode",
+    doc: Some(
+        "The structure that defines a display mode.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetFullscreenDisplayModes`]\n- [`SDL_GetDesktopDisplayMode`]\n- [`SDL_GetCurrentDisplayMode`]\n- [`SDL_SetWindowFullscreenMode`]\n- [`SDL_GetWindowFullscreenMode`]\n\n## Notes for `sdl3-sys`\nThis struct can't be created manually. Use the corresponding SDL functions.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "displayID",
+            doc: Some("the display this mode is associated with\n"),
+            available_since: None,
+            ty: "SDL_DisplayID",
+        },
+        Field {
+            name: "format",
+            doc: Some("pixel format\n"),
+            available_since: None,
+            ty: "SDL_PixelFormat",
+        },
+        Field {
+            name: "w",
+            doc: Some("width\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "h",
+            doc: Some("height\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "pixel_density",
+            doc: Some(
+                "scale converting size to pixels (e.g. a 1920x1080 mode with 2.0 scale would have 3840x2160 pixels)\n",
+            ),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "refresh_rate",
+            doc: Some("refresh rate (or 0.0f for unspecified)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "refresh_rate_numerator",
+            doc: Some("precise refresh rate numerator (or 0 for unspecified)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "refresh_rate_denominator",
+            doc: Some("precise refresh rate denominator\n"),
+            available_since: None,
+            ty: "::core::ffi::c_int",
+        },
+        Field {
+            name: "internal",
+            doc: Some("Private\n"),
+            available_since: None,
+            ty: "*mut SDL_DisplayModeData",
+        },
+    ],
+};

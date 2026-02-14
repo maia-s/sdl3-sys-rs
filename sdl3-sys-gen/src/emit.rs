@@ -1,5 +1,6 @@
 use crate::{
-    GroupMetadata, GroupValueMetadata, HintMetadata, PropertyMetadata, find_common_ident_prefix,
+    FieldMetadata, GroupMetadata, GroupValueMetadata, HintMetadata, PropertyMetadata,
+    StructMetadata, find_common_ident_prefix,
     parse::{
         ArgDecl, CanCmp, CanCopy, CanDefault, Conditional, ConditionalExpr, Define, DocComment,
         DocCommentFile, Enum, EnumKind, Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan,
@@ -516,6 +517,30 @@ impl DocComment {
     }
 }
 
+trait MetaDoc {
+    fn meta_doc(&self, ctx: &mut EmitContext) -> EmitResult<String>;
+}
+
+impl MetaDoc for DocComment {
+    fn meta_doc(&self, ctx: &mut EmitContext) -> EmitResult<String> {
+        Ok(ctx
+            .capture_output(|ctx| self.emit(ctx))?
+            .lines()
+            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
+            .collect())
+    }
+}
+
+impl MetaDoc for Option<DocComment> {
+    fn meta_doc(&self, ctx: &mut EmitContext) -> EmitResult<String> {
+        if let Some(doc) = self {
+            doc.meta_doc(ctx)
+        } else {
+            Ok(String::new())
+        }
+    }
+}
+
 impl Emit for DocComment {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
         self.emit_rust(ctx, "///")
@@ -807,24 +832,12 @@ impl Emit for Define {
                 let ident_s = self.ident.as_str();
                 let hint_pfx = format!("{}HINT_", ctx.generator.hint_prop_prefix);
                 let prop_pfx = format!("{}PROP_", ctx.generator.hint_prop_prefix);
+                let name = ident_s.to_owned();
+                let doc = self.doc.meta_doc(ctx)?;
                 if ident_s.starts_with(&hint_pfx) {
-                    ctx.register_hint_metadata(HintMetadata {
-                        name: ident_s.to_owned(),
-                        doc: ctx
-                            .capture_output(|ctx| self.doc.emit(ctx))?
-                            .lines()
-                            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
-                            .collect(),
-                    });
+                    ctx.register_hint_metadata(HintMetadata { name, doc });
                 } else if ident_s.starts_with(&prop_pfx) {
-                    ctx.register_property_metadata(PropertyMetadata {
-                        name: ident_s.to_owned(),
-                        doc: ctx
-                            .capture_output(|ctx| self.doc.emit(ctx))?
-                            .lines()
-                            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
-                            .collect(),
-                    });
+                    ctx.register_property_metadata(PropertyMetadata { name, doc });
                 }
             } else {
                 ctx.log_skipped("constant value define", self.ident.as_str())?;
@@ -1124,10 +1137,7 @@ impl Enum {
         }
 
         let mut doc_out = ctx.capture_output(|ctx| doc.emit(ctx))?;
-        let doc_meta = doc_out
-            .lines()
-            .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
-            .collect::<String>();
+        let doc_meta = doc.meta_doc(ctx)?;
         let mut ctx_doc = ctx.with_output(&mut doc_out);
         let mut impl_consts = String::new();
         let mut ctx_impl = ctx.with_output(&mut impl_consts);
@@ -1191,7 +1201,6 @@ impl Enum {
 
             variant.cond.emit_cfg(&mut ctx_impl)?;
             variant.doc.emit(&mut ctx_impl)?;
-            let variant_doc_meta = ctx_impl.capture_output(|ctx| variant.doc.emit(ctx))?;
             if !variant.cond.is_empty() {
                 writeln!(
                     ctx_impl,
@@ -1241,10 +1250,7 @@ impl Enum {
             values_metadata.push(GroupValueMetadata {
                 name: variant_ident.to_owned(),
                 short_name: short_variant_ident.to_owned(),
-                doc: variant_doc_meta
-                    .lines()
-                    .map(|line| format!("{}\n", line.strip_prefix("///").unwrap().trim()))
-                    .collect(),
+                doc: variant.doc.meta_doc(ctx)?,
             });
         }
 
@@ -1677,7 +1683,7 @@ impl StructOrUnion {
             );
         }
 
-        let sym = ctx.scope_mut().register_struct_or_union_sym(StructSym {
+        let Ok(sym) = ctx.scope_mut().register_struct_or_union_sym(StructSym {
             kind: self.kind,
             ident: ident.clone(),
             fields: self.fields.clone(),
@@ -1687,7 +1693,12 @@ impl StructOrUnion {
             can_copy: self.can_copy,
             can_construct: self.can_construct,
             can_eq: self.can_eq,
-        })?;
+        }) else {
+            if with_ident {
+                ident.emit(ctx)?;
+            }
+            return Ok(());
+        };
 
         if let (true, Some(fields)) = (sym.emit_status != EmitStatus::Emitted, &sym.fields) {
             ctx.scope_mut().register_struct_or_union_sym(StructSym {
@@ -1738,6 +1749,8 @@ impl StructOrUnion {
             )?;
             ctx_ool.increase_indent();
 
+            let mut fields_metadata = Vec::new();
+
             for field in fields.fields.iter() {
                 field.doc.emit(ctx_ool)?;
                 if field.ident.as_str().starts_with("padding") {
@@ -1751,6 +1764,12 @@ impl StructOrUnion {
                 write!(ctx_ool, ": ")?;
                 field.ty.emit(ctx_ool)?;
                 writeln!(ctx_ool, ",")?;
+
+                fields_metadata.push(FieldMetadata {
+                    name: field.ident.to_string(),
+                    doc: field.doc.meta_doc(ctx_ool)?,
+                    ty: ctx_ool.capture_output(|ctx| field.ty.emit(ctx))?,
+                })
             }
             if !sym.can_construct {
                 // see https://github.com/rust-lang/rust/issues/132699
@@ -1824,6 +1843,14 @@ impl StructOrUnion {
                 writeln!(ctx_ool, "}}")?;
                 writeln!(ctx_ool)?;
             }
+
+            let doc = doc.meta_doc(ctx_ool)?;
+            ctx_ool.register_struct_metadata(StructMetadata {
+                kind: self.kind,
+                name: ident.to_string(),
+                doc,
+                fields: fields_metadata,
+            });
         }
         if with_ident {
             ident.emit(ctx)?;

@@ -60,3 +60,38 @@ pub const METADATA_SDL_TouchDeviceType: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_Finger: Struct = Struct {
+    module: "touch",
+    kind: StructKind::Struct,
+    name: "SDL_Finger",
+    doc: Some(
+        "Data about a single finger in a multitouch event.\n\nEach touch event is a collection of fingers that are simultaneously in\ncontact with the touch device (so a \"touch\" can be a \"multitouch,\" in\nreality), and this struct reports details of the specific fingers.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GetTouchFingers`]\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
+    fields: &[
+        Field {
+            name: "id",
+            doc: Some("the finger ID\n"),
+            available_since: None,
+            ty: "SDL_FingerID",
+        },
+        Field {
+            name: "x",
+            doc: Some("the x-axis location of the touch event, normalized (0...1)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "y",
+            doc: Some("the y-axis location of the touch event, normalized (0...1)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "pressure",
+            doc: Some("the quantity of pressure applied, normalized (0...1)\n"),
+            available_since: None,
+            ty: "::core::ffi::c_float",
+        },
+    ],
+};

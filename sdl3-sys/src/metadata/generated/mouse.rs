@@ -219,3 +219,26 @@ pub const METADATA_SDL_MouseButtonFlags: Group = Group {
         },
     ],
 };
+pub const METADATA_SDL_CursorFrameInfo: Struct = Struct {
+    module: "mouse",
+    kind: StructKind::Struct,
+    name: "SDL_CursorFrameInfo",
+    doc: Some(
+        "Animated cursor frame info.\n\n## Availability\nThis struct is available since SDL 3.4.0.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
+    fields: &[
+        Field {
+            name: "surface",
+            doc: Some("The surface data for this frame\n"),
+            available_since: None,
+            ty: "*mut SDL_Surface",
+        },
+        Field {
+            name: "duration",
+            doc: Some("The frame duration in milliseconds (a duration of 0 is infinite)\n"),
+            available_since: None,
+            ty: "Uint32",
+        },
+    ],
+};
