@@ -174,17 +174,9 @@ pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 
 impl SDL_GamepadType {
     /// Initialize a `SDL_GamepadType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -413,17 +405,9 @@ pub const SDL_GAMEPAD_BUTTON_COUNT: SDL_GamepadButton = SDL_GamepadButton::COUNT
 
 impl SDL_GamepadButton {
     /// Initialize a `SDL_GamepadButton` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -535,17 +519,9 @@ pub const SDL_GAMEPAD_BUTTON_LABEL_TRIANGLE: SDL_GamepadButtonLabel =
 
 impl SDL_GamepadButtonLabel {
     /// Initialize a `SDL_GamepadButtonLabel` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -654,17 +630,9 @@ pub const SDL_GAMEPAD_AXIS_COUNT: SDL_GamepadAxis = SDL_GamepadAxis::COUNT;
 
 impl SDL_GamepadAxis {
     /// Initialize a `SDL_GamepadAxis` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -753,17 +721,9 @@ pub const SDL_GAMEPAD_BINDTYPE_HAT: SDL_GamepadBindingType = SDL_GamepadBindingT
 
 impl SDL_GamepadBindingType {
     /// Initialize a `SDL_GamepadBindingType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

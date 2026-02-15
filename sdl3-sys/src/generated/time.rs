@@ -112,17 +112,9 @@ pub const SDL_DATE_FORMAT_MMDDYYYY: SDL_DateFormat = SDL_DateFormat::MMDDYYYY;
 
 impl SDL_DateFormat {
     /// Initialize a `SDL_DateFormat` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -205,17 +197,9 @@ pub const SDL_TIME_FORMAT_12HR: SDL_TimeFormat = SDL_TimeFormat::_12HR;
 
 impl SDL_TimeFormat {
     /// Initialize a `SDL_TimeFormat` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

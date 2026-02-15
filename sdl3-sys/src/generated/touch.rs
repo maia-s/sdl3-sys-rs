@@ -62,17 +62,9 @@ impl ::core::fmt::Display for SDL_TouchID {
 
 impl SDL_TouchID {
     /// Initialize a `SDL_TouchID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint64) -> Self {
+    pub const fn new(value: Uint64) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint64 {
-        self.0
     }
 }
 
@@ -137,17 +129,9 @@ impl ::core::fmt::Display for SDL_FingerID {
 
 impl SDL_FingerID {
     /// Initialize a `SDL_FingerID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint64) -> Self {
+    pub const fn new(value: Uint64) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint64 {
-        self.0
     }
 }
 
@@ -239,17 +223,9 @@ pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE: SDL_TouchDeviceType =
 
 impl SDL_TouchDeviceType {
     /// Initialize a `SDL_TouchDeviceType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

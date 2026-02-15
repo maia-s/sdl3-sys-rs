@@ -199,17 +199,9 @@ pub const SDL_TRAYENTRY_CHECKED: SDL_TrayEntryFlags = SDL_TrayEntryFlags::CHECKE
 
 impl SDL_TrayEntryFlags {
     /// Initialize a `SDL_TrayEntryFlags` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 

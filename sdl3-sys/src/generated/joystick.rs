@@ -92,17 +92,9 @@ impl ::core::fmt::Display for SDL_JoystickID {
 
 impl SDL_JoystickID {
     /// Initialize a `SDL_JoystickID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -225,17 +217,9 @@ pub const SDL_JOYSTICK_TYPE_COUNT: SDL_JoystickType = SDL_JoystickType::COUNT;
 
 impl SDL_JoystickType {
     /// Initialize a `SDL_JoystickType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -326,17 +310,9 @@ pub const SDL_JOYSTICK_CONNECTION_WIRELESS: SDL_JoystickConnectionState =
 
 impl SDL_JoystickConnectionState {
     /// Initialize a `SDL_JoystickConnectionState` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

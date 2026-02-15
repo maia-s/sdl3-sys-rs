@@ -55,17 +55,9 @@ impl ::core::fmt::Display for SDL_SensorID {
 
 impl SDL_SensorID {
     /// Initialize a `SDL_SensorID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -246,17 +238,9 @@ pub const SDL_SENSOR_COUNT: SDL_SensorType = SDL_SensorType::COUNT;
 
 impl SDL_SensorType {
     /// Initialize a `SDL_SensorType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

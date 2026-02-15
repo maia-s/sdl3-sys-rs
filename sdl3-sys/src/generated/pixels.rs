@@ -194,17 +194,9 @@ pub const SDL_PIXELTYPE_INDEX2: SDL_PixelType = SDL_PixelType::INDEX2;
 
 impl SDL_PixelType {
     /// Initialize a `SDL_PixelType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -284,17 +276,9 @@ pub const SDL_BITMAPORDER_1234: SDL_BitmapOrder = SDL_BitmapOrder::_1234;
 
 impl SDL_BitmapOrder {
     /// Initialize a `SDL_BitmapOrder` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -398,17 +382,9 @@ pub const SDL_PACKEDORDER_BGRA: SDL_PackedOrder = SDL_PackedOrder::BGRA;
 
 impl SDL_PackedOrder {
     /// Initialize a `SDL_PackedOrder` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -504,17 +480,9 @@ pub const SDL_ARRAYORDER_ABGR: SDL_ArrayOrder = SDL_ArrayOrder::ABGR;
 
 impl SDL_ArrayOrder {
     /// Initialize a `SDL_ArrayOrder` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -618,17 +586,9 @@ pub const SDL_PACKEDLAYOUT_1010102: SDL_PackedLayout = SDL_PackedLayout::_101010
 
 impl SDL_PackedLayout {
     /// Initialize a `SDL_PackedLayout` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1155,17 +1115,9 @@ pub const SDL_PIXELFORMAT_XBGR32: SDL_PixelFormat = SDL_PixelFormat::XBGR32;
 
 impl SDL_PixelFormat {
     /// Initialize a `SDL_PixelFormat` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1611,17 +1563,9 @@ pub const SDL_COLOR_TYPE_YCBCR: SDL_ColorType = SDL_ColorType::YCBCR;
 
 impl SDL_ColorType {
     /// Initialize a `SDL_ColorType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+    pub const fn new(value: ::core::ffi::c_uint) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_uint {
-        self.0
     }
 }
 
@@ -1706,17 +1650,9 @@ pub const SDL_COLOR_RANGE_FULL: SDL_ColorRange = SDL_ColorRange::FULL;
 
 impl SDL_ColorRange {
     /// Initialize a `SDL_ColorRange` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+    pub const fn new(value: ::core::ffi::c_uint) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_uint {
-        self.0
     }
 }
 
@@ -1863,17 +1799,9 @@ pub const SDL_COLOR_PRIMARIES_CUSTOM: SDL_ColorPrimaries = SDL_ColorPrimaries::C
 
 impl SDL_ColorPrimaries {
     /// Initialize a `SDL_ColorPrimaries` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+    pub const fn new(value: ::core::ffi::c_uint) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_uint {
-        self.0
     }
 }
 
@@ -2064,17 +1992,9 @@ pub const SDL_TRANSFER_CHARACTERISTICS_CUSTOM: SDL_TransferCharacteristics =
 
 impl SDL_TransferCharacteristics {
     /// Initialize a `SDL_TransferCharacteristics` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+    pub const fn new(value: ::core::ffi::c_uint) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_uint {
-        self.0
     }
 }
 
@@ -2230,17 +2150,9 @@ pub const SDL_MATRIX_COEFFICIENTS_CUSTOM: SDL_MatrixCoefficients = SDL_MatrixCoe
 
 impl SDL_MatrixCoefficients {
     /// Initialize a `SDL_MatrixCoefficients` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+    pub const fn new(value: ::core::ffi::c_uint) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_uint {
-        self.0
     }
 }
 
@@ -2332,17 +2244,9 @@ pub const SDL_CHROMA_LOCATION_TOPLEFT: SDL_ChromaLocation = SDL_ChromaLocation::
 
 impl SDL_ChromaLocation {
     /// Initialize a `SDL_ChromaLocation` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_uint) -> Self {
+    pub const fn new(value: ::core::ffi::c_uint) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_uint {
-        self.0
     }
 }
 
@@ -2497,17 +2401,9 @@ pub const SDL_COLORSPACE_YUV_DEFAULT: SDL_Colorspace = SDL_Colorspace::YUV_DEFAU
 
 impl SDL_Colorspace {
     /// Initialize a `SDL_Colorspace` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 

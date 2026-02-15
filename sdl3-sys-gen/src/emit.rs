@@ -1470,17 +1470,9 @@ impl Enum {
             str_block! {"
                 impl {enum_ident_s} {{
                     /// Initialize a `{enum_ident_s}` from a raw value.
-                    /// # Safety
-                    /// The value should be valid for this type
                     #[inline(always)]
-                    pub const unsafe fn from_raw(value: {enum_base_type_s}) -> Self {{
+                    pub const fn new(value: {enum_base_type_s}) -> Self {{
                         Self(value)
-                    }}
-
-                    /// Get the inner raw value.
-                    #[inline(always)]
-                    pub const fn into_raw(self) -> {enum_base_type_s} {{
-                        self.0
                     }}
                 }}
             "},

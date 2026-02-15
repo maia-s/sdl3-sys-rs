@@ -871,17 +871,9 @@ pub const SDL_EVENT_ENUM_PADDING: SDL_EventType = SDL_EventType::ENUM_PADDING;
 
 impl SDL_EventType {
     /// Initialize a `SDL_EventType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -2175,17 +2167,9 @@ pub const SDL_GETEVENT: SDL_EventAction = SDL_EventAction::GETEVENT;
 
 impl SDL_EventAction {
     /// Initialize a `SDL_EventAction` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

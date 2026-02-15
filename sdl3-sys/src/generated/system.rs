@@ -757,17 +757,9 @@ pub const SDL_SANDBOX_MACOS: SDL_Sandbox = SDL_Sandbox::MACOS;
 
 impl SDL_Sandbox {
     /// Initialize a `SDL_Sandbox` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

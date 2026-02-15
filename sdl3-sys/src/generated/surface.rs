@@ -204,17 +204,9 @@ pub const SDL_SURFACE_SIMD_ALIGNED: SDL_SurfaceFlags = SDL_SurfaceFlags::SIMD_AL
 
 impl SDL_SurfaceFlags {
     /// Initialize a `SDL_SurfaceFlags` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -304,17 +296,9 @@ pub const SDL_SCALEMODE_PIXELART: SDL_ScaleMode = SDL_ScaleMode::PIXELART;
 
 impl SDL_ScaleMode {
     /// Initialize a `SDL_ScaleMode` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -501,17 +485,9 @@ pub const SDL_FLIP_HORIZONTAL_AND_VERTICAL: SDL_FlipMode = SDL_FlipMode::HORIZON
 
 impl SDL_FlipMode {
     /// Initialize a `SDL_FlipMode` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

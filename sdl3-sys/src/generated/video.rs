@@ -78,17 +78,9 @@ impl ::core::fmt::Display for SDL_DisplayID {
 
 impl SDL_DisplayID {
     /// Initialize a `SDL_DisplayID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -148,17 +140,9 @@ impl ::core::fmt::Display for SDL_WindowID {
 
 impl SDL_WindowID {
     /// Initialize a `SDL_WindowID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -261,17 +245,9 @@ pub const SDL_SYSTEM_THEME_DARK: SDL_SystemTheme = SDL_SystemTheme::DARK;
 
 impl SDL_SystemTheme {
     /// Initialize a `SDL_SystemTheme` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -410,17 +386,9 @@ pub const SDL_ORIENTATION_PORTRAIT_FLIPPED: SDL_DisplayOrientation =
 
 impl SDL_DisplayOrientation {
     /// Initialize a `SDL_DisplayOrientation` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -924,17 +892,9 @@ pub const SDL_WINDOW_NOT_FOCUSABLE: SDL_WindowFlags = SDL_WindowFlags::NOT_FOCUS
 
 impl SDL_WindowFlags {
     /// Initialize a `SDL_WindowFlags` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint64) -> Self {
+    pub const fn new(value: Uint64) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint64 {
-        self.0
     }
 }
 
@@ -1134,17 +1094,9 @@ pub const SDL_FLASH_UNTIL_FOCUSED: SDL_FlashOperation = SDL_FlashOperation::UNTI
 
 impl SDL_FlashOperation {
     /// Initialize a `SDL_FlashOperation` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1248,17 +1200,9 @@ pub const SDL_PROGRESS_STATE_ERROR: SDL_ProgressState = SDL_ProgressState::ERROR
 
 impl SDL_ProgressState {
     /// Initialize a `SDL_ProgressState` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1612,17 +1556,9 @@ pub const SDL_GL_EGL_PLATFORM: SDL_GLAttr = SDL_GLAttr::EGL_PLATFORM;
 
 impl SDL_GLAttr {
     /// Initialize a `SDL_GLAttr` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1796,17 +1732,9 @@ pub const SDL_GL_CONTEXT_PROFILE_ES: SDL_GLProfile = SDL_GLProfile::ES;
 
 impl SDL_GLProfile {
     /// Initialize a `SDL_GLProfile` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Sint32) -> Self {
+    pub const fn new(value: Sint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Sint32 {
-        self.0
     }
 }
 
@@ -1992,17 +1920,9 @@ pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG: SDL_GLContextFlag =
 
 impl SDL_GLContextFlag {
     /// Initialize a `SDL_GLContextFlag` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Sint32) -> Self {
+    pub const fn new(value: Sint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Sint32 {
-        self.0
     }
 }
 
@@ -2160,17 +2080,9 @@ pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH: SDL_GLContextReleaseFlag =
 
 impl SDL_GLContextReleaseFlag {
     /// Initialize a `SDL_GLContextReleaseFlag` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Sint32) -> Self {
+    pub const fn new(value: Sint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Sint32 {
-        self.0
     }
 }
 
@@ -2331,17 +2243,9 @@ pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT: SDL_GLContextResetNotification =
 
 impl SDL_GLContextResetNotification {
     /// Initialize a `SDL_GLContextResetNotification` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Sint32) -> Self {
+    pub const fn new(value: Sint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Sint32 {
-        self.0
     }
 }
 
@@ -5515,17 +5419,9 @@ pub const SDL_HITTEST_RESIZE_LEFT: SDL_HitTestResult = SDL_HitTestResult::RESIZE
 
 impl SDL_HitTestResult {
     /// Initialize a `SDL_HitTestResult` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

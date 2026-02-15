@@ -771,17 +771,9 @@ pub const SDL_HAPTIC_PAUSE: SDL_HapticEffectType = SDL_HapticEffectType::PAUSE;
 
 impl SDL_HapticEffectType {
     /// Initialize a `SDL_HapticEffectType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint16) -> Self {
+    pub const fn new(value: Uint16) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint16 {
-        self.0
     }
 }
 
@@ -925,17 +917,9 @@ pub const SDL_HAPTIC_STEERING_AXIS: SDL_HapticDirectionType =
 
 impl SDL_HapticDirectionType {
     /// Initialize a `SDL_HapticDirectionType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint8) -> Self {
+    pub const fn new(value: Uint8) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint8 {
-        self.0
     }
 }
 
@@ -995,17 +979,9 @@ impl ::core::fmt::Display for SDL_HapticEffectID {
 
 impl SDL_HapticEffectID {
     /// Initialize a `SDL_HapticEffectID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1609,17 +1585,9 @@ impl ::core::fmt::Display for SDL_HapticID {
 
 impl SDL_HapticID {
     /// Initialize a `SDL_HapticID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 

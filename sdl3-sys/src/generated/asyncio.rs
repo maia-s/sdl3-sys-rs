@@ -143,17 +143,9 @@ pub const SDL_ASYNCIO_TASK_CLOSE: SDL_AsyncIOTaskType = SDL_AsyncIOTaskType::CLO
 
 impl SDL_AsyncIOTaskType {
     /// Initialize a `SDL_AsyncIOTaskType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -239,17 +231,9 @@ pub const SDL_ASYNCIO_CANCELED: SDL_AsyncIOResult = SDL_AsyncIOResult::CANCELED;
 
 impl SDL_AsyncIOResult {
     /// Initialize a `SDL_AsyncIOResult` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

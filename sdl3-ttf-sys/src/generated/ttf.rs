@@ -728,17 +728,9 @@ pub const TTF_STYLE_STRIKETHROUGH: TTF_FontStyleFlags = TTF_FontStyleFlags::STRI
 
 impl TTF_FontStyleFlags {
     /// Initialize a `TTF_FontStyleFlags` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -959,17 +951,9 @@ pub const TTF_HINTING_LIGHT_SUBPIXEL: TTF_HintingFlags = TTF_HintingFlags::LIGHT
 
 impl TTF_HintingFlags {
     /// Initialize a `TTF_HintingFlags` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1232,17 +1216,9 @@ pub const TTF_HORIZONTAL_ALIGN_RIGHT: TTF_HorizontalAlignment = TTF_HorizontalAl
 
 impl TTF_HorizontalAlignment {
     /// Initialize a `TTF_HorizontalAlignment` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -1621,17 +1597,9 @@ pub const TTF_DIRECTION_BTT: TTF_Direction = TTF_Direction::BTT;
 
 impl TTF_Direction {
     /// Initialize a `TTF_Direction` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::primitive::u32) -> Self {
+    pub const fn new(value: ::core::primitive::u32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::primitive::u32 {
-        self.0
     }
 }
 
@@ -1937,17 +1905,9 @@ pub const TTF_IMAGE_SDF: TTF_ImageType = TTF_ImageType::SDF;
 
 impl TTF_ImageType {
     /// Initialize a `TTF_ImageType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -3228,17 +3188,9 @@ pub const TTF_GPU_TEXTENGINE_WINDING_COUNTER_CLOCKWISE: TTF_GPUTextEngineWinding
 
 impl TTF_GPUTextEngineWinding {
     /// Initialize a `TTF_GPUTextEngineWinding` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -4221,17 +4173,9 @@ pub const TTF_SUBSTRING_TEXT_END: TTF_SubStringFlags = TTF_SubStringFlags::TEXT_
 
 impl TTF_SubStringFlags {
     /// Initialize a `TTF_SubStringFlags` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 

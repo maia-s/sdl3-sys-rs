@@ -3781,17 +3781,9 @@ pub const IMG_DECODER_STATUS_COMPLETE: IMG_AnimationDecoderStatus =
 
 impl IMG_AnimationDecoderStatus {
     /// Initialize a `IMG_AnimationDecoderStatus` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

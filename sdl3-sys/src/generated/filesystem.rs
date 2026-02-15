@@ -289,17 +289,9 @@ pub const SDL_FOLDER_COUNT: SDL_Folder = SDL_Folder::COUNT;
 
 impl SDL_Folder {
     /// Initialize a `SDL_Folder` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -430,17 +422,9 @@ pub const SDL_PATHTYPE_OTHER: SDL_PathType = SDL_PathType::OTHER;
 
 impl SDL_PathType {
     /// Initialize a `SDL_PathType` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -614,17 +598,9 @@ pub const SDL_GLOB_CASEINSENSITIVE: SDL_GlobFlags = SDL_GlobFlags::CASEINSENSITI
 
 impl SDL_GlobFlags {
     /// Initialize a `SDL_GlobFlags` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint32) -> Self {
+    pub const fn new(value: Uint32) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint32 {
-        self.0
     }
 }
 
@@ -736,17 +712,9 @@ pub const SDL_ENUM_FAILURE: SDL_EnumerationResult = SDL_EnumerationResult::FAILU
 
 impl SDL_EnumerationResult {
     /// Initialize a `SDL_EnumerationResult` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 

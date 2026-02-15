@@ -72,17 +72,9 @@ impl ::core::fmt::Display for SDL_ThreadID {
 
 impl SDL_ThreadID {
     /// Initialize a `SDL_ThreadID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: Uint64) -> Self {
+    pub const fn new(value: Uint64) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> Uint64 {
-        self.0
     }
 }
 
@@ -125,17 +117,9 @@ impl From<SDL_TLSID> for SDL_AtomicInt {
 
 impl SDL_TLSID {
     /// Initialize a `SDL_TLSID` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: SDL_AtomicInt) -> Self {
+    pub const fn new(value: SDL_AtomicInt) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> SDL_AtomicInt {
-        self.0
     }
 }
 
@@ -217,17 +201,9 @@ pub const SDL_THREAD_PRIORITY_TIME_CRITICAL: SDL_ThreadPriority = SDL_ThreadPrio
 
 impl SDL_ThreadPriority {
     /// Initialize a `SDL_ThreadPriority` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
@@ -324,17 +300,9 @@ pub const SDL_THREAD_COMPLETE: SDL_ThreadState = SDL_ThreadState::COMPLETE;
 
 impl SDL_ThreadState {
     /// Initialize a `SDL_ThreadState` from a raw value.
-    /// # Safety
-    /// The value should be valid for this type
     #[inline(always)]
-    pub const unsafe fn from_raw(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::ffi::c_int) -> Self {
         Self(value)
-    }
-
-    /// Get the inner raw value.
-    #[inline(always)]
-    pub const fn into_raw(self) -> ::core::ffi::c_int {
-        self.0
     }
 }
 
