@@ -367,6 +367,11 @@ pub const SDL_HINT_AUDIO_DEVICE_STREAM_NAME: *const ::core::ffi::c_char =
 /// - "Movie" - Music or sound with dialog
 /// - "Media" - Music or sound without dialog
 ///
+/// Android's AAudio target supports this hint as of SDL 3.4.4. Android does
+/// not support the exact same options as WASAPI, but for portability, will
+/// attempt to map these same strings to the `aaudio_usage_t` constants. For
+/// example, "Movie" and "Media" will both map to `AAUDIO_USAGE_MEDIA`, etc.
+///
 /// If your application applies its own echo cancellation, gain control, and
 /// noise reduction it should also set [`SDL_HINT_AUDIO_DEVICE_RAW_STREAM`].
 ///
@@ -1360,6 +1365,26 @@ pub const SDL_HINT_JOYSTICK_FLIGHTSTICK_DEVICES_EXCLUDED: *const ::core::ffi::c_
 /// This hint is available since SDL 3.2.0.
 pub const SDL_HINT_JOYSTICK_GAMEINPUT: *const ::core::ffi::c_char =
     c"SDL_JOYSTICK_GAMEINPUT".as_ptr();
+
+/// A variable controlling whether GameInput should be used for handling
+/// GIP devices that require raw report processing, but aren't supported
+/// by HIDRAW, such as Xbox One Guitars.
+///
+/// Note that this is only supported with GameInput 3 or newer.
+///
+/// The variable can be set to the following values:
+///
+/// - "0": GameInput is not used to handle raw GIP devices.
+/// - "1": GameInput is used.
+///
+/// The default is "1" when using GameInput 3 or newer, and is "0" otherwise.
+///
+/// This hint should be set before SDL is initialized.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.4.
+pub const SDL_HINT_JOYSTICK_GAMEINPUT_RAW: *const ::core::ffi::c_char =
+    c"SDL_JOYSTICK_GAMEINPUT_RAW".as_ptr();
 
 /// A variable containing a list of devices known to have a GameCube form
 /// factor.
@@ -2975,8 +3000,8 @@ pub const SDL_HINT_OPENGL_ES_DRIVER: *const ::core::ffi::c_char = c"SDL_OPENGL_E
 ///
 /// - "0": Force a request for an OpenGL context that is _not_ sRGB-capable.
 /// - "1": Force a request for an OpenGL context that _is_ sRGB-capable.
-/// - "skip": Don't make any request for an sRGB-capable context
-///   (don't specify the attribute at all during context creation time).
+/// - "skip": Don't make any request for an sRGB-capable context (don't specify
+///   the attribute at all during context creation time).
 /// - any other string is undefined behavior.
 ///
 /// If unset, or set to an empty string, SDL will make a request using the
@@ -4438,6 +4463,23 @@ pub const SDL_HINT_WINDOWS_RAW_KEYBOARD: *const ::core::ffi::c_char =
 pub const SDL_HINT_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS: *const ::core::ffi::c_char =
     c"SDL_WINDOWS_RAW_KEYBOARD_EXCLUDE_HOTKEYS".as_ptr();
 
+/// A variable controlling whether the RIDEV_INPUTSINK flag is set when
+/// enabling Windows raw keyboard events.
+///
+/// This enables the window to still receive input even if not in foreground.
+///
+/// Focused windows that receive text input will still prevent input events from triggering.
+///
+/// - "0": Input is not received when not in focus or foreground. (default)
+/// - "1": Input will be received even when not in focus or foreground.
+///
+/// This hint can be set anytime.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.4.
+pub const SDL_HINT_WINDOWS_RAW_KEYBOARD_INPUTSINK: *const ::core::ffi::c_char =
+    c"SDL_WINDOWS_RAW_KEYBOARD_INPUTSINK".as_ptr();
+
 /// A variable controlling whether SDL uses Kernel Semaphores on Windows.
 ///
 /// Kernel Semaphores are inter-process and require a context switch on every
@@ -4874,7 +4916,8 @@ unsafe extern "C" {
 /// A callback used to send notifications of hint value changes.
 ///
 /// This is called an initial time during [`SDL_AddHintCallback`] with the hint's
-/// current value, and then again each time the hint's value changes.
+/// current value, and then again each time the hint's value changes. In the
+/// initial call, the current value is in both `oldValue` and `newValue`.
 ///
 /// ## Parameters
 /// - `userdata`: what was passed as `userdata` to [`SDL_AddHintCallback()`].

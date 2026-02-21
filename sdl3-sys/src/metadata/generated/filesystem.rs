@@ -104,7 +104,7 @@ pub const METADATA_SDL_PathType: Group = Group {
     name: "SDL_PathType",
     short_name: "PathType",
     doc: Some(
-        "Types of filesystem entries.\n\nNote that there may be other sorts of items on a filesystem: devices,\nnamed pipes, etc. They are currently reported as [`SDL_PATHTYPE_OTHER`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_PathInfo`]\n",
+        "Types of filesystem entries.\n\nNote that there may be other sorts of items on a filesystem: devices, named\npipes, etc. They are currently reported as [`SDL_PATHTYPE_OTHER`].\n\n## Availability\nThis enum is available since SDL 3.2.0.\n\n## See also\n- [`SDL_PathInfo`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     values: &[

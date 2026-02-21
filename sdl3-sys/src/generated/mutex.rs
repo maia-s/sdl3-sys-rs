@@ -127,7 +127,8 @@ unsafe extern "C" {
     /// - `mutex`: the mutex to unlock.
     ///
     /// ## Thread safety
-    /// This call must be paired with a previous locking call on the same thread.
+    /// This call must be paired with a previous locking call on the
+    ///   same thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -378,7 +379,8 @@ unsafe extern "C" {
     /// - `rwlock`: the rwlock to unlock.
     ///
     /// ## Thread safety
-    /// This call must be paired with a previous locking call on the same thread.
+    /// This call must be paired with a previous locking call on the
+    ///   same thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

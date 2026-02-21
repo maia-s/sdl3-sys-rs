@@ -343,8 +343,8 @@ unsafe extern "C" {
 
 /// Types of filesystem entries.
 ///
-/// Note that there may be other sorts of items on a filesystem: devices,
-/// named pipes, etc. They are currently reported as [`SDL_PATHTYPE_OTHER`].
+/// Note that there may be other sorts of items on a filesystem: devices, named
+/// pipes, etc. They are currently reported as [`SDL_PATHTYPE_OTHER`].
 ///
 /// ## Availability
 /// This enum is available since SDL 3.2.0.
@@ -909,9 +909,9 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Get information about a filesystem path.
     ///
-    /// Symlinks, on filesystems that support them, are always followed, so you will
-    /// always get information on what the symlink eventually points to, and not the
-    /// symlink itself.
+    /// Symlinks, on filesystems that support them, are always followed, so you
+    /// will always get information on what the symlink eventually points to, and
+    /// not the symlink itself.
     ///
     /// ## Parameters
     /// - `path`: the path to query.

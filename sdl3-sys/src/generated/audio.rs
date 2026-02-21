@@ -1810,7 +1810,7 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
-    /// - [`SDL_SetAudioStreamInputChannelMap`]
+    /// - [`SDL_SetAudioStreamOutputChannelMap`]
     pub fn SDL_SetAudioStreamInputChannelMap(
         stream: *mut SDL_AudioStream,
         chmap: *const ::core::ffi::c_int,

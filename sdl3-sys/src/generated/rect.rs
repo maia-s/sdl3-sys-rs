@@ -582,7 +582,7 @@ unsafe extern "C" {
     /// This function is available since SDL 3.2.0.
     ///
     /// ## See also
-    /// - [`SDL_GetRectIntersection`]
+    /// - [`SDL_GetRectIntersectionFloat`]
     pub fn SDL_HasRectIntersectionFloat(
         A: *const SDL_FRect,
         B: *const SDL_FRect,

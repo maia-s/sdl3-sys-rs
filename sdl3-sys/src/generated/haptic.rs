@@ -2187,7 +2187,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_RunHapticEffect`]
-    /// - [`SDL_StopHapticEffects`]
+    /// - [`SDL_StopHapticEffect`]
     pub fn SDL_StopHapticEffects(haptic: *mut SDL_Haptic) -> ::core::primitive::bool;
 }
 

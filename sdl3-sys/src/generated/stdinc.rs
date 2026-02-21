@@ -1308,6 +1308,8 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Get the value of a variable in the environment.
     ///
+    /// The name of the variable is case sensitive on all platforms.
+    ///
     /// This function uses SDL's cached copy of the environment and is thread-safe.
     ///
     /// ## Parameters
@@ -1330,6 +1332,11 @@ unsafe extern "C" {
     ///
     /// This function bypasses SDL's cached copy of the environment and is not
     /// thread-safe.
+    ///
+    /// On some platforms, this may make case-insensitive matches, while other
+    /// platforms are case-sensitive. It is best to be precise with strings used
+    /// for queries through this interface. [`SDL_getenv`] is always case-sensitive,
+    /// however.
     ///
     /// ## Parameters
     /// - `name`: the name of the variable to get.

@@ -1,6 +1,7 @@
 # Changes
 
-- 0.6.2 wip:
+- 0.6.2:
+    - Update SDL to 3.4.4
     - Require exact version match for source crate when building from source (fix for Android)
 
 - 0.6.1:

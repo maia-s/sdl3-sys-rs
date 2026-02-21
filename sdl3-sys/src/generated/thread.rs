@@ -672,8 +672,8 @@ unsafe extern "C" {
     ///   detached or isn't valid, may be NULL.
     ///
     /// ## Thread safety
-    /// It is safe to call this function from any thread, but only
-    ///   a single thread can wait any specific thread to finish.
+    /// It is safe to call this function from any thread, but only a
+    ///   single thread can wait any specific thread to finish.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.
@@ -731,12 +731,12 @@ unsafe extern "C" {
     ///
     /// It is safe to pass NULL to this function; it is a no-op.
     ///
-    /// ## Thread safety
-    /// It is safe to call this function from any thread.
-    ///
     /// ## Parameters
     /// - `thread`: the [`SDL_Thread`] pointer that was returned from the
     ///   [`SDL_CreateThread()`] call that started this thread.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
     ///
     /// ## Availability
     /// This function is available since SDL 3.2.0.

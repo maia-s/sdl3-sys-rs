@@ -730,7 +730,8 @@ unsafe extern "C" {
     /// Get the default log output function.
     ///
     /// ## Return value
-    /// Returns the default log output callback.
+    /// Returns the default log output callback. It should be called with NULL for
+    ///   the userdata argument.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
