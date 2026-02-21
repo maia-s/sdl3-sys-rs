@@ -31,7 +31,8 @@ for branch in $branches; do
     git checkout "$branch"
     git -C "$src_dir" fetch
     git -C "$src_dir" checkout "$src_branch"
+    rev="$(git -C "$src_dir" describe --tags || git -C "$src_dir" describe --all --long)"
     ./generate-and-check.sh || die "generate $branch failed" 
-    git commit -a --amend --no-edit
+    git commit -a --amend -m "update $(basename $src_dir) ($rev)"
 done
 git checkout main
