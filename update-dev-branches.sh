@@ -35,7 +35,7 @@ main() {
         rev="$(git -C "$src_dir" describe --tags || git -C "$src_dir" describe --all --long)"
         time="$(git -C "$src_dir" show -s --format=%ci HEAD)"
         ./generate-and-check.sh || die "generate $branch failed" 
-        git commit -a --amend -m "$(basename $src_dir) $rev @ $time"
+        git diff --exit-code || git commit -a -m "$(basename $src_dir) $rev @ $time"
     done
     git checkout main
 }
