@@ -13,6 +13,9 @@ rebase_failed() {
 }
 
 main() {
+    git update-index --refresh
+    git diff-index --quiet HEAD -- || die "git isn't clean"
+
     branches="${@:-sdl-dev-3.4 sdl-dev-3.6 image-dev-3.4 image-dev-3.6 ttf-dev mixer-dev net-dev shadercross-dev}"
     for branch in $branches; do
         case $branch in
@@ -30,6 +33,14 @@ main() {
         if git checkout "$branch"; then
             git rebase main || rebase_failed "$branch"
             git checkout "$branch"
+            dist="$(git rev-list --count main..HEAD)"
+            if [ "$dist" -gt "1" ]; then
+                # squash
+                message="$(git log -1 --pretty=%B)"
+                git reset --soft HEAD~1
+                git commit --amend -m "$message"
+                git checkout "$branch"
+            fi
             git -C "$src_dir" fetch
             git -C "$src_dir" checkout "$src_branch"
             rev="$(git -C "$src_dir" describe --tags || git -C "$src_dir" describe --all --long)"
@@ -40,6 +51,7 @@ main() {
             echo "skipping $branch"
         fi
     done
+
     git checkout main
     exit
 }
