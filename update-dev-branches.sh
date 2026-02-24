@@ -41,12 +41,16 @@ main() {
                 git commit --amend -m "$message"
                 git checkout "$branch"
             fi
+            hash="$(git -C "$src_dir" rev-parse HEAD)"
             git -C "$src_dir" fetch
             git -C "$src_dir" checkout "$src_branch"
-            rev="$(git -C "$src_dir" describe --tags || git -C "$src_dir" describe --all --long)"
-            time="$(git -C "$src_dir" show -s --format=%ci HEAD)"
-            ./generate-and-check.sh || die "generate $branch failed" 
-            git diff --exit-code || git commit -a -m "$(basename $src_dir) $rev @ $time"
+            new_hash="$(git -C "$src_dir" rev-parse HEAD)"
+            if [[ "$hash" != "$new_hash" ]]; then
+                rev="$(git -C "$src_dir" describe --tags || git -C "$src_dir" describe --all --long)"
+                time="$(git -C "$src_dir" show -s --format=%ci HEAD)"
+                ./generate-and-check.sh || die "generate $branch failed" 
+                git diff --exit-code || git commit -a -m "$(basename $src_dir) $rev @ $time"
+            fi
         else
             echo "skipping $branch"
         fi
