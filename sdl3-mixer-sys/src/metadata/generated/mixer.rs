@@ -191,6 +191,15 @@ pub const METADATA_MIX_PROP_PLAY_START_MILLISECOND_NUMBER: Property = Property {
     doc: None,
     available_since: None,
 };
+pub const METADATA_MIX_PROP_PLAY_START_ORDER_NUMBER: Property = Property {
+    module: "mixer",
+    name: "MIX_PROP_PLAY_START_ORDER_NUMBER",
+    short_name: "PLAY_START_ORDER_NUMBER",
+    value: crate::mixer::MIX_PROP_PLAY_START_ORDER_NUMBER,
+    ty: PropertyType::NUMBER,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_MIX_PROP_PLAY_LOOP_START_FRAME_NUMBER: Property = Property {
     module: "mixer",
     name: "MIX_PROP_PLAY_LOOP_START_FRAME_NUMBER",

@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_mixer, an add-on library for
 [SDL 3](https://libsdl.org) for loading and playing audio files.
-This version of `sdl3-mixer-sys` has bindings for SDL_mixer version `3.2.0`.
+This version of `sdl3-mixer-sys` has bindings for SDL_mixer versions `3.2.0` to `3.2.2`, inclusive.
 
 <div class="warning">
 
@@ -120,6 +120,9 @@ Formats are autodetected by default. You can disable them by default instead and
 | `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. Recommended when you need metadata but don't need to call into SDL_mixer, e.g. for build scripts. |
 
 ## Recent changes
+
+- 0.6.2
+    - Update SDL_mixer to 3.2.2
 
 - 0.6.1
     - Remove prerelease warning from docs

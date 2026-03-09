@@ -113,7 +113,7 @@ pub const SDL_MIXER_MINOR_VERSION: ::core::primitive::i32 = 2;
 ///
 /// ## Availability
 /// This macro is available since SDL_mixer 3.0.0.
-pub const SDL_MIXER_MICRO_VERSION: ::core::primitive::i32 = 0;
+pub const SDL_MIXER_MICRO_VERSION: ::core::primitive::i32 = 2;
 
 /// This is the current version number macro of the SDL_mixer headers.
 ///
@@ -508,7 +508,7 @@ unsafe extern "C" {
     /// locked until the final matching unlock call.
     ///
     /// Do not lock the mixer for significant amounts of time, or it can cause
-    /// audio dropouts. Just do simply things quickly and unlock again.
+    /// audio dropouts. Just do simple things quickly and unlock again.
     ///
     /// Locking a NULL mixer is a safe no-op.
     ///
@@ -1216,7 +1216,10 @@ unsafe extern "C" {
     /// [`MIX_SetTrackStoppedCallback()`], it will _not_ be called.
     ///
     /// If the mixer is currently mixing in another thread, this will block until
-    /// it finishes.
+    /// it finishes. Destroying a track from the mixer thread itself (during a
+    /// callback) will cause it to be destroyed as soon as this iteration of the
+    /// mixer thread is not using it; in this scenario, destroying a track and then
+    /// making futher changes to it is considered undefined behavior.
     ///
     /// Destroying a NULL [`MIX_Track`] is a legal no-op.
     ///
@@ -2149,6 +2152,14 @@ unsafe extern "C" {
     ///   possible. Note that a track is not consider exhausted until all its loops
     ///   and appended silence have been mixed (and also, that loops don't mean
     ///   anything when the input is an AudioStream). Default true.
+    /// - [`MIX_PROP_PLAY_START_ORDER_NUMBER`]\: This is a special-case property that
+    ///   most apps can ignore. For mod file formats, start mixing from a specific
+    ///   "order" index instead of the start of the file. A value < 0 will cause
+    ///   this property to be ignored. If the decoder doesn't support this
+    ///   property, it will also be ignored. If this property is _not_ ignored, the
+    ///   [`MIX_PROP_PLAY_START_FRAME_NUMBER`] and
+    ///   [`MIX_PROP_PLAY_START_MILLISECOND_NUMBER`] properties will be ignored
+    ///   instead. Default -1. Since SDL_mixer 3.2.2.
     ///
     /// If this function fails, mixing of this track will not start (or restart, if
     /// it was already started).
@@ -2191,6 +2202,9 @@ pub const MIX_PROP_PLAY_START_FRAME_NUMBER: *const ::core::ffi::c_char =
 
 pub const MIX_PROP_PLAY_START_MILLISECOND_NUMBER: *const ::core::ffi::c_char =
     c"SDL_mixer.play.start_millisecond".as_ptr();
+
+pub const MIX_PROP_PLAY_START_ORDER_NUMBER: *const ::core::ffi::c_char =
+    c"SDL_mixer.play.start_order".as_ptr();
 
 pub const MIX_PROP_PLAY_LOOP_START_FRAME_NUMBER: *const ::core::ffi::c_char =
     c"SDL_mixer.play.loop_start_frame".as_ptr();
@@ -2357,8 +2371,12 @@ unsafe extern "C" {
     ///
     /// Once a track has completed any fadeout and come to a stop, it will call its
     /// [`MIX_TrackStoppedCallback`], if any. It is legal to assign the track a new
-    /// input and/or restart it during this callback. This function does not
-    /// prevent new play requests from being made.
+    /// input and/or restart it during this callback.
+    ///
+    /// This function does not prevent new play requests from being made; it’s
+    /// legal to use this function to begin fading all playing tracks but then
+    /// start other tracks playing normally while those fade-outs are still in
+    /// progress.
     ///
     /// ## Parameters
     /// - `mixer`: the mixer on which to stop all tracks.
