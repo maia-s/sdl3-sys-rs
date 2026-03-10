@@ -10,6 +10,8 @@ repository = "https://codeberg.org/maia/sdl3-sys-rs"
 keywords = ["sdl"]
 categories = ["no-std"]
 exclude = [
-    "/SDL_mixer/external/libxmp",
-    "/SDL_mixer/Xcode/macOS/SDL3.framework",
+    "/SDL_mixer/examples",
+    "/SDL_mixer/external/libxmp/test-dev",
+    "/SDL_mixer/VisualC",
+    "/SDL_mixer/Xcode",
 ]

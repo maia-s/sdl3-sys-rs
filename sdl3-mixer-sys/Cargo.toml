@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-mixer-sys"
-version = "0.6.0-pre-1+SDL-mixer-3.2.0"
+version = "0.6.0+SDL-mixer-3.2.0"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -95,9 +95,7 @@ no-default-wavpack = ["no-sdlmixer-wavpack"]
 sdlmixer-deps-shared = []
 no-sdlmixer-deps-shared = []
 
-sdlmixer-vendored = [
-    "no-sdlmixer-mod-xmp", # not vendored in crate for size reasons
-]
+sdlmixer-vendored = []
 no-sdlmixer-vendored = []
 
 sdlmixer-aiff = []

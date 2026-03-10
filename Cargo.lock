@@ -397,7 +397,7 @@ version = "3.2.0"
 
 [[package]]
 name = "sdl3-mixer-sys"
-version = "0.6.0-pre-1+SDL-mixer-3.2.0"
+version = "0.6.0+SDL-mixer-3.2.0"
 dependencies = [
  "cmake",
  "pkg-config",
