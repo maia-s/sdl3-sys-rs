@@ -2,19 +2,34 @@
 
 See the [`sdl3-sys`](sdl3-sys) dir for the SDL 3 Rust bindings.
 
+### Primary crates
+
 - [`sdl3-sys`](sdl3-sys): Rust bindings for SDL 3
-- [`sdl3-src`](sdl3-src): Source code crate for SDL 3, used by `sdl3-sys` when building from source.
-  This contains the official SDL repository as a git submodule.
 - [`sdl3-main`](sdl3-main): Tools for using SDL's main and callback APIs.
-- [`sdl3-main-macros`](sdl3-main-macros): Proc-macros for `sdl3-main`.
 - [`sdl3-image-sys`](sdl3-image-sys): Rust bindings for SDL3_image
-- [`sdl3-image-src`](sdl3-image-src): Source code crate for SDL3_image
 - [`sdl3-mixer-sys`](sdl3-mixer-sys): Rust bindings for SDL3_mixer
-- [`sdl3-mixer-src`](sdl3-mixer-src): Source code crate for SDL3_mixer
 - [`sdl3-ttf-sys`](sdl3-ttf-sys): Rust bindings for SDL3_ttf
-- [`sdl3-ttf-src`](sdl3-ttf-src): Source code crate for SDL3_ttf
+
+### Examples
+
 - [`examples`](examples): Rust ports of SDL GPU examples
+
+(Each of the sys crates have their own examples dir too)
+
+### Source crates
+
+These are used by the corresponding sys crates when building from source. They contain
+the original source repos as git submodules.
+
+- [`sdl3-src`](sdl3-src): Source code crate for SDL 3
+- [`sdl3-image-src`](sdl3-image-src): Source code crate for SDL3_image
+- [`sdl3-mixer-src`](sdl3-mixer-src): Source code crate for SDL3_mixer
+- [`sdl3-ttf-src`](sdl3-ttf-src): Source code crate for SDL3_ttf
+
+### Supporting crates
+
 - [`sdl3-sys-gen`](sdl3-sys-gen): Parser and generator that generates the sys crates in this repo from the official SDL 3 headers.
+- [`sdl3-main-macros`](sdl3-main-macros): Proc-macros for `sdl3-main`.
 
 ### Why not use bindgen?
 
