@@ -430,21 +430,21 @@ impl Value {
             | Value::U32(_)
             | Value::I64(_)
             | Value::U63(_)
-            | Value::U64(_) => {
-                if target_bool {
-                    let out = ctx.capture_output(|ctx| {
-                        write!(ctx, "(")?;
-                        self.emit(ctx)?;
-                        write!(ctx, " != 0)")?;
-                        Ok(())
-                    })?;
-                    return Ok(Some(Value::RustCode(RustCode::boxed(
-                        out,
-                        target.clone(),
-                        true,
-                        false,
-                    ))));
-                }
+            | Value::U64(_)
+                if target_bool =>
+            {
+                let out = ctx.capture_output(|ctx| {
+                    write!(ctx, "(")?;
+                    self.emit(ctx)?;
+                    write!(ctx, " != 0)")?;
+                    Ok(())
+                })?;
+                return Ok(Some(Value::RustCode(RustCode::boxed(
+                    out,
+                    target.clone(),
+                    true,
+                    false,
+                ))));
             }
 
             Value::RustCode(rc) => {
@@ -912,43 +912,18 @@ impl Eval for SizeOf {
             SizeOf::Expr(_, expr) => {
                 let expr = expr.deparenthesize();
                 match expr {
-                    Expr::UnaryOp(uop) => {
+                    Expr::UnaryOp(uop) if uop.op.as_str() == "*" => {
                         // special case: sizeof(*pointer_variable)
-                        if uop.op.as_str() == "*" {
-                            if let Expr::Ident(ident) = &uop.expr.deparenthesize() {
-                                if let Some(Sym {
-                                    value_ty: Some(ty), ..
-                                }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
-                                {
-                                    if let Some(ty) = ty.get_pointer_type() {
-                                        let code = ctx.capture_output(|ctx| {
-                                            write!(ctx, "::core::mem::size_of::<")?;
-                                            ty.emit(ctx)?;
-                                            write!(ctx, ">()")?;
-                                            Ok(())
-                                        })?;
-                                        return Ok(Some(Value::RustCode(RustCode::boxed(
-                                            code,
-                                            Type::primitive(PrimitiveType::SizeT),
-                                            true,
-                                            false,
-                                        ))));
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    Expr::BinaryOp(bop) => {
-                        // special case: sizeof(((Type*)_)->field)
-                        if bop.op.as_str() == "->" {
-                            let lhs = bop.lhs.deparenthesize();
-                            if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs) {
-                                if let Some(ty) = lhs.ty.get_pointer_type() {
+                        if let Expr::Ident(ident) = &uop.expr.deparenthesize() {
+                            if let Some(Sym {
+                                value_ty: Some(ty), ..
+                            }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
+                            {
+                                if let Some(ty) = ty.get_pointer_type() {
                                     let code = ctx.capture_output(|ctx| {
-                                        write!(ctx, "crate::size_of_field!(")?;
+                                        write!(ctx, "::core::mem::size_of::<")?;
                                         ty.emit(ctx)?;
-                                        write!(ctx, ", {rhs})")?;
+                                        write!(ctx, ">()")?;
                                         Ok(())
                                     })?;
                                     return Ok(Some(Value::RustCode(RustCode::boxed(
@@ -958,6 +933,27 @@ impl Eval for SizeOf {
                                         false,
                                     ))));
                                 }
+                            }
+                        }
+                    }
+
+                    Expr::BinaryOp(bop) if bop.op.as_str() == "->" => {
+                        // special case: sizeof(((Type*)_)->field)
+                        let lhs = bop.lhs.deparenthesize();
+                        if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs) {
+                            if let Some(ty) = lhs.ty.get_pointer_type() {
+                                let code = ctx.capture_output(|ctx| {
+                                    write!(ctx, "crate::size_of_field!(")?;
+                                    ty.emit(ctx)?;
+                                    write!(ctx, ", {rhs})")?;
+                                    Ok(())
+                                })?;
+                                return Ok(Some(Value::RustCode(RustCode::boxed(
+                                    code,
+                                    Type::primitive(PrimitiveType::SizeT),
+                                    true,
+                                    false,
+                                ))));
                             }
                         }
                     }

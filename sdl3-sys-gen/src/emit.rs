@@ -386,13 +386,12 @@ impl DocComment {
                                     }
                                 }
                             }
-                            b']' => {
-                                if !matches!(
-                                    line.as_bytes().get(i + 1).copied(),
-                                    Some(b'(') | Some(b'\''),
-                                ) {
-                                    patched.write_char('\\')?;
-                                }
+                            b']' if !matches!(
+                                line.as_bytes().get(i + 1).copied(),
+                                Some(b'(') | Some(b'\''),
+                            ) =>
+                            {
+                                patched.write_char('\\')?
                             }
                             _ => (),
                         }
