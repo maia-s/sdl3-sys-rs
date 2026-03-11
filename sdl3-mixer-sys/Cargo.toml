@@ -186,7 +186,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-mixer-src]
-version = "3.2.0"
+version = "=3.2.0"
 path = "../sdl3-mixer-src"
 optional = true
 

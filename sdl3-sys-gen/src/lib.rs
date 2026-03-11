@@ -455,7 +455,7 @@ impl Library {
                         &|s| s == format!("[build-dependencies.{}]", src_crate.name),
                         &|s| s.starts_with("version ="),
                     ],
-                    apply: &|lines| format!("{}version = \"{revision_ver}\"\n", lines[0]),
+                    apply: &|lines| format!("{}version = \"={revision_ver}\"\n", lines[0]),
                 },
             ],
         )?;
