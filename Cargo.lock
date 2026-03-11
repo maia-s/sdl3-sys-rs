@@ -402,6 +402,7 @@ dependencies = [
  "cmake",
  "pkg-config",
  "rpkg-config",
+ "sdl3-main",
  "sdl3-mixer-src",
  "sdl3-sys",
  "vcpkg",
