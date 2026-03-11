@@ -33,7 +33,7 @@ struct AppMain {
     renderer: *mut SDL_Renderer,
 
     // This doesn't have to be restricted to the main thread, it's just here
-    // because pointers aren't Sync without a wrapper
+    // because pointers aren't Send without a wrapper
     track: *mut MIX_Track,
 }
 
