@@ -267,17 +267,11 @@ fn main() -> ExitCode {
                 while SDL_PollEvent(&mut event) {
                     match event.event_type() {
                         SDL_EventType::KEY_UP => match event.key.key {
-                            SDLK_LEFT => {
-                                if i > 0 {
-                                    i -= 1;
-                                    continue 'images;
-                                }
+                            SDLK_LEFT if i > 0 => {
+                                i -= 1;
+                                continue 'images;
                             }
-                            SDLK_RIGHT => {
-                                if i != images.len() - 1 {
-                                    done = true
-                                }
-                            }
+                            SDLK_RIGHT if i != images.len() - 1 => done = true,
                             SDLK_ESCAPE | SDLK_Q => {
                                 images.clear();
                                 done = true;

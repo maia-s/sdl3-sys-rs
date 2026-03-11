@@ -1324,13 +1324,12 @@ impl Parse for Type {
                         return Ok(Some(Type::Ref(lifetime, Box::new(Type::parse(input)?))));
                     }
                 }
-                ':' => {
-                    if punct.spacing() == Spacing::Joint
-                        && matches!(input.get(1), Some(TokenTree::Punct(p2)) if p2.as_char() == ':')
-                    {
-                        return Ok(Some(Type::Path(Path::parse(input)?)));
-                    }
+                ':' if punct.spacing() == Spacing::Joint
+                    && matches!(input.get(1), Some(TokenTree::Punct(p2)) if p2.as_char() == ':') =>
+                {
+                    return Ok(Some(Type::Path(Path::parse(input)?)));
                 }
+
                 ',' | ';' | '>' => return Ok(None),
                 _ => (),
             },

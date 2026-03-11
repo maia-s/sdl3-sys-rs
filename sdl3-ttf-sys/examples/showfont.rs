@@ -273,18 +273,14 @@ impl Scene {
                     // Toggle underline style
                     TTF_SetFontStyle(self.font, TTF_GetFontStyle(self.font) ^ TTF_STYLE_UNDERLINE);
                 }
-                SDLK_LEFT => {
-                    if event.r#mod & SDL_KMOD_CTRL != 0 {
-                        if let Some(edit) = &self.edit {
-                            adjust_text_offset(edit.text, -1, 0);
-                        }
+                SDLK_LEFT if event.r#mod & SDL_KMOD_CTRL != 0 => {
+                    if let Some(edit) = &self.edit {
+                        adjust_text_offset(edit.text, -1, 0);
                     }
                 }
-                SDLK_RIGHT => {
-                    if event.r#mod & SDL_KMOD_CTRL != 0 {
-                        if let Some(edit) = &self.edit {
-                            adjust_text_offset(edit.text, 1, 0);
-                        }
+                SDLK_RIGHT if event.r#mod & SDL_KMOD_CTRL != 0 => {
+                    if let Some(edit) = &self.edit {
+                        adjust_text_offset(edit.text, 1, 0);
                     }
                 }
                 SDLK_UP => {

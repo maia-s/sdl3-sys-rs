@@ -971,79 +971,69 @@ impl EditBox {
                 SDL_EVENT_MOUSE_BUTTON_UP => {
                     return self.handle_mouse_up(event.button.x, event.button.y);
                 }
-                SDL_EVENT_KEY_DOWN => {
-                    if self.has_focus {
-                        match event.key.key {
-                            SDLK_A => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.select_all();
-                                }
-                            }
-                            SDLK_C => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.copy();
-                                }
-                            }
-                            SDLK_V => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.paste();
-                                }
-                            }
-                            SDLK_X => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.cut();
-                                }
-                            }
-                            SDLK_LEFT => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.move_cursor_beginning_of_line();
-                                } else {
-                                    self.move_cursor_left();
-                                }
-                            }
-                            SDLK_RIGHT => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.move_cursor_end_of_line();
-                                } else {
-                                    self.move_cursor_right();
-                                }
-                            }
-                            SDLK_UP => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.move_cursor_beginning();
-                                } else {
-                                    self.move_cursor_up();
-                                }
-                            }
-                            SDLK_DOWN => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.move_cursor_end();
-                                } else {
-                                    self.move_cursor_down();
-                                }
-                            }
-                            SDLK_HOME => self.move_cursor_beginning(),
-                            SDLK_END => self.move_cursor_end(),
-                            SDLK_BACKSPACE => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.backspace_to_beginning();
-                                } else {
-                                    self.backspace();
-                                }
-                            }
-                            SDLK_DELETE => {
-                                if event.key.r#mod & SDL_KMOD_CTRL != 0 {
-                                    self.delete_to_end();
-                                } else {
-                                    self.delete();
-                                }
-                            }
-                            SDLK_RETURN => self.insert(c"\n".as_ptr()),
-                            SDLK_ESCAPE => self.set_focus(false),
-                            _ => (),
+                SDL_EVENT_KEY_DOWN if self.has_focus => {
+                    match event.key.key {
+                        SDLK_A if event.key.r#mod & SDL_KMOD_CTRL != 0 => {
+                            self.select_all();
                         }
-                        return true;
+                        SDLK_C if event.key.r#mod & SDL_KMOD_CTRL != 0 => {
+                            self.copy();
+                        }
+                        SDLK_V if event.key.r#mod & SDL_KMOD_CTRL != 0 => {
+                            self.paste();
+                        }
+                        SDLK_X if event.key.r#mod & SDL_KMOD_CTRL != 0 => {
+                            self.cut();
+                        }
+                        SDLK_LEFT => {
+                            if event.key.r#mod & SDL_KMOD_CTRL != 0 {
+                                self.move_cursor_beginning_of_line();
+                            } else {
+                                self.move_cursor_left();
+                            }
+                        }
+                        SDLK_RIGHT => {
+                            if event.key.r#mod & SDL_KMOD_CTRL != 0 {
+                                self.move_cursor_end_of_line();
+                            } else {
+                                self.move_cursor_right();
+                            }
+                        }
+                        SDLK_UP => {
+                            if event.key.r#mod & SDL_KMOD_CTRL != 0 {
+                                self.move_cursor_beginning();
+                            } else {
+                                self.move_cursor_up();
+                            }
+                        }
+                        SDLK_DOWN => {
+                            if event.key.r#mod & SDL_KMOD_CTRL != 0 {
+                                self.move_cursor_end();
+                            } else {
+                                self.move_cursor_down();
+                            }
+                        }
+                        SDLK_HOME => self.move_cursor_beginning(),
+                        SDLK_END => self.move_cursor_end(),
+                        SDLK_BACKSPACE => {
+                            if event.key.r#mod & SDL_KMOD_CTRL != 0 {
+                                self.backspace_to_beginning();
+                            } else {
+                                self.backspace();
+                            }
+                        }
+                        SDLK_DELETE => {
+                            if event.key.r#mod & SDL_KMOD_CTRL != 0 {
+                                self.delete_to_end();
+                            } else {
+                                self.delete();
+                            }
+                        }
+                        SDLK_RETURN => self.insert(c"\n".as_ptr()),
+                        SDLK_ESCAPE => self.set_focus(false),
+                        _ => (),
                     }
+                    return true;
                 }
                 SDL_EVENT_TEXT_INPUT => {
                     self.insert(event.text.text);
