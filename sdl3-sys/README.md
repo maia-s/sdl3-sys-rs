@@ -118,6 +118,9 @@ These features are mutually exclusive. Features higher in this list override lat
 
 ## Recent changes
 
+- 0.6.2 wip:
+    - Require exact version match for source crate when building from source (fix for Android)
+
 - 0.6.1:
     - Update SDL to 3.4.2
     - Add `new` and `value` assoc function/method for groups (ids, enums, etc)

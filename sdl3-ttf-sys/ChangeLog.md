@@ -1,6 +1,7 @@
 # Changes
 
 - next:
+    - Require exact version match for source crate when building from source (fix for Android)
     - Add `new` and `value` assoc function/method for groups (ids, enums, etc)
     - impl Display for ids under the `display-impls` feature
     - Add metadata for structs and unions
