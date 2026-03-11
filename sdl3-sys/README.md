@@ -33,8 +33,6 @@ If you're looking for more idiomatic or higher level bindings, check out the
 Other satellite libraries aren't stable yet, and will be released as they're available.
 
 Note that the `sdl3-gfx-sys` crate wasn't made by me and doesn't use the `sdl3-sys` crate.
-The author of that has made an alternate set of sdl 3 sys crates for unknown reasons.
-They've not been in contact with me.
 
 ## Usage
 
