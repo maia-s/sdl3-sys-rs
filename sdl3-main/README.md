@@ -36,8 +36,10 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
-- next:
+- 0.6.1:
     - Make `MainThreadToken::init()` safe
+    - Fix undefined reference to `main_with_result` when using the `main` macro in
+      some cases
 
 - 0.6.0:
     - Update sdl3-sys to 0.6.0
@@ -49,13 +51,13 @@ provides some helper types and functions to alleviate this.
 
 See ChangeLog.md for older changes
 
-[`main`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.main.html>
-[`app_impl`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.app_impl.html>
-[`app_init`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.app_init.html>
-[`app_iterate`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.app_impl.html>
-[`app_event`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.app_event.html>
-[`app_quit`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/attr.app_quit.html>
-[`MainThreadToken`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/struct.MainThreadToken.html>
-[`MainThreadData`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/struct.MainThreadData.html>
-[`run_sync_on_main_thread()`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/fn.run_sync_on_main_thread.html>
-[`run_async_on_main_thread()`]: <https://docs.rs/sdl3-main/0.6.0/sdl3_main/fn.run_async_on_main_thread.html>
+[`main`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/attr.main.html>
+[`app_impl`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/attr.app_impl.html>
+[`app_init`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/attr.app_init.html>
+[`app_iterate`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/attr.app_impl.html>
+[`app_event`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/attr.app_event.html>
+[`app_quit`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/attr.app_quit.html>
+[`MainThreadToken`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/struct.MainThreadToken.html>
+[`MainThreadData`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/struct.MainThreadData.html>
+[`run_sync_on_main_thread()`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/fn.run_sync_on_main_thread.html>
+[`run_async_on_main_thread()`]: <https://docs.rs/sdl3-main/0.6.1/sdl3_main/fn.run_async_on_main_thread.html>

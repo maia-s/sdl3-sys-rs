@@ -36,8 +36,10 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
-- next:
+- 0.6.1:
     - Make `MainThreadToken::init()` safe
+    - Fix undefined reference to `main_with_result` when using the `main` macro in
+      some cases
 
 - 0.6.0:
     - Update sdl3-sys to 0.6.0
