@@ -11,9 +11,10 @@ The `Default` impl of interface types also sets the version field to the correct
 Add-on crates:
 - [`sdl3-main`](https://crates.io/crates/sdl3-main): Tools for using SDL's main and callback interface
 - [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys): Bindings for SDL3_image
+- [`sdl3-mixer-sys`](https://crates.io/crates/sdl3-mixer-sys): Bindings for SDL3_mixer
 - [`sdl3-ttf-sys`](https://crates.io/crates/sdl3-ttf-sys): Bindings for SDL3_ttf
 
-Other satellite libraries aren't stable yet, but will be released as they're available.
+Other satellite libraries aren't stable yet, and will be released as they're available.
 
 <div class="warning">
 
