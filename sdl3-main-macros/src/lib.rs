@@ -389,7 +389,7 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
                     unsafe extern "C" fn sdl_main(argc: c_int, argv: *mut *mut c_char) -> c_int {
                         unsafe {
                             SHUTTLE.capture(
-                                || #app_main.main_with_result(MainThreadToken::assert(), argc, argv)
+                                || #app_main.main(MainThreadToken::assert(), argc, argv)
                             );
                         };
                         0
