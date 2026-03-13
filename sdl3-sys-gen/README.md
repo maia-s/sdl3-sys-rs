@@ -9,7 +9,7 @@ Each of the src crates contain the original source repository as a submodule.
 For example, SDL itself is located in `sdl3-src/SDL`. You can make your changes there,
 or point it to another repository with your custom version.
 
-To generate the bindings, run `generate-and-check.sh` script in the repo root:
+To generate the bindings, run the `generate-and-check.sh` script in the repo root:
 
 ```shell
 ./generate-and-check.sh
