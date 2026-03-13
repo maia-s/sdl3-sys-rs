@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+cd "$(dirname "$(readlink -f "$0")")"
+
 die() {
     echo $* >&2
     exit 1
