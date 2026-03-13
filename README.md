@@ -2,6 +2,8 @@
 
 See the [`sdl3-sys`](sdl3-sys) dir for the SDL 3 Rust bindings.
 
+If you want to generate your own bindings, see the readme in the [`sdl3-sys-gen`](sdl3-sys-gen) dir.
+
 ### Primary crates
 
 - [`sdl3-sys`](sdl3-sys): Rust bindings for SDL 3
