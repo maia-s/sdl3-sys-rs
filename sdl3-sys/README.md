@@ -32,8 +32,6 @@ If you're looking for more idiomatic or higher level bindings, check out the
 
 Other satellite libraries aren't stable yet, and will be released as they're available.
 
-Note that the `sdl3-gfx-sys` crate wasn't made by me and doesn't use the `sdl3-sys` crate.
-
 ## Usage
 
 `sdl3-sys` is compatible with SDL version `3.1.3` or later.
