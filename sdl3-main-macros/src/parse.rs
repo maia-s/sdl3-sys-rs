@@ -797,7 +797,7 @@ impl Deref for Generics {
 
 impl IntoTokenTrees for Generics {
     fn into_token_trees(self, out: &mut impl Extend<TokenTree>) {
-        miniquote_to!(out => <);
+        miniquote_to!(out => ::<);
         for arg in self.params {
             miniquote_to!(out => #arg,);
         }

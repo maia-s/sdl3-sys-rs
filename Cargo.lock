@@ -379,7 +379,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-main"
-version = "0.6.1"
+version = "0.6.2"
 dependencies = [
  "libtest-mimic-collect",
  "parking_lot",
@@ -389,7 +389,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-main-macros"
-version = "0.2.1"
+version = "0.2.2"
 
 [[package]]
 name = "sdl3-mixer-src"

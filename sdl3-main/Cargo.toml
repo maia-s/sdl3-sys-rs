@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-main"
-version = "0.6.1"
+version = "0.6.2"
 edition = "2021"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -37,7 +37,7 @@ version = "0.6.0"
 
 [dependencies.sdl3-main-macros]
 path = "../sdl3-main-macros"
-version = "0.2.1"
+version = "0.2.2"
 
 [dependencies.parking-lot-v0-12]
 package = "parking_lot"

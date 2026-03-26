@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-main-macros"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 rust-version = "1.81"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]

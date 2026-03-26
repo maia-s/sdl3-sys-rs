@@ -1,5 +1,9 @@
 # Changes
 
+- 0.6.2:
+    - Fix using `app_*` macros with app states that have generic arguments
+      (all generics have to be known)
+
 - 0.6.1:
     - Make `MainThreadToken::init()` safe
     - Fix undefined reference to `main_with_result` when using the `main` macro in
