@@ -32,6 +32,7 @@ use core::{convert::Infallible, ops::FromResidual};
 use state::SyncPtr;
 
 /// Use this attribute macro if you want to provide your own main, but run it through SDL.
+/// This macro must be called at the root of `main.rs` in your crate.
 ///
 /// Supported signatures: (all of these can be safe or unsafe)
 /// ```custom,{.rust}
@@ -57,7 +58,8 @@ pub use sdl3_main_macros::main;
 /// functions or methods named `app_init`, `app_iterate`, `app_event` and `app_quit` to the
 /// respective sdl main callbacks, as if the corresponding attribute macros were used.
 /// All four must be defined in a single impl block, but `app_quit` is optional and will be
-/// defined as an empty function if omitted.
+/// defined as an empty function if omitted. The impl block must be at the root of `main.rs`
+/// in your crate, but the rest of the struct and other impl blocks can be defined elsewhere.
 ///
 /// This is functionally the same as marking those functions with the respective attribute
 /// macros, but works with methods and uses the type the block is implemented for as the
@@ -95,6 +97,7 @@ pub use sdl3_main_macros::main;
 pub use sdl3_main_macros::app_impl;
 
 /// The function tagged with `app_init` is called by SDL at the start of the program on the main thread.
+/// This macro must be called at the root of `main.rs` in your crate.
 ///
 /// See the SDL documentation for this function:
 /// [`SDL_AppInit`](https://docs.rs/sdl3-sys/latest/sdl3_sys/main/fn.SDL_AppInit.html)
@@ -142,6 +145,7 @@ pub use sdl3_main_macros::app_impl;
 pub use sdl3_main_macros::app_init;
 
 /// The function tagged with `app_iterate` is called continuously by SDL on the main thread while the app is running.
+/// This macro must be called at the root of `main.rs` in your crate.
 ///
 /// It will only be called if `app_init` returned continue status, and keep getting called
 /// for as long as `app_iterate` and `app_event` return continue status.
@@ -158,6 +162,7 @@ pub use sdl3_main_macros::app_iterate;
 
 /// The function tagged with `app_event` is called by SDL when an event is delivered. This may get called on the main thread
 /// or on another thread.
+/// This macro must be called at the root of `main.rs` in your crate.
 ///
 /// See the SDL documentation for this function:
 /// [`SDL_AppEvent`](https://docs.rs/sdl3-sys/latest/sdl3_sys/main/fn.SDL_AppEvent.html)
@@ -182,6 +187,7 @@ pub use sdl3_main_macros::app_iterate;
 pub use sdl3_main_macros::app_event;
 
 /// The function tagged with `app_quit` is called by SDL on the main thread when the app quits.
+/// This macro must be called at the root of `main.rs` in your crate.
 ///
 /// This will get called regardless of the return status of `app_init`, so if that fails the
 /// app state may not be available. If you're using an app state type you should take it as

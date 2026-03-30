@@ -8,12 +8,18 @@ for interfacing with the main thread of the process.
 To provide your own main but call it through SDL, use the [`main`] attribute macro.
 See the documentation for that for more information.
 
+This macro must be called at the root of `main.rs` in your crate.
+
 ## Callback API
 
 To use the SDL callback API, you can use either the [`app_impl`] attribute macro,
 or all four of the [`app_init`], [`app_iterate`], [`app_event`] and [`app_quit`]
 attribute macros. Don't use the `main` attribute macro in this mode.
 See the documentation for more information.
+
+These macros must be called at the root of `main.rs` in your crate. In the case of
+`app_impl`, the impl block for that must be at the root of `main.rs`, but the rest of
+the app struct and other impl blocks can be defined elsewhere.
 
 ## Main thread helpers
 
