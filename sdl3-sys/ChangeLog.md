@@ -1,5 +1,8 @@
 # Changes
 
+- 0.6.4:
+    - Update SDL to 3.4.6
+
 - 0.6.3:
     - Add features for selecting which subsystems to include when building from source
 

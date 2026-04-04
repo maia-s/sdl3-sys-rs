@@ -1508,7 +1508,7 @@ pub const METADATA_SDL_HINT_MOUSE_DPI_SCALE_CURSORS: Hint = Hint {
     short_name: "MOUSE_DPI_SCALE_CURSORS",
     value: crate::hints::SDL_HINT_MOUSE_DPI_SCALE_CURSORS,
     doc: Some(
-        "A variable setting whether we should scale cursors by the current display\nscale.\n\nThe variable can be set to the following values:\n\n- \"0\": Cursors will not change size based on the display content scale.\n(default)\n- \"1\": Cursors will automatically match the display content scale (e.g. a\n2x sized cursor will be used when the window is on a monitor with 200%\nscale). This is currently implemented on Windows and Wayland.\n\nThis hint needs to be set before creating cursors.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+        "A variable setting whether we should scale cursors by the current display\nscale.\n\nThe variable can be set to the following values:\n\n- \"0\": Cursors will not change size based on the display content scale.\n(default)\n- \"1\": Cursors will automatically match the display content scale (e.g. a\n2x sized cursor will be used when the window is on a monitor with 200%\nscale). This is currently implemented on Windows.\n\nThis hint needs to be set before creating cursors.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };

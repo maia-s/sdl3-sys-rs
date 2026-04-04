@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sys"
-version = "0.6.3+SDL-3.4.4"
+version = "0.6.4+SDL-3.4.6"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -99,7 +99,7 @@ no-default-subsystems = [
     "no-sdl-power",
     "no-sdl-sensor",
     "no-sdl-dialog",
-    "no-sdl-tray"
+    "no-sdl-tray",
 ]
 sdl-audio = []
 sdl-video = []
@@ -192,7 +192,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-src]
-version = "=3.4.4"
+version = "=3.4.6"
 path = "../sdl3-src"
 optional = true
 

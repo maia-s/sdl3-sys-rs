@@ -2717,7 +2717,7 @@ pub const SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR: *const ::core::ffi::c_char =
 ///   (default)
 /// - "1": Cursors will automatically match the display content scale (e.g. a
 ///   2x sized cursor will be used when the window is on a monitor with 200%
-///   scale). This is currently implemented on Windows and Wayland.
+///   scale). This is currently implemented on Windows.
 ///
 /// This hint needs to be set before creating cursors.
 ///
