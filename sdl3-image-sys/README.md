@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_image, an add-on library for
 [SDL 3](https://libsdl.org) for loading images.
-This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.4.2`, inclusive.
+This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.4.4`, inclusive.
 
 <div class="warning">
 
@@ -131,6 +131,9 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 | `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. Recommended when you need metadata but don't need to call into SDL_image, e.g. for build scripts. |
 
 ## Recent changes
+
+- 0.6.3
+    - Update SDL_image to 3.4.4
 
 - 0.6.2
     - Update SDL_image to 3.4.2

@@ -9,7 +9,7 @@ pub const SDL_IMAGE_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
 pub const SDL_IMAGE_MINOR_VERSION: ::core::primitive::i32 = 4;
 
-pub const SDL_IMAGE_MICRO_VERSION: ::core::primitive::i32 = 2;
+pub const SDL_IMAGE_MICRO_VERSION: ::core::primitive::i32 = 4;
 
 /// * This is the version number macro for the current SDL_image version.
 pub const SDL_IMAGE_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
@@ -3968,6 +3968,8 @@ unsafe extern "C" {
     /// This function returns the properties of the animation decoder, which holds
     /// information about the underlying image such as description, copyright text
     /// and loop count.
+    ///
+    /// [`IMG_PROP_METADATA_LOOP_COUNT_NUMBER`], if present, specifies the number of times to play the animation, with 0 meaning loop continuously.
     ///
     /// ## Parameters
     /// - `decoder`: the animation decoder.

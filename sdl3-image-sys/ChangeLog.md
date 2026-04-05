@@ -1,5 +1,8 @@
 # Changes
 
+- 0.6.3
+    - Update SDL_image to 3.4.4
+
 - 0.6.2
     - Update SDL_image to 3.4.2
     - Require exact version match for source crate when building from source (fix for Android)
