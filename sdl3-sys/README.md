@@ -71,7 +71,39 @@ Most of these features only work on some targets; don't enable them unless you n
 | `sdl-rpath`              | Set RPATH when linking SDL (default on some targets). Use `no-sdl-rpath` to disable. |
 | `sdl-unix-console-build` | Allow building SDL without X11 or Wayland support on Linux and other targets that usually use X11/Wayland. By default, SDL requires either X11 or Wayland on these targets as a sanity check. |
 
+## Subsystems
+
+By default, subsystems are autodetected at build time and all available subsystems are enabled. If you
+want more control over which subsystems are enabled, you can use these features. Prefix `no-` to a
+feature name to disable the subsytem associated with that feature.
+
+As before, positive features override negative features, so e.g. enabling both the `no-sdl-audio` and
+`sdl-audio` features will enable the audio subsystem. You can use the `no-default-subsystems` feature
+to disable all subsystems by default, so for example, if you enable both of the `no-default-subsystems`
+and `sdl-audio` features, only the audio subsystem will be enabled, and all other subsystems disabled.
+
+APIs for disabled subsystems are still available, but will fail if initialized.
+
+If you want a really slimmed down (but less capable) SDL, also see the `sdl-lean-and-mean` feature.
+
+| Feature        | Description |
+| -------------- | ----------- |
+| `no-default-subsystems` | Disable all subsystems by default. Combine this with the features for the subsystems you want below to enable only those subsystems. |
+| `sdl-audio`    | Enable the Audio subsystem |
+| `sdl-video`    | Enable the Video subsystem |
+| `sdl-gpu`      | Enable the GPU subsystem (implies `sdl-video`) |
+| `sdl-render`   | Enable the Render subsystem (implies `sdl-video`) |
+| `sdl-camera`   | Enable the Camera subsystem (implies `sdl-video`) |
+| `sdl-joystick` | Enable the Joystick subsystem |
+| `sdl-haptic`   | Enable the Haptic subsystem |
+| `sdl-hidapi`   | Enable the HIDAPI subsystem |
+| `sdl-power`    | Enable the Power subsystem |
+| `sdl-sensor`   | Enable the Sensor subsystem |
+| `sdl-dialog`   | Enable the Dialog subsystem |
+| `sdl-tray`     | Enable the Tray subsystem |
+
 ## Target specific features
+
 | Feature | Description |
 | ------- | ----------- |
 | `target-gdk` | Enable APIs that require Microsoft's Game Development Kit (GDK). (This is not related to Gnome's GDK.) |
@@ -119,6 +151,9 @@ These features are mutually exclusive. Features higher in this list override lat
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
 
 ## Recent changes
+
+- 0.6.3:
+    - Add features for selecting which subsystems to include when building from source
 
 - 0.6.2:
     - Update SDL to 3.4.4

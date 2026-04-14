@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sys"
-version = "0.6.2+SDL-3.4.4"
+version = "0.6.3+SDL-3.4.4"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -84,6 +84,47 @@ use-x11-dl-v2 = ["dep:x11-dl-v2"]
 
 # Retained for backwards compatibility
 use-windows-sys-v0-60 = ["use-windows-sys-v0-59"]
+
+# Subsystems to enable when building from source.
+# By default, everything is autodetected and enabled if available
+no-default-subsystems = [
+    "no-sdl-audio",
+    "no-sdl-video",
+    "no-sdl-gpu",
+    "no-sdl-render",
+    "no-sdl-camera",
+    "no-sdl-joystick",
+    "no-sdl-haptic",
+    "no-sdl-hidapi",
+    "no-sdl-power",
+    "no-sdl-sensor",
+    "no-sdl-dialog",
+    "no-sdl-tray"
+]
+sdl-audio = []
+sdl-video = []
+sdl-gpu = ["sdl-video"]
+sdl-render = ["sdl-video"]
+sdl-camera = ["sdl-video"]
+sdl-joystick = []
+sdl-haptic = []
+sdl-hidapi = []
+sdl-power = []
+sdl-sensor = []
+sdl-dialog = []
+sdl-tray = []
+no-sdl-audio = []
+no-sdl-video = []
+no-sdl-gpu = []
+no-sdl-render = []
+no-sdl-camera = []
+no-sdl-joystick = []
+no-sdl-haptic = []
+no-sdl-hidapi = []
+no-sdl-power = []
+no-sdl-sensor = []
+no-sdl-dialog = []
+no-sdl-tray = []
 
 # Misc CMake options for when building from source
 sdl-asan = []

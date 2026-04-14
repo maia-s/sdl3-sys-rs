@@ -1,5 +1,8 @@
 # Changes
 
+- 0.6.3:
+    - Add features for selecting which subsystems to include when building from source
+
 - 0.6.2:
     - Update SDL to 3.4.4
     - Require exact version match for source crate when building from source (fix for Android)

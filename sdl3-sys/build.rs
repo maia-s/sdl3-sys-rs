@@ -33,6 +33,18 @@ fn main() -> Result<(), Box<dyn Error>> {
                 SDL_LIBC,
                 SDL_RPATH,
                 SDL_UNIX_CONSOLE_BUILD,
+                SDL_AUDIO,
+                SDL_VIDEO,
+                SDL_GPU,
+                SDL_RENDER,
+                SDL_CAMERA,
+                SDL_JOYSTICK,
+                SDL_HAPTIC,
+                SDL_HIDAPI,
+                SDL_POWER,
+                SDL_SENSOR,
+                SDL_DIALOG,
+                SDL_TRAY,
             }
         }
         Ok(())
