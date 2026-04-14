@@ -82,7 +82,7 @@ As before, positive features override negative features, so e.g. enabling both t
 to disable all subsystems by default, so for example, if you enable both of the `no-default-subsystems`
 and `sdl-audio` features, only the audio subsystem will be enabled, and all other subsystems disabled.
 
-APIs for disabled subsystems are still available, but will fail if initialized.
+APIs for disabled subsystems are still available, but will fail if initialized/used.
 
 If you want a really slimmed down (but less capable) SDL, also see the `sdl-lean-and-mean` feature.
 
