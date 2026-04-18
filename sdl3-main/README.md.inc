@@ -42,6 +42,12 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
+- next:
+    - Implement `IntoAppResult` for `bool` and `Option<bool>` so that these can be
+      returned from `app_iterate` and `app_event`. For `bool`, `true` translates to
+      `Continue` and `false` translates to `Success`. For `Option<bool>`, `Some`
+      translates as for bool, and `None` translates to `Failure`.
+
 - 0.6.2:
     - Fix using `app_*` macros with app states that have generic arguments
       (all generics have to be known)

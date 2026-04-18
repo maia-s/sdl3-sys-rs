@@ -424,6 +424,54 @@ impl IntoAppResult for AppResult {
     }
 }
 
+impl IntoAppResult for bool {
+    #[inline(always)]
+    fn into_sdl_app_result(self) -> SDL_AppResult {
+        if self {
+            SDL_AppResult::CONTINUE
+        } else {
+            SDL_AppResult::SUCCESS
+        }
+    }
+
+    #[inline(always)]
+    fn into_app_result(self) -> AppResult {
+        if self {
+            AppResult::Continue
+        } else {
+            AppResult::Success
+        }
+    }
+}
+
+impl IntoAppResult for Option<bool> {
+    #[inline(always)]
+    fn into_sdl_app_result(self) -> SDL_AppResult {
+        if let Some(cont) = self {
+            if cont {
+                SDL_AppResult::CONTINUE
+            } else {
+                SDL_AppResult::SUCCESS
+            }
+        } else {
+            SDL_AppResult::FAILURE
+        }
+    }
+
+    #[inline(always)]
+    fn into_app_result(self) -> AppResult {
+        if let Some(cont) = self {
+            if cont {
+                AppResult::Continue
+            } else {
+                AppResult::Success
+            }
+        } else {
+            AppResult::Failure
+        }
+    }
+}
+
 /// This is the Rust enum equivalent to [`SDL_AppResult`].
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum AppResult {
