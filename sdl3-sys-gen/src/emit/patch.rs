@@ -956,7 +956,9 @@ pub fn patch_eval_macro_call(
                 return err();
             };
             Ok(Some(Value::Bool(match builtin.as_str() {
-                "__builtin_add_overflow" | "__builtin_mul_overflow" => false,
+                "__atomic_thread_fence" | "__builtin_add_overflow" | "__builtin_mul_overflow" => {
+                    false
+                }
                 _ => return Err(ParseErr::new(builtin.span(), "unknown builtin").into()),
             })))
         }
