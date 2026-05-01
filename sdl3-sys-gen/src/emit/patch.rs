@@ -273,6 +273,7 @@ pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool,
                 | "SDL_FILE"
                 | "SDL_FUNCTION"
                 | "SDL_HAS_BUILTIN"
+                | "SDL_HAS_EXTENSION"
                 | "SDL_IN_BYTECAP"
                 | "SDL_INOUT_Z_CAP"
                 | "SDL_LINE"
@@ -961,6 +962,26 @@ pub fn patch_eval_macro_call(
                 | "__builtin_add_overflow"
                 | "__builtin_mul_overflow" => false,
                 _ => return Err(ParseErr::new(builtin.span(), "unknown builtin").into()),
+            })))
+        }
+        "SDL_HAS_EXTENSION" => {
+            let args = &*call.args;
+            let err = || {
+                Err(ParseErr::new(
+                    call.span(),
+                    "SDL_HAS_EXTENSION takes one argument of type ident",
+                )
+                .into())
+            };
+            if args.len() != 1 {
+                return err();
+            }
+            let Expr::Ident(builtin) = &args[0].expr()? else {
+                return err();
+            };
+            Ok(Some(Value::Bool(match builtin.as_str() {
+                "c_countof" => false, // only used in code we don't need for now
+                _ => return Err(ParseErr::new(builtin.span(), "unknown extension").into()),
             })))
         }
         "SDL_SINT64_C" => {
