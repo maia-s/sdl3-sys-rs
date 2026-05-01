@@ -1,5 +1,8 @@
 # Changes
 
+- 0.6.5:
+    - Update SDL to 3.4.8 (hotfix)
+
 - 0.6.4:
     - Update SDL to 3.4.6
 
