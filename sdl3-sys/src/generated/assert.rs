@@ -136,10 +136,10 @@ apply_cfg!(#[cfg(doc)] => {
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    apply_cfg!(#[cfg(all(windows, target_env = "msvc"))] => {
+    apply_cfg!(#[cfg(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc")))] => {
     });
 
-    apply_cfg!(#[cfg(not(all(windows, target_env = "msvc")))] => {
+    apply_cfg!(#[cfg(not(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc"))))] => {
     });
 
 });

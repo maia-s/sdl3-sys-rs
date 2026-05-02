@@ -247,7 +247,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_MISC1",
             short_name: "MISC1",
             doc: Some(
-                "Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)\n",
+                "Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Steam Controller QAM button, Amazon Luna microphone button, Google Stadia capture button)\n",
             ),
             available_since: None,
         },
@@ -255,7 +255,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1",
             short_name: "RIGHT_PADDLE1",
             doc: Some(
-                "Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button)\n",
+                "Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button, Steam Controller R4 button)\n",
             ),
             available_since: None,
         },
@@ -263,7 +263,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE1",
             short_name: "LEFT_PADDLE1",
             doc: Some(
-                "Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button)\n",
+                "Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button, Steam Controller L4 button)\n",
             ),
             available_since: None,
         },
@@ -271,7 +271,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2",
             short_name: "RIGHT_PADDLE2",
             doc: Some(
-                "Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button)\n",
+                "Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button, Steam Controller R5 button)\n",
             ),
             available_since: None,
         },
@@ -279,7 +279,7 @@ pub const METADATA_SDL_GamepadButton: Group = Group {
             name: "SDL_GAMEPAD_BUTTON_LEFT_PADDLE2",
             short_name: "LEFT_PADDLE2",
             doc: Some(
-                "Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button)\n",
+                "Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button, Steam Controller L5 button)\n",
             ),
             available_since: None,
         },

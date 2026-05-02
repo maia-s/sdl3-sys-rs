@@ -1149,7 +1149,7 @@ pub struct SDL_MouseMotionEvent {
     pub timestamp: Uint64,
     /// The window with mouse focus, if any
     pub windowID: SDL_WindowID,
-    /// The mouse instance id in relative mode, [`SDL_TOUCH_MOUSEID`] for touch events, or 0
+    /// The mouse instance id in relative mode, [`SDL_TOUCH_MOUSEID`] for touch events, [`SDL_PEN_MOUSEID`] for pen events, or 0
     pub which: SDL_MouseID,
     /// The current button state
     pub state: SDL_MouseButtonFlags,

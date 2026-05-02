@@ -1287,7 +1287,7 @@ pub const METADATA_SDL_MouseMotionEvent: Struct = Struct {
         Field {
             name: "which",
             doc: Some(
-                "The mouse instance id in relative mode, [`SDL_TOUCH_MOUSEID`] for touch events, or 0\n",
+                "The mouse instance id in relative mode, [`SDL_TOUCH_MOUSEID`] for touch events, [`SDL_PEN_MOUSEID`] for pen events, or 0\n",
             ),
             available_since: None,
             ty: "SDL_MouseID",

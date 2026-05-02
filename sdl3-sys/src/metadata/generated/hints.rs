@@ -2192,6 +2192,16 @@ pub const METADATA_SDL_HINT_VIDEO_WIN_D3DCOMPILER: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT",
+    short_name: "VIDEO_X11_ENABLE_XSYNC_EXT",
+    value: crate::hints::SDL_HINT_VIDEO_X11_ENABLE_XSYNC_EXT,
+    doc: Some(
+        "A variable controlling whether the X Synchronization Extension is enabled.\n\nIf set, this can result in smoother window resizing when rendering using\nOpenGL, however, there are some conditions:\n\n- It is only activated on windows created with the [`SDL_WINDOW_OPENGL`] flag\n(windows using an SDL OpenGL renderer have this automatically set).\n- When activated, presentation must be done with `SDL_GL_SwapWindow()`\n(`SDL_RenderPresent()` calls this internally for OpenGL renderers as well).\n\nEnabling this and presenting via an external mechanism will result in sync\nrequests not being acked, and hangs and other odd window behavior may result.\n\nThe variable can be set to the following values:\n\n- \"0\": The X Synchronization Extension is disabled. (default)\n- \"1\": The X Synchronization Extension is enabled.\n\nThis hint should be set before creating a window.\n\n## Availability\nThis hint is available since SDL 3.4.10.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 10)),
+};
 pub const METADATA_SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_VIDEO_X11_EXTERNAL_WINDOW_INPUT",

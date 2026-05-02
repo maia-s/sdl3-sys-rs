@@ -1427,9 +1427,16 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Create a new audio stream.
     ///
+    /// Note that `src_spec` or `dst_spec` may be NULL, but any attempts to
+    /// put or get data from an audio stream will fail until it has valid
+    /// specs assigned to both ends of the stream. Specs can be assigned later
+    /// through [`SDL_SetAudioStreamFormat()`], or binding the stream to an audio
+    /// device (which will set the format of only the input or output,
+    /// depending on what kind of device the stream was bound to).
+    ///
     /// ## Parameters
-    /// - `src_spec`: the format details of the input audio.
-    /// - `dst_spec`: the format details of the output audio.
+    /// - `src_spec`: the format details of the input audio. May be NULL.
+    /// - `dst_spec`: the format details of the output audio. May be NULL.
     ///
     /// ## Return value
     /// Returns a new audio stream on success or NULL on failure; call
@@ -1533,6 +1540,9 @@ unsafe extern "C" {
     /// dst_spec for playback devices). Attempts to make a change to this side will
     /// be ignored, but this will not report an error. The other side's format can
     /// be changed.
+    ///
+    /// `src_spec` and `dst_spec` may each be NULL; a NULL spec signals not to
+    /// change the current format for that side of the stream.
     ///
     /// ## Parameters
     /// - `stream`: the stream the format is being changed.
@@ -3049,7 +3059,8 @@ unsafe extern "C" {
 /// - It can handle incoming data in any variable size.
 /// - It can handle input/output format changes on the fly.
 /// - It can remap audio channels between inputs and outputs.
-/// - You push data as you have it, and pull it when you need it
+/// - You push data as you have it, and pull it when you need it; the
+///   stream will buffer data as needed.
 /// - It can also function as a basic audio data queue even if you just have
 ///   sound that needs to pass from one place to another.
 /// - You can hook callbacks up to them when more data is added or requested,

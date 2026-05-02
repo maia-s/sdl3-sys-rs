@@ -237,11 +237,11 @@ impl sdl3_sys::metadata::GroupMetadata for SDL_GamepadType {
 /// | [`DPAD_DOWN`](SDL_GamepadButton::DPAD_DOWN) | [`SDL_GAMEPAD_BUTTON_DPAD_DOWN`] | |
 /// | [`DPAD_LEFT`](SDL_GamepadButton::DPAD_LEFT) | [`SDL_GAMEPAD_BUTTON_DPAD_LEFT`] | |
 /// | [`DPAD_RIGHT`](SDL_GamepadButton::DPAD_RIGHT) | [`SDL_GAMEPAD_BUTTON_DPAD_RIGHT`] | |
-/// | [`MISC1`](SDL_GamepadButton::MISC1) | [`SDL_GAMEPAD_BUTTON_MISC1`] | Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button) |
-/// | [`RIGHT_PADDLE1`](SDL_GamepadButton::RIGHT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`] | Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button) |
-/// | [`LEFT_PADDLE1`](SDL_GamepadButton::LEFT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`] | Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button) |
-/// | [`RIGHT_PADDLE2`](SDL_GamepadButton::RIGHT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`] | Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button) |
-/// | [`LEFT_PADDLE2`](SDL_GamepadButton::LEFT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`] | Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button) |
+/// | [`MISC1`](SDL_GamepadButton::MISC1) | [`SDL_GAMEPAD_BUTTON_MISC1`] | Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Steam Controller QAM button, Amazon Luna microphone button, Google Stadia capture button) |
+/// | [`RIGHT_PADDLE1`](SDL_GamepadButton::RIGHT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1`] | Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button, Steam Controller R4 button) |
+/// | [`LEFT_PADDLE1`](SDL_GamepadButton::LEFT_PADDLE1) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE1`] | Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button, Steam Controller L4 button) |
+/// | [`RIGHT_PADDLE2`](SDL_GamepadButton::RIGHT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2`] | Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button, Steam Controller R5 button) |
+/// | [`LEFT_PADDLE2`](SDL_GamepadButton::LEFT_PADDLE2) | [`SDL_GAMEPAD_BUTTON_LEFT_PADDLE2`] | Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button, Steam Controller L5 button) |
 /// | [`TOUCHPAD`](SDL_GamepadButton::TOUCHPAD) | [`SDL_GAMEPAD_BUTTON_TOUCHPAD`] | PS4/PS5 touchpad button |
 /// | [`MISC2`](SDL_GamepadButton::MISC2) | [`SDL_GAMEPAD_BUTTON_MISC2`] | Additional button |
 /// | [`MISC3`](SDL_GamepadButton::MISC3) | [`SDL_GAMEPAD_BUTTON_MISC3`] | Additional button (e.g. Nintendo GameCube left trigger click) |
@@ -334,15 +334,15 @@ impl SDL_GamepadButton {
     pub const DPAD_DOWN: Self = Self((12_i32 as ::core::ffi::c_int));
     pub const DPAD_LEFT: Self = Self((13_i32 as ::core::ffi::c_int));
     pub const DPAD_RIGHT: Self = Self((14_i32 as ::core::ffi::c_int));
-    /// Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)
+    /// Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Steam Controller QAM button, Amazon Luna microphone button, Google Stadia capture button)
     pub const MISC1: Self = Self((15_i32 as ::core::ffi::c_int));
-    /// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button)
+    /// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button, Steam Controller R4 button)
     pub const RIGHT_PADDLE1: Self = Self((16_i32 as ::core::ffi::c_int));
-    /// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button)
+    /// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button, Steam Controller L4 button)
     pub const LEFT_PADDLE1: Self = Self((17_i32 as ::core::ffi::c_int));
-    /// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button)
+    /// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button, Steam Controller R5 button)
     pub const RIGHT_PADDLE2: Self = Self((18_i32 as ::core::ffi::c_int));
-    /// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button)
+    /// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button, Steam Controller L5 button)
     pub const LEFT_PADDLE2: Self = Self((19_i32 as ::core::ffi::c_int));
     /// PS4/PS5 touchpad button
     pub const TOUCHPAD: Self = Self((20_i32 as ::core::ffi::c_int));
@@ -379,15 +379,15 @@ pub const SDL_GAMEPAD_BUTTON_DPAD_UP: SDL_GamepadButton = SDL_GamepadButton::DPA
 pub const SDL_GAMEPAD_BUTTON_DPAD_DOWN: SDL_GamepadButton = SDL_GamepadButton::DPAD_DOWN;
 pub const SDL_GAMEPAD_BUTTON_DPAD_LEFT: SDL_GamepadButton = SDL_GamepadButton::DPAD_LEFT;
 pub const SDL_GAMEPAD_BUTTON_DPAD_RIGHT: SDL_GamepadButton = SDL_GamepadButton::DPAD_RIGHT;
-/// Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button, Google Stadia capture button)
+/// Additional button (e.g. Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Steam Controller QAM button, Amazon Luna microphone button, Google Stadia capture button)
 pub const SDL_GAMEPAD_BUTTON_MISC1: SDL_GamepadButton = SDL_GamepadButton::MISC1;
-/// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button)
+/// Upper or primary paddle, under your right hand (e.g. Xbox Elite paddle P1, DualSense Edge RB button, Right Joy-Con SR button, Steam Controller R4 button)
 pub const SDL_GAMEPAD_BUTTON_RIGHT_PADDLE1: SDL_GamepadButton = SDL_GamepadButton::RIGHT_PADDLE1;
-/// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button)
+/// Upper or primary paddle, under your left hand (e.g. Xbox Elite paddle P3, DualSense Edge LB button, Left Joy-Con SL button, Steam Controller L4 button)
 pub const SDL_GAMEPAD_BUTTON_LEFT_PADDLE1: SDL_GamepadButton = SDL_GamepadButton::LEFT_PADDLE1;
-/// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button)
+/// Lower or secondary paddle, under your right hand (e.g. Xbox Elite paddle P2, DualSense Edge right Fn button, Right Joy-Con SL button, Steam Controller R5 button)
 pub const SDL_GAMEPAD_BUTTON_RIGHT_PADDLE2: SDL_GamepadButton = SDL_GamepadButton::RIGHT_PADDLE2;
-/// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button)
+/// Lower or secondary paddle, under your left hand (e.g. Xbox Elite paddle P4, DualSense Edge left Fn button, Left Joy-Con SR button, Steam Controller L5 button)
 pub const SDL_GAMEPAD_BUTTON_LEFT_PADDLE2: SDL_GamepadButton = SDL_GamepadButton::LEFT_PADDLE2;
 /// PS4/PS5 touchpad button
 pub const SDL_GAMEPAD_BUTTON_TOUCHPAD: SDL_GamepadButton = SDL_GamepadButton::TOUCHPAD;
