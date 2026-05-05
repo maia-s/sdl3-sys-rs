@@ -1,8 +1,8 @@
 # Changes
 
 - 0.7.0
-    - update sdl3-sys to 0.7.0
-    ...
+    - Update SDL_image to 3.4.6
+    - Update sdl3-sys to 0.7.0
 
 - 0.6.4
     - Enable `use-pkg-config` and `use-vcpkg` features by default

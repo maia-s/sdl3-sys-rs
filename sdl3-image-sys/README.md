@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_image, an add-on library for
 [SDL 3](https://libsdl.org) for loading and saving images.
-This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.4.4`, inclusive.
+This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.4.6`, inclusive.
 
 `sdl3-image-sys` works out of the box on any target that SDL3_image supports and doesn't require anything
 else if the SDL3_image library is installed or otherwise available. On targets that support it you can
@@ -138,8 +138,8 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 ## Recent changes
 
 - 0.7.0
-    - update sdl3-sys to 0.7.0
-    ...
+    - Update SDL_image to 3.4.6
+    - Update sdl3-sys to 0.7.0
 
 - 0.6.4
     - Enable `use-pkg-config` and `use-vcpkg` features by default
