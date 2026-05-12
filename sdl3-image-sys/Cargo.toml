@@ -13,7 +13,11 @@ categories = ["external-ffi-bindings", "no-std"]
 links = "SDL3_image"
 
 [features]
-default = ["no-sdlimage-vendored"] # breaks on msvc bc of missimg libs
+default = [
+    "use-pkg-config",
+    "use-vcpkg",
+    "no-sdlimage-vendored", # breaks on msvc bc of missimg libs
+]
 
 # Build and link SDL3_image from source instead of linking a pre-existing library
 build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-image-src"]
@@ -162,7 +166,7 @@ no-sdlimage-tif-shared = []
 no-sdlimage-webp-shared = []
 
 [dependencies]
-sdl3-sys = { version = "0.6.0", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.6.0", path = "../sdl3-sys", default-features = false }
 
 [build-dependencies.cmake]
 version = "0.1"

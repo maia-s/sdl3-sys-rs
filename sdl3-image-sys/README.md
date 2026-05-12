@@ -132,6 +132,8 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
+    - Enable `use-pkg-config` and `use-vcpkg` features by default
+
 - 0.6.3
     - Update SDL_image to 3.4.4
 

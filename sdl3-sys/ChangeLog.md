@@ -1,5 +1,7 @@
 # Changes
 
+    - Enable `use-pkg-config` and `use-vcpkg` features by default
+
 - 0.6.5:
     - Update SDL to 3.4.8 (hotfix)
 

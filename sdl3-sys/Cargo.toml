@@ -19,7 +19,7 @@ categories = [
 links = "SDL3"
 
 [features]
-default = []
+default = ["use-pkg-config", "use-vcpkg"]
 
 # Build and link SDL 3 from source instead of linking a pre-existing library
 build-from-source = ["dep:cc", "dep:cmake", "dep:rpkg-config", "dep:sdl3-src"]

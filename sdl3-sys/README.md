@@ -49,8 +49,8 @@ convention for libraries. You can change this behaviour with the following featu
 
 | Feature | Description |
 | ------- | ----------- |
-| `use-pkg-config` | Use `pkg-config` to find and link the SDL 3 library. |
-| `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library. |
+| `use-pkg-config` | Use `pkg-config` to find and link the SDL 3 library (enabled by default). |
+| `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library (enabled by default). |
 | `build-from-source` | Build and link SDL 3 from source. You need CMake, a C compiler, and any dependencies SDL needs to build for your target. See below for details. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
 | `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `~/Library/Frameworks` or `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
@@ -176,6 +176,8 @@ These features are always available.
 | `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
 
 ## Recent changes
+
+    - Enable `use-pkg-config` and `use-vcpkg` features by default
 
 - 0.6.5:
     - Update SDL to 3.4.8 (hotfix)

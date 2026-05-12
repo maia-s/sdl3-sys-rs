@@ -14,7 +14,7 @@ links = "SDL3_ttf"
 autoexamples = false
 
 [features]
-default = []
+default = ["use-pkg-config", "use-vcpkg"]
 
 # Build and link SDL3_ttf from source instead of linking a pre-existing library
 build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-ttf-src"]
@@ -62,7 +62,7 @@ no-sdlttf-harfbuzz = []
 no-sdlttf-plutosvg = []
 
 [dependencies]
-sdl3-sys = { version = "0.6.0", path = "../sdl3-sys" }
+sdl3-sys = { version = "0.6.0", path = "../sdl3-sys", default-features = false }
 
 [build-dependencies.cmake]
 version = "0.1"
