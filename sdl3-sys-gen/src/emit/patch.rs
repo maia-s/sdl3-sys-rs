@@ -734,11 +734,11 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
         "pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<*const ::core::ffi::c_void, SDL_FunctionPointer>(core::ptr::null()) }};"
     )?;
     writeln!(ctx, "{cfg_win}")?;
-    writeln!(ctx, "unsafe extern \"cdecl\" {{")?;
+    writeln!(ctx, "unsafe extern \"C\" {{")?;
     ctx.increase_indent();
     writeln!(
         ctx,
-        "fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<unsafe extern \"stdcall\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;"
+        "fn _beginthreadex(security: *mut ::core::ffi::c_void, stack_size: ::core::ffi::c_uint, start_address: Option<unsafe extern \"system\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, arglist: *mut ::core::ffi::c_void, initflag: ::core::ffi::c_uint, thrdaddr: ::core::ffi::c_uint) -> ::core::primitive::usize;"
     )?;
     writeln!(ctx, "fn _endthreadex(retval: ::core::ffi::c_uint);")?;
     ctx.decrease_indent();
@@ -746,12 +746,12 @@ fn emit_begin_end_thread_function(ctx: &mut EmitContext) -> EmitResult {
     writeln!(ctx, "{cfg_win}")?;
     writeln!(
         ctx,
-        "pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<unsafe extern \"cdecl\" fn(*mut ::core::ffi::c_void, ::core::ffi::c_uint, Option<unsafe extern \"stdcall\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, *mut ::core::ffi::c_void, ::core::ffi::c_uint, ::core::ffi::c_uint) -> ::core::primitive::usize, SDL_FunctionPointer>(_beginthreadex) }};"
+        "pub const SDL_BeginThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<unsafe extern \"C\" fn(*mut ::core::ffi::c_void, ::core::ffi::c_uint, Option<unsafe extern \"system\" fn(*const ::core::ffi::c_void) -> ::core::ffi::c_uint>, *mut ::core::ffi::c_void, ::core::ffi::c_uint, ::core::ffi::c_uint) -> ::core::primitive::usize, SDL_FunctionPointer>(_beginthreadex) }};"
     )?;
     writeln!(ctx, "{cfg_win}")?;
     writeln!(
         ctx,
-        "pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<unsafe extern \"cdecl\" fn (::core::ffi::c_uint), SDL_FunctionPointer>(_endthreadex) }};"
+        "pub const SDL_EndThreadFunction: SDL_FunctionPointer = unsafe {{ ::core::mem::transmute::<unsafe extern \"C\" fn (::core::ffi::c_uint), SDL_FunctionPointer>(_endthreadex) }};"
     )?;
     writeln!(ctx)?;
     Ok(())

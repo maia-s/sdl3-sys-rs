@@ -71,11 +71,11 @@ fn emit_extern_start(ctx: &mut EmitContext, abi: &Option<FnAbi>, for_fn_ptr: boo
     }
     if let Some(abi) = &abi {
         match abi.ident.as_str() {
-            "__cdecl" => write!(ctx, "extern \"cdecl\" ")?,
-            "SDLCALL" => {
+            "__cdecl" | "SDLCALL" => {
                 // SDL explicitly uses the cdecl ABI on non-GNU Windows, but cdecl is the
                 // default ABI on 32-bit Windows and is ignored on 64-bit Windows, so we can
                 // just use C everywhere
+                // also cdecl is deprecated by rust and equivalent to C
                 write!(ctx, "extern \"C\" ")?;
             }
             _ => return Err(ParseErr::new(abi.span(), "can't emit this abi").into()),
