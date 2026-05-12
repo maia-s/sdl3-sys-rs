@@ -3,27 +3,28 @@
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
 This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.4.8`, inclusive.
 
-Many types can be initialized to all zero with the `Default` trait for convenience.
-However, many of these aren't valid when passed to SDL without further modification.
-They're intended to be used with `..Default::default()` in initializers.
-The `Default` impl of interface types also sets the version field to the correct value.
+`sdl3-sys` works out of the box on any target that SDL 3 supports and doesn't require anything
+else if the SDL library is installed or otherwise available. On targets that support it you can
+use `pkg-config` or `vcpkg` to locate the SDL library if required (see below).
 
-<div class="warning">
+If the SDL library isn't already available, you have the option of building SDL from source as
+part of the build (see below), which requires CMake, a C compiler, and any dependencies that SDL
+needs to build on your target. Builds for web are supported via Emscripten
+(`wasm32-unknown-emscripten`).
 
-Most of the docs are generated directly from the C headers and document how
-SDL works in C. Using it from Rust might work differently in some cases.
-For example, macros in C are usually translated to constants or constant
-functions in Rust. Documentation specific to these Rust bindings are tagged
-with `sdl3-sys`.
+SDL 3's callback API can be used via the [`sdl3-main`](https://crates.io/crates/sdl3-main) crate.
 
-</div>
+> ⓘ *Most of the docs are generated directly from the original C headers, which documents how*
+> *SDL works in C. Using it from Rust might work differently in some cases.*
+> *For example, macros in C are usually translated to constants or constant*
+> *functions in Rust, but the docs may still refer to them as macros.*
+> *Documentation specific to these Rust bindings are tagged with `sdl3-sys`.*
 
 [Browse the API at docs.rs!](https://docs.rs/sdl3-sys)
 
-If you're looking for more idiomatic or higher level bindings, check out the
-[sdl3](https://crates.io/crates/sdl3) crate.
+## Related crates
 
-## Add-on crates
+### Add-ons and satellite libraries
 
 - [`sdl3-main`](https://crates.io/crates/sdl3-main): Tools for using SDL's main and callback interface
 - [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys): Bindings for SDL3_image
@@ -31,6 +32,10 @@ If you're looking for more idiomatic or higher level bindings, check out the
 - [`sdl3-ttf-sys`](https://crates.io/crates/sdl3-ttf-sys): Bindings for SDL3_ttf
 
 Other satellite libraries aren't stable yet, and will be released as they're available.
+
+### Higher level bindings using `sdl3-sys`
+
+- [`sdl3`](https://crates.io/crates/sdl3): An evolution of the `sdl2` crate
 
 ## Usage
 
@@ -46,7 +51,7 @@ convention for libraries. You can change this behaviour with the following featu
 | ------- | ----------- |
 | `use-pkg-config` | Use `pkg-config` to find and link the SDL 3 library. |
 | `use-vcpkg` | Use `vcpkg` to find and link the SDL 3 library. |
-| `build-from-source` | Build and link SDL 3 from source. You have to install any dependencies SDL needs to build for your target first. See below for build related features. |
+| `build-from-source` | Build and link SDL 3 from source. You need CMake, a C compiler, and any dependencies SDL needs to build for your target. See below for details. |
 | `build-from-source-static` | Shortcut for enabling both the `build-from-source` and `link-static` features. This should no longer be necessary. |
 | `link-framework` | Link to a framework on Apple targets. This currently requires `SDL3.xcframework` to be located at `~/Library/Frameworks` or `/Library/Frameworks`. The built executable has to be put in a signed app bundle to be able to run. |
 | `link-static` | Link SDL statically. SDL doesn't recommend doing this. <ul><li>On targets that only support static linking, such as emscripten, you don't have to enable this feature.</li><li>On Apple targets, this currently requires frameworks that should be optional.</li></ul> |
@@ -54,8 +59,18 @@ convention for libraries. You can change this behaviour with the following featu
 
 ### Building from source
 
-When building from source with the `build-from-source` feature flag, you can enable these
-additional features to configure the build. They have no effect when not building from source.
+Typically it's better to use a prebuilt SDL library and simply configure `sdl3-sys` to use that (see above),
+but sometimes building from source can be convenient. Building from source needs CMake, a C compiler, and any
+dependencies SDL needs to build for your target.
+
+- For many platforms, including Windows and macOS, this is just the standard OS SDK.
+- For builds for the web, you need the [Emscripten SDK](https://emscripten.org/). Make sure that is activated
+  and build for the `wasm32-unknown-emscripten` target. Emscripten builds of SDL are always statically linked.
+- Building for Linux needs [many libraries](https://github.com/libsdl-org/SDL/blob/main/docs/README-linux.md)
+  for full support, but you can leave out anything you don't need.
+
+When building from source with the `build-from-source` feature flag, you can enable the features
+below to configure the build. They have no effect when not building from source.
 Most of them correspond to SDL CMake variables. You can prefix them with `no-` to disable them,
 e.g. `no-sdl-libc` to not link with the system C library. If you both enable and disable a
 feature, enable takes precedence.
@@ -71,7 +86,9 @@ Most of these features only work on some targets; don't enable them unless you n
 | `sdl-rpath`              | Set RPATH when linking SDL (default on some targets). Use `no-sdl-rpath` to disable. |
 | `sdl-unix-console-build` | Allow building SDL without X11 or Wayland support on Linux and other targets that usually use X11/Wayland. By default, SDL requires either X11 or Wayland on these targets as a sanity check. |
 
-## Subsystems
+#### Subsystems
+
+These features are only used when building from source.
 
 By default, subsystems are autodetected at build time and all available subsystems are enabled. If you
 want more control over which subsystems are enabled, you can use these features. Prefix `no-` to a
@@ -102,13 +119,17 @@ If you want a really slimmed down (but less capable) SDL, also see the `sdl-lean
 | `sdl-dialog`   | Enable the Dialog subsystem |
 | `sdl-tray`     | Enable the Tray subsystem |
 
-## Target specific features
+### Target specific features
+
+These features are always available, but only make sense for some targets.
 
 | Feature | Description |
 | ------- | ----------- |
 | `target-gdk` | Enable APIs that require Microsoft's Game Development Kit (GDK). (This is not related to Gnome's GDK.) |
 
-## Optional integrations
+### Optional integrations
+
+These features are always available, but some of them only make sense for some targets.
 
 `sdl3-sys` can use definitions from other crates for some foreign types that it needs,
 e.g. for Vulkan types. By default it'll use opaque structs or pointers to opaque structs
@@ -122,7 +143,9 @@ for these types unless otherwise specified.
 | `use-x11-v2` | Use X11 types from the `x11` crate (v2). |
 | `use-x11-dl-v2` | Use X11 types from the `x11-dl` crate (v2). |
 
-## Assert level
+### Assert level
+
+These features are always available.
 
 You can set the default assertion level for SDL using the `assert-level-*` features.
 This affects the assert macros in the `assert` module and the value of the `SDL_ASSERT_LEVEL`
@@ -140,7 +163,9 @@ These features are mutually exclusive. Features higher in this list override lat
 | `assert-level-debug` | 2: Debug settings: `SDL_assert` and `SDL_assert_release` enabled. |
 | `assert-level-paranoid` | 3: Paranoid settings: All SDL assertion macros enabled, including `SDL_assert_paranoid`. |
 
-## Other features
+### Other features
+
+These features are always available.
 
 | Feature | Description |
 | ------- | ----------- |
