@@ -113,7 +113,7 @@ pub const SDL_MIXER_MINOR_VERSION: ::core::primitive::i32 = 2;
 ///
 /// ## Availability
 /// This macro is available since SDL_mixer 3.0.0.
-pub const SDL_MIXER_MICRO_VERSION: ::core::primitive::i32 = 2;
+pub const SDL_MIXER_MICRO_VERSION: ::core::primitive::i32 = 4;
 
 /// This is the current version number macro of the SDL_mixer headers.
 ///
@@ -744,7 +744,6 @@ unsafe extern "C" {
     /// [`SDL_PropertiesID`] are discussed in
     /// [SDL's documentation](https://wiki.libsdl.org/SDL3/CategoryProperties)
     /// .
-    ///
     /// These are the supported properties:
     ///
     /// - [`MIX_PROP_AUDIO_LOAD_IOSTREAM_POINTER`]\: a pointer to an [`SDL_IOStream`] to
@@ -760,6 +759,11 @@ unsafe extern "C" {
     ///   metadata tags, like ID3 and APE tags. This can be used to speed up
     ///   loading _if the data definitely doesn't have these tags_. Some decoders
     ///   will fail if these tags are present when this property is true.
+    /// - [`MIX_PROP_AUDIO_LOAD_IGNORE_LOOPS_BOOLEAN`]\: true to ignore metadata in
+    ///   the audio data specifying loop points. This will make a file decode from
+    ///   start to finish without looping, even if the file specified it should
+    ///   have. This audio can still be looped at playback time via [`MIX_Track`] loop
+    ///   settings, regardless of this setting. Default false.
     /// - [`MIX_PROP_AUDIO_DECODER_STRING`]\: the name of the decoder to use for this
     ///   data. Optional. If not specified, SDL_mixer will examine the data and
     ///   choose the best decoder. These names are the same returned from
@@ -803,6 +807,9 @@ pub const MIX_PROP_AUDIO_LOAD_PREFERRED_MIXER_POINTER: *const ::core::ffi::c_cha
 
 pub const MIX_PROP_AUDIO_LOAD_SKIP_METADATA_TAGS_BOOLEAN: *const ::core::ffi::c_char =
     c"SDL_mixer.audio.load.skip_metadata_tags".as_ptr();
+
+pub const MIX_PROP_AUDIO_LOAD_IGNORE_LOOPS_BOOLEAN: *const ::core::ffi::c_char =
+    c"SDL_mixer.audio.load.ignore_loops".as_ptr();
 
 pub const MIX_PROP_AUDIO_DECODER_STRING: *const ::core::ffi::c_char =
     c"SDL_mixer.audio.decoder".as_ptr();
@@ -3833,8 +3840,9 @@ unsafe extern "C" {
     ///
     /// This function allows properties to be specified. This is intended to supply
     /// file-specific settings, such as where to find SoundFonts for a MIDI file,
-    /// etc. In most cases, the caller should pass a zero to specify no extra
-    /// properties.
+    /// etc. Most of the properties available to [`MIX_LoadAudioWithProperties()`]
+    /// apply here, too. In most cases, the caller should pass a zero to specify no
+    /// extra properties.
     ///
     /// If `closeio` is true, then `io` will be closed when this decoder is done
     /// with it. If this function fails and `closeio` is true, then `io` will be

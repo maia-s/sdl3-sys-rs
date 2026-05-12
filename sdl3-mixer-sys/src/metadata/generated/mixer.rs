@@ -56,6 +56,15 @@ pub const METADATA_MIX_PROP_AUDIO_LOAD_SKIP_METADATA_TAGS_BOOLEAN: Property = Pr
     doc: None,
     available_since: None,
 };
+pub const METADATA_MIX_PROP_AUDIO_LOAD_IGNORE_LOOPS_BOOLEAN: Property = Property {
+    module: "mixer",
+    name: "MIX_PROP_AUDIO_LOAD_IGNORE_LOOPS_BOOLEAN",
+    short_name: "AUDIO_LOAD_IGNORE_LOOPS_BOOLEAN",
+    value: crate::mixer::MIX_PROP_AUDIO_LOAD_IGNORE_LOOPS_BOOLEAN,
+    ty: PropertyType::BOOLEAN,
+    doc: None,
+    available_since: None,
+};
 pub const METADATA_MIX_PROP_AUDIO_DECODER_STRING: Property = Property {
     module: "mixer",
     name: "MIX_PROP_AUDIO_DECODER_STRING",

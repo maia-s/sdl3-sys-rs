@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_mixer, an add-on library for
 [SDL 3](https://libsdl.org) for loading and playing audio files.
-This version of `sdl3-mixer-sys` has bindings for SDL_mixer versions `3.2.0` to `3.2.2`, inclusive.
+This version of `sdl3-mixer-sys` has bindings for SDL_mixer versions `3.2.0` to `3.2.4`, inclusive.
 
 <div class="warning">
 
