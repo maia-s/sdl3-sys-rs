@@ -59,7 +59,7 @@ convention for libraries. You can change this behaviour with the following featu
 
 ### Building from source
 
-Typically it's better to use a prebuilt SDL library and simply configure `sdl3-sys` to use that (see above),
+Typically it's better to use a prebuilt SDL library and simply configure `sdl3-sys` to use that if required (see above),
 but sometimes building from source can be convenient. Building from source needs CMake, a C compiler, and any
 dependencies SDL needs to build for your target.
 
