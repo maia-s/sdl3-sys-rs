@@ -253,6 +253,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_3DS" = CfgExpr(r#"any(doc, target_os = "horizon")"#);
             "SDL_PLATFORM_ANDROID" = CfgExpr(r#"any(doc, target_os = "android")"#);
             "SDL_PLATFORM_APPLE" = CfgExpr(r#"any(doc, target_vendor = "apple")"#);
+            "SDL_PLATFORM_CYGWIN" = CfgExpr(r#"any(doc, target_os = "cygwin")"#);
             "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"any(doc, target_os = "emscripten")"#);
             "SDL_PLATFORM_GDK" = CfgExpr(r#"any(doc, all(windows, feature = "target-gdk"))"#);
             "SDL_PLATFORM_IOS" = CfgExpr(r#"any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")"#);
