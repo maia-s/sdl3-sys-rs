@@ -161,7 +161,7 @@ apply_cfg!(#[cfg(not(doc))] => {
     });
 
     apply_cfg!(#[cfg(not(all(not(any(/* always disabled: __clang__ */)), all(windows, target_env = "msvc"))))] => {
-        apply_cfg!(#[cfg(not(any(doc, target_os = "emscripten")))] => {
+        apply_cfg!(#[cfg(any(not(target_os = "emscripten"), doc))] => {
             #[inline(always)]
             pub fn SDL_CompilerBarrier() {
                 ::core::sync::atomic::compiler_fence(::core::sync::atomic::Ordering::SeqCst)

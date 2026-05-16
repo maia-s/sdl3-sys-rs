@@ -16,6 +16,33 @@ use std::{
     rc::Rc,
 };
 
+pub trait IsPlatform: Sized {
+    fn is_platform(&self) -> bool;
+    fn deplatform(cfg: Cfg<Self>) -> Cfg<Self>;
+}
+
+impl IsPlatform for Ident {
+    fn is_platform(&self) -> bool {
+        self.as_str().starts_with("SDL_PLATFORM_")
+    }
+
+    fn deplatform(mut cfg: Cfg<Self>) -> Cfg<Self> {
+        cfg.is_platform = false;
+        Cfg::one(Ident::new_inline(".sdl3-sys.doc")).any(cfg)
+    }
+}
+
+impl IsPlatform for String {
+    fn is_platform(&self) -> bool {
+        self.as_str().starts_with("SDL_PLATFORM_")
+    }
+
+    fn deplatform(mut cfg: Cfg<Self>) -> Cfg<Self> {
+        cfg.is_platform = false;
+        Cfg::one(String::from(".sdl3-sys.doc")).any(cfg)
+    }
+}
+
 #[derive(Clone, Copy, Debug)]
 pub struct CfgExpr(&'static str);
 
@@ -24,16 +51,21 @@ pub type DefineState = Cfg<Ident>;
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Cfg<T> {
     state: Option<Coll<T>>,
+    is_platform: bool,
 }
 
-impl<T: Clone + Ord> Cfg<T> {
+impl<T: Clone + Ord + IsPlatform> Cfg<T> {
     pub fn none() -> Self {
-        Self { state: None }
+        Self {
+            state: None,
+            is_platform: false,
+        }
     }
 
     pub fn never() -> Self {
         Self {
             state: Some(Coll::Any(BTreeSet::new())),
+            is_platform: false,
         }
     }
 
@@ -42,13 +74,29 @@ impl<T: Clone + Ord> Cfg<T> {
     }
 
     pub fn one(item: T) -> Self {
+        let is_platform = item.is_platform();
         Self {
             state: Some(Coll::One(item)),
+            is_platform,
         }
     }
 
     #[must_use]
-    pub fn all(self, rhs: Self) -> Self {
+    pub fn normalize(self) -> Self {
+        if self.state.is_some() && self.is_platform {
+            T::deplatform(self)
+        } else {
+            self
+        }
+    }
+
+    #[must_use]
+    pub fn all(mut self, mut rhs: Self) -> Self {
+        let is_platform = self.is_platform && rhs.is_platform;
+        if !is_platform {
+            self = self.normalize();
+            rhs = rhs.normalize();
+        }
         let state = if let Some(self_state) = self.state {
             Some(if let Some(rhs_state) = rhs.state {
                 self_state.all(rhs_state)
@@ -58,11 +106,16 @@ impl<T: Clone + Ord> Cfg<T> {
         } else {
             rhs.state
         };
-        Self { state }
+        Self { state, is_platform }
     }
 
     #[must_use]
-    pub fn any(self, rhs: Self) -> Self {
+    pub fn any(mut self, mut rhs: Self) -> Self {
+        let is_platform = self.is_platform && rhs.is_platform;
+        if !is_platform {
+            self = self.normalize();
+            rhs = rhs.normalize();
+        }
         let state = if let Some(self_state) = self.state {
             Some(if let Some(rhs_state) = rhs.state {
                 self_state.any(rhs_state)
@@ -72,13 +125,14 @@ impl<T: Clone + Ord> Cfg<T> {
         } else {
             rhs.state
         };
-        Self { state }
+        Self { state, is_platform }
     }
 
     #[must_use]
     pub fn not(self) -> Self {
         Self {
             state: self.state.map(|coll| coll.not()),
+            is_platform: self.is_platform,
         }
     }
 }
@@ -208,6 +262,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             };
         }
         target_defines! {
+            ".sdl3-sys.doc" = CfgExpr("doc");
             ".sdl3-sys.assert-level-disabled" = CfgExpr(r#"feature = "assert-level-disabled""#);
             ".sdl3-sys.assert-level-release" = CfgExpr(r#"feature = "assert-level-release""#);
             ".sdl3-sys.assert-level-debug" = CfgExpr(r#"feature = "assert-level-debug""#);
@@ -250,22 +305,22 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "ANDROID" = CfgExpr(r#"target_os = "android""#);
             "DEBUG" = CfgExpr("debug_assertions");
             "SDL_BYTEORDER" = CfgExpr(always_true!("byte order")); // this has a non-boolean value
-            "SDL_PLATFORM_3DS" = CfgExpr(r#"any(doc, target_os = "horizon")"#);
-            "SDL_PLATFORM_ANDROID" = CfgExpr(r#"any(doc, target_os = "android")"#);
-            "SDL_PLATFORM_APPLE" = CfgExpr(r#"any(doc, target_vendor = "apple")"#);
-            "SDL_PLATFORM_CYGWIN" = CfgExpr(r#"any(doc, target_os = "cygwin")"#);
-            "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"any(doc, target_os = "emscripten")"#);
-            "SDL_PLATFORM_GDK" = CfgExpr(r#"any(doc, all(windows, feature = "target-gdk"))"#);
-            "SDL_PLATFORM_IOS" = CfgExpr(r#"any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")"#);
-            "SDL_PLATFORM_LINUX" = CfgExpr(r#"any(doc, target_os = "linux")"#);
+            "SDL_PLATFORM_3DS" = CfgExpr(r#"target_os = "horizon""#);
+            "SDL_PLATFORM_ANDROID" = CfgExpr(r#"target_os = "android""#);
+            "SDL_PLATFORM_APPLE" = CfgExpr(r#"target_vendor = "apple""#);
+            "SDL_PLATFORM_CYGWIN" = CfgExpr(r#"target_os = "cygwin""#);
+            "SDL_PLATFORM_EMSCRIPTEN" = CfgExpr(r#"target_os = "emscripten""#);
+            "SDL_PLATFORM_GDK" = CfgExpr(r#"all(windows, feature = "target-gdk")"#);
+            "SDL_PLATFORM_IOS" = CfgExpr(r#"any(target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")"#);
+            "SDL_PLATFORM_LINUX" = CfgExpr(r#"target_os = "linux""#);
             "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE")); // not currently used in public headers
             "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2")); // not currently used in public headers
-            "SDL_PLATFORM_PSP" = CfgExpr(r#"any(doc, target_os = "psp")"#);
-            "SDL_PLATFORM_TVOS" = CfgExpr(r#"any(doc, target_os = "tvos")"#);
-            "SDL_PLATFORM_VITA" = CfgExpr(r#"any(doc, target_os = "vita")"#);
-            "SDL_PLATFORM_WIN32" = CfgExpr(r#"any(doc, target_os = "windows")"#);
-            "SDL_PLATFORM_WINDOWS" = CfgExpr("any(doc, windows)");
-            "SDL_PLATFORM_WINGDK" = CfgExpr(r#"any(doc, all(target_os = "windows", feature = "target-gdk"))"#);
+            "SDL_PLATFORM_PSP" = CfgExpr(r#"target_os = "psp""#);
+            "SDL_PLATFORM_TVOS" = CfgExpr(r#"target_os = "tvos""#);
+            "SDL_PLATFORM_VITA" = CfgExpr(r#"target_os = "vita""#);
+            "SDL_PLATFORM_WIN32" = CfgExpr(r#"target_os = "windows""#);
+            "SDL_PLATFORM_WINDOWS" = CfgExpr("windows");
+            "SDL_PLATFORM_WINGDK" = CfgExpr(r#"all(target_os = "windows", feature = "target-gdk")"#);
             "SDL_WIKI_DOCUMENTATION_SECTION" = CfgExpr("doc");
         }
 
@@ -765,7 +820,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
         })
     }
 
-    pub fn emit_cfg<T>(
+    pub fn emit_cfg<T: Clone + Ord + IsPlatform>(
         &mut self,
         cfg: &Cfg<T>,
         emit_cfg: impl Fn(&mut EmitContext, &T) -> EmitResult,
@@ -815,6 +870,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             }
         }
 
+        let cfg = cfg.clone().normalize();
         if let Some(coll) = &cfg.state {
             write!(self, "#[cfg(")?;
             emit_cfg_r(self, &emit_cfg, coll)?;

@@ -84,7 +84,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(any(any(doc, target_os = "windows"), any(doc, all(target_os = "windows", feature = "target-gdk"))))] => {
+apply_cfg!(#[cfg(any(doc, target_os = "windows", all(target_os = "windows", feature = "target-gdk")))] => {
     unsafe extern "C" {
         /// Get the D3D9 adapter index that matches the specified display.
         ///
@@ -241,7 +241,7 @@ apply_cfg!(#[cfg(any(doc, target_os = "linux"))] => {
 
 });
 
-apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos"))] => {
+apply_cfg!(#[cfg(any(doc, any(target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")))] => {
     /// The prototype for an Apple iOS animation callback.
     ///
     /// This datatype is only useful on Apple iOS.
@@ -936,7 +936,7 @@ unsafe extern "C" {
     pub fn SDL_OnApplicationDidEnterForeground();
 }
 
-apply_cfg!(#[cfg(any(doc, target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos"))] => {
+apply_cfg!(#[cfg(any(doc, any(target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")))] => {
     unsafe extern "C" {
         /// Let iOS apps with external event handling report
         /// onApplicationDidChangeStatusBarOrientation.

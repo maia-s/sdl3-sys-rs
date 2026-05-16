@@ -358,14 +358,14 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(not(any(doc, windows)))] => {
-    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
+apply_cfg!(#[cfg(any(not(windows), doc))] => {
+    apply_cfg!(#[cfg(all(any(not(target_vendor = "apple"), doc), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"ld".as_ptr();
 
     });
 
-    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
+    apply_cfg!(#[cfg(not(all(any(not(target_vendor = "apple"), doc), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIs64: *const ::core::ffi::c_char = c"lld".as_ptr();
 
@@ -379,14 +379,14 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(not(any(doc, windows)))] => {
-    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
+apply_cfg!(#[cfg(any(not(windows), doc))] => {
+    apply_cfg!(#[cfg(all(any(not(target_vendor = "apple"), doc), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64")))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"lu".as_ptr();
 
     });
 
-    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
+    apply_cfg!(#[cfg(not(all(any(not(target_vendor = "apple"), doc), not(target_os = "emscripten"), all(not(windows), target_pointer_width = "64"))))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIu64: *const ::core::ffi::c_char = c"llu".as_ptr();
 
@@ -400,14 +400,14 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(not(any(doc, windows)))] => {
-    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))] => {
+apply_cfg!(#[cfg(any(not(windows), doc))] => {
+    apply_cfg!(#[cfg(all(any(not(target_vendor = "apple"), doc), all(not(windows), target_pointer_width = "64")))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"lx".as_ptr();
 
     });
 
-    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))] => {
+    apply_cfg!(#[cfg(not(all(any(not(target_vendor = "apple"), doc), all(not(windows), target_pointer_width = "64"))))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIx64: *const ::core::ffi::c_char = c"llx".as_ptr();
 
@@ -421,14 +421,14 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(not(any(doc, windows)))] => {
-    apply_cfg!(#[cfg(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64")))] => {
+apply_cfg!(#[cfg(any(not(windows), doc))] => {
+    apply_cfg!(#[cfg(all(any(not(target_vendor = "apple"), doc), all(not(windows), target_pointer_width = "64")))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"lX".as_ptr();
 
     });
 
-    apply_cfg!(#[cfg(not(all(not(any(doc, target_vendor = "apple")), all(not(windows), target_pointer_width = "64"))))] => {
+    apply_cfg!(#[cfg(not(all(any(not(target_vendor = "apple"), doc), all(not(windows), target_pointer_width = "64"))))] => {
         #[cfg(not(doc))]
         pub const SDL_PRIX64: *const ::core::ffi::c_char = c"llX".as_ptr();
 
@@ -468,7 +468,7 @@ apply_cfg!(#[cfg(any(doc, windows))] => {
 
 });
 
-apply_cfg!(#[cfg(not(any(doc, windows)))] => {
+apply_cfg!(#[cfg(any(not(windows), doc))] => {
     #[cfg(not(doc))]
     pub const SDL_PRILL_PREFIX: *const ::core::ffi::c_char = c"ll".as_ptr();
 
@@ -565,7 +565,7 @@ const _: () = ::core::assert!(
 
 const _: () = ::core::assert!((!(0 as ::core::ffi::c_int) == (-1_i32 as ::core::ffi::c_int)));
 
-apply_cfg!(#[cfg(all(not(any(doc, target_os = "horizon")), not(any(doc, target_os = "vita"))))] => {
+apply_cfg!(#[cfg(any(all(not(target_os = "horizon"), not(target_os = "vita")), doc))] => {
     #[doc(hidden)]
     /// ## Known values (`sdl3-sys`)
     /// | Associated constant | Global constant | Description |
