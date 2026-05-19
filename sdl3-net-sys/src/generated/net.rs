@@ -106,7 +106,7 @@ pub const SDL_NET_MINOR_VERSION: ::core::primitive::i32 = 1;
 ///
 /// ## Availability
 /// This macro is available since SDL_net 3.0.0.
-pub const SDL_NET_MICRO_VERSION: ::core::primitive::i32 = 0;
+pub const SDL_NET_MICRO_VERSION: ::core::primitive::i32 = 1;
 
 /// This is the version number macro for the current SDL_net version.
 ///
@@ -464,6 +464,59 @@ unsafe extern "C" {
     /// - [`NET_GetAddressStatus`]
     /// - [`NET_WaitUntilResolved`]
     pub fn NET_GetAddressString(address: *mut NET_Address) -> *const ::core::ffi::c_char;
+}
+
+unsafe extern "C" {
+    /// Get the protocol-level bytes of a network address from a resolved address.
+    ///
+    /// This data is not human-readable, is protocol-specific, and might not even
+    /// be in a specific byte order.
+    ///
+    /// This is only useful for possibly hashing, to map a address to a specific
+    /// player in a game, or possibly for handing to a system-level networking API
+    /// (which is _not_ recommended; an app does this at their own risk).
+    ///
+    /// Do not store these bytes for future runs of the program; there is no
+    /// promise the format won't change.
+    ///
+    /// On return `*num_bytes` will hold the number of bytes provided with the
+    /// address. Since the data is not NULL-terminated, this is the only way to
+    /// determine its size; as such, this parameter must not be NULL.
+    ///
+    /// Do not free or modify the returned data; it belongs to the [`NET_Address`] that
+    /// was queried, and is valid as long as the object lives. Either make sure the
+    /// address has a reference as long as you need this or make a copy of the
+    /// bytes.
+    ///
+    /// This will return NULL if resolution is still in progress, or if resolution
+    /// failed. You can use [`NET_GetAddressStatus()`] or [`NET_WaitUntilResolved()`] to
+    /// make sure resolution has successfully completed before calling this.
+    ///
+    /// A human-readable version is available in [`NET_GetAddressString()`] and isn't
+    /// any less efficient to query than the raw bytes.
+    ///
+    /// ## Parameters
+    /// - `address`: The [`NET_Address`] to query.
+    /// - `num_bytes`: on return, will be set to the number of bytes returned.
+    ///
+    /// ## Return value
+    /// Returns a pointer to bytes, or NULL on error; call [`SDL_GetError()`] for
+    ///   details.
+    ///
+    /// ## Thread safety
+    /// It is safe to call this function from any thread.
+    ///
+    /// ## Availability
+    /// This function is available since SDL_net 3.0.0.
+    ///
+    /// ## See also
+    /// - [`NET_GetAddressString`]
+    /// - [`NET_GetAddressStatus`]
+    /// - [`NET_WaitUntilResolved`]
+    pub fn NET_GetAddressBytes(
+        address: *mut NET_Address,
+        num_bytes: *mut ::core::ffi::c_int,
+    ) -> *const ::core::ffi::c_void;
 }
 
 unsafe extern "C" {
@@ -1165,7 +1218,7 @@ unsafe extern "C" {
     /// on what is available at the time, and also the app isn't required to read
     /// all available data at once.
     ///
-    /// This call never blocks; if no new data isn't available at the time of the
+    /// This call never blocks; if no new data is available at the time of the
     /// call, it returns 0 immediately. The caller can try again later.
     ///
     /// If the connection has failed (remote side dropped us, or one of a million

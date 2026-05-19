@@ -2,7 +2,7 @@
 
 These are low level Rust bindings for SDL3_net, an add-on library for
 [SDL 3](https://libsdl.org) for networking.
-This version of `sdl3-net-sys` has bindings for SDL_net version `3.1.0-prerelease`.
+This version of `sdl3-net-sys` has bindings for SDL_net version `3.1.1-prerelease-3.1.0-17-gf8256ab`.
 
 <div class="warning">
 
