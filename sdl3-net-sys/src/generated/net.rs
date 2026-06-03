@@ -98,7 +98,7 @@ pub const SDL_NET_MAJOR_VERSION: ::core::primitive::i32 = 3;
 ///
 /// ## Availability
 /// This macro is available since SDL_net 3.0.0.
-pub const SDL_NET_MINOR_VERSION: ::core::primitive::i32 = 1;
+pub const SDL_NET_MINOR_VERSION: ::core::primitive::i32 = 2;
 
 /// The current micro (or patchlevel) version of the SDL_net headers.
 ///
@@ -106,7 +106,7 @@ pub const SDL_NET_MINOR_VERSION: ::core::primitive::i32 = 1;
 ///
 /// ## Availability
 /// This macro is available since SDL_net 3.0.0.
-pub const SDL_NET_MICRO_VERSION: ::core::primitive::i32 = 1;
+pub const SDL_NET_MICRO_VERSION: ::core::primitive::i32 = 0;
 
 /// This is the version number macro for the current SDL_net version.
 ///
