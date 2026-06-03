@@ -770,6 +770,25 @@ pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT: *const ::core::ffi::c_char =
 pub const SDL_HINT_ENABLE_SCREEN_KEYBOARD: *const ::core::ffi::c_char =
     c"SDL_ENABLE_SCREEN_KEYBOARD".as_ptr();
 
+/// A variable that controls whether the Steam on-screen keyboard should be
+/// shown when text input is active.
+///
+/// Steam will set this hint via environment variable for games launched in Big
+/// Picture mode. To override this you should call [`SDL_SetHintWithPriority()`]
+/// with priority [`SDL_HINT_OVERRIDE`].
+///
+/// The variable can be set to the following values:
+///
+/// - "0": Do not show the Steam on-screen keyboard.
+/// - "1": Show the Steam on-screen keyboard.
+///
+/// This hint should be set before SDL is initialized.
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.12.
+pub const SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD: *const ::core::ffi::c_char =
+    c"SDL_ENABLE_STEAM_SCREEN_KEYBOARD".as_ptr();
+
 /// A variable containing a list of evdev devices to use if udev is not
 /// available.
 ///

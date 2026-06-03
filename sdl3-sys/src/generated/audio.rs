@@ -2428,6 +2428,8 @@ unsafe extern "C" {
 /// appropriate, but the system goes on with the data currently available to it
 /// if this callback does nothing.
 ///
+/// Do not call [`SDL_DestroyAudioStream()`] on `stream` during this callback.
+///
 /// ## Parameters
 /// - `stream`: the SDL audio stream associated with this callback.
 /// - `additional_amount`: the amount of data, in bytes, that is needed right

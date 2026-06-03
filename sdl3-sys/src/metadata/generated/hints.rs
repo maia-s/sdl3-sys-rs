@@ -402,6 +402,16 @@ pub const METADATA_SDL_HINT_ENABLE_SCREEN_KEYBOARD: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD",
+    short_name: "ENABLE_STEAM_SCREEN_KEYBOARD",
+    value: crate::hints::SDL_HINT_ENABLE_STEAM_SCREEN_KEYBOARD,
+    doc: Some(
+        "A variable that controls whether the Steam on-screen keyboard should be\nshown when text input is active.\n\nSteam will set this hint via environment variable for games launched in Big\nPicture mode. To override this you should call [`SDL_SetHintWithPriority()`]\nwith priority [`SDL_HINT_OVERRIDE`].\n\nThe variable can be set to the following values:\n\n- \"0\": Do not show the Steam on-screen keyboard.\n- \"1\": Show the Steam on-screen keyboard.\n\nThis hint should be set before SDL is initialized.\n\n## Availability\nThis hint is available since SDL 3.4.12.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 12)),
+};
 pub const METADATA_SDL_HINT_EVDEV_DEVICES: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_EVDEV_DEVICES",
