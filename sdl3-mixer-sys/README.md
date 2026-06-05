@@ -4,15 +4,20 @@ These are low level Rust bindings for SDL3_mixer, an add-on library for
 [SDL 3](https://libsdl.org) for loading and playing audio files.
 This version of `sdl3-mixer-sys` has bindings for SDL_mixer versions `3.2.0` to `3.2.4`, inclusive.
 
-<div class="warning">
+`sdl3-mixer-sys` works out of the box on any target that SDL3_mixer supports and doesn't require anything
+else if the SDL3_mixer library is installed or otherwise available. On targets that support it you can
+use `pkg-config` or `vcpkg` to locate the SDL3_mixer library if required (see below).
 
-Most of the docs are generated directly from the C headers and document how
-SDL works in C. Using it from Rust might work differently in some cases.
-For example, macros in C are usually translated to constants or constant
-functions in Rust. Documentation specific to these Rust bindings are tagged
-with `sdl3-sys`.
+If the SDL3_mixer library isn't already available, you have the option of building it from source as
+part of the build (see below), which requires CMake, a C compiler, and any dependencies that SDL3_mixer
+needs to build on your target. You can also choose to use vendored dependencies.
+Builds for web are supported via Emscripten (`wasm32-unknown-emscripten`).
 
-</div>
+> ⓘ *Most of the docs are generated directly from the original C headers, which documents how*
+> *SDL works in C. Using it from Rust might work differently in some cases.*
+> *For example, macros in C are usually translated to constants or constant*
+> *functions in Rust, but the docs may still refer to them as macros.*
+> *Documentation specific to these Rust bindings are tagged with `sdl3-sys`.*
 
 [Browse the API at docs.rs!](https://docs.rs/sdl3-mixer-sys)
 

@@ -7,10 +7,10 @@ This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.4.10`, in
 else if the SDL library is installed or otherwise available. On targets that support it you can
 use `pkg-config` or `vcpkg` to locate the SDL library if required (see below).
 
-If the SDL library isn't already available, you have the option of building SDL from source as
+If the SDL library isn't already available, you have the option of building it from source as
 part of the build (see below), which requires CMake, a C compiler, and any dependencies that SDL
-needs to build on your target. Builds for web are supported via Emscripten
-(`wasm32-unknown-emscripten`).
+needs to build on your target.
+Builds for web are supported via Emscripten (`wasm32-unknown-emscripten`).
 
 SDL 3's callback API can be used via the [`sdl3-main`](https://crates.io/crates/sdl3-main) crate.
 
