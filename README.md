@@ -10,6 +10,7 @@ If you want to generate your own bindings, see the readme in the [`sdl3-sys-gen`
 - [`sdl3-main`](sdl3-main): Tools for using SDL's main and callback APIs.
 - [`sdl3-image-sys`](sdl3-image-sys): Rust bindings for SDL3_image
 - [`sdl3-mixer-sys`](sdl3-mixer-sys): Rust bindings for SDL3_mixer
+- [`sdl3-net-sys`](sdl3-net-sys): Rust bindings for SDL3_net
 - [`sdl3-ttf-sys`](sdl3-ttf-sys): Rust bindings for SDL3_ttf
 
 ### Examples
@@ -26,6 +27,7 @@ the original source repos as git submodules.
 - [`sdl3-src`](sdl3-src): Source code crate for SDL 3
 - [`sdl3-image-src`](sdl3-image-src): Source code crate for SDL3_image
 - [`sdl3-mixer-src`](sdl3-mixer-src): Source code crate for SDL3_mixer
+- [`sdl3-net-src`](sdl3-net-src): Source code crate for SDL3_net
 - [`sdl3-ttf-src`](sdl3-ttf-src): Source code crate for SDL3_ttf
 
 ### Supporting crates
