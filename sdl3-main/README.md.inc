@@ -42,7 +42,7 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
-- next:
+- 0.6.3:
     - Implement `IntoAppResult` for `bool` and `Option<bool>` so that these can be
       returned from `app_iterate` and `app_event`. For `bool`, `true` translates to
       `Continue` and `false` translates to `Success`. For `Option<bool>`, `Some`
