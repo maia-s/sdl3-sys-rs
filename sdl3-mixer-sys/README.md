@@ -126,6 +126,8 @@ Formats are autodetected by default. You can disable them by default instead and
 
 ## Recent changes
 
+- 0.6.3
+    - Update SDL_mixer to 3.2.4
     - Enable `use-pkg-config` and `use-vcpkg` features by default
 
 - 0.6.2

@@ -367,7 +367,7 @@ version = "3.4.4"
 
 [[package]]
 name = "sdl3-image-sys"
-version = "0.6.3+SDL-image-3.4.4"
+version = "0.6.4+SDL-image-3.4.4"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -397,7 +397,7 @@ version = "3.2.4"
 
 [[package]]
 name = "sdl3-mixer-sys"
-version = "0.6.2+SDL-mixer-3.2.4"
+version = "0.6.3+SDL-mixer-3.2.4"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -414,7 +414,7 @@ version = "3.2.0"
 
 [[package]]
 name = "sdl3-net-sys"
-version = "0.6.0-pre-0+SDL-net-3.2.0"
+version = "0.6.0+SDL-net-3.2.0"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -430,7 +430,7 @@ version = "3.4.10"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.6.5+SDL-3.4.10"
+version = "0.6.6+SDL-3.4.10"
 dependencies = [
  "ash",
  "cc",

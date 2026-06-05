@@ -1,5 +1,7 @@
 # Changes
 
+- 0.6.6:
+    - Update SDL to 3.4.10
     - Enable `use-pkg-config` and `use-vcpkg` features by default
     - Replace use of deprecated `cdecl` and `stdcall` ABIs with equivalent non-deprecated ones
 

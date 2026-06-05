@@ -53,7 +53,7 @@ convention for libraries. You can change this behaviour with the following featu
 
 ## Recent changes
 
-- 0.6.0-pre-0:
-    - Prerelease
+- 0.6.0:
+    - First release
 
 See ChangeLog.md for older changes
