@@ -79,6 +79,7 @@ disables harfbuzz support. Activated features override features disabled with th
     - Add `new` and `value` assoc function/method for groups (ids, enums, etc)
     - impl Display for ids under the `display-impls` feature
     - Add metadata for structs and unions
+    - Fix Android builds being built for the wrong arch (Thanks to Archee)
 
 - 0.6.0:
     - Update sdl3-sys to 0.6.0

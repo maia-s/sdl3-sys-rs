@@ -129,6 +129,7 @@ Formats are autodetected by default. You can disable them by default instead and
 - 0.6.3
     - Update SDL_mixer to 3.2.4
     - Enable `use-pkg-config` and `use-vcpkg` features by default
+    - Fix Android builds being built for the wrong arch (Thanks to Archee)
 
 - 0.6.2
     - Update SDL_mixer to 3.2.2

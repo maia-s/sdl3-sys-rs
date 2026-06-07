@@ -308,6 +308,23 @@ fn build(
             let package_name = config("package_name");
 
             let mut build_config = BuildConfig::new(SOURCE_DIR);
+
+            // workaround for android builds being built for the wrong arch
+            // TODO: find out why cmake/cc does the wrong thing
+            if env::var("CARGO_CFG_TARGET_OS").unwrap() == "android" {
+                let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
+                let (abi, processor) = match target_arch.as_str() {
+                    "aarch64" => ("arm64-v8a", "arm64"),
+                    "arm" => ("armeabi-v7a", "arm"),
+                    "x86_64" => ("x86_64", "x86_64"),
+                    "x86" => ("x86", "x86"),
+                    other => (other, other),
+                };
+                build_config.define("ANDROID_ABI", abi);
+                build_config.define("CMAKE_SYSTEM_NAME", "Android");
+                build_config.define("CMAKE_SYSTEM_PROCESSOR", processor);
+            }
+
             f(&mut build_config)?;
             let out_dir = build_config.build();
             println!("cargo::metadata=OUT_DIR={}", out_dir.display());
