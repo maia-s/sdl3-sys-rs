@@ -1,5 +1,6 @@
 # Changes
 
+- 0.6.4
     - Enable `use-pkg-config` and `use-vcpkg` features by default
     - Fix Android builds being built for the wrong arch (Thanks to Archee)
 

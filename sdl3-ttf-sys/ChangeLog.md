@@ -1,6 +1,6 @@
 # Changes
 
-- next:
+- 0.6.1:
     - Enable `use-pkg-config` and `use-vcpkg` features by default
     - Require exact version match for source crate when building from source (fix for Android)
     - Add `new` and `value` assoc function/method for groups (ids, enums, etc)
