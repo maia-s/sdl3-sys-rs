@@ -1,0 +1,11 @@
+package_name: sdl3-sound
+lib_name: SDL3_sound
+lib_rev_name: SDL_sound
+lib_min_version: 3.2.0
+lib_dir: SDL_sound
+include_dir: include/SDL3_sound
+version_header: SDL_sound.h
+headers_prefix: SDL_
+sym_prefix: Sound_
+define_prefix: SDL_SOUND_
+hint_prop_prefix: SDL_SOUND_

@@ -13,3 +13,6 @@
 [submodule "SDL_net"]
 	path = sdl3-net-src/SDL_net
 	url = https://github.com/libsdl-org/SDL_net
+[submodule "SDL_sound"]
+	path = sdl3-sound-src/SDL_sound
+	url = https://github.com/icculus/SDL_sound
