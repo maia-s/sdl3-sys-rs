@@ -2,6 +2,9 @@ use super::{
     CanCmp, CanCopy, Define, DefineValue, Enum, EnumKind, Expr, Function, ParseContext, ParseErr,
     PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
 };
+use crate::parse::TypeEnum;
+use core::{cell::RefCell, mem};
+use std::rc::Rc;
 
 pub fn patch_parsed_define(ctx: &ParseContext, define: &mut Define) -> Result<bool, ParseErr> {
     match (ctx.module(), define.ident.as_str()) {
@@ -453,7 +456,26 @@ pub fn patch_parsed_typedef(ctx: &ParseContext, td: &mut TypeDef) -> Result<bool
             Ok(true)
         }
         ("sound", "Sound_SampleFlags") => {
-            td.kind = TypeDefKind::Alias;
+            let TypeDef {
+                ty:
+                    Type {
+                        ty: TypeEnum::Enum(e),
+                        ..
+                    },
+                kind:
+                    TypeDefKind::Enum {
+                        variants,
+                        match_define,
+                        ..
+                    },
+                ..
+            } = td
+            else {
+                unreachable!()
+            };
+            *variants = Rc::new(RefCell::new(mem::take(&mut e.variants)));
+            *match_define = |_| false;
+            td.ty.ty = TypeEnum::Primitive(PrimitiveType::Uint32T);
             Ok(true)
         }
         ("video", "SDL_WindowID") => {

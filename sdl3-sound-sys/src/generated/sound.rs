@@ -123,24 +123,24 @@ unsafe extern "C" {
 /// | [`ERROR`](Sound_SampleFlags::ERROR) | [`SOUND_SAMPLEFLAG_ERROR`] | Unrecoverable error. |
 /// | [`EAGAIN`](Sound_SampleFlags::EAGAIN) | [`SOUND_SAMPLEFLAG_EAGAIN`] | Function would block, or temp error. |
 #[repr(transparent)]
-#[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct Sound_SampleFlags(pub ::core::ffi::c_int);
+#[derive(Clone, Copy, Default, PartialEq, Eq, Hash)]
+pub struct Sound_SampleFlags(pub ::core::primitive::u32);
 
-impl ::core::cmp::PartialEq<::core::ffi::c_int> for Sound_SampleFlags {
+impl ::core::cmp::PartialEq<::core::primitive::u32> for Sound_SampleFlags {
     #[inline(always)]
-    fn eq(&self, other: &::core::ffi::c_int) -> bool {
+    fn eq(&self, other: &::core::primitive::u32) -> bool {
         &self.0 == other
     }
 }
 
-impl ::core::cmp::PartialEq<Sound_SampleFlags> for ::core::ffi::c_int {
+impl ::core::cmp::PartialEq<Sound_SampleFlags> for ::core::primitive::u32 {
     #[inline(always)]
     fn eq(&self, other: &Sound_SampleFlags) -> bool {
         self == &other.0
     }
 }
 
-impl From<Sound_SampleFlags> for ::core::ffi::c_int {
+impl From<Sound_SampleFlags> for ::core::primitive::u32 {
     #[inline(always)]
     fn from(value: Sound_SampleFlags) -> Self {
         value.0
@@ -150,30 +150,130 @@ impl From<Sound_SampleFlags> for ::core::ffi::c_int {
 #[cfg(feature = "debug-impls")]
 impl ::core::fmt::Debug for Sound_SampleFlags {
     fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-        #[allow(unreachable_patterns)]
-        f.write_str(match *self {
-            Self::NONE => "SOUND_SAMPLEFLAG_NONE",
-            Self::CANSEEK => "SOUND_SAMPLEFLAG_CANSEEK",
-            Self::EOF => "SOUND_SAMPLEFLAG_EOF",
-            Self::ERROR => "SOUND_SAMPLEFLAG_ERROR",
-            Self::EAGAIN => "SOUND_SAMPLEFLAG_EAGAIN",
+        let mut first = true;
+        let all_bits = 0;
+        write!(f, "Sound_SampleFlags(")?;
+        let all_bits = all_bits | Self::NONE.0;
+        if (Self::NONE != 0 || self.0 == 0) && *self & Self::NONE == Self::NONE {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "NONE")?;
+        }
+        let all_bits = all_bits | Self::CANSEEK.0;
+        if (Self::CANSEEK != 0 || self.0 == 0) && *self & Self::CANSEEK == Self::CANSEEK {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "CANSEEK")?;
+        }
+        let all_bits = all_bits | Self::EOF.0;
+        if (Self::EOF != 0 || self.0 == 0) && *self & Self::EOF == Self::EOF {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "EOF")?;
+        }
+        let all_bits = all_bits | Self::ERROR.0;
+        if (Self::ERROR != 0 || self.0 == 0) && *self & Self::ERROR == Self::ERROR {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "ERROR")?;
+        }
+        let all_bits = all_bits | Self::EAGAIN.0;
+        if (Self::EAGAIN != 0 || self.0 == 0) && *self & Self::EAGAIN == Self::EAGAIN {
+            if !first {
+                write!(f, " | ")?;
+            }
+            first = false;
+            write!(f, "EAGAIN")?;
+        }
 
-            _ => return write!(f, "Sound_SampleFlags({})", self.0),
-        })
+        if self.0 & !all_bits != 0 {
+            if !first {
+                write!(f, " | ")?;
+            }
+            write!(f, "{:#x}", self.0)?;
+        } else if first {
+            write!(f, "0")?;
+        }
+        write!(f, ")")
+    }
+}
+
+impl ::core::ops::BitAnd for Sound_SampleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitand(self, rhs: Self) -> Self::Output {
+        Self(self.0 & rhs.0)
+    }
+}
+
+impl ::core::ops::BitAndAssign for Sound_SampleFlags {
+    #[inline(always)]
+    fn bitand_assign(&mut self, rhs: Self) {
+        self.0 &= rhs.0;
+    }
+}
+
+impl ::core::ops::BitOr for Sound_SampleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self(self.0 | rhs.0)
+    }
+}
+
+impl ::core::ops::BitOrAssign for Sound_SampleFlags {
+    #[inline(always)]
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.0 |= rhs.0;
+    }
+}
+
+impl ::core::ops::BitXor for Sound_SampleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn bitxor(self, rhs: Self) -> Self::Output {
+        Self(self.0 ^ rhs.0)
+    }
+}
+
+impl ::core::ops::BitXorAssign for Sound_SampleFlags {
+    #[inline(always)]
+    fn bitxor_assign(&mut self, rhs: Self) {
+        self.0 ^= rhs.0;
+    }
+}
+
+impl ::core::ops::Not for Sound_SampleFlags {
+    type Output = Self;
+
+    #[inline(always)]
+    fn not(self) -> Self::Output {
+        Self(!self.0)
     }
 }
 
 impl Sound_SampleFlags {
     /// No special attributes.
-    pub const NONE: Self = Self((0 as ::core::ffi::c_int));
+    pub const NONE: Self = Self((0 as ::core::primitive::u32));
     /// Sample can seek to arbitrary points.
-    pub const CANSEEK: Self = Self((1 as ::core::ffi::c_int));
+    pub const CANSEEK: Self = Self((1 as ::core::primitive::u32));
     /// End of input stream.
-    pub const EOF: Self = Self((536870912_i32 as ::core::ffi::c_int));
+    pub const EOF: Self = Self((536870912_i32 as ::core::primitive::u32));
     /// Unrecoverable error.
-    pub const ERROR: Self = Self((1073741824_i32 as ::core::ffi::c_int));
+    pub const ERROR: Self = Self((1073741824_i32 as ::core::primitive::u32));
     /// Function would block, or temp error.
-    pub const EAGAIN: Self = Self((-2147483648_i32 as ::core::ffi::c_int));
+    pub const EAGAIN: Self = Self((-2147483648_i32 as ::core::primitive::u32));
 }
 
 /// No special attributes.
@@ -190,7 +290,7 @@ pub const SOUND_SAMPLEFLAG_EAGAIN: Sound_SampleFlags = Sound_SampleFlags::EAGAIN
 impl Sound_SampleFlags {
     /// Initialize a `Sound_SampleFlags` from a raw value.
     #[inline(always)]
-    pub const fn new(value: ::core::ffi::c_int) -> Self {
+    pub const fn new(value: ::core::primitive::u32) -> Self {
         Self(value)
     }
 }
@@ -198,7 +298,7 @@ impl Sound_SampleFlags {
 impl Sound_SampleFlags {
     /// Get a copy of the inner raw value.
     #[inline(always)]
-    pub const fn value(&self) -> ::core::ffi::c_int {
+    pub const fn value(&self) -> ::core::primitive::u32 {
         self.0
     }
 }

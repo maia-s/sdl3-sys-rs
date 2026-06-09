@@ -4,7 +4,7 @@ use super::*;
 
 pub const METADATA_Sound_SampleFlags: Group = Group {
     module: "sound",
-    kind: GroupKind::Enum,
+    kind: GroupKind::Flags,
     name: "Sound_SampleFlags",
     short_name: "SampleFlags",
     doc: Some(
