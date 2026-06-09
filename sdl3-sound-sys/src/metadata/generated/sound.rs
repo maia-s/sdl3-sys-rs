@@ -8,7 +8,7 @@ pub const METADATA_Sound_SampleFlags: Group = Group {
     name: "Sound_SampleFlags",
     short_name: "SampleFlags",
     doc: Some(
-        "Flags that are used in a [`Sound_Sample`] to show various states.\n\n## Availability\nThis enum is available since [`SDL_sound`] 1.0.0.\n\n## See also\n- [`Sound_SampleNew`]\n- [`Sound_SampleNewFromFile`]\n- [`Sound_SampleDecode`]\n- [`Sound_SampleDecodeAll`]\n- [`Sound_SampleSeek`]\n",
+        "Flags that are used in a [`Sound_Sample`] to show various states.\n\n## Availability\nThis enum is available since SDL_sound 1.0.0.\n\n## See also\n- [`Sound_SampleNew`]\n- [`Sound_SampleNewFromFile`]\n- [`Sound_SampleDecode`]\n- [`Sound_SampleDecodeAll`]\n- [`Sound_SampleSeek`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(1, 0, 0)),
     values: &[
@@ -49,7 +49,7 @@ pub const METADATA_Sound_DecoderInfo: Struct = Struct {
     kind: StructKind::Struct,
     name: "Sound_DecoderInfo",
     doc: Some(
-        "[`Sound_DecoderInfo`] Information about available sound decoders.\n\nEach decoder sets up one of these structs, which can be retrieved via the\n[`Sound_AvailableDecoders()`] function. EVERY FIELD IN THIS IS READ-ONLY.\n\nThe extensions field is a NULL-terminated list of ASCIZ strings. You should\nread it like this:\n\n```c\nfor (const char **ext = info->extensions; *ext != NULL; ext++) {\nprintf(\"   File extension \\\"%s\\\"\\n\", *ext);\n}\n```\n\n## Availability\nThis struct is available since [`SDL_sound`] 1.0.0.\n\n## See also\n- [`Sound_AvailableDecoders`]\n",
+        "[`Sound_DecoderInfo`] Information about available sound decoders.\n\nEach decoder sets up one of these structs, which can be retrieved via the\n[`Sound_AvailableDecoders()`] function. EVERY FIELD IN THIS IS READ-ONLY.\n\nThe extensions field is a NULL-terminated list of ASCIZ strings. You should\nread it like this:\n\n```c\nfor (const char **ext = info->extensions; *ext != NULL; ext++) {\nprintf(\"   File extension \\\"%s\\\"\\n\", *ext);\n}\n```\n\n## Availability\nThis struct is available since SDL_sound 1.0.0.\n\n## See also\n- [`Sound_AvailableDecoders`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(1, 0, 0)),
     fields: &[
@@ -84,7 +84,7 @@ pub const METADATA_Sound_Sample: Struct = Struct {
     kind: StructKind::Struct,
     name: "Sound_Sample",
     doc: Some(
-        "Represents sound data in the process of being decoded.\n\nThe [`Sound_Sample`] structure is the heart of [`SDL_sound`]. This holds\ninformation about a source of sound data as it is being decoded. EVERY\nFIELD IN THIS IS READ-ONLY. Please use the API functions to change them.\n\n## Availability\nThis struct is available since [`SDL_sound`] 1.0.0.\n",
+        "Represents sound data in the process of being decoded.\n\nThe [`Sound_Sample`] structure is the heart of SDL_sound. This holds\ninformation about a source of sound data as it is being decoded. EVERY\nFIELD IN THIS IS READ-ONLY. Please use the API functions to change them.\n\n## Availability\nThis struct is available since SDL_sound 1.0.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(1, 0, 0)),
     fields: &[

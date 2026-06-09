@@ -1,15 +1,15 @@
-//! The latest version of [`SDL_sound`] can be found at:
+//! The latest version of SDL_sound can be found at:
 //!
 //! <https://icculus.org/SDL_sound/>
 //!
-//! Note that [`SDL_sound`] is _not_ an official part of the SDL project, despite
+//! Note that SDL_sound is _not_ an official part of the SDL project, despite
 //! its name.
 //!
-//! The basic gist of [`SDL_sound`] is that you use an [`SDL_IOStream`] to get sound
-//! data into this library, and [`SDL_sound`] will take that data, in one of
+//! The basic gist of SDL_sound is that you use an [`SDL_IOStream`] to get sound
+//! data into this library, and SDL_sound will take that data, in one of
 //! several popular formats, and decode it into raw waveform data in the format
 //! of your choice. This gives you a nice abstraction for getting sound into
-//! your game or application; just feed it to [`SDL_sound`], and it will handle
+//! your game or application; just feed it to SDL_sound, and it will handle
 //! decoding and converting, so you can just pass it to your SDL audio callback
 //! (or whatever). Since it gets data from an [`SDL_IOStream`], you can get the
 //! initial sound data from any number of sources: file, memory buffer, network
@@ -35,34 +35,34 @@
 
 use sdl3_sys::everything::*;
 
-/// The current major version of the [`SDL_sound`] headers.
+/// The current major version of the SDL_sound headers.
 ///
-/// If this were [`SDL_sound`] version 3.2.1, this value would be 3.
+/// If this were SDL_sound version 3.2.1, this value would be 3.
 ///
 /// ## Availability
-/// This macro is available since [`SDL_sound`] 3.0.0.
+/// This macro is available since SDL_sound 3.0.0.
 pub const SDL_SOUND_MAJOR_VERSION: ::core::primitive::i32 = 3;
 
-/// The current minor version of the [`SDL_sound`] headers.
+/// The current minor version of the SDL_sound headers.
 ///
-/// If this were [`SDL_sound`] version 3.2.1, this value would be 2.
+/// If this were SDL_sound version 3.2.1, this value would be 2.
 ///
 /// ## Availability
-/// This macro is available since [`SDL_sound`] 3.0.0.
+/// This macro is available since SDL_sound 3.0.0.
 pub const SDL_SOUND_MINOR_VERSION: ::core::primitive::i32 = 2;
 
-/// The current micro (or patchlevel) version of the [`SDL_sound`] headers.
+/// The current micro (or patchlevel) version of the SDL_sound headers.
 ///
-/// If this were [`SDL_sound`] version 3.2.1, this value would be 1.
+/// If this were SDL_sound version 3.2.1, this value would be 1.
 ///
 /// ## Availability
-/// This macro is available since [`SDL_sound`] 3.0.0.
+/// This macro is available since SDL_sound 3.0.0.
 pub const SDL_SOUND_MICRO_VERSION: ::core::primitive::i32 = 0;
 
-/// This is the version number macro for the current [`SDL_sound`] version.
+/// This is the version number macro for the current SDL_sound version.
 ///
 /// ## Availability
-/// This macro is available since [`SDL_sound`] 3.0.0.
+/// This macro is available since SDL_sound 3.0.0.
 ///
 /// ## See also
 /// - [`Sound_Version`]
@@ -72,10 +72,10 @@ pub const SDL_SOUND_VERSION: ::core::primitive::i32 = SDL_VERSIONNUM(
     SDL_SOUND_MICRO_VERSION,
 );
 
-/// This macro will evaluate to true if compiled with [`SDL_sound`] at least X.Y.Z.
+/// This macro will evaluate to true if compiled with SDL_sound at least X.Y.Z.
 ///
 /// ## Availability
-/// This macro is available since [`SDL_sound`] 3.0.0.
+/// This macro is available since SDL_sound 3.0.0.
 #[inline(always)]
 pub const fn SDL_SOUND_VERSION_ATLEAST(
     X: ::core::primitive::i32,
@@ -89,23 +89,23 @@ pub const fn SDL_SOUND_VERSION_ATLEAST(
 }
 
 unsafe extern "C" {
-    /// This function gets the version of the dynamically linked [`SDL_sound`] library.
+    /// This function gets the version of the dynamically linked SDL_sound library.
     ///
     /// ## Return value
-    /// Returns [`SDL_sound`] version.
+    /// Returns SDL_sound version.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 3.0.0.
+    /// This function is available since SDL_sound 3.0.0.
     pub fn Sound_Version() -> ::core::ffi::c_int;
 }
 
 /// Flags that are used in a [`Sound_Sample`] to show various states.
 ///
 /// ## Availability
-/// This enum is available since [`SDL_sound`] 1.0.0.
+/// This enum is available since SDL_sound 1.0.0.
 ///
 /// ## See also
 /// - [`Sound_SampleNew`]
@@ -224,7 +224,7 @@ impl sdl3_sys::metadata::GroupMetadata for Sound_SampleFlags {
 /// ```
 ///
 /// ## Availability
-/// This struct is available since [`SDL_sound`] 1.0.0.
+/// This struct is available since SDL_sound 1.0.0.
 ///
 /// ## See also
 /// - [`Sound_AvailableDecoders`]
@@ -251,12 +251,12 @@ impl ::core::default::Default for Sound_DecoderInfo {
 
 /// Represents sound data in the process of being decoded.
 ///
-/// The [`Sound_Sample`] structure is the heart of [`SDL_sound`]. This holds
+/// The [`Sound_Sample`] structure is the heart of SDL_sound. This holds
 /// information about a source of sound data as it is being decoded. EVERY
 /// FIELD IN THIS IS READ-ONLY. Please use the API functions to change them.
 ///
 /// ## Availability
-/// This struct is available since [`SDL_sound`] 1.0.0.
+/// This struct is available since SDL_sound 1.0.0.
 #[repr(C)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
 pub struct Sound_Sample {
@@ -285,9 +285,9 @@ impl ::core::default::Default for Sound_Sample {
 }
 
 unsafe extern "C" {
-    /// Initialize [`SDL_sound`].
+    /// Initialize SDL_sound.
     ///
-    /// This must be called before any other [`SDL_sound`] function (except perhaps
+    /// This must be called before any other SDL_sound function (except perhaps
     /// [`Sound_Version()`]). You should call [`SDL_Init()`] before calling this.
     /// [`Sound_Init()`] will attempt to call SDL_Init([`SDL_INIT_AUDIO`]), just in case.
     /// This is a safe behaviour, but it may not configure SDL to your liking by
@@ -301,7 +301,7 @@ unsafe extern "C" {
     /// This call is not thread-safe.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_Quit`]
@@ -309,10 +309,10 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
-    /// Shutdown [`SDL_sound`].
+    /// Shutdown SDL_sound.
     ///
     /// This closes any [`SDL_IOStreams`] that were being used as sound sources, and
-    /// frees any resources in use by [`SDL_sound`].
+    /// frees any resources in use by SDL_sound.
     ///
     /// All [`Sound_Sample`] pointers you had prior to this call are invalidated.
     ///
@@ -324,14 +324,14 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns nonzero on success, zero on error. Specifics of the error can be
-    ///   gleaned from [`Sound_GetError()`]. If failure, state of [`SDL_sound`] is
+    ///   gleaned from [`Sound_GetError()`]. If failure, state of SDL_sound is
     ///   undefined, and probably badly screwed up.
     ///
     /// ## Thread safety
     /// This call is not thread-safe.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_Init`]
@@ -339,7 +339,7 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
-    /// Get a list of sound formats supported by this version of [`SDL_sound`].
+    /// Get a list of sound formats supported by this version of SDL_sound.
     ///
     /// This is for informational purposes only. Note that the extension listed is
     /// merely convention: if we list "MP3", you can open an MPEG-1 Layer 3 audio
@@ -370,7 +370,7 @@ unsafe extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_DecoderInfo`]
@@ -378,7 +378,7 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
-    /// Get the last [`SDL_sound`] error message as a null-terminated string.
+    /// Get the last SDL_sound error message as a null-terminated string.
     ///
     /// This will be NULL if there's been no error since the last call to this
     /// function. The pointer returned by this call points to an internal buffer,
@@ -394,7 +394,7 @@ unsafe extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_ClearError`]
@@ -411,7 +411,7 @@ unsafe extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_GetError`]
@@ -436,7 +436,7 @@ unsafe extern "C" {
     /// readable error message can be fetched from [`Sound_GetError()`].
     ///
     /// Optionally, a desired audio format can be specified. If the incoming data
-    /// is in a different format, [`SDL_sound`] will convert it to the desired format
+    /// is in a different format, SDL_sound will convert it to the desired format
     /// on the fly. Note that this can be an expensive operation, so it may be wise
     /// to convert data before you need to play it back, if possible, or make sure
     /// your data is initially in the format that you need it in. If you don't want
@@ -481,16 +481,16 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns [`Sound_Sample`] pointer, which is used as a handle to several other
-    ///   [`SDL_sound`] APIs. NULL on error. If error, use [`Sound_GetError()`] to
+    ///   SDL_sound APIs. NULL on error. If error, use [`Sound_GetError()`] to
     ///   see what went wrong.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0 (using [`SDL_RWops`]
+    /// This function is available since SDL_sound 1.0.0 (using [`SDL_RWops`]
     /// ```text
-    ///    and [`Sound_AudioInfo`]; as of [`SDL_sound`] 3.0.0, this expects the SDL3
+    ///    and [`Sound_AudioInfo`]; as of SDL_sound 3.0.0, this expects the SDL3
     ///    equivalents, SDL_IOStream and SDL_AudioSpec, but is otherwise
     ///    identical).
     /// ```
@@ -528,16 +528,16 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns [`Sound_Sample`] pointer, which is used as a handle to several other
-    ///   [`SDL_sound`] APIs. NULL on error. If error, use [`Sound_GetError()`] to
+    ///   SDL_sound APIs. NULL on error. If error, use [`Sound_GetError()`] to
     ///   see what went wrong.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0 (using
+    /// This function is available since SDL_sound 1.0.0 (using
     /// ```text
-    ///    [`Sound_AudioInfo`]; as of [`SDL_sound`] 3.0.0, this expects the SDL3
+    ///    [`Sound_AudioInfo`]; as of SDL_sound 3.0.0, this expects the SDL3
     ///    equivalent, SDL_AudioSpec, but is otherwise identical).
     /// ```
     ///
@@ -577,16 +577,16 @@ unsafe extern "C" {
     ///
     /// ## Return value
     /// Returns [`Sound_Sample`] pointer, which is used as a handle to several other
-    ///   [`SDL_sound`] APIs. NULL on error. If error, use [`Sound_GetError()`] to
+    ///   SDL_sound APIs. NULL on error. If error, use [`Sound_GetError()`] to
     ///   see what went wrong.
     ///
     /// ## Thread safety
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0 (using
+    /// This function is available since SDL_sound 1.0.0 (using
     /// ```text
-    ///    [`Sound_AudioInfo`]; as of [`SDL_sound`] 3.0.0, this expects the SDL3
+    ///    [`Sound_AudioInfo`]; as of SDL_sound 3.0.0, this expects the SDL3
     ///    equivalent, SDL_AudioSpec, but is otherwise identical).
     /// ```
     ///
@@ -620,9 +620,9 @@ unsafe extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0 (using
+    /// This function is available since SDL_sound 1.0.0 (using
     /// ```text
-    ///    [`Sound_AudioInfo`]; as of [`SDL_sound`] 3.0.0, this expects the SDL3
+    ///    [`Sound_AudioInfo`]; as of SDL_sound 3.0.0, this expects the SDL3
     ///    equivalent, SDL_AudioSpec, but is otherwise identical).
     /// ```
     ///
@@ -660,7 +660,7 @@ unsafe extern "C" {
     /// It is safe to call this function from any thread.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     pub fn Sound_GetDuration(sample: *mut Sound_Sample) -> Sint32;
 }
 
@@ -694,7 +694,7 @@ unsafe extern "C" {
     ///   at the same time.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_Decode`]
@@ -706,7 +706,7 @@ unsafe extern "C" {
     /// Change the desired output format for a sample.
     ///
     /// Future calls to [`Sound_Decode()`] or [`Sound_DecodeAll()`] will produce audio in
-    /// the newly-requested format; [`SDL_sound`] will convert on-the-fly while
+    /// the newly-requested format; SDL_sound will convert on-the-fly while
     /// decoding, if necessary.
     ///
     /// The sample's buffer size, must be a multiple of the size of a single sample
@@ -734,7 +734,7 @@ unsafe extern "C" {
     ///   at the same time.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 3.0.0.
+    /// This function is available since SDL_sound 3.0.0.
     ///
     /// ## See also
     /// - [`Sound_Decode`]
@@ -767,7 +767,7 @@ unsafe extern "C" {
     ///   at the same time.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_DecodeAll`]
@@ -814,7 +814,7 @@ unsafe extern "C" {
     ///   at the same time.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_Decode`]
@@ -835,7 +835,7 @@ unsafe extern "C" {
     /// avoided by wrapping it in some sort of buffering [`SDL_IOStream`].
     ///
     /// This function should ONLY fail if the [`SDL_IOStream`] is not seekable, or
-    /// [`SDL_sound`] is not initialized. Both can be controlled by the application,
+    /// SDL_sound is not initialized. Both can be controlled by the application,
     /// and thus, it is up to the developer's paranoia to dictate whether this
     /// function's return value need be checked at all.
     ///
@@ -859,7 +859,7 @@ unsafe extern "C" {
     ///   at the same time.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_Seek`]
@@ -912,7 +912,7 @@ unsafe extern "C" {
     ///   at the same time.
     ///
     /// ## Availability
-    /// This function is available since [`SDL_sound`] 1.0.0.
+    /// This function is available since SDL_sound 1.0.0.
     ///
     /// ## See also
     /// - [`Sound_Rewind`]
