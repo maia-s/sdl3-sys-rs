@@ -30,6 +30,7 @@ SDL 3's callback API can be used via the [`sdl3-main`](https://crates.io/crates/
 - [`sdl3-image-sys`](https://crates.io/crates/sdl3-image-sys): Bindings for SDL3_image
 - [`sdl3-mixer-sys`](https://crates.io/crates/sdl3-mixer-sys): Bindings for SDL3_mixer
 - [`sdl3-net-sys`](https://crates.io/crates/sdl3-net-sys): Bindings for SDL3_net
+- [`sdl3-sound-sys`](https://crates.io/crates/sdl3-sound-sys): Bindings for SDL_sound 3
 - [`sdl3-ttf-sys`](https://crates.io/crates/sdl3-ttf-sys): Bindings for SDL3_ttf
 
 Other satellite libraries aren't stable yet, and will be released as they're available.

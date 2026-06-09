@@ -1,16 +1,16 @@
 # sdl3-sound-sys: Low level Rust bindings for SDL3_sound
 
-These are low level Rust bindings for SDL3_sound, an add-on library for
-[SDL 3](https://libsdl.org) for loading audio files.
+These are low level Rust bindings for [SDL_sound 3](https://github.com/icculus/SDL_sound),
+an add-on library for [SDL 3](https://libsdl.org) for decoding several popular sound file formats.
 This version of `sdl3-sound-sys` has bindings for SDL_sound version `3.2.0`.
 
-`sdl3-sound-sys` works out of the box on any target that SDL3_sound supports and doesn't require anything
-else if the SDL3_sound library is installed or otherwise available. On targets that support it you can
-use `pkg-config` or `vcpkg` to locate the SDL3_sound library if required (see below).
+`sdl3-sound-sys` works out of the box on any target that SDL_sound 3 supports and doesn't require anything
+else if the SDL_sound 3 library is installed or otherwise available. On targets that support it you can
+use `pkg-config` or `vcpkg` to locate the SDL_sound 3 library if required (see below).
 
-If the SDL3_sound library isn't already available, you have the option of building it from source as
-part of the build (see below), which requires CMake, a C compiler, and any dependencies that SDL3_sound
-needs to build on your target. You can also choose to use vendored dependencies.
+If the SDL_sound 3 library isn't already available, you have the option of building it from source as
+part of the build (see below), which requires CMake, a C compiler, and SDL (which can also be built
+from source via the `sdl3-sys` crate).
 Builds for web are supported via Emscripten (`wasm32-unknown-emscripten`).
 
 > ⓘ *Most of the docs are generated directly from the original C headers, which documents how*
@@ -58,6 +58,9 @@ Formats are autodetected by default, except for MIDI which is disabled by defaul
 | `no-default-formats`  | Disable all formats by default |
 
 #### Formats
+
+Use `sdlsound-` prefix to enable and `no-sdlsound-` prefix to disable, e.g. `sdlsound-wav` to enable wav.
+Enables override disables.
 
 None of these formats require additional dependencies.
 

@@ -435,7 +435,6 @@ dependencies = [
  "cmake",
  "pkg-config",
  "rpkg-config",
- "sdl3-main",
  "sdl3-sound-src",
  "sdl3-sys",
  "vcpkg",
