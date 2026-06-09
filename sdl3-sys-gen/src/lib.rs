@@ -360,7 +360,11 @@ impl Library {
                 && revision_tag[1..].chars().next().unwrap().is_ascii_digit()
             {
                 if revision_offset == "0" {
-                    ("", format!("{version}-{revision_tag}"))
+                    if revision_tag[1..] == version {
+                        ("", version.clone())
+                    } else {
+                        ("", format!("{version}-{revision_tag}"))
+                    }
                 } else {
                     (
                         "",

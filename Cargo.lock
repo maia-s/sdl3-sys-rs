@@ -426,11 +426,11 @@ dependencies = [
 
 [[package]]
 name = "sdl3-sound-src"
-version = "3.2.0-v3.2.0"
+version = "3.2.0"
 
 [[package]]
 name = "sdl3-sound-sys"
-version = "0.6.0+SDL-sound-3.2.0-v3.2.0"
+version = "0.6.0+SDL-sound-3.2.0"
 dependencies = [
  "cmake",
  "pkg-config",

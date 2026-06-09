@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sound-sys"
-version = "0.6.0+SDL-sound-3.2.0-v3.2.0"
+version = "0.6.0+SDL-sound-3.2.0"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -108,7 +108,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-sound-src]
-version = "=3.2.0-v3.2.0"
+version = "=3.2.0"
 path = "../sdl3-sound-src"
 optional = true
 
