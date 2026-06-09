@@ -93,7 +93,7 @@ main() {
 
     pre_gen $crates
 
-    cargo run -p sdl3-sys-gen $gen_profile
+    cargo run -p sdl3-sys-gen $gen_profile -- $crates
 
     post_gen $crates
 
