@@ -374,16 +374,15 @@ impl DocComment {
                         // escape `[` and `]` that aren't markdown links
                         match line.as_bytes()[i] {
                             b'[' => {
-                                if let Some(e) = line[i + 1..].find(['[', ']']).map(|e| e + i + 1) {
-                                    if (line.as_bytes()[e] == b'['
+                                if let Some(e) = line[i + 1..].find(['[', ']']).map(|e| e + i + 1)
+                                    && ((line.as_bytes()[e] == b'['
                                         && line.as_bytes().get(e + 1).copied() != Some(b'\''))
                                         || !matches!(
                                             line.as_bytes().get(e + 1).copied(),
                                             Some(b'(') | Some(b'\''),
-                                        )
-                                    {
-                                        patched.write_char('\\')?;
-                                    }
+                                        ))
+                                {
+                                    patched.write_char('\\')?;
                                 }
                             }
                             b']' if !matches!(
@@ -571,16 +570,15 @@ impl Conditional {
                         let _eval_mode = ctx.preproc_eval_mode_guard();
                         expr.try_eval(ctx)?
                     };
-                    if value.is_none() {
-                        if let Expr::BinaryOp(bop) = &expr {
-                            if let Expr::Ident(lhs) = &bop.lhs {
-                                value = ctx.try_target_dependent_if_compare(
-                                    bop.op.as_str(),
-                                    lhs.as_str(),
-                                    &bop.rhs,
-                                );
-                            }
-                        }
+                    if value.is_none()
+                        && let Expr::BinaryOp(bop) = &expr
+                        && let Expr::Ident(lhs) = &bop.lhs
+                    {
+                        value = ctx.try_target_dependent_if_compare(
+                            bop.op.as_str(),
+                            lhs.as_str(),
+                            &bop.rhs,
+                        );
                     }
                     if let Some(value) = value {
                         Ok(if let Value::TargetDependent(define_state) = value {
@@ -629,16 +627,15 @@ impl<const ALLOW_INITIAL_ELSE: bool> Emit for PreProcBlock<ALLOW_INITIAL_ELSE> {
                     let _eval_mode = ctx.preproc_eval_mode_guard();
                     expr.try_eval(ctx)?
                 };
-                if value.is_none() {
-                    if let Expr::BinaryOp(bop) = &expr {
-                        if let Expr::Ident(lhs) = &bop.lhs {
-                            value = ctx.try_target_dependent_if_compare(
-                                bop.op.as_str(),
-                                lhs.as_str(),
-                                &bop.rhs,
-                            );
-                        }
-                    }
+                if value.is_none()
+                    && let Expr::BinaryOp(bop) = &expr
+                    && let Expr::Ident(lhs) = &bop.lhs
+                {
+                    value = ctx.try_target_dependent_if_compare(
+                        bop.op.as_str(),
+                        lhs.as_str(),
+                        &bop.rhs,
+                    );
                 }
                 if let Some(value) = value {
                     if let Value::TargetDependent(define_state) = value {
@@ -1100,10 +1097,10 @@ impl Enum {
         doc: Option<DocComment>,
         alias_ty: Option<Type>,
     ) -> EmitResult {
-        if let Some(ident) = &self.ident {
-            if !self.registered.get() {
-                ctx.scope_mut().register_enum_sym(ident.clone())?;
-            }
+        if let Some(ident) = &self.ident
+            && !self.registered.get()
+        {
+            ctx.scope_mut().register_enum_sym(ident.clone())?;
         }
 
         let module = ctx.module().to_string();
@@ -1656,14 +1653,13 @@ impl StructOrUnion {
             false
         };
 
-        if let Some(fields) = &self.fields {
-            if fields
+        if let Some(fields) = &self.fields
+            && fields
                 .fields
                 .iter()
                 .any(|field| field.ident.as_str().starts_with("padding"))
-            {
-                doc.as_mut().unwrap().add_note("This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.");
-            }
+        {
+            doc.as_mut().unwrap().add_note("This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.");
         }
 
         if !self.can_construct {
@@ -1971,17 +1967,14 @@ impl Emit for Type {
                     return Err(ParseErr::new(len.span(), "invalid array length").into());
                 };
                 // check if the length is an enum value
-                if let Expr::Ident(ident) = len {
-                    if let Some(ty) = ctx
+                if let Expr::Ident(ident) = len
+                    && let Some(ty) = ctx
                         .lookup_sym(&ident.clone().try_into().unwrap())
                         .and_then(|s| s.value_ty)
-                    {
-                        if let TypeEnum::Ident(ident) = &ty.ty {
-                            if ctx.lookup_enum_sym(ident).is_some() {
-                                write!(ctx, ".0 as ::core::primitive::usize")?;
-                            }
-                        }
-                    }
+                    && let TypeEnum::Ident(ident) = &ty.ty
+                    && ctx.lookup_enum_sym(ident).is_some()
+                {
+                    write!(ctx, ".0 as ::core::primitive::usize")?;
                 }
                 write!(ctx, "]")?;
             }
@@ -2084,15 +2077,15 @@ impl Emit for TypeDef {
 
                     ctx.flush_ool_output()?;
 
-                    if let Some(ident) = &s.ident {
-                        if self.ident.as_str() != ident.as_str() {
-                            write!(ctx, "pub type ")?;
-                            self.ident.emit(ctx)?;
-                            write!(ctx, " = ")?;
-                            ident.emit(ctx)?;
-                            writeln!(ctx, ";")?;
-                            writeln!(ctx)?;
-                        }
+                    if let Some(ident) = &s.ident
+                        && self.ident.as_str() != ident.as_str()
+                    {
+                        write!(ctx, "pub type ")?;
+                        self.ident.emit(ctx)?;
+                        write!(ctx, " = ")?;
+                        ident.emit(ctx)?;
+                        writeln!(ctx, ";")?;
+                        writeln!(ctx)?;
                     }
 
                     Ok(())

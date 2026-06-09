@@ -268,31 +268,30 @@ impl Library {
         let mut version_minor = None;
         let mut version_micro = None;
         for line in read_to_string(&version_header)?.lines() {
-            if let Some(line) = line.trim_ascii_start().strip_prefix("#define") {
-                if let Some(line) = line.trim_ascii_start().strip_prefix(define_prefix) {
-                    if let Some(line) = line.strip_prefix("MAJOR_VERSION") {
-                        version_major = Some(
-                            line.trim_ascii()
-                                .parse::<usize>()
-                                .map_err(|e| format!("couldn't parse major version: {e}"))?,
-                        );
-                    } else if let Some(line) = line.strip_prefix("MINOR_VERSION") {
-                        version_minor = Some(
-                            line.trim_ascii()
-                                .parse::<usize>()
-                                .map_err(|e| format!("couldn't parse minor version: {e}"))?,
-                        );
-                    } else if let Some(line) = line.strip_prefix("MICRO_VERSION") {
-                        version_micro = Some(
-                            line.trim_ascii()
-                                .parse::<usize>()
-                                .map_err(|e| format!("couldn't parse micro version: {e}"))?,
-                        );
-                    }
-                    if version_major.is_some() && version_minor.is_some() && version_micro.is_some()
-                    {
-                        break;
-                    }
+            if let Some(line) = line.trim_ascii_start().strip_prefix("#define")
+                && let Some(line) = line.trim_ascii_start().strip_prefix(define_prefix)
+            {
+                if let Some(line) = line.strip_prefix("MAJOR_VERSION") {
+                    version_major = Some(
+                        line.trim_ascii()
+                            .parse::<usize>()
+                            .map_err(|e| format!("couldn't parse major version: {e}"))?,
+                    );
+                } else if let Some(line) = line.strip_prefix("MINOR_VERSION") {
+                    version_minor = Some(
+                        line.trim_ascii()
+                            .parse::<usize>()
+                            .map_err(|e| format!("couldn't parse minor version: {e}"))?,
+                    );
+                } else if let Some(line) = line.strip_prefix("MICRO_VERSION") {
+                    version_micro = Some(
+                        line.trim_ascii()
+                            .parse::<usize>()
+                            .map_err(|e| format!("couldn't parse micro version: {e}"))?,
+                    );
+                }
+                if version_major.is_some() && version_minor.is_some() && version_micro.is_some() {
+                    break;
                 }
             }
         }

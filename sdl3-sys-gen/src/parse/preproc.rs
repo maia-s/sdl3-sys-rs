@@ -95,11 +95,12 @@ impl Parse for DefineValue {
             let mut items = Items::try_parse_try_all(ctx, input)?;
             let expr = Expr::try_parse_try_all(ctx, input)?;
             let ty = Type::try_parse_try_all(ctx, input)?;
-            if let Some(i) = &items {
-                if i.0.len() == 1 && matches!(i.0[0], Item::FnCall(_)) {
-                    // skip FnCall item as it'll have been parsed as Expr::FnCall too
-                    items = None;
-                }
+            if let Some(i) = &items
+                && i.0.len() == 1
+                && matches!(i.0[0], Item::FnCall(_))
+            {
+                // skip FnCall item as it'll have been parsed as Expr::FnCall too
+                items = None;
             }
             if items.is_some() as usize + expr.is_some() as usize + ty.is_some() as usize > 1 {
                 let mut ambiguous = Ambiguous::new(input.clone());
@@ -483,30 +484,28 @@ impl Parse for PreProcLine {
                             skip: false,
                         };
                         patch_parsed_define(ctx, &mut define)?;
-                        if let Some(td) = &mut *ctx.active_typedef.borrow_mut() {
-                            if let TypeDefKind::Enum {
+                        if let Some(td) = &mut *ctx.active_typedef.borrow_mut()
+                            && let TypeDefKind::Enum {
                                 variants,
                                 match_define,
                                 ..
                             } = &mut td.kind
-                            {
-                                if match_define(define.ident.as_str()) {
-                                    define.skip = true;
-                                    let DefineValue::Expr(value) =
-                                        define.value.cast_expr(Type::ident(td.ident.clone()))
-                                    else {
-                                        todo!()
-                                    };
-                                    variants.borrow_mut().push(EnumVariant {
-                                        cond: Conditional::new(),
-                                        doc: define.doc.clone(),
-                                        ident: define.ident.clone().try_into().unwrap(),
-                                        expr: Some(value),
-                                        comma: None,
-                                        registered: Cell::new(false),
-                                    });
-                                }
-                            }
+                            && match_define(define.ident.as_str())
+                        {
+                            define.skip = true;
+                            let DefineValue::Expr(value) =
+                                define.value.cast_expr(Type::ident(td.ident.clone()))
+                            else {
+                                todo!()
+                            };
+                            variants.borrow_mut().push(EnumVariant {
+                                cond: Conditional::new(),
+                                doc: define.doc.clone(),
+                                ident: define.ident.clone().try_into().unwrap(),
+                                expr: Some(value),
+                                comma: None,
+                                registered: Cell::new(false),
+                            });
                         }
                         PreProcLineKind::Define(define)
                     }

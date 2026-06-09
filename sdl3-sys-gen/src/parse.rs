@@ -151,10 +151,10 @@ pub trait Parse: Sized {
         input: &Span,
         accept: impl FnOnce(&Self) -> bool,
     ) -> ParseRawRes<Option<Self>> {
-        if let (rest, Some(parsed)) = Self::try_parse_raw(ctx, input)? {
-            if accept(&parsed) {
-                return Ok((rest, Some(parsed)));
-            }
+        if let (rest, Some(parsed)) = Self::try_parse_raw(ctx, input)?
+            && accept(&parsed)
+        {
+            return Ok((rest, Some(parsed)));
         }
         Ok((input.clone(), None))
     }

@@ -87,16 +87,15 @@ pub fn patch_parsed_define(ctx: &ParseContext, define: &mut Define) -> Result<bo
             Ok(true)
         }
         ("mutex", _) => {
-            if let DefineValue::Expr(Expr::FnCall(call)) = &define.value {
-                if let Expr::Ident(ident) = &*call.func {
-                    if matches!(
-                        ident.as_str(),
-                        "__attribute__" | "SDL_THREAD_ANNOTATION_ATTRIBUTE__"
-                    ) {
-                        define.value = DefineValue::Empty;
-                        return Ok(true);
-                    }
-                }
+            if let DefineValue::Expr(Expr::FnCall(call)) = &define.value
+                && let Expr::Ident(ident) = &*call.func
+                && matches!(
+                    ident.as_str(),
+                    "__attribute__" | "SDL_THREAD_ANNOTATION_ATTRIBUTE__"
+                )
+            {
+                define.value = DefineValue::Empty;
+                return Ok(true);
             }
             Ok(false)
         }

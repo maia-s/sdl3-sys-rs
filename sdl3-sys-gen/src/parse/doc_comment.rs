@@ -86,14 +86,14 @@ impl Display for DocComment {
             .skip_while(|line| line.trim().is_empty())
             .peekable();
 
-        if let Some(line) = lines.peek() {
-            if line.trim().starts_with("# Category") {
+        if let Some(line) = lines.peek()
+            && line.trim().starts_with("# Category")
+        {
+            lines.next();
+            if let Some(line) = lines.peek()
+                && line.trim().is_empty()
+            {
                 lines.next();
-                if let Some(line) = lines.peek() {
-                    if line.trim().is_empty() {
-                        lines.next();
-                    }
-                }
             }
         }
 
@@ -232,11 +232,11 @@ impl Parse for DocCommentFile {
     }
 
     fn try_parse_raw(ctx: &ParseContext, input: &Span) -> ParseRawRes<Option<Self>> {
-        if let (mut rest, Some(dc)) = DocComment::try_parse_raw(ctx, input)? {
-            if WsAndComments::try_parse(ctx, &mut rest)?.is_some() {
-                // empty line after doc comment, so it's not attached to anything
-                return Ok((rest, Some(Self(dc))));
-            }
+        if let (mut rest, Some(dc)) = DocComment::try_parse_raw(ctx, input)?
+            && WsAndComments::try_parse(ctx, &mut rest)?.is_some()
+        {
+            // empty line after doc comment, so it's not attached to anything
+            return Ok((rest, Some(Self(dc))));
         }
         Ok((input.clone(), None))
     }

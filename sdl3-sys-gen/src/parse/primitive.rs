@@ -233,12 +233,10 @@ impl Parse for PrimitiveTypeParse {
             ));
         } else if let (mut rest, Some(ident)) = IdentOrKw::try_parse_raw(ctx, &rest)? {
             let mut span = ident.span();
-            if !is_const {
-                if let (rest_, Some(const_kw)) = Kw_const::try_parse_raw(ctx, &rest)? {
-                    rest = rest_;
-                    span = span.join(&const_kw.span());
-                    is_const = true;
-                }
+            if !is_const && let (rest_, Some(const_kw)) = Kw_const::try_parse_raw(ctx, &rest)? {
+                rest = rest_;
+                span = span.join(&const_kw.span());
+                is_const = true;
             }
             return Ok((
                 rest,

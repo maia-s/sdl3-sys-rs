@@ -193,26 +193,25 @@ impl Expr {
             }
         }
 
-        if is_cast {
-            if let (not_cast_rest, Some(not_cast)) =
+        if is_cast
+            && let (not_cast_rest, Some(not_cast)) =
                 Expr::try_parse_raw_with_prec(ctx, input, prec, false)?
-            {
-                match rest.start_pos().cmp(&not_cast_rest.start_pos()) {
-                    Ordering::Greater => {
-                        // keep the cast
-                    }
-                    Ordering::Less => {
-                        return Err(ParseErr::new(
-                            lhs.span(),
-                            "expression is valid both as a cast and as a non-cast expression, but expression is longer",
-                        ));
-                    }
-                    Ordering::Equal => {
-                        let mut ambiguous = Ambiguous::new(lhs.span().join(&not_cast.span()));
-                        ambiguous.push_expr(lhs);
-                        ambiguous.push_expr(not_cast);
-                        lhs = Expr::Ambiguous(ambiguous);
-                    }
+        {
+            match rest.start_pos().cmp(&not_cast_rest.start_pos()) {
+                Ordering::Greater => {
+                    // keep the cast
+                }
+                Ordering::Less => {
+                    return Err(ParseErr::new(
+                        lhs.span(),
+                        "expression is valid both as a cast and as a non-cast expression, but expression is longer",
+                    ));
+                }
+                Ordering::Equal => {
+                    let mut ambiguous = Ambiguous::new(lhs.span().join(&not_cast.span()));
+                    ambiguous.push_expr(lhs);
+                    ambiguous.push_expr(not_cast);
+                    lhs = Expr::Ambiguous(ambiguous);
                 }
             }
         }

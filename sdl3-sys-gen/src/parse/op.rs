@@ -135,11 +135,11 @@ impl ExprOp {
         ctx: &ParseContext,
         input: &mut Span,
     ) -> ParseRes<Option<(Precedence, Self)>> {
-        if let (rest, Some(op)) = ExprOp::try_parse_raw(ctx, input)? {
-            if let Some(prec) = op.unary_precedence() {
-                *input = rest;
-                return Ok(Some((prec, op)));
-            }
+        if let (rest, Some(op)) = ExprOp::try_parse_raw(ctx, input)?
+            && let Some(prec) = op.unary_precedence()
+        {
+            *input = rest;
+            return Ok(Some((prec, op)));
         }
         Ok(None)
     }
@@ -148,11 +148,11 @@ impl ExprOp {
         ctx: &ParseContext,
         input: &mut Span,
     ) -> ParseRes<Option<(Precedence, Self)>> {
-        if let (rest, Some(op)) = ExprOp::try_parse_raw(ctx, input)? {
-            if let Some(prec) = op.binary_precedence() {
-                *input = rest;
-                return Ok(Some((prec, op)));
-            }
+        if let (rest, Some(op)) = ExprOp::try_parse_raw(ctx, input)?
+            && let Some(prec) = op.binary_precedence()
+        {
+            *input = rest;
+            return Ok(Some((prec, op)));
         }
         Ok(None)
     }

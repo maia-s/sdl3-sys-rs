@@ -418,10 +418,10 @@ impl Value {
         let is_const;
         let is_unsafe;
 
-        if let Ok(ty) = self.ty() {
-            if ty == target {
-                return Ok(Some(self.clone()));
-            }
+        if let Ok(ty) = self.ty()
+            && ty == target
+        {
+            return Ok(Some(self.clone()));
         }
 
         match self {
@@ -914,47 +914,45 @@ impl Eval for SizeOf {
                 match expr {
                     Expr::UnaryOp(uop) if uop.op.as_str() == "*" => {
                         // special case: sizeof(*pointer_variable)
-                        if let Expr::Ident(ident) = &uop.expr.deparenthesize() {
-                            if let Some(Sym {
+                        if let Expr::Ident(ident) = &uop.expr.deparenthesize()
+                            && let Some(Sym {
                                 value_ty: Some(ty), ..
                             }) = ctx.lookup_sym(&ident.clone().try_into().unwrap())
-                            {
-                                if let Some(ty) = ty.get_pointer_type() {
-                                    let code = ctx.capture_output(|ctx| {
-                                        write!(ctx, "::core::mem::size_of::<")?;
-                                        ty.emit(ctx)?;
-                                        write!(ctx, ">()")?;
-                                        Ok(())
-                                    })?;
-                                    return Ok(Some(Value::RustCode(RustCode::boxed(
-                                        code,
-                                        Type::primitive(PrimitiveType::SizeT),
-                                        true,
-                                        false,
-                                    ))));
-                                }
-                            }
+                            && let Some(ty) = ty.get_pointer_type()
+                        {
+                            let code = ctx.capture_output(|ctx| {
+                                write!(ctx, "::core::mem::size_of::<")?;
+                                ty.emit(ctx)?;
+                                write!(ctx, ">()")?;
+                                Ok(())
+                            })?;
+                            return Ok(Some(Value::RustCode(RustCode::boxed(
+                                code,
+                                Type::primitive(PrimitiveType::SizeT),
+                                true,
+                                false,
+                            ))));
                         }
                     }
 
                     Expr::BinaryOp(bop) if bop.op.as_str() == "->" => {
                         // special case: sizeof(((Type*)_)->field)
                         let lhs = bop.lhs.deparenthesize();
-                        if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs) {
-                            if let Some(ty) = lhs.ty.get_pointer_type() {
-                                let code = ctx.capture_output(|ctx| {
-                                    write!(ctx, "crate::size_of_field!(")?;
-                                    ty.emit(ctx)?;
-                                    write!(ctx, ", {rhs})")?;
-                                    Ok(())
-                                })?;
-                                return Ok(Some(Value::RustCode(RustCode::boxed(
-                                    code,
-                                    Type::primitive(PrimitiveType::SizeT),
-                                    true,
-                                    false,
-                                ))));
-                            }
+                        if let (Expr::Cast(lhs), Expr::Ident(rhs)) = (&lhs, &bop.rhs)
+                            && let Some(ty) = lhs.ty.get_pointer_type()
+                        {
+                            let code = ctx.capture_output(|ctx| {
+                                write!(ctx, "crate::size_of_field!(")?;
+                                ty.emit(ctx)?;
+                                write!(ctx, ", {rhs})")?;
+                                Ok(())
+                            })?;
+                            return Ok(Some(Value::RustCode(RustCode::boxed(
+                                code,
+                                Type::primitive(PrimitiveType::SizeT),
+                                true,
+                                false,
+                            ))));
                         }
                     }
 
@@ -1058,19 +1056,19 @@ impl Eval for Expr {
                     "false" => return Ok(Some(Value::Bool(false))),
                     "size_t" => return Ok(None),
                     _ => {
-                        if let Ok(ident) = Ident::try_from(ident.clone()) {
-                            if let Some(sym) = ctx.lookup_sym(&ident) {
-                                return if let Some(ty) = &sym.value_ty {
-                                    Ok(Some(Value::RustCode(RustCode::boxed(
-                                        ident.to_string(),
-                                        ty.clone(),
-                                        true,
-                                        false,
-                                    ))))
-                                } else {
-                                    Ok(None)
-                                };
-                            }
+                        if let Ok(ident) = Ident::try_from(ident.clone())
+                            && let Some(sym) = ctx.lookup_sym(&ident)
+                        {
+                            return if let Some(ty) = &sym.value_ty {
+                                Ok(Some(Value::RustCode(RustCode::boxed(
+                                    ident.to_string(),
+                                    ty.clone(),
+                                    true,
+                                    false,
+                                ))))
+                            } else {
+                                Ok(None)
+                            };
                         }
                     }
                 }
@@ -1102,10 +1100,10 @@ impl Eval for Expr {
 
                 return match uop.op.as_str().as_bytes() {
                     b"!" => {
-                        if ctx.is_preproc_eval_mode() {
-                            if let Value::TargetDependent(ds) = expr {
-                                return Ok(Some(Value::TargetDependent(ds.not())));
-                            }
+                        if ctx.is_preproc_eval_mode()
+                            && let Value::TargetDependent(ds) = expr
+                        {
+                            return Ok(Some(Value::TargetDependent(ds.not())));
                         }
                         let expr = expr.coerce(ctx, &Type::bool())?.unwrap_or(expr);
                         match expr {
@@ -1171,18 +1169,16 @@ impl Eval for Expr {
 
             Expr::BinaryOp(bop) => {
                 fn is_pointer(ctx: &EmitContext, expr: &Expr) -> bool {
-                    if let Expr::Ident(i) = &expr {
-                        if let Ok(i) = i.clone().try_into() {
-                            if let Some(sym) = ctx.lookup_sym(&i) {
-                                if let Some(ty) = sym.value_ty {
-                                    if ty.is_pointer() {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
+                    if let Expr::Ident(i) = &expr
+                        && let Ok(i) = i.clone().try_into()
+                        && let Some(sym) = ctx.lookup_sym(&i)
+                        && let Some(ty) = sym.value_ty
+                        && ty.is_pointer()
+                    {
+                        true
+                    } else {
+                        false
                     }
-                    false
                 }
                 macro_rules! assign {
                     ($op:tt) => {{
@@ -1774,10 +1770,10 @@ impl Emit for Parenthesized {
 
 impl Emit for FnCall {
     fn emit(&self, ctx: &mut EmitContext) -> EmitResult {
-        if let Expr::Ident(ident) = &*self.func {
-            if patch_emit_macro_call(ctx, ident.as_str(), self)? {
-                return Ok(());
-            }
+        if let Expr::Ident(ident) = &*self.func
+            && patch_emit_macro_call(ctx, ident.as_str(), self)?
+        {
+            return Ok(());
         }
         if let Some(value) = self.try_eval(ctx)? {
             value.emit(ctx)

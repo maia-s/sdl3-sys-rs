@@ -1074,12 +1074,11 @@ impl PreProcState {
         value: DefineValue,
     ) -> EmitResult {
         if let Ok(true) = self.is_defined_ignore_target(&key) {
-            if let DefineValue::Expr(Expr::Literal(new_lit)) = &value {
-                if let DefineValue::Expr(Expr::Literal(old_lit)) = &self.lookup(&key)?.unwrap().1 {
-                    if new_lit == old_lit {
-                        return Ok(());
-                    }
-                }
+            if let DefineValue::Expr(Expr::Literal(new_lit)) = &value
+                && let DefineValue::Expr(Expr::Literal(old_lit)) = &self.lookup(&key)?.unwrap().1
+                && new_lit == old_lit
+            {
+                return Ok(());
             }
             return Err(ParseErr::new(key.span, "already defined").into());
         }
@@ -1206,14 +1205,12 @@ impl Sym {
                 return Some(field.ty.clone());
             }
         }
-        if let Some(alias) = &self.alias_ty {
-            if let Some(ty) = &alias.inner_ty() {
-                if let TypeEnum::Ident(i) = &ty.ty {
-                    if let Some(sym) = ctx.lookup_sym(i) {
-                        return sym.field_type(ctx, name);
-                    }
-                }
-            }
+        if let Some(alias) = &self.alias_ty
+            && let Some(ty) = &alias.inner_ty()
+            && let TypeEnum::Ident(i) = &ty.ty
+            && let Some(sym) = ctx.lookup_sym(i)
+        {
+            return sym.field_type(ctx, name);
         }
         None
     }
@@ -1423,17 +1420,17 @@ impl Scope {
 impl InnerScope {
     pub fn register_sym(&mut self, sym: Sym) -> EmitResult {
         let span = sym.ident.span();
-        if let Some(s) = self.lookup(&sym.ident) {
-            if sym.module != s.module {
-                return Err(ParseErr::new(
-                    span,
-                    format!(
-                        "symbol already defined in this scope (imported from `{}`)",
-                        s.module
-                    ),
-                )
-                .into());
-            }
+        if let Some(s) = self.lookup(&sym.ident)
+            && sym.module != s.module
+        {
+            return Err(ParseErr::new(
+                span,
+                format!(
+                    "symbol already defined in this scope (imported from `{}`)",
+                    s.module
+                ),
+            )
+            .into());
         }
         self.syms.insert(sym.ident.clone(), sym.clone());
         Ok(())
