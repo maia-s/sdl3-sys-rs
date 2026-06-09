@@ -16,7 +16,7 @@ main() {
     git update-index --refresh
     git diff-index --quiet HEAD -- || die "git isn't clean"
 
-    branches="${@:-sdl-dev-3.4 sdl-dev-3.6 image-dev-3.4 image-dev-3.6 ttf-dev mixer-dev net-dev shadercross-dev sound-dev}"
+    branches="${@:-sdl-dev-3.4 sdl-dev-3.6 image-dev-3.4 image-dev-3.6 ttf-dev mixer-dev net-dev shadercross-dev sound-dev-3.2 sound-dev-3.4}"
     for branch in $branches; do
         case $branch in
             sdl-dev-3.4) crate=sdl3-sys; src_dir=sdl3-src/SDL; src_branch=origin/release-3.4.x;;
@@ -27,7 +27,8 @@ main() {
             mixer-dev) crate=sdl3-mixer-sys; src_dir=sdl3-mixer-src/SDL_mixer; src_branch=origin/main;;
             net-dev) crate=sdl3-net-sys; src_dir=sdl3-net-src/SDL_net; src_branch=origin/main;;
             shadercross-dev) crate=sdl3-shadercross-sys; src_dir=sdl3-shadercross-src/SDL_shadercross; src_branch=origin/main;;
-            sound-dev) crate=sdl3-sound-sys; src_dir=sdl3-sound-src/SDL_sound; src_branch=origin/main;;
+            sound-dev-3.2) crate=sdl3-sound-sys; src_dir=sdl3-sound-src/SDL_sound; src_branch=origin/release-3.2.x;;
+            sound-dev-3.4) crate=sdl3-sound-sys; src_dir=sdl3-sound-src/SDL_sound; src_branch=origin/main;;
             *) die "unknown branch $branch"
         esac
 
