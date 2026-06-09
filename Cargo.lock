@@ -425,6 +425,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "sdl3-sound-src"
+version = "3.2.0-v3.2.0"
+
+[[package]]
+name = "sdl3-sound-sys"
+version = "0.6.0+SDL-sound-3.2.0-v3.2.0"
+dependencies = [
+ "cmake",
+ "pkg-config",
+ "rpkg-config",
+ "sdl3-main",
+ "sdl3-sound-src",
+ "sdl3-sys",
+ "vcpkg",
+]
+
+[[package]]
 name = "sdl3-src"
 version = "3.4.10"
 

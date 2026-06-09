@@ -453,6 +453,10 @@ pub fn patch_parsed_typedef(ctx: &ParseContext, td: &mut TypeDef) -> Result<bool
             *match_define = |_| false;
             Ok(true)
         }
+        ("sound", "Sound_SampleFlags") => {
+            td.kind = TypeDefKind::Alias;
+            Ok(true)
+        }
         ("video", "SDL_WindowID") => {
             let TypeDefKind::Enum { match_define, .. } = &mut td.kind else {
                 unreachable!()

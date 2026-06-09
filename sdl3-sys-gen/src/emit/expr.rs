@@ -1022,7 +1022,9 @@ impl Eval for Expr {
 
             Expr::Ident(ident) => {
                 if let Ok(i) = ident.clone().try_into() {
-                    return if let Some(sym) = ctx.lookup_sym(&i) {
+                    return if !ctx.is_preproc_eval_mode()
+                        && let Some(sym) = ctx.lookup_sym(&i)
+                    {
                         if let Some(ty) = sym.value_ty {
                             Ok(Some(Value::RustCode(RustCode::boxed(
                                 i.to_string(),

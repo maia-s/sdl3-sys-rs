@@ -21,9 +21,6 @@ build-from-source = ["dep:cmake", "dep:rpkg-config", "dep:sdl3-sound-src"]
 # Build and link a static SDL3_sound library from source
 build-from-source-static = ["build-from-source", "link-static"]
 
-# Build and link a static SDL3_image library from source using vendored libraries
-build-static-vendored = ["build-from-source-static", "sdlsound-vendored"]
-
 # Link SDL3_sound as a static library. The default is to link a shared/dynamic library.
 link-static = []
 

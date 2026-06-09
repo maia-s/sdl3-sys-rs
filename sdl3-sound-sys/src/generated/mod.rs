@@ -20,5 +20,10 @@
     unused_variables
 )]
 
+pub mod sound;
+
 /// Reexports of everything from the other modules
-pub mod everything {}
+pub mod everything {
+    #[doc(no_inline)]
+    pub use super::sound::*;
+}

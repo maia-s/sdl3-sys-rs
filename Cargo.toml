@@ -9,6 +9,8 @@ members = [
     "sdl3-mixer-sys",
     "sdl3-net-src",
     "sdl3-net-sys",
+    "sdl3-sound-src",
+    "sdl3-sound-sys",
     "sdl3-src",
     "sdl3-sys-gen",
     "sdl3-sys",

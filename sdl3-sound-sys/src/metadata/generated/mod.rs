@@ -8,8 +8,13 @@ use sdl3_sys::{
     version::SDL_VERSIONNUM,
 };
 
+pub mod sound;
+
 /// Reexports of everything from the other modules
-pub mod everything {}
+pub mod everything {
+    #[doc(no_inline)]
+    pub use super::sound::*;
+}
 
 /// Metadata for hint constants in this crate
 pub const HINTS: &[&Hint] = &[];
@@ -18,7 +23,10 @@ pub const HINTS: &[&Hint] = &[];
 pub const PROPERTIES: &[&Property] = &[];
 
 /// Metadata for groups in this crate
-pub const GROUPS: &[&Group] = &[];
+pub const GROUPS: &[&Group] = &[&sound::METADATA_Sound_SampleFlags];
 
 /// Metadata for structs and unions in this crate
-pub const STRUCTS: &[&Struct] = &[];
+pub const STRUCTS: &[&Struct] = &[
+    &sound::METADATA_Sound_DecoderInfo,
+    &sound::METADATA_Sound_Sample,
+];
