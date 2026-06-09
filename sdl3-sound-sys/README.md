@@ -76,7 +76,7 @@ None of these formats require additional dependencies.
 | `shn`           | Enable Shorten support |
 | `modplug`       | Enable support for various module formats via ModPlug |
 | `mp3`           | Enabole MP3, MP2 and MP1 support |
-| `midi`          | Enable MIDI support via Timidity. This usues LGPL licensed code. (disabled by default) |
+| `midi`          | Enable MIDI support via Timidity. This uses LGPL licensed code. (disabled by default) |
 | `coreaudio`     | Enable CoreAudio support on Apple targets |
 
 ## Other features
