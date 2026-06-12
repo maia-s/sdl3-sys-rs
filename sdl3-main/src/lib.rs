@@ -34,6 +34,10 @@ use state::SyncPtr;
 /// Use this attribute macro if you want to provide your own main, but run it through SDL.
 /// This macro must be called at the root of `main.rs` in your crate.
 ///
+/// If the sdl3_main crate is imported at a different location than `::sdl3_main`,
+/// pass its path via the `sdl3_main` argument, e.g.
+/// `#[::path::to::sdl3_main::main(sdl3_main = ::path::to::sdl3_main)]`
+///
 /// Supported signatures: (all of these can be safe or unsafe)
 /// ```custom,{.rust}
 /// fn()
@@ -69,6 +73,10 @@ pub use sdl3_main_macros::main;
 /// for information about supported function signatures. `app_impl` also supports methods,
 /// taking `self` as the app state.
 ///
+/// If the sdl3_main crate is imported at a different location than `::sdl3_main`,
+/// pass its path via the `sdl3_main` argument, e.g.
+/// `#[::path::to::sdl3_main::app_impl(sdl3_main = ::path::to::sdl3_main)]`
+///
 /// Example:
 /// ```rust
 /// use sdl3_main::{app_impl, AppResult};
@@ -98,6 +106,10 @@ pub use sdl3_main_macros::app_impl;
 
 /// The function tagged with `app_init` is called by SDL at the start of the program on the main thread.
 /// This macro must be called at the root of `main.rs` in your crate.
+///
+/// If the sdl3_main crate is imported at a different location than `::sdl3_main`,
+/// pass its path via the `sdl3_main` argument, e.g.
+/// `#[::path::to::sdl3_main::app_init(sdl3_main = ::path::to::sdl3_main)]`
 ///
 /// See the SDL documentation for this function:
 /// [`SDL_AppInit`](https://docs.rs/sdl3-sys/latest/sdl3_sys/main/fn.SDL_AppInit.html)
@@ -147,6 +159,10 @@ pub use sdl3_main_macros::app_init;
 /// The function tagged with `app_iterate` is called continuously by SDL on the main thread while the app is running.
 /// This macro must be called at the root of `main.rs` in your crate.
 ///
+/// If the sdl3_main crate is imported at a different location than `::sdl3_main`,
+/// pass its path via the `sdl3_main` argument, e.g.
+/// `#[::path::to::sdl3_main::app_iterate(sdl3_main = ::path::to::sdl3_main)]`
+///
 /// It will only be called if `app_init` returned continue status, and keep getting called
 /// for as long as `app_iterate` and `app_event` return continue status.
 ///
@@ -163,6 +179,10 @@ pub use sdl3_main_macros::app_iterate;
 /// The function tagged with `app_event` is called by SDL when an event is delivered. This may get called on the main thread
 /// or on another thread.
 /// This macro must be called at the root of `main.rs` in your crate.
+///
+/// If the sdl3_main crate is imported at a different location than `::sdl3_main`,
+/// pass its path via the `sdl3_main` argument, e.g.
+/// `#[::path::to::sdl3_main::app_event(app_event = ::path::to::sdl3_main)]`
 ///
 /// See the SDL documentation for this function:
 /// [`SDL_AppEvent`](https://docs.rs/sdl3-sys/latest/sdl3_sys/main/fn.SDL_AppEvent.html)
@@ -188,6 +208,10 @@ pub use sdl3_main_macros::app_event;
 
 /// The function tagged with `app_quit` is called by SDL on the main thread when the app quits.
 /// This macro must be called at the root of `main.rs` in your crate.
+///
+/// If the sdl3_main crate is imported at a different location than `::sdl3_main`,
+/// pass its path via the `sdl3_main` argument, e.g.
+/// `#[::path::to::sdl3_main::app_quit(sdl3_main = ::path::to::sdl3_main)]`
 ///
 /// This will get called regardless of the return status of `app_init`, so if that fails the
 /// app state may not be available. If you're using an app state type you should take it as

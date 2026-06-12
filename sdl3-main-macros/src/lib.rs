@@ -1,9 +1,9 @@
 #![doc = include_str!("../README.md")]
 
+use crate::parse::{parse_op, Path};
+use core::str::FromStr;
 use parse::{Error, Function, Generic, ImplBlock, IntoTokenTrees, Item, Parse, Type, Visibility};
 use proc_macro::{Delimiter, Group, Ident, Punct, Spacing, Span, TokenStream, TokenTree};
-
-const SDL3_MAIN: &str = "sdl3_main";
 
 macro_rules! input {
     ($input:expr) => {
@@ -193,16 +193,77 @@ fn op2(c0: char, c1: char) -> [TokenTree; 2] {
     ]
 }
 
-fn sdl3_main_path() -> TokenStream {
-    miniquote!(::#{Ident::new(SDL3_MAIN, Span::mixed_site())})
+struct Context {
+    sdl3_main: Path,
 }
 
-fn sdl3_main_internal_path() -> TokenStream {
-    miniquote!(#{sdl3_main_path()}::__internal)
-}
+impl Context {
+    pub fn new() -> Self {
+        Self {
+            sdl3_main: Path::from_str("::sdl3_main").unwrap(),
+        }
+    }
 
-fn sdl3_sys_path() -> TokenStream {
-    miniquote!(#{sdl3_main_internal_path()}::sdl3_sys)
+    pub fn with_main(sdl3_main: Path) -> Self {
+        Self { sdl3_main }
+    }
+
+    pub fn sdl3_main_path(&self) -> TokenStream {
+        (&self.sdl3_main).into_token_stream()
+    }
+
+    pub fn sdl3_main_internal_path(&self) -> TokenStream {
+        miniquote!(#{self.sdl3_main_path()}::__internal)
+    }
+
+    pub fn sdl3_sys_path(&self) -> TokenStream {
+        miniquote!(#{self.sdl3_main_internal_path()}::sdl3_sys)
+    }
+
+    pub fn shuttle_unsafe(&self) -> TokenStream {
+        if cfg!(feature = "std") {
+            miniquote!(unsafe)
+        } else {
+            miniquote!()
+        }
+    }
+
+    pub fn shuttle_unit_def(&self) -> TokenStream {
+        if cfg!(feature = "std") {
+            miniquote! {
+                #[allow(non_upper_case_globals)]
+                static #{priv_ident("static", "shuttle_unit")}:
+                    #{self.sdl3_main_internal_path()}::Shuttle<()> =
+                    #{self.sdl3_main_internal_path()}::Shuttle::new();
+            }
+        } else {
+            miniquote!()
+        }
+    }
+
+    pub fn shuttle_unit_capture_and_continue(&self) -> TokenStream {
+        if cfg!(feature = "std") {
+            miniquote!(#{priv_ident("static", "shuttle_unit")}.capture_and_continue)
+        } else {
+            miniquote!((|_, f| f()))
+        }
+    }
+
+    pub fn shuttle_unit_capture(&self) -> TokenStream {
+        if cfg!(feature = "std") {
+            miniquote!(#{priv_ident("static", "shuttle_unit")}.capture)
+        } else {
+            miniquote!((|f| f()))
+        }
+    }
+
+    pub fn shuttle_unit_resume(&self) -> TokenStream {
+        if cfg!(feature = "std") {
+            miniquote!(unsafe { #{priv_ident("static", "shuttle_unit")}.resume() })
+        } else {
+            miniquote!()
+        }
+    }
 }
 
 fn priv_ident(kind: &str, name: &str) -> Ident {
@@ -225,95 +286,59 @@ fn app_fn(
     name: &str,
     attr: TokenStream,
     item: TokenStream,
-    f: impl FnOnce(&mut TokenStream, Function) -> Result<(), Error>,
+    f: impl FnOnce(&mut TokenStream, &Context, Function) -> Result<(), Error>,
 ) -> TokenStream {
-    wrap(attr, item, |out, attr, item| {
-        if !attr.is_empty() {
-            Err(Error::new(
-                Some(attr.first().unwrap().span()),
-                format!("other attributes aren't supported with `#[{name}]`"),
-            ))
-        } else {
-            let item = Function::parse_all(item)?;
-            if let Some(abi) = &item.abi {
-                return Err(Error::new(
-                    Some(abi.span),
-                    "this function shouldn't set an ABI",
-                ));
-            }
-            miniquote_to! { out =>
-                mod #{&item.ident} {}
-                #[allow(non_upper_case_globals)]
-                const #{app_raw_fn_ident(name)}: #{item.signature()} = const {
-                    #{&item}
-                    #{&item.ident}
-                };
-            };
-            f(out, item)
+    wrap(attr, item, |out, ctx, item| {
+        let item = Function::parse_all(item)?;
+        if let Some(abi) = &item.abi {
+            return Err(Error::new(
+                Some(abi.span),
+                "this function shouldn't set an ABI",
+            ));
         }
+        miniquote_to! { out =>
+            mod #{&item.ident} {}
+            #[allow(non_upper_case_globals)]
+            const #{app_raw_fn_ident(name)}: #{item.signature()} = const {
+                #{&item}
+                #{&item.ident}
+            };
+        };
+        f(out, ctx, item)
     })
 }
 
 fn wrap(
     attr: TokenStream,
     item: TokenStream,
-    f: impl FnOnce(&mut TokenStream, &mut &[TokenTree], &mut &[TokenTree]) -> Result<(), Error>,
+    f: impl FnOnce(&mut TokenStream, &Context, &mut &[TokenTree]) -> Result<(), Error>,
 ) -> TokenStream {
     let mut ts = TokenStream::new();
-    match f(&mut ts, input!(attr), input!(item)) {
+    let ctx = if attr.is_empty() {
+        Context::new()
+    } else {
+        match (|| -> Result<Context, Error> {
+            let attr = input!(attr);
+            let arg = Ident::parse(attr)?;
+            if arg.to_string() != "sdl3_main" {
+                return Err(Error::new(Some(arg.span()), "expected `sdl3_main`"));
+            }
+            parse_op(attr, "=")?;
+            Ok(Context::with_main(Path::parse_all(attr)?))
+        })() {
+            Ok(ctx) => ctx,
+            Err(err) => return err.into_token_stream(),
+        }
+    };
+    match f(&mut ts, &ctx, input!(item)) {
         Ok(()) => ts,
         Err(err) => err.into_token_stream(),
     }
 }
 
-fn shuttle_unsafe() -> TokenStream {
-    if cfg!(feature = "std") {
-        miniquote!(unsafe)
-    } else {
-        miniquote!()
-    }
-}
-
-fn shuttle_unit_def() -> TokenStream {
-    if cfg!(feature = "std") {
-        miniquote! {
-            #[allow(non_upper_case_globals)]
-            static #{priv_ident("static", "shuttle_unit")}:
-                #{sdl3_main_internal_path()}::Shuttle<()> =
-                #{sdl3_main_internal_path()}::Shuttle::new();
-        }
-    } else {
-        miniquote!()
-    }
-}
-
-fn shuttle_unit_capture_and_continue() -> TokenStream {
-    if cfg!(feature = "std") {
-        miniquote!(#{priv_ident("static", "shuttle_unit")}.capture_and_continue)
-    } else {
-        miniquote!((|_, f| f()))
-    }
-}
-
-fn shuttle_unit_capture() -> TokenStream {
-    if cfg!(feature = "std") {
-        miniquote!(#{priv_ident("static", "shuttle_unit")}.capture)
-    } else {
-        miniquote!((|f| f()))
-    }
-}
-
-fn shuttle_unit_resume() -> TokenStream {
-    if cfg!(feature = "std") {
-        miniquote!(unsafe { #{priv_ident("static", "shuttle_unit")}.resume() })
-    } else {
-        miniquote!()
-    }
-}
-
 #[proc_macro_attribute]
 pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
-    app_fn("main", attr, item, |out, f| {
+    app_fn("main", attr, item, |out, ctx, f| {
         let app_main = app_raw_fn_ident("main");
 
         let simple_return = if let Some(rtype) = &f.return_type {
@@ -325,18 +350,18 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
         if simple_return {
             if cfg!(feature = "std") {
                 miniquote_to! { out =>
-                    #{shuttle_unit_def()}
+                    #{ctx.shuttle_unit_def()}
 
                     fn main() -> ::core::result::Result<(), &'static ::core::ffi::CStr> {
                         use ::core::{any::Any, ffi::{c_char, c_int, CStr}, option::Option, result::Result};
                         use ::std::panic::catch_unwind;
-                        use #{sdl3_main_path()}::{app::AppMain, MainThreadToken};
-                        use #{sdl3_main_internal_path()}::{Shuttle, run_app};
-                        use #{sdl3_sys_path()}::error::SDL_GetError;
+                        use #{ctx.sdl3_main_path()}::{app::AppMain, MainThreadToken};
+                        use #{ctx.sdl3_main_internal_path()}::{Shuttle, run_app};
+                        use #{ctx.sdl3_sys_path()}::error::SDL_GetError;
 
                         unsafe extern "C" fn sdl_main(argc: c_int, argv: *mut *mut c_char) -> c_int {
                             unsafe {
-                                #{shuttle_unit_capture_and_continue()}(
+                                #{ctx.shuttle_unit_capture_and_continue()}(
                                     1,
                                     || unsafe { #app_main.main(MainThreadToken::assert(), argc, argv) },
                                 )
@@ -346,7 +371,7 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
                         if unsafe { run_app(sdl_main) } == 0 {
                             Result::Ok(())
                         } else {
-                            #{shuttle_unit_resume()}
+                            #{ctx.shuttle_unit_resume()}
                             Result::Err(unsafe { CStr::from_ptr(SDL_GetError()) })
                         }
                     }
@@ -358,8 +383,8 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
                     #[unsafe(no_mangle)]
                     extern "C" fn main(argc: ::core::ffi::c_int, argv: *mut *mut ::core::ffi::c_char) -> ::core::ffi::c_int {
                         use ::core::{ffi::{c_char, c_int}, option::Option, ptr};
-                        use #{sdl3_main_path()}::{app::AppMain, MainThreadToken};
-                        use #{sdl3_sys_path()}::main::SDL_RunApp;
+                        use #{ctx.sdl3_main_path()}::{app::AppMain, MainThreadToken};
+                        use #{ctx.sdl3_sys_path()}::main::SDL_RunApp;
 
                         unsafe extern "C" fn sdl_main(argc: c_int, argv: *mut *mut c_char) -> c_int {
                             unsafe { #app_main.main(MainThreadToken::assert(), argc, argv) }
@@ -381,8 +406,8 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
             miniquote_to! { out =>
                 fn main() -> #rtype {
                     use ::core::{ffi::{c_char, c_int}, mem::MaybeUninit, ptr::{addr_of, addr_of_mut}};
-                    use #{sdl3_main_path()}::{app::AppMainWithResult, MainThreadToken};
-                    use #{sdl3_main_internal_path()}::{Shuttle, run_app};
+                    use #{ctx.sdl3_main_path()}::{app::AppMainWithResult, MainThreadToken};
+                    use #{ctx.sdl3_main_internal_path()}::{Shuttle, run_app};
 
                     static SHUTTLE: Shuttle<#rtype> = Shuttle::new();
 
@@ -408,7 +433,7 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
 
 #[proc_macro_attribute]
 pub fn app_impl(attr: TokenStream, item: TokenStream) -> TokenStream {
-    wrap(attr, item, |out, attr, item| {
+    wrap(attr, item, |out, ctx, item| {
         let impl_block = ImplBlock::parse_all(item)?;
         let state_t = impl_block.ty.clone();
         let mut has_init = false;
@@ -480,7 +505,7 @@ pub fn app_impl(attr: TokenStream, item: TokenStream) -> TokenStream {
                     Delimiter::Brace,
                     miniquote!(#{&state_t}::#{&f.ident} #args),
                 ));
-                miniquote_to!(out => #[#{sdl3_main_path()}::#attr] #wrapper)
+                miniquote_to!(out => #[#{ctx.sdl3_main_path()}::#attr(sdl3_main = #{ctx.sdl3_main_path()})] #wrapper)
             }
         }
         if !has_init {
@@ -494,16 +519,16 @@ pub fn app_impl(attr: TokenStream, item: TokenStream) -> TokenStream {
         }
         if !has_quit {
             let f = Function::new(Ident::new("app_quit", Span::mixed_site()));
-            miniquote_to!(out => #[#{sdl3_main_path()}::app_quit] #f);
+            miniquote_to!(out => #[#{ctx.sdl3_main_path()}::app_quit(sdl3_main = #{ctx.sdl3_main_path()})] #f);
         }
-        miniquote_to!(out => #attr #impl_block);
+        miniquote_to!(out => #impl_block);
         Ok(())
     })
 }
 
 #[proc_macro_attribute]
 pub fn app_init(attr: TokenStream, item: TokenStream) -> TokenStream {
-    app_fn("app_init", attr, item, |out, f| {
+    app_fn("app_init", attr, item, |out, ctx, f| {
         let mut state = Type::unit();
         if let Some(rtype) = &f.return_type {
             if let Some(generics) = rtype.path_generics() {
@@ -521,17 +546,17 @@ pub fn app_init(attr: TokenStream, item: TokenStream) -> TokenStream {
             #[allow(non_camel_case_types)]
             type #state_t = #state;
 
-            #[#{sdl3_main_path()}::main]
+            #[#{ctx.sdl3_main_path()}::main(sdl3_main = #{ctx.sdl3_main_path()})]
             unsafe fn __sdl3_main_callbacks(argc: ::core::ffi::c_int, argv: *mut *mut ::core::ffi::c_char) -> ::core::ffi::c_int {
                 use ::core::ffi::{c_char, c_int, c_void};
-                use #{sdl3_sys_path()}::{init::SDL_AppResult, main::SDL_EnterAppMainCallbacks};
-                use #{sdl3_main_path()}::{app::AppInit, MainThreadToken};
+                use #{ctx.sdl3_sys_path()}::{init::SDL_AppResult, main::SDL_EnterAppMainCallbacks};
+                use #{ctx.sdl3_main_path()}::{app::AppInit, MainThreadToken};
 
                 unsafe extern "C" fn app_init(
                     appstate: *mut *mut c_void, argc: c_int, argv: *mut *mut c_char
                 ) -> SDL_AppResult {
-                    #{shuttle_unsafe()} {
-                        #{shuttle_unit_capture_and_continue()}(
+                    #{ctx.shuttle_unsafe()} {
+                        #{ctx.shuttle_unit_capture_and_continue()}(
                             SDL_AppResult::FAILURE,
                             || AppInit::<#state_t>::init(
                                 #{app_raw_fn_ident("app_init")},
@@ -554,7 +579,7 @@ pub fn app_init(attr: TokenStream, item: TokenStream) -> TokenStream {
                         Option::Some(#{app_fn_ident("app_quit")}),
                     )
                 };
-                #{shuttle_unit_resume()}
+                #{ctx.shuttle_unit_resume()}
                 st
             }
         }
@@ -565,7 +590,7 @@ pub fn app_init(attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn app_iterate(attr: TokenStream, item: TokenStream) -> TokenStream {
     let name = "app_iterate";
-    app_fn(name, attr, item, |out, f| {
+    app_fn(name, attr, item, |out, ctx, f| {
         let state_ac = match f.params.len() {
             1 => f.params[0].ty.classify()? as u8,
             _ => 0,
@@ -573,11 +598,11 @@ pub fn app_iterate(attr: TokenStream, item: TokenStream) -> TokenStream {
         miniquote_to! { out =>
             unsafe extern "C" fn #{app_fn_ident(name)}(
                 appstate: *mut ::core::ffi::c_void
-            ) -> #{sdl3_sys_path()}::init::SDL_AppResult {
-                #{shuttle_unsafe()} {
-                    #{shuttle_unit_capture_and_continue()}(
-                        #{sdl3_sys_path()}::init::SDL_AppResult::FAILURE,
-                        || #{sdl3_main_path()}::app::AppIterate::<#{app_type_ident("AppState")}, #state_ac>::iterate(
+            ) -> #{ctx.sdl3_sys_path()}::init::SDL_AppResult {
+                #{ctx.shuttle_unsafe()} {
+                    #{ctx.shuttle_unit_capture_and_continue()}(
+                        #{ctx.sdl3_sys_path()}::init::SDL_AppResult::FAILURE,
+                        || #{ctx.sdl3_main_path()}::app::AppIterate::<#{app_type_ident("AppState")}, #state_ac>::iterate(
                             #{app_raw_fn_ident(name)},
                             appstate
                         )
@@ -592,7 +617,7 @@ pub fn app_iterate(attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn app_event(attr: TokenStream, item: TokenStream) -> TokenStream {
     let name = "app_event";
-    app_fn(name, attr, item, |out, f| {
+    app_fn(name, attr, item, |out, ctx, f| {
         let (state_ac, event_ac) = match f.params.len() {
             1 => (0, f.params[0].ty.classify()? as u8),
             2 => (
@@ -604,12 +629,12 @@ pub fn app_event(attr: TokenStream, item: TokenStream) -> TokenStream {
         miniquote_to! { out =>
             unsafe extern "C" fn #{app_fn_ident(name)}(
                 appstate: *mut ::core::ffi::c_void,
-                event: *mut #{sdl3_sys_path()}::events::SDL_Event
-            ) -> #{sdl3_sys_path()}::init::SDL_AppResult {
-                #{shuttle_unsafe()} {
-                    #{shuttle_unit_capture_and_continue()}(
-                        #{sdl3_sys_path()}::init::SDL_AppResult::FAILURE,
-                        || #{sdl3_main_path()}::app::AppEvent::<#{app_type_ident("AppState")}, #state_ac, #event_ac>::event(
+                event: *mut #{ctx.sdl3_sys_path()}::events::SDL_Event
+            ) -> #{ctx.sdl3_sys_path()}::init::SDL_AppResult {
+                #{ctx.shuttle_unsafe()} {
+                    #{ctx.shuttle_unit_capture_and_continue()}(
+                        #{ctx.sdl3_sys_path()}::init::SDL_AppResult::FAILURE,
+                        || #{ctx.sdl3_main_path()}::app::AppEvent::<#{app_type_ident("AppState")}, #state_ac, #event_ac>::event(
                             #{app_raw_fn_ident(name)},
                             appstate,
                             event
@@ -625,7 +650,7 @@ pub fn app_event(attr: TokenStream, item: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn app_quit(attr: TokenStream, item: TokenStream) -> TokenStream {
     let name = "app_quit";
-    app_fn(name, attr, item, |out, f| {
+    app_fn(name, attr, item, |out, ctx, f| {
         let state_ac = match f.params.len() {
             1 | 2 => f.params[0].ty.classify()? as u8,
             _ => 0,
@@ -633,11 +658,11 @@ pub fn app_quit(attr: TokenStream, item: TokenStream) -> TokenStream {
         miniquote_to! { out =>
             unsafe extern "C" fn #{app_fn_ident(name)}(
                 appstate: *mut ::core::ffi::c_void,
-                result: #{sdl3_sys_path()}::init::SDL_AppResult
+                result: #{ctx.sdl3_sys_path()}::init::SDL_AppResult
             ) {
-                #{shuttle_unsafe()} {
-                    #{shuttle_unit_capture()}(
-                        || #{sdl3_main_path()}::app::AppQuit::<#{app_type_ident("AppState")}, #state_ac>::quit(
+                #{ctx.shuttle_unsafe()} {
+                    #{ctx.shuttle_unit_capture()}(
+                        || #{ctx.sdl3_main_path()}::app::AppQuit::<#{app_type_ident("AppState")}, #state_ac>::quit(
                             #{app_raw_fn_ident(name)},
                             appstate,
                             result

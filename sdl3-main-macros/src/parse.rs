@@ -205,7 +205,7 @@ fn parse_kw(input: &mut &[TokenTree], kw: &str) -> Result<Ident, Error> {
 }
 */
 
-fn try_parse_op(input: &mut &[TokenTree], op: &str) -> Option<Vec<Punct>> {
+pub fn try_parse_op(input: &mut &[TokenTree], op: &str) -> Option<Vec<Punct>> {
     let mut rest = *input;
     let mut op = op.as_bytes();
     let mut parsed = Vec::new();
@@ -227,7 +227,7 @@ fn try_parse_op(input: &mut &[TokenTree], op: &str) -> Option<Vec<Punct>> {
     None
 }
 
-fn parse_op(input: &mut &[TokenTree], op: &str) -> Result<Vec<Punct>, Error> {
+pub fn parse_op(input: &mut &[TokenTree], op: &str) -> Result<Vec<Punct>, Error> {
     try_parse_op(input, op)
         .ok_or_else(|| Error::new(input.first().map(|t| t.span()), format!("expected `{op}`")))
 }

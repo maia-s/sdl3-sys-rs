@@ -1,5 +1,10 @@
 # Changes
 
+- 0.6.4:
+    - Support renamed or relocated sdl3_main crate when calling attribute macros.
+      Pass `sdl3_main = ::path::to::sdl3_main` as an argument to the macro, e.g.
+      `#[::path::to::sdl3_main::app_impl(sdl3_main = ::path::to::sdl3_main)]`
+
 - 0.6.3:
     - Implement `IntoAppResult` for `bool` and `Option<bool>` so that these can be
       returned from `app_iterate` and `app_event`. For `bool`, `true` translates to
