@@ -179,6 +179,9 @@ These features are always available.
 
 ## Recent changes
 
+- 0.6.7:
+    - Update SDL to 3.4.12
+
 - 0.6.6:
     - Update SDL to 3.4.10
     - Enable `use-pkg-config` and `use-vcpkg` features by default
