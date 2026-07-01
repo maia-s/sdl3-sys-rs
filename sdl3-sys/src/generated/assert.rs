@@ -178,7 +178,7 @@ pub const SDL_ASSERT_LEVEL: ::core::primitive::i32 = 3;
 ///
 /// The code does nothing, but wraps `condition` in a sizeof operator, which
 /// generates no code and has no side effects, but avoid compiler warnings
-/// about unused variables.
+/// about unused variables, and still checks syntax even when disabled.
 ///
 /// ## Parameters
 /// - `condition`: the condition to assert (but not actually run here).

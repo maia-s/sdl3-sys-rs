@@ -271,14 +271,14 @@ apply_cfg!(#[cfg(doc)] => {
 });
 
 apply_cfg!(#[cfg(not(doc))] => {
-    apply_cfg!(#[cfg(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64")))] => {
+    apply_cfg!(#[cfg(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64"), not(target_arch = "arm64ec")))] => {
         #[inline(always)]
         pub fn SDL_CPUPauseInstruction() {
             ::core::hint::spin_loop();
         }
     });
 
-    apply_cfg!(#[cfg(not(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64"))))] => {
+    apply_cfg!(#[cfg(not(all(any(any(/* always disabled: __GNUC__ */), any(/* always disabled: __clang__ */)), any(target_arch = "x86", target_arch = "x86_64"), not(target_arch = "arm64ec"))))] => {
         #[inline(always)]
         pub fn SDL_CPUPauseInstruction() {
             ::core::hint::spin_loop();
