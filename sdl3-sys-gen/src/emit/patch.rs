@@ -642,7 +642,7 @@ pub fn patch_emit_define(ctx: &mut EmitContext, define: &Define) -> Result<bool,
                     let mut bytes = str.into_bytes_with_nul();
                     let edit = bytes.len() - 1;
                     bytes.push(0);
-                    for ch in [b'd', b'u', b'x', b'X'] {
+                    for ch in *b"duxX" {
                         bytes[edit] = ch;
                         writeln!(ctx, "#[cfg(not(doc))]")?;
                         Define {
