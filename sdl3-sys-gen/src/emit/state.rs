@@ -281,6 +281,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__ARM_ARCH_7M__" = CfgExpr(r#"target_feature = "armv7-m""#);
             "__ARM_ARCH_7S__" = CfgExpr(r#"target_feature = "armv7s""#);
             "__ARM_ARCH_8A__" = CfgExpr(r#"target_feature = "armv8-a""#);
+            "__arm64ec__" = CfgExpr(r#"target_arch = "arm64ec""#);
             "__clang__" = CfgExpr(always_false!("__clang__")); // not needed
             "__EMSCRIPTEN__" = CfgExpr(r#"target_os = "emscripten""#);
             "__GNUC__" = CfgExpr(always_false!("__GNUC__")); // not needed
