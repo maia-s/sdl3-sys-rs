@@ -23,4 +23,4 @@ pub const REVISION_TAG_BASE: &str = "release";
 pub const REVISION_OFFSET: &str = "0";
 
 /// Hash part of the revision
-pub const REVISION_HASH: &str = "gf87239e71e";
+pub const REVISION_HASH: &str = "gf87239e71";
