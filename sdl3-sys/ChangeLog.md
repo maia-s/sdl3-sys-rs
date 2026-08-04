@@ -1,5 +1,8 @@
 # Changes
 
+- 0.6.8:
+    - Update SDL to 3.4.14
+
 - 0.6.7:
     - Update SDL to 3.4.12
 

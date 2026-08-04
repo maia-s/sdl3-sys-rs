@@ -2121,7 +2121,8 @@ pub const SDL_HINT_JOYSTICK_HIDAPI_GIP: *const ::core::ffi::c_char =
 /// - "0": Assume this is a generic controller.
 /// - "1": Reset the controller to get metadata.
 ///
-/// By default the controller is not reset.
+/// By default the controller is reset. This is so we can properly detect
+/// the controller type.
 ///
 /// This hint should be set before initializing joysticks and gamepads.
 ///

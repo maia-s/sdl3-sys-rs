@@ -1178,7 +1178,7 @@ pub const METADATA_SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA: Hint = Hint 
     short_name: "JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA",
     value: crate::hints::SDL_HINT_JOYSTICK_HIDAPI_GIP_RESET_FOR_METADATA,
     doc: Some(
-        "A variable controlling whether the new HIDAPI driver for wired Xbox One\n(GIP) controllers should reset the controller if it can't get the metadata\nfrom the controller.\n\nThe variable can be set to the following values:\n\n- \"0\": Assume this is a generic controller.\n- \"1\": Reset the controller to get metadata.\n\nBy default the controller is not reset.\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
+        "A variable controlling whether the new HIDAPI driver for wired Xbox One\n(GIP) controllers should reset the controller if it can't get the metadata\nfrom the controller.\n\nThe variable can be set to the following values:\n\n- \"0\": Assume this is a generic controller.\n- \"1\": Reset the controller to get metadata.\n\nBy default the controller is reset. This is so we can properly detect\nthe controller type.\n\nThis hint should be set before initializing joysticks and gamepads.\n\n## Availability\nThis hint is available since SDL 3.4.0.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
