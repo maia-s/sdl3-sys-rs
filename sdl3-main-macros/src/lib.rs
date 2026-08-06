@@ -352,12 +352,11 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
                 miniquote_to! { out =>
                     #{ctx.shuttle_unit_def()}
 
-                    fn main() -> ::core::result::Result<(), &'static ::core::ffi::CStr> {
+                    fn main() -> ::std::process::ExitCode {
                         use ::core::{any::Any, ffi::{c_char, c_int, CStr}, option::Option, result::Result};
                         use ::std::panic::catch_unwind;
                         use #{ctx.sdl3_main_path()}::{app::AppMain, MainThreadToken};
                         use #{ctx.sdl3_main_internal_path()}::{Shuttle, run_app};
-                        use #{ctx.sdl3_sys_path()}::error::SDL_GetError;
 
                         unsafe extern "C" fn sdl_main(argc: c_int, argv: *mut *mut c_char) -> c_int {
                             unsafe {
@@ -369,10 +368,10 @@ pub fn main(attr: TokenStream, item: TokenStream) -> TokenStream {
                         }
 
                         if unsafe { run_app(sdl_main) } == 0 {
-                            Result::Ok(())
+                            ::std::process::ExitCode::SUCCESS
                         } else {
                             #{ctx.shuttle_unit_resume()}
-                            Result::Err(unsafe { CStr::from_ptr(SDL_GetError()) })
+                            ::std::process::ExitCode::FAILURE
                         }
                     }
                 }
