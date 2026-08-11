@@ -4440,6 +4440,7 @@ pub struct SDL_GPUViewport {
 /// ## See also
 /// - [`SDL_UploadToGPUTexture`]
 /// - [`SDL_DownloadFromGPUTexture`]
+/// - [`SDL_GPUTransferBuffer`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -4472,6 +4473,7 @@ impl ::core::default::Default for SDL_GPUTextureTransferInfo {
 /// ## See also
 /// - [`SDL_UploadToGPUBuffer`]
 /// - [`SDL_DownloadFromGPUBuffer`]
+/// - [`SDL_GPUTransferBuffer`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -4499,6 +4501,7 @@ impl ::core::default::Default for SDL_GPUTransferBufferLocation {
 ///
 /// ## See also
 /// - [`SDL_CopyGPUTextureToTexture`]
+/// - [`SDL_GPUTexture`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -4536,6 +4539,7 @@ impl ::core::default::Default for SDL_GPUTextureLocation {
 /// - [`SDL_UploadToGPUTexture`]
 /// - [`SDL_DownloadFromGPUTexture`]
 /// - [`SDL_CreateGPUTexture`]
+/// - [`SDL_GPUTexture`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -4575,6 +4579,7 @@ impl ::core::default::Default for SDL_GPUTextureRegion {
 ///
 /// ## See also
 /// - [`SDL_BlitGPUTexture`]
+/// - [`SDL_GPUTexture`]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-impls", derive(Debug))]
@@ -4909,6 +4914,7 @@ pub struct SDL_GPUStencilOpState {
 /// This struct is available since SDL 3.2.0.
 ///
 /// ## See also
+/// - [`SDL_SetGPUBlendConstants`]
 /// - [`SDL_GPUColorTargetDescription`]
 /// - [`SDL_GPUBlendFactor`]
 /// - [`SDL_GPUBlendOp`]
@@ -5503,6 +5509,11 @@ impl ::core::default::Default for SDL_GPUDepthStencilTargetInfo {
 ///
 /// ## See also
 /// - [`SDL_BlitGPUTexture`]
+/// - [`SDL_GPUBlitRegion`]
+/// - [`SDL_GPULoadOp`]
+/// - [`SDL_FColor`]
+/// - [`SDL_FlipMode`]
+/// - [`SDL_GPUFilter`]
 ///
 /// ## Notes for `sdl3-sys`
 /// This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.

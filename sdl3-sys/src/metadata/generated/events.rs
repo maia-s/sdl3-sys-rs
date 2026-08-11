@@ -2427,6 +2427,12 @@ pub const METADATA_SDL_PenProximityEvent: Struct = Struct {
             available_since: None,
             ty: "SDL_PenID",
         },
+        Field {
+            name: "pen_state",
+            doc: Some("Complete pen input state at time of event (added in 3.4.16).\n"),
+            available_since: None,
+            ty: "SDL_PenInputFlags",
+        },
     ],
 };
 pub const METADATA_SDL_PenMotionEvent: Struct = Struct {

@@ -2274,7 +2274,7 @@ pub const METADATA_SDL_GPUTextureTransferInfo: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUTextureTransferInfo",
     doc: Some(
-        "A structure specifying parameters related to transferring data to or from a\ntexture.\n\nIf either of `pixels_per_row` or `rows_per_layer` is zero, then width and\nheight of passed [`SDL_GPUTextureRegion`] to [`SDL_UploadToGPUTexture`] or\n[`SDL_DownloadFromGPUTexture`] are used as default values respectively and data\nis considered to be tightly packed.\n\n**WARNING**: On some older/integrated hardware, Direct3D 12 requires\ntexture data row pitch to be 256 byte aligned, and offsets to be aligned to\n512 bytes. If they are not, SDL will make a temporary copy of the data that\nis properly aligned, but this adds overhead to the transfer process. Apps\ncan avoid this by aligning their data appropriately, or using a different\nGPU backend than Direct3D 12.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n",
+        "A structure specifying parameters related to transferring data to or from a\ntexture.\n\nIf either of `pixels_per_row` or `rows_per_layer` is zero, then width and\nheight of passed [`SDL_GPUTextureRegion`] to [`SDL_UploadToGPUTexture`] or\n[`SDL_DownloadFromGPUTexture`] are used as default values respectively and data\nis considered to be tightly packed.\n\n**WARNING**: On some older/integrated hardware, Direct3D 12 requires\ntexture data row pitch to be 256 byte aligned, and offsets to be aligned to\n512 bytes. If they are not, SDL will make a temporary copy of the data that\nis properly aligned, but this adds overhead to the transfer process. Apps\ncan avoid this by aligning their data appropriately, or using a different\nGPU backend than Direct3D 12.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n- [`SDL_GPUTransferBuffer`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[
@@ -2309,7 +2309,7 @@ pub const METADATA_SDL_GPUTransferBufferLocation: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUTransferBufferLocation",
     doc: Some(
-        "A structure specifying a location in a transfer buffer.\n\nUsed when transferring buffer data to or from a transfer buffer.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUBuffer`]\n- [`SDL_DownloadFromGPUBuffer`]\n",
+        "A structure specifying a location in a transfer buffer.\n\nUsed when transferring buffer data to or from a transfer buffer.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUBuffer`]\n- [`SDL_DownloadFromGPUBuffer`]\n- [`SDL_GPUTransferBuffer`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[
@@ -2332,7 +2332,7 @@ pub const METADATA_SDL_GPUTextureLocation: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUTextureLocation",
     doc: Some(
-        "A structure specifying a location in a texture.\n\nUsed when copying data from one texture to another.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CopyGPUTextureToTexture`]\n",
+        "A structure specifying a location in a texture.\n\nUsed when copying data from one texture to another.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_CopyGPUTextureToTexture`]\n- [`SDL_GPUTexture`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[
@@ -2379,7 +2379,7 @@ pub const METADATA_SDL_GPUTextureRegion: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUTextureRegion",
     doc: Some(
-        "A structure specifying a region of a texture.\n\nUsed when transferring data to or from a texture.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n- [`SDL_CreateGPUTexture`]\n",
+        "A structure specifying a region of a texture.\n\nUsed when transferring data to or from a texture.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_UploadToGPUTexture`]\n- [`SDL_DownloadFromGPUTexture`]\n- [`SDL_CreateGPUTexture`]\n- [`SDL_GPUTexture`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[
@@ -2444,7 +2444,7 @@ pub const METADATA_SDL_GPUBlitRegion: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUBlitRegion",
     doc: Some(
-        "A structure specifying a region of a texture used in the blit operation.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BlitGPUTexture`]\n",
+        "A structure specifying a region of a texture used in the blit operation.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BlitGPUTexture`]\n- [`SDL_GPUTexture`]\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[
@@ -2913,7 +2913,7 @@ pub const METADATA_SDL_GPUColorTargetBlendState: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUColorTargetBlendState",
     doc: Some(
-        "A structure specifying the blend state of a color target.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_GPUColorTargetDescription`]\n- [`SDL_GPUBlendFactor`]\n- [`SDL_GPUBlendOp`]\n- [`SDL_GPUColorComponentFlags`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+        "A structure specifying the blend state of a color target.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_SetGPUBlendConstants`]\n- [`SDL_GPUColorTargetDescription`]\n- [`SDL_GPUBlendFactor`]\n- [`SDL_GPUBlendOp`]\n- [`SDL_GPUColorComponentFlags`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[
@@ -3825,7 +3825,7 @@ pub const METADATA_SDL_GPUBlitInfo: Struct = Struct {
     kind: StructKind::Struct,
     name: "SDL_GPUBlitInfo",
     doc: Some(
-        "A structure containing parameters for a blit command.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BlitGPUTexture`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
+        "A structure containing parameters for a blit command.\n\n## Availability\nThis struct is available since SDL 3.2.0.\n\n## See also\n- [`SDL_BlitGPUTexture`]\n- [`SDL_GPUBlitRegion`]\n- [`SDL_GPULoadOp`]\n- [`SDL_FColor`]\n- [`SDL_FlipMode`]\n- [`SDL_GPUFilter`]\n\n## Notes for `sdl3-sys`\nThis struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.\n",
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
     fields: &[

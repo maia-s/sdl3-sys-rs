@@ -698,7 +698,7 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Create a 2D software rendering context for a surface.
     ///
-    /// Two other API which can be used to create [`SDL_Renderer`]\:
+    /// Two other APIs which can be used to create [`SDL_Renderer`]\:
     /// [`SDL_CreateRenderer()`] and [`SDL_CreateWindowAndRenderer()`]. These can _also_
     /// create a software renderer, but they are intended to be used with an
     /// [`SDL_Window`] as the final destination and not an [`SDL_Surface`].
@@ -1869,6 +1869,8 @@ unsafe extern "C" {
 unsafe extern "C" {
     /// Set the blend mode for a texture, used by [`SDL_RenderTexture()`].
     ///
+    /// This blend mode is used for any drawing that involves this texture.
+    ///
     /// If the blend mode is not supported, the closest supported mode is chosen
     /// and this function returns false.
     ///
@@ -1888,6 +1890,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetTextureBlendMode`]
+    /// - [`SDL_SetRenderDrawBlendMode`]
     pub fn SDL_SetTextureBlendMode(
         texture: *mut SDL_Texture,
         blendMode: SDL_BlendMode,
@@ -3014,7 +3017,9 @@ unsafe extern "C" {
 }
 
 unsafe extern "C" {
-    /// Set the blend mode used for drawing operations (Fill and Line).
+    /// Set the blend mode used for drawing operations.
+    ///
+    /// This blend mode is used for any drawing that doesn't involve textures.
     ///
     /// If the blend mode is not supported, the closest supported mode is chosen.
     ///
@@ -3034,6 +3039,7 @@ unsafe extern "C" {
     ///
     /// ## See also
     /// - [`SDL_GetRenderDrawBlendMode`]
+    /// - [`SDL_SetTextureBlendMode`]
     pub fn SDL_SetRenderDrawBlendMode(
         renderer: *mut SDL_Renderer,
         blendMode: SDL_BlendMode,

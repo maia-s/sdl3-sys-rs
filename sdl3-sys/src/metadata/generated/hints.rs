@@ -42,6 +42,16 @@ pub const METADATA_SDL_HINT_ANDROID_LOW_LATENCY_AUDIO: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 2, 0)),
 };
+pub const METADATA_SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET",
+    short_name: "ANDROID_AAUDIO_INPUT_PRESET",
+    value: crate::hints::SDL_HINT_ANDROID_AAUDIO_INPUT_PRESET,
+    doc: Some(
+        "A variable to control Android's AAudio input preset.\n\nThis hint only applies to SDL's \"aaudio\" backend on Android 9+ devices.\n\nSome devices choose the wrong microphone by default (between the one meant\nto be spoken in when the phone is held to the user's ear for a phone call,\nor an external microphone that's meant to be used when recording video),\nor have DSP effects applied to the recorded audio, and changing the input\npreset can help control this.\n\nThis can be any number that maps to an `AAUDIO_INPUT_PRESET_*` enum from\nthe Android NDK headers. The most reasonable choices are 5 (\"camcorder\",\nfor external microphones) and 7 (\"voice communication\", for speaking\ndirectly into the device like a mobile phone). 6 (\"voice recognition\")\nmight also be a useful choice.\n\nIf unset (the default), SDL will not specify an input preset at all, which\nlets the system choose. This is usually the correct thing to do unless\nyour app is having problems.\n\nThis hint should be set before a recording audio device is opened.\n\n## Availability\nThis hint is available since SDL 3.4.16.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 16)),
+};
 pub const METADATA_SDL_HINT_ANDROID_TRAP_BACK_BUTTON: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_ANDROID_TRAP_BACK_BUTTON",

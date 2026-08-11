@@ -1693,6 +1693,8 @@ pub struct SDL_PenProximityEvent {
     pub windowID: SDL_WindowID,
     /// The pen instance id
     pub which: SDL_PenID,
+    /// Complete pen input state at time of event (added in 3.4.16).
+    pub pen_state: SDL_PenInputFlags,
 }
 
 /// Pressure-sensitive pen motion event structure (event.pmotion.*)
