@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-sound-sys"
-version = "0.6.0+SDL-sound-3.2.0"
+version = "0.7.0+SDL-sound-3.2.0"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -90,7 +90,7 @@ no-sdlsound-midi = []
 no-sdlsound-coreaudio = []
 
 [dependencies]
-sdl3-sys = { version = "0.6.0", path = "../sdl3-sys", default-features = false }
+sdl3-sys = { version = "0.7.0", path = "../sdl3-sys", default-features = false }
 
 [build-dependencies.cmake]
 version = "0.1"

@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-mixer-sys"
-version = "0.6.3+SDL-mixer-3.2.4"
+version = "0.7.0+SDL-mixer-3.2.4"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -171,10 +171,10 @@ no-sdlmixer-wavpack-dsd = []
 no-sdlmixer-wavpack-shared = []
 
 [dependencies]
-sdl3-sys = { version = "0.6.0", path = "../sdl3-sys", default-features = false }
+sdl3-sys = { version = "0.7.0", path = "../sdl3-sys", default-features = false }
 
 [dev-dependencies]
-sdl3-main = { version = "0.6.0", path = "../sdl3-main" }
+sdl3-main = { version = "0.7.0", path = "../sdl3-main" }
 
 [build-dependencies.cmake]
 version = "0.1"

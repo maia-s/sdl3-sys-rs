@@ -137,6 +137,10 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 ## Recent changes
 
+- 0.7.0
+    - update sdl3-sys to 0.7.0
+    ...
+
 - 0.6.4
     - Enable `use-pkg-config` and `use-vcpkg` features by default
     - Fix Android builds being built for the wrong arch (Thanks to Archee)

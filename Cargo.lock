@@ -367,7 +367,7 @@ version = "3.4.4"
 
 [[package]]
 name = "sdl3-image-sys"
-version = "0.6.4+SDL-image-3.4.4"
+version = "0.7.0+SDL-image-3.4.4"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -379,7 +379,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-main"
-version = "0.6.4"
+version = "0.7.0"
 dependencies = [
  "libtest-mimic-collect",
  "parking_lot",
@@ -397,7 +397,7 @@ version = "3.2.4"
 
 [[package]]
 name = "sdl3-mixer-sys"
-version = "0.6.3+SDL-mixer-3.2.4"
+version = "0.7.0+SDL-mixer-3.2.4"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -414,7 +414,7 @@ version = "3.2.0"
 
 [[package]]
 name = "sdl3-net-sys"
-version = "0.6.0+SDL-net-3.2.0"
+version = "0.7.0+SDL-net-3.2.0"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -430,7 +430,7 @@ version = "3.2.0"
 
 [[package]]
 name = "sdl3-sound-sys"
-version = "0.6.0+SDL-sound-3.2.0"
+version = "0.7.0+SDL-sound-3.2.0"
 dependencies = [
  "cmake",
  "pkg-config",
@@ -446,7 +446,7 @@ version = "3.4.16"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.6.8+SDL-3.4.16"
+version = "0.7.0+SDL-3.4.16"
 dependencies = [
  "ash",
  "cc",
@@ -476,7 +476,7 @@ version = "3.2.2"
 
 [[package]]
 name = "sdl3-ttf-sys"
-version = "0.6.1+SDL-ttf-3.2.2"
+version = "0.7.0+SDL-ttf-3.2.2"
 dependencies = [
  "cmake",
  "pkg-config",

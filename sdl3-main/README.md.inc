@@ -42,6 +42,10 @@ provides some helper types and functions to alleviate this.
 
 ## Recent changes
 
+- 0.7.0
+    - update sdl3-sys to 0.7.0
+    ...
+
 - 0.6.4:
     - Support renamed or relocated sdl3_main crate when calling attribute macros.
       Pass `sdl3_main = ::path::to::sdl3_main` as an argument to the macro, e.g.

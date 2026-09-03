@@ -1,5 +1,9 @@
 # Changes
 
+- 0.7.0
+    - update sdl3-sys to 0.7.0
+    ...
+
 - 0.6.1:
     - Enable `use-pkg-config` and `use-vcpkg` features by default
     - Require exact version match for source crate when building from source (fix for Android)

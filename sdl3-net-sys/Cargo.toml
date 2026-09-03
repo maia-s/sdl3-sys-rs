@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-net-sys"
-version = "0.6.0+SDL-net-3.2.0"
+version = "0.7.0+SDL-net-3.2.0"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -53,7 +53,7 @@ only-metadata = ["metadata", "no-link"]
 nightly = []
 
 [dependencies]
-sdl3-sys = { path = "../sdl3-sys", version = "0.6", default-features = false }
+sdl3-sys = { path = "../sdl3-sys", version = "0.7.0", default-features = false }
 
 [build-dependencies.cmake]
 version = "0.1"
