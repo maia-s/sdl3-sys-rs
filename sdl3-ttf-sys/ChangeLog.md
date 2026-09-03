@@ -1,8 +1,7 @@
 # Changes
 
 - 0.7.0
-    - update sdl3-sys to 0.7.0
-    ...
+    - Update sdl3-sys to 0.7.0
 
 - 0.6.1:
     - Enable `use-pkg-config` and `use-vcpkg` features by default
