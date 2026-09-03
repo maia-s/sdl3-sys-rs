@@ -1,8 +1,7 @@
 # Changes
 
 - 0.7.0
-    - update sdl3-sys to 0.7.0
-    ...
+    - Update sdl3-sys to 0.7.0
 
 - 0.6.3
     - Update SDL_mixer to 3.2.4
