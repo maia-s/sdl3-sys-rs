@@ -179,6 +179,11 @@ These features are always available.
 
 ## Recent changes
 
+- 0.7.0:
+    - Update SDL to 3.4.16
+    - Make all event structs non-exhaustive, because SDL may add fields to them in the future.
+      If you need to construct an event struct yourself, you can use `Default::default()`.
+
 - 0.6.8:
     - Update SDL to 3.4.14
 
