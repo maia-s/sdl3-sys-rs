@@ -2,7 +2,7 @@ use super::{
     CanCmp, CanCopy, Define, DefineValue, Enum, EnumKind, Expr, Function, ParseContext, ParseErr,
     PrimitiveType, StructOrUnion, Type, TypeDef, TypeDefKind,
 };
-use crate::parse::TypeEnum;
+use crate::parse::{CanConstruct, TypeEnum};
 use core::{cell::RefCell, mem};
 use std::rc::Rc;
 
@@ -360,9 +360,10 @@ pub fn patch_parsed_struct(ctx: &ParseContext, s: &mut StructOrUnion) -> Result<
             s.can_eq = CanCmp::No;
             Ok(true)
         }
-        ("events", "SDL_ClipboardEvent" | "SDL_UserEvent") => {
-            // part of union
-            s.can_copy = CanCopy::Always;
+        ("events", i) if i.ends_with("Event") => {
+            // event structs can be added to without breaking the SDL abi guarantee
+            s.can_construct = CanConstruct::NonExhaustive;
+            s.can_copy = CanCopy::Always; // part of `SDL_Event` union
             Ok(true)
         }
         (

@@ -2,11 +2,11 @@ use crate::{
     FieldMetadata, GroupMetadata, GroupValueMetadata, HintMetadata, PropertyMetadata,
     StructMetadata, find_common_ident_prefix,
     parse::{
-        ArgDecl, CanCmp, CanCopy, CanDefault, Conditional, ConditionalExpr, Define, DocComment,
-        DocCommentFile, Enum, EnumKind, Expr, FnAbi, FnDeclArgs, FnPointer, Function, GetSpan,
-        Ident, IdentOrKwT, Include, IntegerLiteral, Item, Items, Literal, ParseErr, PreProcBlock,
-        PrimitiveType, StructFields, StructKind, StructOrUnion, Type, TypeDef, TypeDefKind,
-        TypeEnum,
+        ArgDecl, CanCmp, CanConstruct, CanCopy, CanDefault, Conditional, ConditionalExpr, Define,
+        DocComment, DocCommentFile, Enum, EnumKind, Expr, FnAbi, FnDeclArgs, FnPointer, Function,
+        GetSpan, Ident, IdentOrKwT, Include, IntegerLiteral, Item, Items, Literal, ParseErr,
+        PreProcBlock, PrimitiveType, StructFields, StructKind, StructOrUnion, Type, TypeDef,
+        TypeDefKind, TypeEnum,
     },
     strip_common_ident_prefix,
 };
@@ -1603,7 +1603,7 @@ impl StructOrUnion {
     }
 
     pub fn can_default(&self, ctx: &EmitContext) -> CanDefault {
-        if !self.can_construct {
+        if self.can_construct == CanConstruct::Never {
             return CanDefault::No;
         }
         let mut can = if matches!(self.kind, StructKind::Union) {
@@ -1663,12 +1663,16 @@ impl StructOrUnion {
             doc.as_mut().unwrap().add_note("This struct has padding fields which shouldn't be accessed directly; use struct update syntax with e.g. `..Default::default()` for manual construction.");
         }
 
-        if !self.can_construct {
+        if self.can_construct != CanConstruct::Always {
             // replace other notes
             doc.as_mut().unwrap().notes.clear();
-            doc.as_mut().unwrap().add_note(
-                "This struct can't be created manually. Use the corresponding SDL functions.",
-            );
+            doc.as_mut()
+                .unwrap()
+                .add_note(if self.can_construct == CanConstruct::Never {
+                    "This struct can't be created manually. Use the corresponding SDL functions."
+                } else {
+                    "This struct is non-exhaustive. If created manually, it must be initialized with `default()` or equivalent."
+                });
         }
 
         let Ok(sym) = ctx.scope_mut().register_struct_or_union_sym(StructSym {
@@ -1709,7 +1713,7 @@ impl StructOrUnion {
             } else {
                 self.can_derive_eq(ctx, Some(fields))
             };
-            let can_default = if is_interface || !sym.can_construct {
+            let can_default = if is_interface || sym.can_construct == CanConstruct::Never {
                 CanDefault::No
             } else {
                 self.can_default(ctx)
@@ -1718,6 +1722,12 @@ impl StructOrUnion {
             let ctx_ool = &mut { ctx.with_ool_output() };
             if self.hidden {
                 writeln!(ctx_ool, "#[doc(hidden)]")?;
+            }
+            if self.can_construct == CanConstruct::NonExhaustive {
+                writeln!(
+                    ctx_ool,
+                    "#[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699"
+                )?;
             }
             sym.doc.emit(ctx_ool)?;
             writeln!(ctx_ool, "#[repr(C)]")?;
@@ -1759,10 +1769,17 @@ impl StructOrUnion {
                     ty: ctx_ool.capture_output(|ctx| field.ty.emit(ctx))?,
                 })
             }
-            if !sym.can_construct {
-                // see https://github.com/rust-lang/rust/issues/132699
-                writeln!(ctx_ool, "#[doc(hidden)]")?;
-                writeln!(ctx_ool, "__non_exhaustive: ::sdl3_sys::NonExhaustive,")?;
+            match sym.can_construct {
+                CanConstruct::Always => {}
+                CanConstruct::NonExhaustive => {
+                    // see https://github.com/rust-lang/rust/issues/132699
+                    writeln!(ctx_ool, "#[doc(hidden)]")?;
+                    writeln!(ctx_ool, "__non_exhaustive: (),")?;
+                }
+                CanConstruct::Never => {
+                    writeln!(ctx_ool, "#[doc(hidden)]")?;
+                    writeln!(ctx_ool, "__non_exhaustive: ::sdl3_sys::NonExhaustive,")?;
+                }
             }
 
             ctx_ool.decrease_indent();

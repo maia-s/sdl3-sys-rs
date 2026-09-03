@@ -2,9 +2,9 @@ use super::{Emit, EmitErr, EmitResult, Eval, Value, patch::patch_emit_opaque_str
 use crate::{
     Defer, Gen, GroupMetadata, HintMetadata, Metadata, PropertyMetadata, StructMetadata,
     parse::{
-        CanCmp, CanCopy, CanDefault, DefineArg, DefineValue, DocComment, Expr, GetSpan, Ident,
-        IdentOrKw, ParseErr, PrimitiveType, RustCode, Span, StructFields, StructKind, Type,
-        TypeEnum,
+        CanCmp, CanConstruct, CanCopy, CanDefault, DefineArg, DefineValue, DocComment, Expr,
+        GetSpan, Ident, IdentOrKw, ParseErr, PrimitiveType, RustCode, Span, StructFields,
+        StructKind, Type, TypeEnum,
     },
 };
 use core::{fmt::Display, mem};
@@ -1226,7 +1226,7 @@ pub struct StructSym {
     pub emit_status: EmitStatus,
     pub hidden: bool,
     pub can_copy: CanCopy,
-    pub can_construct: bool,
+    pub can_construct: CanConstruct,
     pub can_eq: CanCmp,
 }
 
@@ -1349,7 +1349,8 @@ impl Scope {
                 changed = true;
                 regd.can_copy = sym.can_copy;
             }
-            if sym.can_construct != regd.can_construct && !sym.can_construct {
+            if sym.can_construct != CanConstruct::Always && sym.can_construct != regd.can_construct
+            {
                 changed = true;
                 regd.can_construct = sym.can_construct;
             }

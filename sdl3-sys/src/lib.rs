@@ -52,6 +52,7 @@ macro_rules! __const_c_str {
 #[doc(hidden)]
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+// This type intentionally doesn't derive Default. Use () for default-constructible non-exhaustives.
 pub struct NonExhaustive(());
 
 #[cfg(feature = "debug-impls")]

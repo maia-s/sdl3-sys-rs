@@ -15,6 +15,13 @@ pub enum CanCopy {
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CanConstruct {
+    Always,
+    NonExhaustive,
+    Never,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CanDefault {
     Derive,
     Manual,

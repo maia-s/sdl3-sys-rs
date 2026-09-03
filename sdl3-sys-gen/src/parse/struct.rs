@@ -1,7 +1,7 @@
 use super::{
-    CanCmp, CanCopy, Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op, Parse,
-    ParseContext, ParseErr, ParseRawRes, Span, Spanned, Type, TypeWithReqIdent, WsAndComments,
-    patch_parsed_struct,
+    CanCmp, CanConstruct, CanCopy, Delimited, DocComment, GetSpan, Ident, Kw_struct, Kw_union, Op,
+    Parse, ParseContext, ParseErr, ParseRawRes, Span, Spanned, Type, TypeWithReqIdent,
+    WsAndComments, patch_parsed_struct,
 };
 use std::borrow::Cow;
 
@@ -21,7 +21,7 @@ pub struct StructOrUnion {
     pub fields: Option<StructFields>,
     pub hidden: bool,
     pub can_copy: CanCopy,
-    pub can_construct: bool,
+    pub can_construct: CanConstruct,
     pub can_eq: CanCmp,
     pub manual_debug_impl: bool,
 }
@@ -120,7 +120,11 @@ impl Parse for StructOrUnion {
             } else {
                 CanCopy::Default
             },
-            can_construct: !has_refcount_or_internal,
+            can_construct: if has_refcount_or_internal {
+                CanConstruct::Never
+            } else {
+                CanConstruct::Always
+            },
             can_eq,
             manual_debug_impl: false,
         };
