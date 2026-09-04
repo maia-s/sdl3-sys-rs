@@ -389,7 +389,7 @@ dependencies = [
 
 [[package]]
 name = "sdl3-main-macros"
-version = "0.2.3"
+version = "0.2.4"
 
 [[package]]
 name = "sdl3-mixer-src"

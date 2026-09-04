@@ -38,7 +38,7 @@ default-features = false
 
 [dependencies.sdl3-main-macros]
 path = "../sdl3-main-macros"
-version = "0.2.3"
+version = "0.2.4"
 
 [dependencies.parking-lot-v0-12]
 package = "parking_lot"

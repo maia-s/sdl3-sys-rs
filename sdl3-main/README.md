@@ -43,8 +43,9 @@ provides some helper types and functions to alleviate this.
 ## Recent changes
 
 - 0.7.0
-    - update sdl3-sys to 0.7.0
-    ...
+    - Update sdl3-sys to 0.7.0
+    - Don't try to print the SDL error if main returns failure. The SDL error may no
+      longer be available at that point. (Thanks to lyorig)
 
 - 0.6.4:
     - Support renamed or relocated sdl3_main crate when calling attribute macros.
