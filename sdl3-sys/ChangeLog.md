@@ -1,5 +1,9 @@
 # Changes
 
+- 0.7.1:
+    - Make non-exhaustive marker fields public so that `..Default::default()` can be used with
+      initialization syntax. (`#[non_exhaustive]` can't be used with FFI structs)
+
 - 0.7.0:
     - Update SDL to 3.4.16
     - Make all event structs non-exhaustive, because SDL may add fields to them in the future.

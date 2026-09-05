@@ -446,7 +446,7 @@ version = "3.4.16"
 
 [[package]]
 name = "sdl3-sys"
-version = "0.7.0+SDL-3.4.16"
+version = "0.7.1+SDL-3.4.16"
 dependencies = [
  "ash",
  "cc",

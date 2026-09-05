@@ -909,7 +909,8 @@ pub struct SDL_CommonEvent {
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -936,7 +937,8 @@ pub struct SDL_DisplayEvent {
     /// event dependent data
     pub data2: Sint32,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -963,7 +965,8 @@ pub struct SDL_WindowEvent {
     /// event dependent data
     pub data2: Sint32,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -986,7 +989,8 @@ pub struct SDL_KeyboardDeviceEvent {
     /// The keyboard instance id
     pub which: SDL_KeyboardID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1033,7 +1037,8 @@ pub struct SDL_KeyboardEvent {
     /// true if this is a key repeat
     pub repeat: ::core::primitive::bool,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1066,7 +1071,8 @@ pub struct SDL_TextEditingEvent {
     /// The length of selected editing text, or -1 if not set
     pub length: Sint32,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 impl ::core::default::Default for SDL_TextEditingEvent {
@@ -1111,7 +1117,8 @@ pub struct SDL_TextEditingCandidatesEvent {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 impl ::core::default::Default for SDL_TextEditingCandidatesEvent {
@@ -1151,7 +1158,8 @@ pub struct SDL_TextInputEvent {
     /// The input text, UTF-8 encoded
     pub text: *const ::core::ffi::c_char,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 impl ::core::default::Default for SDL_TextInputEvent {
@@ -1182,7 +1190,8 @@ pub struct SDL_MouseDeviceEvent {
     /// The mouse instance id
     pub which: SDL_MouseID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1217,7 +1226,8 @@ pub struct SDL_MouseMotionEvent {
     /// The relative motion in the Y direction
     pub yrel: ::core::ffi::c_float,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1254,7 +1264,8 @@ pub struct SDL_MouseButtonEvent {
     /// Y coordinate, relative to window
     pub y: ::core::ffi::c_float,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1293,7 +1304,8 @@ pub struct SDL_MouseWheelEvent {
     /// The amount scrolled vertically, accumulated to whole scroll "ticks" (added in 3.2.12)
     pub integer_y: Sint32,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1328,7 +1340,8 @@ pub struct SDL_JoyAxisEvent {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding4: Uint16,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1363,7 +1376,8 @@ pub struct SDL_JoyBallEvent {
     /// The relative motion in the Y direction
     pub yrel: Sint16,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1400,7 +1414,8 @@ pub struct SDL_JoyHatEvent {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1431,7 +1446,8 @@ pub struct SDL_JoyButtonEvent {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1460,7 +1476,8 @@ pub struct SDL_JoyDeviceEvent {
     /// The joystick instance id
     pub which: SDL_JoystickID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1487,7 +1504,8 @@ pub struct SDL_JoyBatteryEvent {
     /// The joystick battery percent charge remaining
     pub percent: ::core::ffi::c_int,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1522,7 +1540,8 @@ pub struct SDL_GamepadAxisEvent {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding4: Uint16,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1553,7 +1572,8 @@ pub struct SDL_GamepadButtonEvent {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding2: Uint8,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1586,7 +1606,8 @@ pub struct SDL_GamepadDeviceEvent {
     /// The joystick instance id
     pub which: SDL_JoystickID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1619,7 +1640,8 @@ pub struct SDL_GamepadTouchpadEvent {
     /// Normalized in the range 0...1
     pub pressure: ::core::ffi::c_float,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1648,7 +1670,8 @@ pub struct SDL_GamepadSensorEvent {
     /// The timestamp of the sensor reading in nanoseconds, not necessarily synchronized with the system clock
     pub sensor_timestamp: Uint64,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1683,7 +1706,8 @@ pub struct SDL_AudioDeviceEvent {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding3: Uint8,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1706,7 +1730,8 @@ pub struct SDL_CameraDeviceEvent {
     /// [`SDL_CameraID`] for the device being added or removed or changing
     pub which: SDL_CameraID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1729,7 +1754,8 @@ pub struct SDL_RenderEvent {
     /// The window containing the renderer in question.
     pub windowID: SDL_WindowID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1779,7 +1805,8 @@ pub struct SDL_TouchFingerEvent {
     /// The window underneath the finger, if any
     pub windowID: SDL_WindowID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1800,7 +1827,8 @@ pub struct SDL_PinchFingerEvent {
     /// The window underneath the finger, if any
     pub windowID: SDL_WindowID,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1840,7 +1868,8 @@ pub struct SDL_PenProximityEvent {
     /// Complete pen input state at time of event (added in 3.4.16).
     pub pen_state: SDL_PenInputFlags,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1877,7 +1906,8 @@ pub struct SDL_PenMotionEvent {
     /// Y coordinate, relative to window
     pub y: ::core::ffi::c_float,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1915,7 +1945,8 @@ pub struct SDL_PenTouchEvent {
     /// true if the pen is touching or false if the pen is lifted off
     pub down: ::core::primitive::bool,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1953,7 +1984,8 @@ pub struct SDL_PenButtonEvent {
     /// true if the button is pressed
     pub down: ::core::primitive::bool,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -1991,7 +2023,8 @@ pub struct SDL_PenAxisEvent {
     /// New value of axis
     pub value: ::core::ffi::c_float,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -2023,7 +2056,8 @@ pub struct SDL_DropEvent {
     /// The text for [`SDL_EVENT_DROP_TEXT`] and the file name for [`SDL_EVENT_DROP_FILE`], NULL for other events
     pub data: *const ::core::ffi::c_char,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 impl ::core::default::Default for SDL_DropEvent {
@@ -2059,7 +2093,8 @@ pub struct SDL_ClipboardEvent {
     /// current mime types
     pub mime_types: *mut *const ::core::ffi::c_char,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 impl ::core::default::Default for SDL_ClipboardEvent {
@@ -2094,7 +2129,8 @@ pub struct SDL_SensorEvent {
     /// The timestamp of the sensor reading in nanoseconds, not necessarily synchronized with the system clock
     pub sensor_timestamp: Uint64,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -2115,7 +2151,8 @@ pub struct SDL_QuitEvent {
     /// In nanoseconds, populated using [`SDL_GetTicksNS()`]
     pub timestamp: Uint64,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 #[allow(clippy::manual_non_exhaustive)] // https://github.com/rust-lang/rust/issues/132699
@@ -2150,7 +2187,8 @@ pub struct SDL_UserEvent {
     /// User defined data pointer
     pub data2: *mut ::core::ffi::c_void,
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 impl ::core::default::Default for SDL_UserEvent {
@@ -2264,7 +2302,8 @@ pub union SDL_Event {
     #[deprecated(note = "padding fields are exempt from semver; init with `..Default::default()`")]
     pub padding: [Uint8; 128],
     #[doc(hidden)]
-    __non_exhaustive: (),
+    #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
+    pub __non_exhaustive: (),
 }
 
 impl ::core::default::Default for SDL_Event {

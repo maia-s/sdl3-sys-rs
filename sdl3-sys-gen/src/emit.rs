@@ -1774,7 +1774,11 @@ impl StructOrUnion {
                 CanConstruct::NonExhaustive => {
                     // see https://github.com/rust-lang/rust/issues/132699
                     writeln!(ctx_ool, "#[doc(hidden)]")?;
-                    writeln!(ctx_ool, "__non_exhaustive: (),")?;
+                    writeln!(
+                        ctx_ool,
+                        "#[deprecated(note = \"this struct is non-exhaustive; init with `..Default::default()`\")]"
+                    )?;
+                    writeln!(ctx_ool, "pub __non_exhaustive: (),")?;
                 }
                 CanConstruct::Never => {
                     writeln!(ctx_ool, "#[doc(hidden)]")?;
