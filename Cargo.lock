@@ -472,11 +472,11 @@ dependencies = [
 
 [[package]]
 name = "sdl3-ttf-src"
-version = "3.2.2"
+version = "3.2.3"
 
 [[package]]
 name = "sdl3-ttf-sys"
-version = "0.7.0+SDL-ttf-3.2.2"
+version = "0.7.1+SDL-ttf-3.2.2"
 dependencies = [
  "cmake",
  "pkg-config",

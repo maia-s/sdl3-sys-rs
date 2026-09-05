@@ -1,6 +1,6 @@
 [package]
 name = "sdl3-ttf-sys"
-version = "0.7.0+SDL-ttf-3.2.2"
+version = "0.7.1+SDL-ttf-3.2.2"
 edition = "2024"
 rust-version = "1.85"
 authors = ["Maia S Ravn <maia.noreply@runbox.com>"]
@@ -77,7 +77,7 @@ version = "0.1.2"
 optional = true
 
 [build-dependencies.sdl3-ttf-src]
-version = "=3.2.2"
+version = "=3.2.3"
 path = "../sdl3-ttf-src"
 optional = true
 
