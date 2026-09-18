@@ -175,10 +175,14 @@ These features are always available.
 | `display-impls` | Implement the `Display` trait for applicable SDL types. |
 | `metadata`    | Enable metadata. Also see `only-metadata`. |
 | `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. Recommended when you need metadata but don't need to call into SDL, e.g. for build scripts. |
-| `variadic` | Enable the `VaList` type so that variadic functions can be used. Requires Rust 1.99 or later. |
+| `variadic` | Enable the `VaList` type so that variadic functions using it can be called. Requires Rust 1.99 or later. |
 | `nightly` | Enable features that need the nightly compiler. This enables some intrinsics. |
 
 ## Recent changes
+
+- next-3.4
+    - Add `variadic` feature flag for enabling variadic functions using the VaList type
+      on stable (MSRV 1.99)
 
 - 0.7.1:
     - Make non-exhaustive marker fields public so that `..Default::default()` can be used with

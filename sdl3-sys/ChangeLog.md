@@ -1,6 +1,8 @@
 # Changes
 
-    - Add `variadic` feature flag for enabling variadic functions on stable (MSRV 1.99)
+- next-3.4
+    - Add `variadic` feature flag for enabling variadic functions using the VaList type
+      on stable (MSRV 1.99)
 
 - 0.7.1:
     - Make non-exhaustive marker fields public so that `..Default::default()` can be used with
