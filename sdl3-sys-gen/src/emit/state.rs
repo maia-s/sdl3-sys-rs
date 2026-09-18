@@ -315,6 +315,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "SDL_PLATFORM_IOS" = CfgExpr(r#"any(target_os = "ios", target_os = "tvos", target_os = "visionos", target_os = "watchos")"#);
             "SDL_PLATFORM_LINUX" = CfgExpr(r#"target_os = "linux""#);
             "SDL_PLATFORM_NGAGE" = CfgExpr(always_false!("SDL_PLATFORM_NGAGE")); // not currently used in public headers
+            "SDL_PLATFORM_OPENHARMONY" = CfgExpr(r#"target_env="ohos""#);
             "SDL_PLATFORM_PS2" = CfgExpr(always_false!("SDL_PLATFORM_PS2")); // not currently used in public headers
             "SDL_PLATFORM_PSP" = CfgExpr(r#"target_os = "psp""#);
             "SDL_PLATFORM_TVOS" = CfgExpr(r#"target_os = "tvos""#);
