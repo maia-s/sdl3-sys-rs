@@ -72,8 +72,11 @@ display-impls = []
 metadata = []
 only-metadata = ["metadata", "no-link"]
 
+# Enable VaList type (MSRV 1.99)
+variadic = []
+
 # Enable nightly features
-nightly = []
+nightly = ["variadic"]
 
 # Optional integrations
 use-ash-v0-38 = ["dep:ash-v0-38"]

@@ -175,7 +175,8 @@ These features are always available.
 | `display-impls` | Implement the `Display` trait for applicable SDL types. |
 | `metadata`    | Enable metadata. Also see `only-metadata`. |
 | `only-metadata` | Shortcut for enabling both the `metadata` and `no-link` features. Recommended when you need metadata but don't need to call into SDL, e.g. for build scripts. |
-| `nightly` | Enable features that need the nightly compiler. This enables the `VaList` type, as well as enabling some intrinsics. |
+| `variadic` | Enable the `VaList` type so that variadic functions can be used. Requires Rust 1.99 or later. |
+| `nightly` | Enable features that need the nightly compiler. This enables some intrinsics. |
 
 ## Recent changes
 

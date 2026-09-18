@@ -1,5 +1,7 @@
 # Changes
 
+    - Add `variadic` feature flag for enabling variadic functions on stable (MSRV 1.99)
+
 - 0.7.1:
     - Make non-exhaustive marker fields public so that `..Default::default()` can be used with
       initialization syntax. (`#[non_exhaustive]` can't be used with FFI structs)
