@@ -88,7 +88,7 @@ main() {
     fi
 
     if $require_clean; then
-        git diff --quiet || die "uncommitted changes"
+        git diff --quiet || (git diff; die "uncommitted changes")
     fi
 
     pre_gen $crates
@@ -98,7 +98,7 @@ main() {
     post_gen $crates
 
     if $require_clean; then
-        git diff --quiet || die "sdl3-sys-gen output didn't match committed results"
+        git diff --quiet || (git diff; die "sdl3-sys-gen output didn't match committed results")
     fi
 
     check $crates
