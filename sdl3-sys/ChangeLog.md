@@ -1,6 +1,6 @@
 # Changes
 
-- next-3.4
+- next-3.4:
     - Add `variadic` feature flag for enabling variadic functions using the VaList type
       on stable (MSRV 1.99)
 

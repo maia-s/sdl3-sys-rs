@@ -180,7 +180,7 @@ These features are always available.
 
 ## Recent changes
 
-- next-3.4
+- next-3.4:
     - Add `variadic` feature flag for enabling variadic functions using the VaList type
       on stable (MSRV 1.99)
 
@@ -192,20 +192,5 @@ These features are always available.
     - Update SDL to 3.4.16
     - Make all event structs non-exhaustive, because SDL may add fields to them in the future.
       If you need to construct an event struct yourself, you can use `Default::default()`.
-
-- 0.6.8:
-    - Update SDL to 3.4.14
-
-- 0.6.7:
-    - Update SDL to 3.4.12
-
-- 0.6.6:
-    - Update SDL to 3.4.10
-    - Enable `use-pkg-config` and `use-vcpkg` features by default
-    - Replace use of deprecated `cdecl` and `stdcall` ABIs with equivalent non-deprecated ones
-    - Fix Android builds being built for the wrong arch (Thanks to Archee)
-
-- 0.6.5:
-    - Update SDL to 3.4.8 (hotfix)
 
 See ChangeLog.md for older changes
