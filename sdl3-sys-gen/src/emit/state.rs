@@ -336,6 +336,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "__cplusplus",
             "__FILE_NAME__",
             "__has_include",
+            "__MINGW64_VERSION_MAJOR", // mingw-w64
             "__SUNPRO_C",
             "__WATCOMC__",
             "assert",
