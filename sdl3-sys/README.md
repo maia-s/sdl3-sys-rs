@@ -181,7 +181,7 @@ These features are always available.
 ## Recent changes
 
 - next-3.4:
-    - Add `variadic` feature flag for enabling variadic functions using the VaList type
+    - Add `variadic` feature flag for enabling variadic functions using the `VaList` type
       on stable (MSRV 1.99)
 
 - 0.7.1:
