@@ -35,6 +35,7 @@ main() {
         if git checkout "$branch"; then
             git rebase main || rebase_failed "$branch"
             git checkout "$branch"
+            ./update-submodules.sh
             dist="$(git rev-list --count main..HEAD)"
             if [ "$dist" -gt "1" ]; then
                 # squash
@@ -42,6 +43,7 @@ main() {
                 git reset --soft HEAD~1
                 git commit --amend -m "$message"
                 git checkout "$branch"
+                ./update-submodules.sh
             fi
             hash="$(git -C "$src_dir" rev-parse HEAD)"
             git -C "$src_dir" fetch
@@ -59,6 +61,7 @@ main() {
     done
 
     git checkout main
+    ./update-submodules.sh
     exit
 }
 
