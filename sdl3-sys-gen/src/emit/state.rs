@@ -356,6 +356,7 @@ impl<'a, 'b> EmitContext<'a, 'b> {
             "NO_SDL_VULKAN_TYPEDEFS",
             format!("SDL_{module}_h_"), "SDL_locale_h", "SDL_main_impl_h_",
             format!("SDL_{module}_h_").to_ascii_uppercase(),
+            "SDL_SHADERCROSS_H",
             "SDL_TTF_TEXTENGINE_H_",
             "SDL_ASSERT_FILE",
             "SDL_ASSERT_LEVEL",
