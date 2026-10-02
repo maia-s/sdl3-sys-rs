@@ -13,6 +13,14 @@ rebase_failed() {
 }
 
 main() {
+    push=false
+    for arg in "$@"; do
+        case "$arg" in
+            --push) push=true;;
+            *) die "unknown arg: $arg";;
+        esac
+    done
+
     git update-index --refresh
     git diff-index --quiet HEAD -- || die "git isn't clean"
 
@@ -54,6 +62,9 @@ main() {
                 time="$(git -C "$src_dir" show -s --format=%ci HEAD)"
                 ./generate-and-check.sh --crate "$crate" || die "generate $branch/$crate failed"
                 git diff --exit-code || git commit -a -m "$(basename $src_dir) $rev @ $time"
+                if $push; then
+                    git push --force-with-lease origin "$branch" || die "push failed"
+                fi
             fi
         else
             echo "skipping $branch"
