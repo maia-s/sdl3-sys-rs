@@ -1,5 +1,8 @@
 # Changes
 
+- 0.7.1
+    - Update SDL_image to 3.4.8
+
 - 0.7.0
     - Update SDL_image to 3.4.6
     - Update sdl3-sys to 0.7.0
