@@ -73,11 +73,12 @@ main() {
 
 push=false
 
+args=()
 for arg in "$@"; do
     case "$arg" in
         --push) push=true;;
-        *) die "unknown arg: $arg";;
+        *) args+=("$arg");;
     esac
 done
 
-main $push "$@"
+main $push "$args"
