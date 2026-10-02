@@ -13,13 +13,8 @@ rebase_failed() {
 }
 
 main() {
-    push=false
-    for arg in "$@"; do
-        case "$arg" in
-            --push) push=true;;
-            *) die "unknown arg: $arg";;
-        esac
-    done
+    push=$1
+    shift
 
     git update-index --refresh
     git diff-index --quiet HEAD -- || die "git isn't clean"
@@ -76,4 +71,13 @@ main() {
     exit
 }
 
-main "$@"
+push=false
+
+for arg in "$@"; do
+    case "$arg" in
+        --push) push=true;;
+        *) die "unknown arg: $arg";;
+    esac
+done
+
+main $push "$@"
