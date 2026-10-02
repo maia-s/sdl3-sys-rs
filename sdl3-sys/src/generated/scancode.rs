@@ -183,6 +183,7 @@ use super::stdinc::*;
 /// | [`CLEARAGAIN`](SDL_Scancode::CLEARAGAIN) | [`SDL_SCANCODE_CLEARAGAIN`] | |
 /// | [`CRSEL`](SDL_Scancode::CRSEL) | [`SDL_SCANCODE_CRSEL`] | |
 /// | [`EXSEL`](SDL_Scancode::EXSEL) | [`SDL_SCANCODE_EXSEL`] | |
+/// | [`FRONT`](SDL_Scancode::FRONT) | [`SDL_SCANCODE_FRONT`] | Front (Sun keyboards) |
 /// | [`KP_00`](SDL_Scancode::KP_00) | [`SDL_SCANCODE_KP_00`] | |
 /// | [`KP_000`](SDL_Scancode::KP_000) | [`SDL_SCANCODE_KP_000`] | |
 /// | [`THOUSANDSSEPARATOR`](SDL_Scancode::THOUSANDSSEPARATOR) | [`SDL_SCANCODE_THOUSANDSSEPARATOR`] | |
@@ -462,6 +463,7 @@ impl ::core::fmt::Debug for SDL_Scancode {
             Self::CLEARAGAIN => "SDL_SCANCODE_CLEARAGAIN",
             Self::CRSEL => "SDL_SCANCODE_CRSEL",
             Self::EXSEL => "SDL_SCANCODE_EXSEL",
+            Self::FRONT => "SDL_SCANCODE_FRONT",
             Self::KP_00 => "SDL_SCANCODE_KP_00",
             Self::KP_000 => "SDL_SCANCODE_KP_000",
             Self::THOUSANDSSEPARATOR => "SDL_SCANCODE_THOUSANDSSEPARATOR",
@@ -798,6 +800,8 @@ impl SDL_Scancode {
     pub const CLEARAGAIN: Self = Self((162 as ::core::ffi::c_int));
     pub const CRSEL: Self = Self((163 as ::core::ffi::c_int));
     pub const EXSEL: Self = Self((164 as ::core::ffi::c_int));
+    /// Front (Sun keyboards)
+    pub const FRONT: Self = Self((165 as ::core::ffi::c_int));
     pub const KP_00: Self = Self((176 as ::core::ffi::c_int));
     pub const KP_000: Self = Self((177 as ::core::ffi::c_int));
     pub const THOUSANDSSEPARATOR: Self = Self((178 as ::core::ffi::c_int));
@@ -1176,6 +1180,8 @@ pub const SDL_SCANCODE_OPER: SDL_Scancode = SDL_Scancode::OPER;
 pub const SDL_SCANCODE_CLEARAGAIN: SDL_Scancode = SDL_Scancode::CLEARAGAIN;
 pub const SDL_SCANCODE_CRSEL: SDL_Scancode = SDL_Scancode::CRSEL;
 pub const SDL_SCANCODE_EXSEL: SDL_Scancode = SDL_Scancode::EXSEL;
+/// Front (Sun keyboards)
+pub const SDL_SCANCODE_FRONT: SDL_Scancode = SDL_Scancode::FRONT;
 pub const SDL_SCANCODE_KP_00: SDL_Scancode = SDL_Scancode::KP_00;
 pub const SDL_SCANCODE_KP_000: SDL_Scancode = SDL_Scancode::KP_000;
 pub const SDL_SCANCODE_THOUSANDSSEPARATOR: SDL_Scancode = SDL_Scancode::THOUSANDSSEPARATOR;

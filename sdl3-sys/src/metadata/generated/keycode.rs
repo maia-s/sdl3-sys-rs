@@ -991,6 +991,12 @@ pub const METADATA_SDL_Keycode: Group = Group {
             available_since: None,
         },
         GroupValue {
+            name: "SDLK_FRONT",
+            short_name: "FRONT",
+            doc: Some("SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_FRONT`])\n"),
+            available_since: None,
+        },
+        GroupValue {
             name: "SDLK_KP_00",
             short_name: "KP_00",
             doc: Some("SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_00`])\n"),

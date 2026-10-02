@@ -88,6 +88,7 @@ use super::sensor::*;
 /// | [`NINTENDO_SWITCH_JOYCON_RIGHT`](SDL_GamepadType::NINTENDO_SWITCH_JOYCON_RIGHT) | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT`] | |
 /// | [`NINTENDO_SWITCH_JOYCON_PAIR`](SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR) | [`SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR`] | |
 /// | [`GAMECUBE`](SDL_GamepadType::GAMECUBE) | [`SDL_GAMEPAD_TYPE_GAMECUBE`] | |
+/// | [`STEAM`](SDL_GamepadType::STEAM) | [`SDL_GAMEPAD_TYPE_STEAM`] | |
 /// | [`COUNT`](SDL_GamepadType::COUNT) | [`SDL_GAMEPAD_TYPE_COUNT`] | |
 #[repr(transparent)]
 #[derive(Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -131,6 +132,7 @@ impl ::core::fmt::Debug for SDL_GamepadType {
             Self::NINTENDO_SWITCH_JOYCON_RIGHT => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT",
             Self::NINTENDO_SWITCH_JOYCON_PAIR => "SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR",
             Self::GAMECUBE => "SDL_GAMEPAD_TYPE_GAMECUBE",
+            Self::STEAM => "SDL_GAMEPAD_TYPE_STEAM",
             Self::COUNT => "SDL_GAMEPAD_TYPE_COUNT",
 
             _ => return write!(f, "SDL_GamepadType({})", self.0),
@@ -151,7 +153,8 @@ impl SDL_GamepadType {
     pub const NINTENDO_SWITCH_JOYCON_RIGHT: Self = Self((9 as ::core::ffi::c_int));
     pub const NINTENDO_SWITCH_JOYCON_PAIR: Self = Self((10 as ::core::ffi::c_int));
     pub const GAMECUBE: Self = Self((11 as ::core::ffi::c_int));
-    pub const COUNT: Self = Self((12 as ::core::ffi::c_int));
+    pub const STEAM: Self = Self((12 as ::core::ffi::c_int));
+    pub const COUNT: Self = Self((13 as ::core::ffi::c_int));
 }
 
 pub const SDL_GAMEPAD_TYPE_UNKNOWN: SDL_GamepadType = SDL_GamepadType::UNKNOWN;
@@ -170,6 +173,7 @@ pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_RIGHT: SDL_GamepadType =
 pub const SDL_GAMEPAD_TYPE_NINTENDO_SWITCH_JOYCON_PAIR: SDL_GamepadType =
     SDL_GamepadType::NINTENDO_SWITCH_JOYCON_PAIR;
 pub const SDL_GAMEPAD_TYPE_GAMECUBE: SDL_GamepadType = SDL_GamepadType::GAMECUBE;
+pub const SDL_GAMEPAD_TYPE_STEAM: SDL_GamepadType = SDL_GamepadType::STEAM;
 pub const SDL_GAMEPAD_TYPE_COUNT: SDL_GamepadType = SDL_GamepadType::COUNT;
 
 impl SDL_GamepadType {

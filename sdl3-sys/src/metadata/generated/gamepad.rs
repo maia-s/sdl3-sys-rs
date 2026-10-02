@@ -130,6 +130,12 @@ pub const METADATA_SDL_GamepadType: Group = Group {
             available_since: None,
         },
         GroupValue {
+            name: "SDL_GAMEPAD_TYPE_STEAM",
+            short_name: "STEAM",
+            doc: None,
+            available_since: None,
+        },
+        GroupValue {
             name: "SDL_GAMEPAD_TYPE_COUNT",
             short_name: "COUNT",
             doc: None,

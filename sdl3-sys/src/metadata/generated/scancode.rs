@@ -979,6 +979,12 @@ pub const METADATA_SDL_Scancode: Group = Group {
             available_since: None,
         },
         GroupValue {
+            name: "SDL_SCANCODE_FRONT",
+            short_name: "FRONT",
+            doc: Some("Front (Sun keyboards)\n"),
+            available_since: None,
+        },
+        GroupValue {
             name: "SDL_SCANCODE_KP_00",
             short_name: "KP_00",
             doc: None,

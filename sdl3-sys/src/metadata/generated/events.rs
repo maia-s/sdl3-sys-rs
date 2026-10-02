@@ -2435,6 +2435,12 @@ pub const METADATA_SDL_PenProximityEvent: Struct = Struct {
             available_since: None,
             ty: "SDL_PenInputFlags",
         },
+        Field {
+            name: "device_type",
+            doc: Some("the device type of the pen, if known (added in 3.4.18).\n"),
+            available_since: None,
+            ty: "SDL_PenDeviceType",
+        },
     ],
 };
 pub const METADATA_SDL_PenMotionEvent: Struct = Struct {
@@ -2493,6 +2499,12 @@ pub const METADATA_SDL_PenMotionEvent: Struct = Struct {
             doc: Some("Y coordinate, relative to window\n"),
             available_since: None,
             ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "device_type",
+            doc: Some("the device type of the pen, if known (added in 3.4.18).\n"),
+            available_since: None,
+            ty: "SDL_PenDeviceType",
         },
     ],
 };
@@ -2565,6 +2577,12 @@ pub const METADATA_SDL_PenTouchEvent: Struct = Struct {
             available_since: None,
             ty: "::core::primitive::bool",
         },
+        Field {
+            name: "device_type",
+            doc: Some("the device type of the pen, if known (added in 3.4.18).\n"),
+            available_since: None,
+            ty: "SDL_PenDeviceType",
+        },
     ],
 };
 pub const METADATA_SDL_PenButtonEvent: Struct = Struct {
@@ -2636,6 +2654,12 @@ pub const METADATA_SDL_PenButtonEvent: Struct = Struct {
             available_since: None,
             ty: "::core::primitive::bool",
         },
+        Field {
+            name: "device_type",
+            doc: Some("the device type of the pen, if known (added in 3.4.18).\n"),
+            available_since: None,
+            ty: "SDL_PenDeviceType",
+        },
     ],
 };
 pub const METADATA_SDL_PenAxisEvent: Struct = Struct {
@@ -2706,6 +2730,12 @@ pub const METADATA_SDL_PenAxisEvent: Struct = Struct {
             doc: Some("New value of axis\n"),
             available_since: None,
             ty: "::core::ffi::c_float",
+        },
+        Field {
+            name: "device_type",
+            doc: Some("the device type of the pen, if known (added in 3.4.18).\n"),
+            available_since: None,
+            ty: "SDL_PenDeviceType",
         },
     ],
 };

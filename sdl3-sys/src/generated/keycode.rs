@@ -196,6 +196,7 @@ use super::scancode::*;
 /// | [`CLEARAGAIN`](SDL_Keycode::CLEARAGAIN) | [`SDLK_CLEARAGAIN`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CLEARAGAIN`]) |
 /// | [`CRSEL`](SDL_Keycode::CRSEL) | [`SDLK_CRSEL`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_CRSEL`]) |
 /// | [`EXSEL`](SDL_Keycode::EXSEL) | [`SDLK_EXSEL`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_EXSEL`]) |
+/// | [`FRONT`](SDL_Keycode::FRONT) | [`SDLK_FRONT`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_FRONT`]) |
 /// | [`KP_00`](SDL_Keycode::KP_00) | [`SDLK_KP_00`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_00`]) |
 /// | [`KP_000`](SDL_Keycode::KP_000) | [`SDLK_KP_000`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_000`]) |
 /// | [`THOUSANDSSEPARATOR`](SDL_Keycode::THOUSANDSSEPARATOR) | [`SDLK_THOUSANDSSEPARATOR`] | SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_THOUSANDSSEPARATOR`]) |
@@ -492,6 +493,7 @@ impl ::core::fmt::Debug for SDL_Keycode {
             Self::CLEARAGAIN => "SDLK_CLEARAGAIN",
             Self::CRSEL => "SDLK_CRSEL",
             Self::EXSEL => "SDLK_EXSEL",
+            Self::FRONT => "SDLK_FRONT",
             Self::KP_00 => "SDLK_KP_00",
             Self::KP_000 => "SDLK_KP_000",
             Self::THOUSANDSSEPARATOR => "SDLK_THOUSANDSSEPARATOR",
@@ -918,6 +920,8 @@ impl SDL_Keycode {
     pub const CRSEL: Self = Self((0x400000a3 as Uint32));
     /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_EXSEL`])
     pub const EXSEL: Self = Self((0x400000a4 as Uint32));
+    /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_FRONT`])
+    pub const FRONT: Self = Self((0x400000a5 as Uint32));
     /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_00`])
     pub const KP_00: Self = Self((0x400000b0 as Uint32));
     /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_000`])
@@ -1434,6 +1438,8 @@ pub const SDLK_CLEARAGAIN: SDL_Keycode = SDL_Keycode::CLEARAGAIN;
 pub const SDLK_CRSEL: SDL_Keycode = SDL_Keycode::CRSEL;
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_EXSEL`])
 pub const SDLK_EXSEL: SDL_Keycode = SDL_Keycode::EXSEL;
+/// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_FRONT`])
+pub const SDLK_FRONT: SDL_Keycode = SDL_Keycode::FRONT;
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_00`])
 pub const SDLK_KP_00: SDL_Keycode = SDL_Keycode::KP_00;
 /// SDL_SCANCODE_TO_KEYCODE([`SDL_SCANCODE_KP_000`])

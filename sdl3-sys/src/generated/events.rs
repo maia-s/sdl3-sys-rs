@@ -1867,6 +1867,8 @@ pub struct SDL_PenProximityEvent {
     pub which: SDL_PenID,
     /// Complete pen input state at time of event (added in 3.4.16).
     pub pen_state: SDL_PenInputFlags,
+    /// the device type of the pen, if known (added in 3.4.18).
+    pub device_type: SDL_PenDeviceType,
     #[doc(hidden)]
     #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
     pub __non_exhaustive: (),
@@ -1905,6 +1907,8 @@ pub struct SDL_PenMotionEvent {
     pub x: ::core::ffi::c_float,
     /// Y coordinate, relative to window
     pub y: ::core::ffi::c_float,
+    /// the device type of the pen, if known (added in 3.4.18).
+    pub device_type: SDL_PenDeviceType,
     #[doc(hidden)]
     #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
     pub __non_exhaustive: (),
@@ -1944,6 +1948,8 @@ pub struct SDL_PenTouchEvent {
     pub eraser: ::core::primitive::bool,
     /// true if the pen is touching or false if the pen is lifted off
     pub down: ::core::primitive::bool,
+    /// the device type of the pen, if known (added in 3.4.18).
+    pub device_type: SDL_PenDeviceType,
     #[doc(hidden)]
     #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
     pub __non_exhaustive: (),
@@ -1983,6 +1989,8 @@ pub struct SDL_PenButtonEvent {
     pub button: Uint8,
     /// true if the button is pressed
     pub down: ::core::primitive::bool,
+    /// the device type of the pen, if known (added in 3.4.18).
+    pub device_type: SDL_PenDeviceType,
     #[doc(hidden)]
     #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
     pub __non_exhaustive: (),
@@ -2022,6 +2030,8 @@ pub struct SDL_PenAxisEvent {
     pub axis: SDL_PenAxis,
     /// New value of axis
     pub value: ::core::ffi::c_float,
+    /// the device type of the pen, if known (added in 3.4.18).
+    pub device_type: SDL_PenDeviceType,
     #[doc(hidden)]
     #[deprecated(note = "this struct is non-exhaustive; init with `..Default::default()`")]
     pub __non_exhaustive: (),

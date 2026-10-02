@@ -1,6 +1,7 @@
 # Changes
 
-- next-3.4:
+- 0.7.2:
+    - Update SDL to 3.4.18
     - Add `variadic` feature flag for enabling variadic functions using the `VaList` type
       on stable (MSRV 1.99)
 
