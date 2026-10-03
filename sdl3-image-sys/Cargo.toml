@@ -73,6 +73,7 @@ no-default-formats = [
     "no-sdlimage-lbm",
     "no-sdlimage-pcx",
     "no-sdlimage-png",
+    "no-sdlimage-png-libpng",
     "no-sdlimage-pnm",
     "no-sdlimage-qoi",
     "no-sdlimage-svg",
@@ -115,6 +116,7 @@ sdlimage-jxl = []
 sdlimage-lbm = []
 sdlimage-pcx = []
 sdlimage-png = []
+sdlimage-png-libpng = ["sdlimage-png"]
 sdlimage-pnm = []
 sdlimage-qoi = []
 sdlimage-svg = []
@@ -133,6 +135,7 @@ no-sdlimage-jxl = []
 no-sdlimage-lbm = []
 no-sdlimage-pcx = []
 no-sdlimage-png = []
+no-sdlimage-png-libpng = []
 no-sdlimage-pnm = []
 no-sdlimage-qoi = []
 no-sdlimage-svg = []
@@ -154,7 +157,7 @@ no-sdlimage-png-save = []
 sdlimage-avif-shared = ["sdlimage-avif"]
 sdlimage-jpg-shared = ["sdlimage-jpg"]
 sdlimage-jxl-shared = ["sdlimage-jxl"]
-sdlimage-png-shared = ["sdlimage-png"]
+sdlimage-png-shared = ["sdlimage-png-libpng"]
 sdlimage-tif-shared = ["sdlimage-tif"]
 sdlimage-webp-shared = ["sdlimage-webp"]
 

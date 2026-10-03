@@ -41,6 +41,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 SDLIMAGE_LBM,
                 SDLIMAGE_PCX,
                 SDLIMAGE_PNG,
+                SDLIMAGE_PNG_LIBPNG,
                 SDLIMAGE_PNM,
                 SDLIMAGE_QOI,
                 SDLIMAGE_SVG,

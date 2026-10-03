@@ -88,44 +88,45 @@ feature. Enabled features override disabled features.
 
 These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` prefix.
 
-| Feature (cmake) | Built-in | STB | WIC | ImageIO | Library |
-| --------------- | :------: | :-: | :-: | :-----: | ------- |
-| `avif`          |          |     |     |         | libavif (BSD-2-Clause) + aom (BSD-2-Clause) + dav1d (BSD-2-Clause) + ... |
-| `bmp`           | ✅       |     |     | ✅       |         |
-| `gif`           | ✅       |     |     | ✅       |         |
-| `jpg`           |          | ✅  | ✅  | ✅       | libjpeg (IJG-short) |
-| `jxl`           |          |     |     |         | libjxl (BSD-3-Clause) + ... |
-| `lbm`           | ✅       |     |     |         |         |
-| `pcx`           | ✅       |     |     |         |         |
-| `png`           |          | ✅  | ✅  | ✅       | libpng (Libpng) + libz (Zlib) |
-| `pnm`           | ✅       |     |     |         |         |
-| `qoi`           | ✅ (MIT) |     |     |         |         |
-| `svg`           | ✅       |     |     |         |         |
-| `tga`           | ✅       |     |     | ✅      |         |
-| `tif`           |          |     | ✅  | ✅      | libtiff (libtiff) |
-| `webp`          |          |     |     |         | libwebp (BSD-3-Clause) |
-| `xcf`           | ✅       |     |     |         |         |
-| `xpm`           | ✅       |     |     |         |         |
-| `xv`            | ✅       |     |     |         |         |
+| Feature (cmake) | Built-in | STB | WIC | ImageIO | Library | Notes |
+| --------------- | :------: | :-: | :-: | :-----: | ------- | ----- |
+| `avif`          |          |     |     |         | libavif (BSD-2-Clause) + aom (BSD-2-Clause) + dav1d (BSD-2-Clause) + ... | |
+| `bmp`           | ✅       |     |     | ✅       |         | |
+| `gif`           | ✅       |     |     | ✅       |         | |
+| `jpg`           |          | ✅  | ✅  | ✅       | libjpeg (IJG-short) | |
+| `jxl`           |          |     |     |         | libjxl (BSD-3-Clause) + ... | |
+| `lbm`           | ✅       |     |     |         |         | |
+| `pcx`           | ✅       |     |     |         |         | |
+| `png`           |          | ✅  | ✅  | ✅       | libpng (Libpng) + libz (Zlib) | |
+| `png-libpng`    |          |     |     |          | libpng (Libpng) + libz (Zlib) | Always use libpng for PNG (supports APNG) |
+| `pnm`           | ✅       |     |     |         |         | |
+| `qoi`           | ✅ (MIT) |     |     |         |         | |
+| `svg`           | ✅       |     |     |         |         | |
+| `tga`           | ✅       |     |     | ✅      |         | |
+| `tif`           |          |     | ✅  | ✅      | libtiff (libtiff) | |
+| `webp`          |          |     |     |         | libwebp (BSD-3-Clause) | |
+| `xcf`           | ✅       |     |     |         |         | |
+| `xpm`           | ✅       |     |     |         |         | |
+| `xv`            | ✅       |     |     |         |         | |
 
 ##### Save support
 
 | Feature (cmake) | Description |
 | --------------- | ----------- |
-| `avif-save`     | Support saving images in avif format. Enables the `sdlimage-avif` feature |
-| `jpg-save`      | Support saving images in jpg format. Enables the `sdlimage-jpg` feature |
-| `png-save`      | Support saving images in png format. Enables the `sdlimage-png` feature |
+| `avif-save`     | Support saving images in avif format. Implies `sdlimage-avif`. |
+| `jpg-save`      | Support saving images in jpg format. Implies `sdlimage-jpg`. |
+| `png-save`      | Support saving images in png format. Implies `sdlimage-png`. |
 
 ##### Shared linking
 
 | Feature (cmake) | Description |
 | --------------- | ----------- |
-| `avif-shared`   | Use shared libraries for avif |
-| `jpg-shared`    | Use shared library for jpeg |
-| `jxl-shared`    | Use shared libraries for jxl |
-| `png-shared`    | Use shared libraries for png |
-| `tif-shared`    | Use shared library for tiff |
-| `webp-shared`   | Use shared library for webp |
+| `avif-shared`   | Use shared libraries for avif. Implies `sdlimage-avif`. |
+| `jpg-shared`    | Use shared library for jpeg. Implies `sdlimage-jpg`. |
+| `jxl-shared`    | Use shared libraries for jxl. Implies `sdlimage-jxl`. |
+| `png-shared`    | Use shared libraries for png. Implies `sdlimage-png-libpng`. |
+| `tif-shared`    | Use shared library for tiff. Implies `sdlimage-tif`. |
+| `webp-shared`   | Use shared library for webp. Implies `sdlimage-webp`. |
 
 ## Other features
 
@@ -139,6 +140,7 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
 
 - 0.7.1
     - Update SDL_image to 3.4.8
+    - Add `sdlimage-png-libpng` feature
 
 - 0.7.0
     - Update SDL_image to 3.4.6

@@ -2,6 +2,7 @@
 
 - 0.7.1
     - Update SDL_image to 3.4.8
+    - Add `sdlimage-png-libpng` feature
 
 - 0.7.0
     - Update SDL_image to 3.4.6
