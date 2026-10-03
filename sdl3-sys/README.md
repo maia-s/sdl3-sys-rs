@@ -180,6 +180,9 @@ These features are always available.
 
 ## Recent changes
 
+- next-3.4:
+    - ...
+
 - 0.7.2:
     - Update SDL to 3.4.18
     - Add `variadic` feature flag for enabling variadic functions using the `VaList` type
