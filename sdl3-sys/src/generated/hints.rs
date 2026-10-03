@@ -3418,6 +3418,19 @@ pub const SDL_HINT_PS2_GS_PROGRESSIVE: *const ::core::ffi::c_char =
 /// This hint is available since SDL 3.4.0.
 pub const SDL_HINT_PS2_GS_MODE: *const ::core::ffi::c_char = c"SDL_PS2_GS_MODE".as_ptr();
 
+/// A variable controlling the pixel storage mode of the PS2's framebuffer.
+///
+/// The variable can be set to the following values:
+///
+/// - "32"
+/// - "24" (default)
+/// - "16"
+///
+/// ## Availability
+/// This hint is available since SDL 3.4.20.
+pub const SDL_HINT_PS2_GS_COLOR_DEPTH: *const ::core::ffi::c_char =
+    c"SDL_PS2_GS_COLOR_DEPTH".as_ptr();
+
 /// A variable controlling which Dispmanx layer to use on a Raspberry PI.
 ///
 /// Also known as Z-order. The variable can take a negative or positive value.

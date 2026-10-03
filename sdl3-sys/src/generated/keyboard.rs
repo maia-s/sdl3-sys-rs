@@ -188,6 +188,13 @@ unsafe extern "C" {
     /// Note: This function doesn't take into account whether shift has been
     /// pressed or not.
     ///
+    /// Note that this function is "thread safe," in that calling it from two
+    /// threads at once will return the same array and that it won't be reallocated
+    /// or free'd without warning, as more events arrive, the contents of this
+    /// array may change without warning or any sort of thread synchronization. For
+    /// apps that need precision, it is better to use the key events in the SDL
+    /// event queue.
+    ///
     /// ## Parameters
     /// - `numkeys`: if non-NULL, receives the length of the returned array.
     ///

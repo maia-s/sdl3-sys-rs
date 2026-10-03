@@ -669,6 +669,8 @@ pub struct SDL_AudioSpec {
 /// This reports on the size of an audio sample frame: stereo Sint16 data (2
 /// channels of 2 bytes each) would be 4 bytes per frame, for example.
 ///
+/// This casts the value to unsigned int to avoid implicit sign conversion.
+///
 /// ## Parameters
 /// - `x`: an [`SDL_AudioSpec`] to query.
 ///
@@ -682,7 +684,7 @@ pub struct SDL_AudioSpec {
 /// This macro is available since SDL 3.2.0.
 #[inline(always)]
 pub const fn SDL_AUDIO_FRAMESIZE(x: SDL_AudioSpec) -> ::core::ffi::c_uint {
-    (SDL_AUDIO_BYTESIZE(x.format) * (x.channels as ::core::ffi::c_uint))
+    (SDL_AUDIO_BYTESIZE(x.format) * ((x.channels) as ::core::ffi::c_uint))
 }
 
 unsafe extern "C" {
@@ -2365,6 +2367,16 @@ unsafe extern "C" {
     ///
     /// As this is just a wrapper over [`SDL_LockMutex`] for an internal lock; it has
     /// all the same attributes (recursive locks are allowed, etc).
+    ///
+    /// Note that when the stream's callback runs, SDL is holding both an internal
+    /// mutex for the audio device and the stream's lock, in that order. Which is
+    /// to say: while this function can protect arbitrary data, calling into some
+    /// SDL audio functions while holding this lock may cause a deadlock--the app
+    /// holds this lock, and then calls into something that wants to obtain the
+    /// device lock, in the opposite order that SDL's audio thread obtained them.
+    /// Therefore, best practice is to use this function to protect simple app data
+    /// against the audio callback, and be careful about what SDL functions one
+    /// calls while locked outside of the callback.
     ///
     /// ## Parameters
     /// - `stream`: the audio stream to lock.

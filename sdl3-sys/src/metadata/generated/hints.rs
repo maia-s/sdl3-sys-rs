@@ -1902,6 +1902,16 @@ pub const METADATA_SDL_HINT_PS2_GS_MODE: Hint = Hint {
     ),
     available_since: Some(SDL_VERSIONNUM(3, 4, 0)),
 };
+pub const METADATA_SDL_HINT_PS2_GS_COLOR_DEPTH: Hint = Hint {
+    module: "hints",
+    name: "SDL_HINT_PS2_GS_COLOR_DEPTH",
+    short_name: "PS2_GS_COLOR_DEPTH",
+    value: crate::hints::SDL_HINT_PS2_GS_COLOR_DEPTH,
+    doc: Some(
+        "A variable controlling the pixel storage mode of the PS2's framebuffer.\n\nThe variable can be set to the following values:\n\n- \"32\"\n- \"24\" (default)\n- \"16\"\n\n## Availability\nThis hint is available since SDL 3.4.20.\n",
+    ),
+    available_since: Some(SDL_VERSIONNUM(3, 4, 20)),
+};
 pub const METADATA_SDL_HINT_RPI_VIDEO_LAYER: Hint = Hint {
     module: "hints",
     name: "SDL_HINT_RPI_VIDEO_LAYER",

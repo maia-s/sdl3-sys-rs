@@ -194,8 +194,8 @@ impl Expr {
         }
 
         if is_cast
-            && let (not_cast_rest, Some(not_cast)) =
-                Expr::try_parse_raw_with_prec(ctx, input, prec, false)?
+            && let Ok((not_cast_rest, Some(not_cast))) =
+                Expr::try_parse_raw_with_prec(ctx, input, prec, false)
         {
             match rest.start_pos().cmp(&not_cast_rest.start_pos()) {
                 Ordering::Greater => {
