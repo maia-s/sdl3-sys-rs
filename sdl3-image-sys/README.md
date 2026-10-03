@@ -146,28 +146,4 @@ These are enabled with an `sdlimage-` prefix and disabled with a `no-sdlimage-` 
     - Update SDL_image to 3.4.6
     - Update sdl3-sys to 0.7.0
 
-- 0.6.4
-    - Enable `use-pkg-config` and `use-vcpkg` features by default
-    - Fix Android builds being built for the wrong arch (Thanks to Archee)
-
-- 0.6.3
-    - Update SDL_image to 3.4.4
-
-- 0.6.2
-    - Update SDL_image to 3.4.2
-    - Require exact version match for source crate when building from source (fix for Android)
-    - Add `new` and `value` assoc function/method for groups (ids, enums, etc)
-    - impl Display for ids under the `display-impls` feature
-    - Add metadata for structs and unions
-
-- 0.6.1:
-    - Update SDL_image to 3.4.0
-
-- 0.6.0:
-    - Update sdl3-sys to 0.6.0
-    - Synchronize version number with sdl3-sys
-    - Add metadata
-    - Make some functions safe and/or const
-    - MSRV 1.85
-
 See ChangeLog.md for older changes
