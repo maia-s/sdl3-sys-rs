@@ -17,7 +17,7 @@ main() {
     shift
 
     git update-index --refresh
-    git diff-index --quiet HEAD -- || die "git isn't clean"
+    git diff-index --quiet HEAD -- || (git diff-index HEAD --; die "git isn't clean")
 
     branches="${@:-sdl-dev-3.4 sdl-dev image-dev-3.4 image-dev ttf-dev mixer-dev net-dev shadercross-dev sound-dev-3.2 sound-dev}"
     for branch in $branches; do
@@ -36,6 +36,7 @@ main() {
         esac
 
         if git checkout "$branch"; then
+            git reset --hard "origin/$branch" || die "reset to origin failed"
             git rebase main || rebase_failed "$branch"
             git checkout "$branch"
             ./update-submodules.sh
