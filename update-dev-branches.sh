@@ -16,6 +16,7 @@ main() {
     push=$1
     shift
 
+    git fetch
     git update-index --refresh
     git diff-index --quiet HEAD -- || (git diff-index HEAD --; die "git isn't clean")
 
@@ -72,12 +73,12 @@ main() {
     exit
 }
 
-push=false
+push=true
 
 args=()
 for arg in "$@"; do
     case "$arg" in
-        --push) push=true;;
+        --local) push=false;;
         *) args+=("$arg");;
     esac
 done
