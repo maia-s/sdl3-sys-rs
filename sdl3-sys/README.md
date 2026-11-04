@@ -182,6 +182,9 @@ These features are always available.
 
 ## Recent changes
 
+- next-3.4:
+    - ...
+
 - 0.7.3:
     - Update SDL to 3.4.20
 
