@@ -3,6 +3,7 @@
 These are low level Rust bindings for SDL3_ttf, an add-on library for
 [SDL 3](https://libsdl.org) for rendering text.
 This version of `sdl3-ttf-sys` has bindings for SDL_ttf versions `3.2.0` to `3.2.2`, inclusive.
+`sdl3-ttf-sys` is made without generative AI.
 
 `sdl3-ttf-sys` works out of the box on any target that SDL3_ttf supports and doesn't require anything
 else if the SDL3_ttf library is installed or otherwise available. On targets that support it you can

@@ -3,6 +3,7 @@
 These are low level Rust bindings for [SDL_sound 3](https://github.com/icculus/SDL_sound),
 an add-on library for [SDL 3](https://libsdl.org) for decoding several popular sound file formats.
 This version of `sdl3-sound-sys` has bindings for SDL_sound version `3.2.0`.
+`sdl3-sound-sys` is made without generative AI.
 
 `sdl3-sound-sys` works out of the box on any target that SDL_sound 3 supports and doesn't require anything
 else if the SDL_sound 3 library is installed or otherwise available. On targets that support it you can

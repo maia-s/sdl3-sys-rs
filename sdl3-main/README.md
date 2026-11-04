@@ -2,6 +2,7 @@
 
 This crate provides tools for using SDL 3's main and callback APIs, and
 for interfacing with the main thread of the process.
+`sdl3-main` is made without generative AI.
 
 ## SDL main
 

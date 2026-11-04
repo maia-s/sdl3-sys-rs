@@ -2,6 +2,7 @@
 
 These are low level Rust bindings for SDL, the [Simple DirectMedia Layer](https://libsdl.org).
 This version of `sdl3-sys` has bindings for SDL versions `3.2.0` to `3.4.20`, inclusive.
+`sdl3-sys` is made without generative AI.
 
 `sdl3-sys` works out of the box on any target that SDL 3 supports and doesn't require anything
 else if the SDL library is installed or otherwise available. On targets that support it you can
@@ -38,6 +39,7 @@ Other satellite libraries aren't stable yet, and will be released as they're ava
 ### Higher level bindings using `sdl3-sys`
 
 - [`sdl3`](https://crates.io/crates/sdl3): An evolution of the `sdl2` crate
+  (not affiliated with `sdl3-sys`)
 
 ## Usage
 
@@ -180,8 +182,8 @@ These features are always available.
 
 ## Recent changes
 
-- next-3.4:
-    - ...
+- 0.7.3:
+    - Update SDL to 3.4.20
 
 - 0.7.2:
     - Update SDL to 3.4.18

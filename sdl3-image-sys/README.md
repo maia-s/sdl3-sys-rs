@@ -3,6 +3,7 @@
 These are low level Rust bindings for SDL3_image, an add-on library for
 [SDL 3](https://libsdl.org) for loading and saving images.
 This version of `sdl3-image-sys` has bindings for SDL_image versions `3.2.0` to `3.4.8`, inclusive.
+`sdl3-image-sys` is made without generative AI.
 
 `sdl3-image-sys` works out of the box on any target that SDL3_image supports and doesn't require anything
 else if the SDL3_image library is installed or otherwise available. On targets that support it you can

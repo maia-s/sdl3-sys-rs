@@ -3,6 +3,7 @@
 These are low level Rust bindings for SDL3_net, an add-on library for
 [SDL 3](https://libsdl.org) for networking.
 This version of `sdl3-net-sys` has bindings for SDL_net version `3.2.0`.
+`sdl3-net-sys` is made without generative AI.
 
 `sdl3-net-sys` works out of the box on any target that SDL3_net supports and doesn't require anything
 else if the SDL3_net library is installed or otherwise available. On targets that support it you can

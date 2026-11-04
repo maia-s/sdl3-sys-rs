@@ -3,6 +3,7 @@
 These are low level Rust bindings for SDL3_mixer, an add-on library for
 [SDL 3](https://libsdl.org) for loading and playing audio files.
 This version of `sdl3-mixer-sys` has bindings for SDL_mixer versions `3.2.0` to `3.2.4`, inclusive.
+`sdl3-mixer-sys` is made without generative AI.
 
 `sdl3-mixer-sys` works out of the box on any target that SDL3_mixer supports and doesn't require anything
 else if the SDL3_mixer library is installed or otherwise available. On targets that support it you can
