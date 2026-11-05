@@ -1,5 +1,8 @@
 # Changes
 
+- next-3.4:
+    - ...
+
 - 0.7.1
     - Use fixed sdl3-ttf-src 3.2.3 (SDL_ttf 3.2.2 with CMake 4 compatibility fix)
 

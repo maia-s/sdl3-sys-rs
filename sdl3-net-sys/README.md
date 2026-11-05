@@ -54,6 +54,9 @@ convention for libraries. You can change this behaviour with the following featu
 
 ## Recent changes
 
+- next-3.4:
+    - ...
+
 - 0.7.0
     - Update sdl3-sys to 0.7.0
 

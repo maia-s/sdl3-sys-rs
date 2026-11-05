@@ -127,6 +127,9 @@ Formats are autodetected by default. You can disable them by default instead and
 
 ## Recent changes
 
+- next-3.4:
+    - ...
+
 - 0.7.0
     - Update sdl3-sys to 0.7.0
 
