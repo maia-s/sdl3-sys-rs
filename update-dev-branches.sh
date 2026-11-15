@@ -16,7 +16,7 @@ main() {
     push=$1
     shift
 
-    git fetch
+    git fetch --prune --tags
     git update-index --refresh
     git diff-index --quiet HEAD -- || (git diff-index HEAD --; die "git isn't clean")
 
@@ -36,10 +36,8 @@ main() {
             *) die "unknown branch $branch"
         esac
 
-        if git checkout "$branch"; then
-            git reset --hard "origin/$branch" || die "reset to origin failed"
+        if git checkout "origin/$branch"; then
             git rebase main || rebase_failed "$branch"
-            git checkout "$branch"
             ./update-submodules.sh
             dist="$(git rev-list --count main..HEAD)"
             if [ "$dist" -gt "1" ]; then
@@ -47,11 +45,10 @@ main() {
                 message="$(git log -1 --pretty=%B)"
                 git reset --soft HEAD~1
                 git commit --amend -m "$message"
-                git checkout "$branch"
                 ./update-submodules.sh
             fi
             hash="$(git -C "$src_dir" rev-parse HEAD)"
-            git -C "$src_dir" fetch
+            git -C "$src_dir" fetch --prune --tags
             git -C "$src_dir" checkout "$src_branch"
             new_hash="$(git -C "$src_dir" rev-parse HEAD)"
             if [[ "$hash" != "$new_hash" ]]; then
@@ -61,7 +58,7 @@ main() {
                 git diff --exit-code || git commit -a -m "$(basename $src_dir) $rev @ $time"
             fi
             if $push; then
-                git push --force-with-lease origin "$branch" || die "push failed"
+                git push --force-with-lease origin "HEAD:$branch" || die "push failed"
             fi
         else
             echo "skipping $branch"
