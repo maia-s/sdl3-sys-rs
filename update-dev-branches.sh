@@ -20,23 +20,24 @@ main() {
     git update-index --refresh
     git diff-index --quiet HEAD -- || (git diff-index HEAD --; die "git isn't clean")
 
-    branches="${@:-sdl-dev-3.4 sdl-dev image-dev-3.4 image-dev ttf-dev mixer-dev net-dev shadercross-dev sound-dev-3.2 sound-dev}"
+    branches="${@:-$(git ls-remote --branches | grep -- -dev | sed -e 's,.*refs/heads/,,')}"
     for branch in $branches; do
-        case $branch in
-            sdl-dev-3.4) crate=sdl3-sys; src_dir=sdl3-src/SDL; src_branch=origin/release-3.4.x;;
-            sdl-dev) crate=sdl3-sys; src_dir=sdl3-src/SDL; src_branch=origin/main;;
-            image-dev-3.4) crate=sdl3-image-sys; src_dir=sdl3-image-src/SDL_image; src_branch=origin/release-3.4.x;;
-            image-dev) crate=sdl3-image-sys; src_dir=sdl3-image-src/SDL_image; src_branch=origin/main;;
-            ttf-dev) crate=sdl3-ttf-sys; src_dir=sdl3-ttf-src/SDL_ttf; src_branch=origin/main;;
-            mixer-dev) crate=sdl3-mixer-sys; src_dir=sdl3-mixer-src/SDL_mixer; src_branch=origin/main;;
-            net-dev) crate=sdl3-net-sys; src_dir=sdl3-net-src/SDL_net; src_branch=origin/main;;
-            shadercross-dev) crate=sdl3-shadercross-sys; src_dir=sdl3-shadercross-src/SDL_shadercross; src_branch=origin/main;;
-            sound-dev-3.2) crate=sdl3-sound-sys; src_dir=sdl3-sound-src/SDL_sound; src_branch=origin/release-3.2.x;;
-            sound-dev) crate=sdl3-sound-sys; src_dir=sdl3-sound-src/SDL_sound; src_branch=origin/main;;
-            *) die "unknown branch $branch"
-        esac
-
         if git checkout "origin/$branch"; then
+            branch_base="${branch%%-dev*}"
+            branch_ver="${branch##*-dev-}"
+            crate="sdl3-$branch_base-sys"
+            src_crate="sdl3-$branch_base-src"
+            if [[ "$crate" == "sdl3-sdl-sys" ]]; then
+                crate=sdl3-sys
+                src_crate=sdl3-src
+            fi
+            src_dir="$src_crate/$(grep lib_dir: $crate/config.txt | sed 's/lib_dir:[[:space:]]*//')"
+            if [[ "$branch_ver" == "$branch_base-dev" ]]; then
+                src_branch=origin/main
+            else
+                src_branch="origin/release-$branch_ver.x"
+            fi
+
             git rebase main || rebase_failed "$branch"
             ./update-submodules.sh
             dist="$(git rev-list --count main..HEAD)"
